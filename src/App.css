@@ -4,3 +4,11 @@
   margin: 0;
   padding: 0;
 }
+
+.pallete_colors {
+  --lightGray-color: #9AA7B7;
+  --purple-color: #59263e;
+  --orange-color: #DBA498;
+  --rose-color: #EFCDD6;
+  --blue-color: #14344A;
+}

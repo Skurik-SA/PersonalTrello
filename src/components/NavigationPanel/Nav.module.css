@@ -2,14 +2,14 @@ nav {
     top: 0;
     left: 0;
     padding-left: 20px;
-    padding-right: 20px;
+    padding-right: 10px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
     text-align: center;
     height: 50px;
-    background: #363062;
+    background: #59263e;
 }
 
 section {
@@ -17,37 +17,86 @@ section {
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    gap: 10px;
+    gap: 5px;
 }
 
-.popupMenu {
+.customButtonBaseStyle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    background: rgba(20, 33, 74, 0.7);
+    line-height: 1.5;
+    font-weight: 400;
+    color: #f3cdc5;
+    font-size: 1rem;
+    border-radius: 5px;
+
+    padding: 7px;
+
+    border: none;
+}
+
+.customButtonBaseStyle:hover {
+    cursor: pointer;
+    background: rgba(45, 70, 150, 0.7);
+
+}
+
+.customPopperBaseStyleTM,
+.customPopperBaseStyleBoards,
+.customPopperBaseStyleFavorites,
+.customPopperBaseStyleTemplates,
+.customPopperBaseStyleCreate {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    background: #4D4C7D;
+    background:  #59263e;
     font-weight: 600;
     text-align: center;
     margin-top: 10px;
     padding-top: 10px;
     padding-bottom: 10px;
-    width: 250px;
+    width: 350px;
     border-radius: 5px;
+    overflow: auto;
+
+    scrollbar-color: #8d3c62 #59263e;
+    scrollbar-width: thin;
+
+
+    }
+::-webkit-scrollbar {
+    width: 8px; /* ширина для вертикального скролла */
+    height: 6px; /* высота для горизонтального скролла */
+    background-color: #59263e;
 }
 
-
-
-
-.popupMenuItems {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-    font-size: 1rem;
-    padding: 5px 5px 5px 15px;
-    cursor: pointer;
+/* ползунок скроллбара */
+::-webkit-scrollbar-thumb {
+    background-color: #8d3c62;
 }
 
-.popupMenuItems:hover {
-    background:#827397;
+::-webkit-scrollbar-thumb:hover {
+    background-color: #a84775;
 }
 
+.customPopperBaseStyleTM {
+    height: 100px;
+}
+
+.customPopperBaseStyleBoards {
+    height: 200px;
+}
+
+.customPopperBaseStyleFavorites {
+    height: 300px;
+}
+
+.customPopperBaseStyleTemplates {
+    height: 400px;
+}
+
+.customPopperBaseStyleCreate {
+    height: 500px;
+}

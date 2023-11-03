@@ -1,0 +1,53 @@
+.menuButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    background: transparent;
+    line-height: 1.5;
+    font-weight: 400;
+    color: #DBA498;
+    font-size: 1rem;
+
+    padding: 7px;
+
+    border: none;
+}
+
+.menuButton:hover {
+    border-radius: 5px;
+    background: #8d3c62;
+    cursor: pointer;
+}
+
+.logoOn {
+    display: flex;
+}
+
+.menuButton:hover > .logoOn {
+    display: none;
+}
+
+.logoOff {
+    display: none;
+}
+
+.menuButton:hover > .logoOff {
+    display: flex;
+}
+
+.popupBaseContent {
+    display: flex;
+    /*display: contents;*/
+    flex-direction: column;
+    gap: 10px;
+    background:  #59263e;
+    font-weight: 600;
+    text-align: center;
+    margin-top: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    width: 350px;
+    border-radius: 5px;
+}
+

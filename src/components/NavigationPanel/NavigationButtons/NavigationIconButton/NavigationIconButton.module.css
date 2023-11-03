@@ -1,0 +1,31 @@
+
+
+.popupMenu {
+    display: flex;
+    /*display: contents;*/
+    flex-direction: column;
+    gap: 10px;
+    background:  #59263e;
+    font-weight: 600;
+    text-align: center;
+    margin-top: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    width: 250px;
+    border-radius: 5px;
+}
+
+.popupMenuItems {
+    display: flex;
+    /*display: contents;*/
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 1rem;
+    padding: 5px 5px 5px 15px;
+    cursor: pointer;
+}
+
+.popupMenuItems:hover {
+    background: #8d3c62;
+}

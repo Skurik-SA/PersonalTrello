@@ -64,8 +64,11 @@ section {
     scrollbar-color: #8d3c62 #59263e;
     scrollbar-width: thin;
 
-
+    -webkit-box-shadow: 0px 0px 11px 7px rgba(34, 60, 80, 0.17);
+    -moz-box-shadow: 0px 0px 11px 7px rgba(34, 60, 80, 0.17);
+    box-shadow: 0px 0px 11px 7px rgba(34, 60, 80, 0.17);
     }
+
 ::-webkit-scrollbar {
     width: 8px; /* ширина для вертикального скролла */
     height: 6px; /* высота для горизонтального скролла */

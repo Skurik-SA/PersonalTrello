@@ -1,22 +1,18 @@
 import styles from "./Nav.module.css"
 import {useEffect, useRef, useState} from "react";
-import {Avatar, Box, Divider, IconButton, Popper} from "@mui/material";
+import {Avatar, Box, Divider, Fade, Grow, IconButton, Popper} from "@mui/material";
 import AccountMenu from "../AccountMenu/AccountMenu.jsx";
-import { css } from '@emotion/react'
-import {CSSTransition} from "react-transition-group";
+import FadeOwn from "../AnimationComponents/FadeOwn/FadeOwn.jsx";
 
 const Nav = (props) => {
     const {
 
     } = props
-    const nodeRef = useRef(null);
 
     const [anchorEl, setAnchorEl] = useState(null);
-    const [inProp, setInProp] = useState(false)
 
 
     const handleClick = (event) => {
-        setInProp((prev) => !prev)
         setAnchorEl(anchorEl ? null : event.currentTarget)
     };
 
@@ -30,7 +26,6 @@ const Nav = (props) => {
         let handler = (e) => {
             try {
                 if (!popperRef.current.contains(e.target) && !buttonPopperRef.current.contains(e.target)) {
-                    setInProp(false)
                     setAnchorEl(null);
                 }
             }
@@ -74,30 +69,27 @@ const Nav = (props) => {
                     <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
                 </IconButton>
 
-                <CSSTransition
-                    in={inProp}
-                    nodeRef={popperRef}
-                    timeout={300}
-                    classNames="pp"
-                    unmountOnExit
-                >
-                    <Popper id={id} open={open} anchorEl={anchorEl} placement={'bottom-end'} ref={popperRef}>
-                        <div className={styles.popupMenu} ref={popperRef}>
-                            <div className={styles.popupMenuItems}>
-                                Профиль
-                            </div>
-                            <Divider/>
-                            <div>
+                <Popper id={id} open={open} anchorEl={anchorEl} placement={'bottom-start'} ref={popperRef} transition>
+                    {({ TransitionProps }) => (
+                        <Grow {...TransitionProps} in={anchorEl} ref={popperRef} timeout={350} >
+                            <div className={styles.popupMenu}>
                                 <div className={styles.popupMenuItems}>
-                                    Настройки
+                                    Профиль
                                 </div>
-                                <div className={styles.popupMenuItems}>
-                                    Выйти
+                                <Divider/>
+                                <div>
+                                    <div className={styles.popupMenuItems}>
+                                        Настройки
+                                    </div>
+                                    <div className={styles.popupMenuItems}>
+                                        Выйти
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </Popper>
-                </CSSTransition>
+                        </Grow>
+                    )}
+                </Popper>
+
             </section>
         </nav>
     )

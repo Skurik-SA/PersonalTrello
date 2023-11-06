@@ -83,10 +83,26 @@ const Board = () => {
                     {/*ToolBar*/}
                     <div className={styles.toolBar}>
                         <div className={styles.toolBar_contentLeft}>
-                            asd
+                            <div>
+                                Task Board For Study
+                            </div>
+                            <div>
+                                FavIco
+                            </div>
+                            <div>
+                                PrivateIco
+                            </div>
                         </div>
                         <div className={styles.toolBar_contentRight}>
-                            asd
+                            <div>
+                                Фильтры
+                            </div>
+                            <div>
+                                Share
+                            </div>
+                            <div>
+                                OneMoreMenu
+                            </div>
                         </div>
                     </div>
                     {/*CardList*/}

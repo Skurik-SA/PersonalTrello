@@ -37,3 +37,15 @@
     transition: all 0.2s ease-in-out;
     width: 300px;
 }
+
+@media screen and (min-width: 300px) {
+    .searchWrapper {
+        display: none;
+    }
+}
+
+@media screen and (min-width: 600px) {
+    .searchWrapper {
+        display: flex;
+    }
+}

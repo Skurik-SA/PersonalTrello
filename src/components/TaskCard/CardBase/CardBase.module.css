@@ -1,0 +1,126 @@
+.cardBaseContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: #260d19;
+    width: 300px;
+    border-radius: 20px;
+    max-height: calc(100vh - 165px);
+}
+
+.boardLi {
+    display: flex;
+    flex-direction: column;
+}
+
+.cardOl {
+    display: flex;
+    flex-direction: column;
+    list-style-type: none;
+    padding-left: 10px;
+    overflow: auto;
+    gap: 5px;
+
+    scrollbar-color: #8d3c62 #59263e;
+    scrollbar-width: thin;
+}
+
+.cardHead, .cardCellar {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    width: 300px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background: #260d19;
+    border-radius: 15px;
+    cursor: pointer;
+ }
+
+.cardHead_contentLeft, .cardCellar_contentLeft {
+    padding-left: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.cardHead_contentRight, .cardCellar_contentRight {
+    margin-right: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.cardCellar_contentLeft {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    margin-left: 10px;
+    margin-right: 10px;
+    background: transparent;
+    border: none;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.cardCellar_contentLeft:hover {
+    cursor: pointer;
+    background: #622141;
+}
+
+.cardHead_contentRight, .cardCellar_contentRight {
+    background: transparent;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px 12px;
+}
+
+.cardCellar_contentRight {
+    padding: 6px 6px 3px;
+}
+
+.cardHead_contentRight:hover, .cardCellar_contentRight:hover {
+    cursor: pointer;
+    background: #622141;
+}
+
+
+.taskWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: left;
+    min-height: 30px;
+    border-radius: 10px;
+    padding: 3px 10px;
+    margin-right: 10px;
+    background: #381325;
+}
+
+.taskContents {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: left;
+}
+
+.titleArea {
+    outline: #de609a;
+    border: none;
+    background: transparent;
+    min-height: 20px;
+    resize: none;
+    overflow: hidden;
+    padding: 6px 10px;
+    text-align: left;
+    align-items: center;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.titleArea:focus {
+    background: #913661;
+    border-radius: 5px;
+}

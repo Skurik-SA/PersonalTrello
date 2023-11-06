@@ -13,24 +13,35 @@ const Nav = (props) => {
                     popperBtnId={'templates-popper'}
                     isIcon
                 >
-                    <div>
-                        Task Manager
-                    </div>
-                    <div>
-                        Task Manager
-                    </div>
-                    <div>
-                        Task Manager
-                    </div>
-                    <div>
-                        Task Manager
-                    </div>
-                    <div>
-                        Task Manager
-                    </div>
-                    <div>
-                        Task Manager
-                    </div>
+                    <ul className={styles.navUl}>
+                        <li className={styles.navLi}>
+                            <button className={styles.singlePoint}>
+                                Task Manager
+                            </button>
+                        </li >
+                        <li className={styles.navLi}>
+                            <button className={styles.singlePoint}>
+                                Task Manager
+                            </button>
+                        </li>
+                        <li className={styles.navLi}>
+                            <button className={styles.singlePoint}>
+                                Task Manager
+                            </button>
+                        </li>
+                        <li className={styles.navLi}>
+                            <button className={styles.singlePoint}>
+                                Task Manager
+                            </button>
+                        </li>
+                        <li className={styles.navLi}>
+                            <button className={styles.singlePoint}>
+                                Task Manager
+                            </button>
+                        </li>
+                    </ul>
+
+
                 </NavigationDefaultButton>
 
                 <NavigationDefaultButton
@@ -38,9 +49,18 @@ const Nav = (props) => {
                     buttonContent={"Доски"}
                     popperBtnId={'boards-popper'}
                 >
-                    <div>
-                        Доски
-                    </div>
+                    <ul className={styles.navUl}>
+                        <li className={styles.navLi}>
+                            <button className={styles.singlePoint}>
+                                Доски
+                            </button>
+                        </li>
+                        <li className={styles.navLi}>
+                            <button className={styles.singlePoint}>
+                                Хуёски
+                            </button>
+                        </li>
+                    </ul>
                 </NavigationDefaultButton>
 
                 <NavigationDefaultButton
@@ -48,9 +68,18 @@ const Nav = (props) => {
                     buttonContent={"Избранное"}
                     popperBtnId={'favorites-popper'}
                 >
-                    <div>
-                        Избранное
-                    </div>
+                    <ul className={styles.navUl}>
+                        <li className={styles.navLi}>
+                            <button className={styles.singlePoint}>
+                                Избранное
+                            </button>
+                        </li>
+                        <li className={styles.navLi}>
+                            <button className={styles.singlePoint}>
+                                Мега избранное
+                            </button>
+                        </li>
+                    </ul>
                 </NavigationDefaultButton>
 
                 <NavigationDefaultButton
@@ -58,9 +87,34 @@ const Nav = (props) => {
                     buttonContent={"Шаблоны"}
                     popperBtnId={'templates-popper'}
                 >
-                    <div>
-                        Шаблоны
-                    </div>
+                    <ul className={styles.navUl}>
+                        <li className={styles.navLi}>
+                            <button className={styles.singlePoint}>
+                                Шаблон 1
+                            </button>
+                        </li>
+                        <li className={styles.navLi}>
+                            <button className={styles.singlePoint}>
+                                Шаблон 2
+                            </button>
+                        </li>
+                        <li className={styles.navLi}>
+                            <button className={styles.singlePoint}>
+                                Шаблон 3
+                            </button>
+                        </li>
+                        <li className={styles.navLi}>
+                            <button className={styles.singlePoint}>
+                                Шаблон 4
+                            </button>
+                        </li>
+                        <li className={styles.navLi}>
+                            <button className={styles.singlePoint}>
+                                Шаблон 5
+                            </button>
+                        </li>
+                    </ul>
+
                 </NavigationDefaultButton>
 
                 <NavigationDefaultButton
@@ -69,9 +123,40 @@ const Nav = (props) => {
                     buttonContent={"Создать"}
                     popperBtnId={'create-popper'}
                 >
-                    <div>
-                        Создать
-                    </div>
+                    <ul className={styles.navUl}>
+                        <li className={styles.navLi}>
+                            <button className={styles.doublePointButton}>
+                                <div>
+                                    Создать новую доску
+                                </div>
+                                <div className={styles.descriptionCard}>
+                                    Доска представляет собой совокупность карточек, упорядоченных в списках.
+                                    Используйте её для управления проектом, отслеживании или организации чего угодно.
+                                </div>
+                            </button>
+                        </li>
+                        <li className={styles.navLi}>
+                            <button className={styles.doublePointButton}>
+                                <div>
+                                    Начать с шаблона
+                                </div>
+                                <div className={styles.descriptionCard}>
+                                    Начните работу быстрее, используя шаблон доски.
+                                </div>
+                            </button>
+                        </li>
+                        <li className={styles.navLi}>
+                            <button className={styles.doublePointButton}>
+                                <div>
+                                    Создать проект
+                                </div>
+                                <div className={styles.descriptionCard}>
+                                    Проект представляет собой пространство для группы нескольких пользователей,
+                                    предназначенный для совместной работы.
+                                </div>
+                            </button>
+                        </li>
+                    </ul>
                 </NavigationDefaultButton>
             </section>
             <section>

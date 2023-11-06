@@ -1,6 +1,8 @@
 nav {
     top: 0;
     left: 0;
+    right: 0;
+    bottom: 0;
     padding-left: 20px;
     padding-right: 10px;
     display: flex;
@@ -10,6 +12,7 @@ nav {
     text-align: center;
     height: 50px;
     background: #59263e;
+    overflow: hidden;
 }
 
 section {
@@ -18,6 +21,7 @@ section {
     justify-content: center;
     align-items: center;
     gap: 5px;
+    height: auto;
 }
 
 .customButtonBaseStyle {
@@ -55,10 +59,8 @@ section {
     font-weight: 600;
     text-align: center;
     margin-top: 10px;
-    padding-top: 10px;
-    padding-bottom: 10px;
     width: 350px;
-    border-radius: 5px;
+    border-radius: 10px;
     overflow: auto;
 
     scrollbar-color: #8d3c62 #59263e;
@@ -69,37 +71,155 @@ section {
     box-shadow: 0px 0px 11px 7px rgba(34, 60, 80, 0.17);
     }
 
-::-webkit-scrollbar {
-    width: 8px; /* ширина для вертикального скролла */
-    height: 6px; /* высота для горизонтального скролла */
-    background-color: #59263e;
-}
-
-/* ползунок скроллбара */
-::-webkit-scrollbar-thumb {
-    background-color: #8d3c62;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background-color: #a84775;
-}
-
 .customPopperBaseStyleTM {
-    height: 100px;
+    height: 200px;
 }
 
 .customPopperBaseStyleBoards {
-    height: 200px;
+    height: auto;
+    width: 250px;
 }
 
 .customPopperBaseStyleFavorites {
     height: 300px;
+    width: 250px;
+
 }
 
 .customPopperBaseStyleTemplates {
     height: 400px;
+    width: 250px;
 }
 
 .customPopperBaseStyleCreate {
-    height: 500px;
+    width: 300px;
+}
+
+.boardsButton {
+
+}
+
+.navUl {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 0;
+    padding-left: 0;
+    list-style-type: none;
+    gap: 5px;
+}
+
+.navLi {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    width: 90%;
+}
+
+.navLi:hover {
+    cursor: pointer;
+}
+
+.singlePoint {
+    height: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 10px;
+    gap: 5px;
+    border: none;
+    font-size: 1rem;
+    background: #6c2e4e;
+    color: #d3a9a0;
+    border-radius: 10px;
+    width: 100%;
+}
+
+.singlePoint:hover {
+    cursor: pointer;
+    background: #a14370;
+
+}
+
+.singlePoint:active {
+    background: #b44d7e;
+}
+
+.doublePointButton {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 10px;
+    gap: 5px;
+    border: none;
+    font-size: 1rem;
+    background: #6c2e4e;
+    color: #d3a9a0;
+    border-radius: 10px;
+
+}
+
+.doublePointButton:hover {
+    cursor: pointer;
+    background: #a14370;
+
+}
+
+.doublePointButton:active {
+    background: #b44d7e;
+}
+
+.descriptionCard {
+
+    text-align: left;
+    font-size: 0.75rem;
+}
+
+@media screen and (min-width: 300px) {
+    .customButtonBaseStyle {
+        display: none;
+    }
+
+    ::-webkit-scrollbar {
+        width: 8px; /* ширина для вертикального скролла */
+        height: 8px; /* высота для горизонтального скролла */
+        background-color: #59263e;
+    }
+
+    /* ползунок скроллбара */
+    ::-webkit-scrollbar-thumb {
+        background-color: #8d3c62;
+        border-radius: 25px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background-color: #a84775;
+    }
+}
+
+@media screen and (min-width: 600px) {
+    .customButtonBaseStyle {
+        display: flex;
+    }
+
+    ::-webkit-scrollbar {
+        width: 8px; /* ширина для вертикального скролла */
+        height: 8px; /* высота для горизонтального скролла */
+        background-color: #59263e;
+        border-radius: 25px;
+    }
+
+    /* ползунок скроллбара */
+    ::-webkit-scrollbar-thumb {
+        background-color: #8d3c62;
+        border-radius: 25px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background-color: #a84775;
+    }
 }

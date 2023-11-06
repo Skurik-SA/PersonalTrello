@@ -1,0 +1,91 @@
+.mainBaseWrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    /*background: #1f1f1f;*/
+}
+
+.toolBar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    color: black;
+    background: #966d64;
+    height: 65px;
+}
+
+.toolBar_contentLeft {
+    padding-left: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.toolBar_contentRight {
+    padding-right: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.cardList {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: row;
+    height: calc(100% - 115px);
+    padding-left: 10px;
+    padding-right: 10px;
+    overflow: auto;
+
+    scrollbar-color: #8d3c62 #59263e;
+    scrollbar-width: auto;
+}
+
+
+.boardOl {
+    display: flex;
+    flex-direction: row;
+    padding-top: 0;
+    padding-left: 0;
+    list-style-type: none;
+    gap: 10px;
+    height: auto;
+    margin-right: 10px;
+}
+
+.addNewCardButtonWrapper {
+    /*margin-right: 10px;*/
+    /*padding-left: 10px;*/
+
+}
+
+.addNewCardButton {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15px;
+    background: #622542;
+    border: none;
+    border-radius: 15px;
+    color: #d3a9a0;
+    font-size: 1rem;
+
+    height: 50px;
+    min-width: 300px;
+}
+
+.addNewCardButton:hover {
+    background: #913661;
+    cursor: pointer;
+}
+
+.addNewCardButton:active {
+    background: #913661;
+}

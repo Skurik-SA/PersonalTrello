@@ -88,63 +88,7 @@
     background: #622141;
 }
 
-.editTaskButton {
-    display: none;
-    position: absolute;
-    top: 3px;
-    margin-left: 83%;
-    padding-top: 3px;
-    width: 30px;
-    height: 30px;
-    border-radius: 15px;
-    background: transparent;
-    border: none;
-}
 
-.editTaskButton:hover {
-    cursor: pointer;
-    background: #4d1a33;
-}
-
-.taskWrapper {
-    position: sticky;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    border-radius: 10px;
-    padding: 3px 12px;
-    margin-right: 10px;
-    background: #381325;
-    cursor: pointer;
-}
-
-.taskWrapper:hover {
-    box-shadow: 0 1px 0 #de609a,
-                0 -1px 0 #de609a,
-                1px 0 0 #de609a,
-                -1px 0 0 #de609a;
-}
-
-.taskWrapper:hover .editTaskButton {
-    display: unset;
-}
-
-.taskText {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: left;
-    padding: 3px 10px;
-    background: #381325;
-}
-
-.taskContents {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: left;
-}
 
 .titleArea {
     outline: #de609a;

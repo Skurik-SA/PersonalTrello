@@ -30,8 +30,6 @@
 }
 
 .userData_rightContent {
-    position: relative;
-    z-index: 100;
     padding-right: 20px;
 
 }

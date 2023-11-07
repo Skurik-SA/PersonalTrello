@@ -15,6 +15,7 @@
     color: black;
     background: #966d64;
     height: 65px;
+    overflow: hidden;
 }
 
 .toolBar_contentLeft {
@@ -33,6 +34,27 @@
     gap: 10px;
 }
 
+.boardTitleInput {
+    min-width: 200px;
+    width: auto;
+    max-width: 70%;
+    background: transparent;
+    border: none;
+    outline: none;
+    padding: 5px 5px 5px 10px;
+    font-size: 1.1rem;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.boardTitleInput:focus {
+    background: #60443e;
+}
+
+.boardTitleInput::placeholder {
+    color: white;
+}
+
 .cardList {
     top: 0;
     left: 0;
@@ -41,10 +63,7 @@
     display: flex;
     flex-direction: row;
     height: calc(100% - 115px);
-    padding-left: 10px;
-    padding-right: 10px;
-    overflow: auto;
-
+    overflow-y: auto;
     scrollbar-color: #8d3c62 #59263e;
     scrollbar-width: auto;
 }
@@ -54,7 +73,7 @@
     display: flex;
     flex-direction: row;
     padding-top: 0;
-    padding-left: 0;
+    padding-left: 10px;
     list-style-type: none;
     gap: 10px;
     height: auto;
@@ -79,6 +98,8 @@
     color: #d3a9a0;
     font-size: 1rem;
 
+    margin-right: 10px;
+
     height: 50px;
     min-width: 300px;
 }
@@ -90,4 +111,19 @@
 
 .addNewCardButton:active {
     background: #913661;
+}
+
+@media screen and (min-width: 0px) {
+    .boardTitleInput {
+        max-width: 15%;
+        font-size: 0.9rem;
+        overflow: hidden;
+    }
+}
+
+@media screen and (min-width: 600px) {
+    .boardTitleInput {
+        max-width: 70%;
+        font-size: 1.1rem;
+    }
 }

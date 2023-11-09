@@ -1,0 +1,55 @@
+.cardList {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: row;
+    height: calc(100% - 115px);
+    scrollbar-color: #8d3c62 #59263e;
+    scrollbar-width: auto;
+    gap: 10px;
+    overflow-y: hidden;
+}
+
+.boardOl {
+    display: flex;
+    flex-direction: row;
+    padding-top: 0;
+    padding-left: 10px;
+    list-style-type: none;
+    height: 100px;
+    margin-right: 10px;
+}
+
+.addNewCardButtonWrapper {
+    /*margin-right: 10px;*/
+    /*padding-left: 10px;*/
+}
+
+.addNewCardButton {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15px;
+    background: #622542;
+    border: none;
+    border-radius: 15px;
+    color: #d3a9a0;
+    font-size: 1rem;
+
+    margin-right: 10px;
+
+    height: 50px;
+    min-width: 300px;
+}
+
+.addNewCardButton:hover {
+    background: #913661;
+    cursor: pointer;
+}
+
+.addNewCardButton:active {
+    background: #913661;
+}

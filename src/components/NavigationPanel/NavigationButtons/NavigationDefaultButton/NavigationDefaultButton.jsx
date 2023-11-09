@@ -15,6 +15,7 @@ const NavigationDefaultButton = (props) => {
         isIcon,
         customButtonBaseStyle,
         customPopperBaseStyle,
+        clickClose= false,
     } = props
 
     const [anchorEl, setAnchorEl] = useState(null);
@@ -91,6 +92,12 @@ const NavigationDefaultButton = (props) => {
                                 :
                                 styles.popupBaseContent
                             }
+                             onClick={() => {
+                                 if (clickClose) {
+                                     setAnchorEl(null)
+                                     setAnimElFlag(false)
+                                 }
+                             }}
                         >
                             {children}
                         </div>

@@ -10,8 +10,6 @@ const BoardTitleInput = (props) => {
     return (
         <input id={"board-title-input"}
 
-               style={{width: 'auto'}}
-
                value={input}
 
                maxLength={127}

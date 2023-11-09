@@ -34,95 +34,102 @@
     gap: 10px;
 }
 
-.cardList {
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    display: flex;
-    flex-direction: row;
-    height: calc(100% - 115px);
-    scrollbar-color: #8d3c62 #59263e;
-    scrollbar-width: auto;
-    gap: 10px;
-    overflow-y: hidden;
-}
-
-.boardOl {
-    display: flex;
-    flex-direction: row;
-    padding-top: 0;
-    padding-left: 10px;
-    list-style-type: none;
-    height: 100px;
-    margin-right: 10px;
-}
-
-.addNewCardButtonWrapper {
-    /*margin-right: 10px;*/
-    /*padding-left: 10px;*/
-
-}
-
-.addNewCardButton {
+.favIcoButton,
+.privacyIcoButton,
+.filtersIcoButton,
+.shareIcoButton,
+.moreOptionsIcoButton {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    margin-top: 15px;
-    background: #622542;
-    border: none;
-    border-radius: 15px;
-    color: #d3a9a0;
-    font-size: 1rem;
 
-    margin-right: 10px;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 4px;
+    border-radius: 5px;
 
-    height: 50px;
-    min-width: 300px;
-}
+    font-size: 0.9rem;
 
-.addNewCardButton:hover {
-    background: #913661;
-    cursor: pointer;
-}
-
-.addNewCardButton:active {
-    background: #913661;
-}
-
-.favIcoButton {
     background: transparent;
     border: none;
     cursor: pointer;
-    padding-left: 8px;
-    padding-right: 8px;
-    border-radius: 5px;
 }
 
-.favIcoButton:hover {
+.filtersIcoButton {
+    padding: 8px 8px 8px 8px;
+    gap: 8px;
+}
+
+.privacyIcoButton {
+    margin-left: 10px;
+    padding-bottom: 4px;
+}
+
+.shareIcoButton {
+    padding-bottom: 5px;
+}
+
+.moreOptionsIcoButton {
+    padding-bottom: 10px;
+}
+
+.favIcoButton:hover,
+.privacyIcoButton:hover,
+.filtersIcoButton:hover,
+.moreOptionsIcoButton:hover,
+.shareIcoButton:hover {
     background: rgba(96, 68, 62, 50%);
-}
-
-.favIconSVG {
-
 }
 
 .favIconSVG:hover {
     scale: 1.3;
 }
 
-.privacyIcoButton {
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    padding-left: 8px;
-    padding-right: 8px;
-    border-radius: 5px;
+.privacyIcoPopper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 300px;
+    background: #4d1a33;
+    border-radius: 10px;
 }
 
-.privacyIcoButton:hover {
-    background: rgba(96, 68, 62, 50%);
+.privacyPopperUl {
+    display: flex;
+    flex-direction: column;
+    padding-top: 0;
+    padding-left: 10px;
+    gap: 5px;
+    list-style-type: none;
+    margin-right: 10px;
+}
+
+.privacyPopperLi {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 10px 10px 10px 20px;
+    background: #672344;
+    border-radius: 8px;
+}
+
+.privacyPopperLi:hover {
+    cursor: pointer;
+    background: #882f5a;
+}
+
+.privacyPopperLiUpContent {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+}
+
+.privacyPopperLiDownContent {
+    font-size: 0.8rem;
 }
 
 @media screen and (min-width: 0px) {

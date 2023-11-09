@@ -1,11 +1,11 @@
 import styles from "./Boards.module.css"
 import SideBar from "../../components/SideBar/SideBar.jsx";
-import CardBase from "../../components/TaskCard/CardBase/CardBase.jsx";
 import {useState} from "react";
-import ScrollContainer from "react-indiana-drag-scroll";
-import {DragDropContext, Draggable, Droppable} from "react-beautiful-dnd";
 import { v4 as uuidv4 } from 'uuid';
 import BoardTitleInput from "../../components/CustomInputs/BoardTitleInput/BoardTitleInput.jsx";
+import NavigationDefaultButton
+    from "../../components/NavigationPanel/NavigationButtons/NavigationDefaultButton/NavigationDefaultButton.jsx";
+import CardBoard from "../../components/TaskCard/CardBoard/CardBoard.jsx";
 
 const Board = () => {
     const data = [
@@ -153,59 +153,9 @@ const Board = () => {
 
 
     const [inVal, setInVal] = useState("Task Board For Study")
-    const [clientVisibleData, setClientVisibleData] = useState(data)
     const [iconFavMode, setIconFavMode] = useState(false)
+    const [iconPrivacyMode, setIconPrivacyMode] = useState(0)
 
-    const handleOnDragEnd = (results) => {
-
-        const {source, destination, type} = results
-
-        if (!destination) {
-            return
-        }
-
-        if (
-            source.droppableId === destination.droppableId &&
-            source.index === destination.index
-        ) {
-            return;
-        }
-
-        if (type === 'group')
-        {
-            const reorderedData = [...clientVisibleData]
-            const sourceIndex = source.index
-            const destinationIndex = destination.index
-
-            const [removedItem] = reorderedData.splice(sourceIndex, 1)
-            reorderedData.splice(destinationIndex, 0, removedItem)
-
-            return setClientVisibleData(reorderedData);
-        }
-
-        const dataSourceIndex = clientVisibleData.findIndex((nd) => nd.id === source.droppableId)
-        const dataDestinationIndex = clientVisibleData.findIndex((nd) => nd.id === destination.droppableId)
-        const newDataItems = [...clientVisibleData[dataSourceIndex].content]
-        const newDestinationItems =
-            source.droppableId !== destination.droppableId
-                ? [...clientVisibleData[dataDestinationIndex].content]
-                : newDataItems
-        const [deletedItem] = newDataItems.splice(source.index, 1)
-        newDestinationItems.splice(destination.index, 0, deletedItem)
-
-        const newEl = [...clientVisibleData]
-        newEl[dataSourceIndex] = {
-            ...clientVisibleData[dataSourceIndex],
-            content: newDataItems
-        }
-
-        newEl[dataDestinationIndex] = {
-            ...clientVisibleData[dataDestinationIndex],
-            content: newDestinationItems
-        }
-
-        setClientVisibleData(newEl)
-    }
 
     return (
         <>
@@ -240,28 +190,98 @@ const Board = () => {
                                         }
                                     </span>
                                 </button>
-                                <button className={styles.privacyIcoButton}>
-                                    <svg width="13" height="15" viewBox="0 0 13 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <rect x="0.5" y="6.5" width="12" height="8" stroke="#002036"/>
-                                        <path d="M9.5 3.5V6.5H3.5V3.5C3.5 1.84315 4.84315 0.5 6.5 0.5C8.15685 0.5 9.5 1.84315 9.5 3.5Z" stroke="#002036"/>
-                                        <rect x="5" y="9" width="3" height="3" fill="#002036"/>
-                                    </svg>
+                                <NavigationDefaultButton
+                                    customButtonBaseStyle={styles.privacyIcoButton}
+                                    customPopperBaseStyle={styles.privacyIcoPopper}
+                                    popperBtnId={'privacy-popper'}
+                                    clickClose={true}
+                                    buttonContent={
+                                        <>
+                                            {iconPrivacyMode === 0
+                                                ?
+                                                <div className={styles.privacyPopperLiUpContent}>
+                                                    <svg width="13" height="15" viewBox="0 0 13 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <rect x="0.5" y="6.5" width="12" height="8" stroke="#002036"/>
+                                                        <path d="M9.5 3.5V6.5H3.5V3.5C3.5 1.84315 4.84315 0.5 6.5 0.5C8.15685 0.5 9.5 1.84315 9.5 3.5Z" stroke="#002036"/>
+                                                        <rect x="5" y="9" width="3" height="3" fill="#002036"/>
+                                                    </svg>
+                                                    <span>
+                                                        Приватная
+                                                    </span>
+                                                </div>
+                                                :
+                                                <>
+                                                    {iconPrivacyMode === 1
+                                                        ?
+                                                        <div className={styles.privacyPopperLiUpContent}>
+                                                            <svg width="14" height="16" viewBox="0 0 14 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                <rect x="0.5" y="7.5" width="13" height="8" rx="4" stroke="#002036"/>
+                                                                <circle cx="7" cy="4" r="3.5" stroke="#002036"/>
+                                                                <ellipse cx="5.5" cy="4" rx="0.5" ry="1" fill="#002036"/>
+                                                                <ellipse cx="8.5" cy="4" rx="0.5" ry="1" fill="#002036"/>
+                                                                <ellipse cx="7" cy="11" rx="3" ry="1" fill="#002036"/>
+                                                            </svg>
+                                                            <span>
+                                                                Публичная
+                                                            </span>
+                                                        </div>
+                                                        :
+                                                        <>
 
-                                    <svg width="14" height="16" viewBox="0 0 14 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <rect x="0.5" y="7.5" width="13" height="8" rx="4" stroke="#002036"/>
-                                        <circle cx="7" cy="4" r="3.5" stroke="#002036"/>
-                                        <ellipse cx="5.5" cy="4" rx="0.5" ry="1" fill="#002036"/>
-                                        <ellipse cx="8.5" cy="4" rx="0.5" ry="1" fill="#002036"/>
-                                        <ellipse cx="7" cy="11" rx="3" ry="1" fill="#002036"/>
-                                    </svg>
-                                    PrivateIco
-                                </button>
+                                                        </>
+
+                                                    }
+                                                </>
+                                            }
+                                        </>
+                                    }
+                                >
+                                    <ul className={styles.privacyPopperUl}>
+                                        <li className={styles.privacyPopperLi}
+                                            onClick={() => {
+                                                setIconPrivacyMode(0)
+                                            }}
+                                        >
+                                            <div className={styles.privacyPopperLiUpContent}>
+                                                <svg width="13" height="15" viewBox="0 0 13 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <rect x="0.5" y="6.5" width="12" height="8" stroke="white"/>
+                                                    <path d="M9.5 3.5V6.5H3.5V3.5C3.5 1.84315 4.84315 0.5 6.5 0.5C8.15685 0.5 9.5 1.84315 9.5 3.5Z" stroke="white"/>
+                                                    <rect x="5" y="9" width="3" height="3" fill="white"/>
+                                                </svg>
+                                                <span>Приватный режим</span>
+                                            </div>
+                                            <div className={styles.privacyPopperLiDownContent}>
+                                                Просматривать и изменять эту доску может только владелец доски
+                                            </div>
+                                        </li>
+
+                                        <li className={styles.privacyPopperLi}
+                                            onClick={() => {
+                                                setIconPrivacyMode(1)
+                                            }}
+                                        >
+                                            <div className={styles.privacyPopperLiUpContent}>
+                                                <svg width="14" height="16" viewBox="0 0 14 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <rect x="0.5" y="7.5" width="13" height="8" rx="4" stroke="white"/>
+                                                    <circle cx="7" cy="4" r="3.5" stroke="white"/>
+                                                    <ellipse cx="5.5" cy="4" rx="0.5" ry="1" fill="white"/>
+                                                    <ellipse cx="8.5" cy="4" rx="0.5" ry="1" fill="white"/>
+                                                    <ellipse cx="7" cy="11" rx="3" ry="1" fill="white"/>
+                                                </svg>
+                                                <span>Публичный режим</span>
+                                            </div>
+                                            <div className={styles.privacyPopperLiDownContent}>
+                                                Просматривать и изменять эту доску могут все учатники добавленные в белый список
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </NavigationDefaultButton>
                             </div>
                         </div>
 
                         <div className={styles.toolBar_contentRight}>
                             <div>
-                                <button style={{background: 'transparent'}}>
+                                <button className={styles.filtersIcoButton}>
                                     <span>
                                         <svg width="15" height="13" viewBox="0 0 15 13" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M0 1C0 0.447715 0.447715 0 1 0H14C14.5523 0 15 0.447715 15 1V1C15 2.10457 14.1046 3 13 3H2C0.89543 3 0 2.10457 0 1V1Z" fill="#002036"/>
@@ -269,62 +289,27 @@ const Board = () => {
                                             <path d="M6 10H9V11.5C9 12.3284 8.32843 13 7.5 13V13C6.67157 13 6 12.3284 6 11.5V10Z" fill="#002036"/>
                                         </svg>
                                     </span>
-                                    Фильтры
+                                    <span>
+                                        Фильтры
+                                    </span>
                                 </button>
                             </div>
-                            <div>
+                            <button className={styles.shareIcoButton}>
                                 Share
-                            </div>
-                            <div>
-                                OneMoreMenu
-                            </div>
+                            </button>
+                            <button className={styles.moreOptionsIcoButton}>
+                                <span>
+                                    <svg width="18" height="4" viewBox="0 0 18 4" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <rect width="4" height="4" fill="#002036"/>
+                                        <rect x="14" width="4" height="4" fill="#002036"/>
+                                        <rect x="7.10522" width="4" height="4" fill="#002036"/>
+                                    </svg>
+                                </span>
+                            </button>
                         </div>
                     </div>
                     {/*CardList*/}
-                    <DragDropContext onDragEnd={handleOnDragEnd}>
-                        <div className={styles.cardList} >
-                            <ScrollContainer
-                                horizontal={true}
-                                vertical={false}
-                                hideScrollbars={false}
-                                style={{display: 'flex', top: '0', left: 0, marginRight: '0'}}
-                                ignoreElements={"li, div"}
-                            >
-                                <Droppable droppableId="ROOT" type="group" direction="horizontal">
-                                    {(provided) => (
-                                        <ol className={styles.boardOl} {...provided.droppableProps} ref={provided.innerRef}>
-                                            {clientVisibleData.map((card, index) =>
-                                                <Draggable
-                                                    draggableId={card.id}
-                                                    key={card.id}
-                                                    index={index}
-                                                >
-                                                    {(provided) => (
-                                                        <div
-                                                            {...provided.dragHandleProps}
-                                                            {...provided.draggableProps}
-                                                            ref={provided.innerRef}
-                                                        >
-                                                            <CardBase
-                                                                card_data={card}
-                                                                card_title={card.title}
-                                                                index={card.id}
-                                                            />
-                                                        </div>
-                                                    )}
-                                                </Draggable>
-                                            )}
-                                            {provided.placeholder}
-                                        </ol>
-                                    )}
-                                </Droppable>
-                                <button className={styles.addNewCardButton}>
-                                    + Добавьте ещё одну колонку
-                                </button>
-                            </ScrollContainer>
-                        </div>
-                    </DragDropContext>
-
+                    <CardBoard data={data}/>
                 </div>
             </div>
         </>

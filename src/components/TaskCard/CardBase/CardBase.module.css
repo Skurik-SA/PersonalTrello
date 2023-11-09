@@ -108,5 +108,6 @@
 .titleArea:focus {
     background: #913661;
     border-radius: 5px;
+    cursor: text;
 }
 

@@ -3,7 +3,6 @@ import {useEffect, useRef, useState} from "react";
 import {TextareaAutosize} from "@mui/material";
 import CardTasks from "../CardTasks/CardTasks.jsx";
 import {Draggable, Droppable} from "react-beautiful-dnd";
-import {v4 as uuidv4} from "uuid";
 
 const CardBase = (props) => {
 
@@ -93,13 +92,13 @@ const CardBase = (props) => {
 
                             </div>
                             <button className={styles.cardHead_contentRight}>
-                            <span>
-                                <svg width="15" height="3" viewBox="0 0 15 3" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <rect width="3" height="3" fill="#DBA498"/>
-                                    <rect x="12" width="3" height="3" fill="#DBA498"/>
-                                    <rect x="6" width="3" height="3" fill="#DBA498"/>
-                                </svg>
-                            </span>
+                                <span>
+                                    <svg width="15" height="3" viewBox="0 0 15 3" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <rect width="3" height="3" fill="#DBA498"/>
+                                        <rect x="12" width="3" height="3" fill="#DBA498"/>
+                                        <rect x="6" width="3" height="3" fill="#DBA498"/>
+                                    </svg>
+                                </span>
                             </button>
                         </div>
                         <ol className={styles.cardOl}>
@@ -126,13 +125,13 @@ const CardBase = (props) => {
                                 + Добавить карточку
                             </button>
                             <button className={styles.cardCellar_contentRight}>
-                            <span>
-                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <rect x="1" y="1" width="18" height="18" rx="2" stroke="#DBA498" strokeWidth="2"/>
-                                    <rect x="9" y="7" width="2" height="8" fill="#DBA498"/>
-                                    <rect x="14" y="5" width="2" height="8" transform="rotate(90 14 5)" fill="#DBA498"/>
-                                </svg>
-                            </span>
+                                <span>
+                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <rect x="1" y="1" width="18" height="18" rx="2" stroke="#DBA498" strokeWidth="2"/>
+                                        <rect x="9" y="7" width="2" height="8" fill="#DBA498"/>
+                                        <rect x="14" y="5" width="2" height="8" transform="rotate(90 14 5)" fill="#DBA498"/>
+                                    </svg>
+                                </span>
                             </button>
                         </div>
                     </div>

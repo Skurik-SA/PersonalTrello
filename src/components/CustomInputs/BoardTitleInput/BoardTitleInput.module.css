@@ -1,0 +1,26 @@
+.boardTitleInput {
+    min-width: 200px;
+    width: auto;
+    max-width: 70%;
+    background: transparent;
+    border: none;
+    outline: none;
+    padding: 5px 5px 5px 10px;
+    font-size: 1.1rem;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.boardTitleInput:hover {
+    background: rgba(96, 68, 62, 50%);
+}
+
+.boardTitleInput:focus {
+    background: #60443e;
+    cursor: text;
+}
+
+.boardTitleInput::placeholder {
+    color: white;
+}

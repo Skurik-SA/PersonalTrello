@@ -34,27 +34,6 @@
     gap: 10px;
 }
 
-.boardTitleInput {
-    min-width: 200px;
-    width: auto;
-    max-width: 70%;
-    background: transparent;
-    border: none;
-    outline: none;
-    padding: 5px 5px 5px 10px;
-    font-size: 1.1rem;
-    text-overflow: ellipsis;
-    overflow: hidden;
-}
-
-.boardTitleInput:focus {
-    background: #60443e;
-}
-
-.boardTitleInput::placeholder {
-    color: white;
-}
-
 .cardList {
     top: 0;
     left: 0;
@@ -110,6 +89,40 @@
 
 .addNewCardButton:active {
     background: #913661;
+}
+
+.favIcoButton {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding-left: 8px;
+    padding-right: 8px;
+    border-radius: 5px;
+}
+
+.favIcoButton:hover {
+    background: rgba(96, 68, 62, 50%);
+}
+
+.favIconSVG {
+
+}
+
+.favIconSVG:hover {
+    scale: 1.3;
+}
+
+.privacyIcoButton {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding-left: 8px;
+    padding-right: 8px;
+    border-radius: 5px;
+}
+
+.privacyIcoButton:hover {
+    background: rgba(96, 68, 62, 50%);
 }
 
 @media screen and (min-width: 0px) {

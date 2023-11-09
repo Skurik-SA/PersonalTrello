@@ -63,9 +63,10 @@
     display: flex;
     flex-direction: row;
     height: calc(100% - 115px);
-    overflow-y: auto;
     scrollbar-color: #8d3c62 #59263e;
     scrollbar-width: auto;
+    gap: 10px;
+    overflow-y: hidden;
 }
 
 
@@ -75,8 +76,7 @@
     padding-top: 0;
     padding-left: 10px;
     list-style-type: none;
-    gap: 10px;
-    height: auto;
+    height: 100px;
     margin-right: 10px;
 }
 

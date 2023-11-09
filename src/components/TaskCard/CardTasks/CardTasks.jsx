@@ -3,14 +3,17 @@ import styles from "./CardTasks.module.css"
 const CardTasks = (props) => {
 
     const {
-        task
+        task,
+        boba2,
+        biba2,
+        gref2
     } = props
 
     return (
-        <li className={styles.taskContents}>
+        <li className={styles.taskContents} {...boba2} {...biba2} ref={gref2}>
             <div className={styles.taskWrapper}>
                 <div className={styles.taskText}>
-                    {task}
+                    {task.info}
                 </div>
                 <button className={styles.editTaskButton}>
                     <span>

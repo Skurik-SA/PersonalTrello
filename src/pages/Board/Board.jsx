@@ -3,79 +3,208 @@ import SideBar from "../../components/SideBar/SideBar.jsx";
 import CardBase from "../../components/TaskCard/CardBase/CardBase.jsx";
 import {useState} from "react";
 import ScrollContainer from "react-indiana-drag-scroll";
+import {DragDropContext, Draggable, Droppable} from "react-beautiful-dnd";
+import { v4 as uuidv4 } from 'uuid';
 
 const Board = () => {
-
-    let data = [
+    const data = [
         {
-            title: 'Хуета',
-            content: ['Зачем','ты','паришься','Плохое','точно','сбудется','Погода','поменяется','И','все','переобуются','Даже','если','не','верить','слухам','Твои','выдумки','вскроются','Вроде','бы','даже','дом','есть','Так','почему','живу','на','улице','Хочу','пройти','Москву','Мне','нужен','новый','уровень','Но','щас','приходится','надумывать','Убегать','и','трахаться','Мерзнуть','и','сутулиться']
-
+            id: uuidv4(),
+            title: 'Залупная2',
+            content: [
+                {
+                    id: uuidv4(),
+                    info: 'Пупа'
+                },
+                {
+                    id: uuidv4(),
+                    info: 'Пришла',
+                },
+                {
+                    id: uuidv4(),
+                    info: 'за',
+                },
+                {
+                    id: uuidv4(),
+                    info: 'Лупой',
+                },
+                {
+                    id: uuidv4(),
+                    info: 'а',
+                },
+                {
+                    id: uuidv4(),
+                    info: 'Лупа',
+                },
+                {
+                    id: uuidv4(),
+                    info: 'Пришла',
+                },
+                {
+                    id: uuidv4(),
+                    info: 'за',
+                },
+                {
+                    id: uuidv4(),
+                    info: 'Пупой'
+                },
+            ],
         },
         {
-            title: 'Залупная',
-            content: ['Пупа', 'Пришла', 'за', 'Лупой', 'а', 'Лупа', 'Пришла', 'Пупой'],
+            id: uuidv4(),
+            title: 'Пиздец3',
+            content: [
+                {
+                    id: uuidv4(),
+                    info: 'Пизда пришла за Лупой, а тут понаписано куча хуйни'
+                },
+                {
+                    id: uuidv4(),
+                    info: 'А мытая лупа пришла за пиздой и хуем, чтоб смачно так отсосать, ну и пиздец же она сосёт. Ну хуйня это веб, я так заебался его писать :(',
+                },
+                {
+                    id: uuidv4(),
+                    info: 'за',
+                },
+                {
+                    id: uuidv4(),
+                    info: 'Лупой',
+                },
+                {
+                    id: uuidv4(),
+                    info: 'а',
+                },
+                {
+                    id: uuidv4(),
+                    info: 'Лупа',
+                },
+                {
+                    id: uuidv4(),
+                    info: 'Пришла',
+                },
+                {
+                    id: uuidv4(),
+                    info: 'за',
+                },
+                {
+                    id: uuidv4(),
+                    info: 'Пупой'
+                },
+            ],
         },
         {
-            title: 'Пиздец',
-            content: ['Пизда пришла за Лупой, а тут понаписано куча хуйни', 'А мытая лупа пришла за пиздой и хуем, чтоб смачно так отсосать, ну и пиздец же она сосёт. Ну хуйня это веб, я так заебался его писать :('],
+            id: uuidv4(),
+            title: 'Залупная4',
+            content: [
+                {
+                    id: uuidv4(),
+                    info: 'Залупа',
+                },
+                {
+                    id: uuidv4(),
+                    info: 'Пупа',
+                },
+            ],
         },
         {
-            title: 'Залупная',
-            content: ['Залупа', 'Пупа'],
+            id: uuidv4(),
+            title: 'Пиздец5',
+            content: [
+                {
+                    id: uuidv4(),
+                    info: 'Пизда',
+                },
+                {
+                    id: uuidv4(),
+                    info: 'Мытая',
+                },
+            ],
         },
         {
-            title: 'Пиздец',
-            content: ['Пизда', 'Мытая'],
+            id: uuidv4(),
+            title: 'Пиздец5',
+            content: [
+                {
+                    id: uuidv4(),
+                    info: 'Пизда',
+                },
+                {
+                    id: uuidv4(),
+                    info: 'Мытая',
+                },
+            ],
         },
         {
-            title: 'Залупная',
-            content: ['Чтобы','просто','все','забили','на','чувства','Не','ценили','искусство','Особенный','возраст','нет','Им','не','было','грустно','Поцелуи','укусы','Танцуют','что','в','усмерть','Перезагрузка','Перезабить','притупившиеся','мысли','Чтоб','тучи','нависли','Бессмысленным','сгустком','грузом','Просто','забили','на','чувства','Понимали','всех','плоско','понимали','все','тускло'],
+            id: uuidv4(),
+            title: 'Пиздец5',
+            content: [
+                {
+                    id: uuidv4(),
+                    info: 'Пизда',
+                },
+                {
+                    id: uuidv4(),
+                    info: 'Мытая',
+                },
+            ],
         },
-        {
-            title: 'Пиздец',
-            content: ['Пизда', 'Мытая'],
-        },
-        {
-            title: 'Залупная',
-            content: ['Залупа', 'Пупа'],
-        },
-        {
-            title: 'Пиздец',
-            content: ['Пизда', 'Мытая'],
-        },
-        {
-            title: 'Пиздец',
-            content: ['Пизда', 'Мытая'],
-        },
-        {
-            title: 'Залупная',
-            content: ['Залупа', 'Пупа'],
-        },
-        {
-            title: 'Пиздец',
-            content: ['Пизда', 'Мытая'],
-        },
-        {
-            title: 'Пиздец',
-            content: ['Пизда', 'Мытая'],
-        },
-        {
-            title: 'Пиздец',
-            content: ['Пизда', 'Мытая'],
-        },
-        {
-            title: 'Залупная',
-            content: ['Залупа', 'Пупа'],
-        },
-        {
-            title: 'Пиздец',
-            content: ['Пизда', 'Мытая'],
-        }
     ]
 
 
     const [inVal, setInVal] = useState("Task Board For Study")
+
+    const [newData, setNewData] = useState(data)
+
+    const handleOnDragEnd = (results) => {
+
+        const {source, destination, type} = results
+
+        if (!destination) {
+            return
+        }
+
+        if (
+            source.droppableId === destination.droppableId &&
+            source.index === destination.index
+        ) {
+            return;
+        }
+
+        if (type === 'group')
+        {
+            const reorderedData = [...newData]
+            const sourceIndex = source.index
+            const destinationIndex = destination.index
+
+            const [removedItem] = reorderedData.splice(sourceIndex, 1)
+            reorderedData.splice(destinationIndex, 0, removedItem)
+
+            return setNewData(reorderedData);
+        }
+
+        const dataSourceIndex = newData.findIndex((nd) => nd.id === source.droppableId)
+        const dataDestinationIndex = newData.findIndex((nd) => nd.id === destination.droppableId)
+        const newDataItems = [...newData[dataSourceIndex].content]
+        const newDestinationItems =
+            source.droppableId !== destination.droppableId
+                ? [...newData[dataDestinationIndex].content]
+                : newDataItems
+        const [deletedItem] = newDataItems.splice(source.index, 1)
+        newDestinationItems.splice(destination.index, 0, deletedItem)
+
+        const newEl = [...newData]
+        newEl[dataSourceIndex] = {
+            ...newData[dataSourceIndex],
+            content: newDataItems
+        }
+
+        newEl[dataDestinationIndex] = {
+            ...newData[dataDestinationIndex],
+            content: newDestinationItems
+        }
+
+        setNewData(newEl)
+    }
 
     return (
         <>
@@ -171,26 +300,50 @@ const Board = () => {
                         </div>
                     </div>
                     {/*CardList*/}
-                    <div className={styles.cardList} >
-                        <ScrollContainer
-                            horizontal={true}
-                            vertical={false}
-                            hideScrollbars={false}
-                            style={{display: 'flex', top: '0', left: 0, marginRight: '0'}}
-                            ignoreElements={"li"}
-                        >
-                        <ol className={styles.boardOl} >
-                                {data.map((card, i) =>
-                                    <div key={i} >
-                                        <CardBase card_data={card} index={i} />
-                                    </div>
-                                )}
-                        </ol>
-                        <button className={styles.addNewCardButton}>
-                            + Добавьте ещё одну колонку
-                        </button>
-                        </ScrollContainer>
-                    </div>
+                    <DragDropContext onDragEnd={handleOnDragEnd}>
+                        <div className={styles.cardList} >
+                            <ScrollContainer
+                                horizontal={true}
+                                vertical={false}
+                                hideScrollbars={false}
+                                style={{display: 'flex', top: '0', left: 0, marginRight: '0'}}
+                                ignoreElements={"li, div"}
+                            >
+                                <Droppable droppableId="ROOT" type="group" direction="horizontal">
+                                    {(provided) => (
+                                        <ol className={styles.boardOl} {...provided.droppableProps} ref={provided.innerRef}>
+                                            {newData.map((card, index) =>
+                                                <Draggable
+                                                    draggableId={card.id}
+                                                    key={card.id}
+                                                    index={index}
+                                                >
+                                                    {(provided) => (
+                                                        <div
+                                                            {...provided.dragHandleProps}
+                                                            {...provided.draggableProps}
+                                                            ref={provided.innerRef}
+                                                        >
+                                                            <CardBase
+                                                                card_data={card}
+                                                                card_title={card.title}
+                                                                index={card.id}
+                                                            />
+                                                        </div>
+                                                    )}
+                                                </Draggable>
+                                            )}
+                                            {provided.placeholder}
+                                        </ol>
+                                    )}
+                                </Droppable>
+                                <button className={styles.addNewCardButton}>
+                                    + Добавьте ещё одну колонку
+                                </button>
+                            </ScrollContainer>
+                        </div>
+                    </DragDropContext>
+
                 </div>
             </div>
         </>

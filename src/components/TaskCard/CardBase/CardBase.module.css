@@ -5,12 +5,12 @@
     background: #260d19;
     width: 300px;
     border-radius: 20px;
-    max-height: calc(100vh - 165px);
 }
 
 .boardLi {
     display: flex;
     flex-direction: column;
+    padding-left: 10px;
 }
 
 .cardOl {
@@ -25,6 +25,7 @@
 
     scrollbar-color: #8d3c62 #59263e;
     scrollbar-width: thin;
+    overflow-x: hidden;
 }
 
 .cardHead, .cardCellar {
@@ -102,6 +103,7 @@
     align-items: center;
     font-size: 1rem;
     cursor: pointer;
+
 }
 
 .titleArea:focus {

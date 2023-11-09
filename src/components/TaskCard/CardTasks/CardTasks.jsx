@@ -4,13 +4,10 @@ const CardTasks = (props) => {
 
     const {
         task,
-        boba2,
-        biba2,
-        gref2
     } = props
 
     return (
-        <li className={styles.taskContents} {...boba2} {...biba2} ref={gref2}>
+        <li className={styles.taskContents} >
             <div className={styles.taskWrapper}>
                 <div className={styles.taskText}>
                     {task.info}

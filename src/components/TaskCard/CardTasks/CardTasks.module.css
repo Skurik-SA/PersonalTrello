@@ -29,6 +29,7 @@
     margin-right: 10px;
     background: #381325;
     cursor: pointer;
+    margin-bottom: 5px;
 }
 
 .taskWrapper:hover {

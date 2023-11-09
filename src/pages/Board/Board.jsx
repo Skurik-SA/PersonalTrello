@@ -347,9 +347,33 @@ const Board = () => {
                                         <div className={styles.checkBoxWrapper}>
                                             <FormGroup>
                                                 <FormControlLabel control={<Checkbox sx={{ '& + *': { fontSize: '0.9rem' } }}/>} label="Нет меток" />
-                                                <FormControlLabel control={<Checkbox sx={{ '& + *': { fontSize: '0.9rem' } }}/>} label="Красные" />
-                                                <FormControlLabel control={<Checkbox sx={{ '& + *': { fontSize: '0.9rem' } }}/>} label="Синие" />
-                                                <FormControlLabel control={<Checkbox sx={{ '& + *': { fontSize: '0.9rem' } }}/>} label={<div>Буба</div>} />
+                                                <FormControlLabel
+                                                    control={
+                                                        <Checkbox
+                                                            sx={{ '& + *': { fontSize: '0.9rem' } }}
+                                                        />
+                                                    }
+                                                    label={
+                                                        <div style={{background: '#7bbb39', minWidth: '290px', minHeight: '30px', borderRadius: '5px'}}></div>
+                                                    } />
+                                                <FormControlLabel
+                                                    control={
+                                                        <Checkbox
+                                                            sx={{ '& + *': { fontSize: '0.9rem' } }}
+                                                        />
+                                                    }
+                                                    label={
+                                                        <div style={{background: '#cc2525', minWidth: '290px', minHeight: '30px', borderRadius: '5px'}}></div>
+                                                    } />
+                                                <FormControlLabel
+                                                    control={
+                                                    <Checkbox
+                                                        sx={{ '& + *': { fontSize: '0.9rem' } }}
+                                                    />
+                                                }
+                                                    label={
+                                                        <div style={{background: '#32b09c', minWidth: '290px', minHeight: '30px', borderRadius: '5px'}}></div>
+                                                } />
                                             </FormGroup>
                                         </div>
                                     </section>

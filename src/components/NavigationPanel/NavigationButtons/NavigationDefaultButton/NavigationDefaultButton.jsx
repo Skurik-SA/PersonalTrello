@@ -15,6 +15,7 @@ const NavigationDefaultButton = (props) => {
         isIcon,
         customButtonBaseStyle,
         customPopperBaseStyle,
+        growAnimationStyle,
         clickClose= false,
     } = props
 
@@ -84,7 +85,13 @@ const NavigationDefaultButton = (props) => {
                     transition
             >
                 {({ TransitionProps }) => (
-                    <Grow {...TransitionProps} in={animElFlag} ref={popperRef2} timeout={150} style={{ transformOrigin: '0 0 0' }}>
+                    <Grow
+                        {...TransitionProps}
+                        in={animElFlag}
+                        ref={popperRef2}
+                        timeout={150}
+                        style={growAnimationStyle ? growAnimationStyle : { transformOrigin: '0 0 0' }}
+                    >
                         <div className={
                             customPopperBaseStyle
                                 ?

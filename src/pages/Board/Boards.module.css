@@ -132,6 +132,53 @@
     font-size: 0.8rem;
 }
 
+
+
+
+.filtersPopper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 370px;
+    background: #4d1a33;
+    border-radius: 10px;
+}
+
+.filtersPopperWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    gap: 10px;
+}
+
+.filtersPopperSection {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+    padding-left: 10px;
+}
+
+.filtersPopperTitle {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 20px;
+}
+
+.filtersPopperNaming {
+    font-size: 0.8rem;
+}
+
+.checkBoxWrapper {
+    padding-left: 10px;
+}
+
+
 @media screen and (min-width: 0px) {
     .boardTitleInput {
         max-width: 15%;

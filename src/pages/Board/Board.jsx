@@ -6,6 +6,7 @@ import BoardTitleInput from "../../components/CustomInputs/BoardTitleInput/Board
 import NavigationDefaultButton
     from "../../components/NavigationPanel/NavigationButtons/NavigationDefaultButton/NavigationDefaultButton.jsx";
 import CardBoard from "../../components/TaskCard/CardBoard/CardBoard.jsx";
+import {Checkbox, FormControlLabel, FormGroup} from "@mui/material";
 
 const Board = () => {
     const data = [
@@ -280,23 +281,98 @@ const Board = () => {
                         </div>
 
                         <div className={styles.toolBar_contentRight}>
-                            <div>
-                                <button className={styles.filtersIcoButton}>
-                                    <span>
-                                        <svg width="15" height="13" viewBox="0 0 15 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M0 1C0 0.447715 0.447715 0 1 0H14C14.5523 0 15 0.447715 15 1V1C15 2.10457 14.1046 3 13 3H2C0.89543 3 0 2.10457 0 1V1Z" fill="#002036"/>
-                                            <path d="M3 6C3 5.44772 3.44772 5 4 5H11C11.5523 5 12 5.44772 12 6V7C12 7.55228 11.5523 8 11 8H4C3.44772 8 3 7.55228 3 7V6Z" fill="#002036"/>
-                                            <path d="M6 10H9V11.5C9 12.3284 8.32843 13 7.5 13V13C6.67157 13 6 12.3284 6 11.5V10Z" fill="#002036"/>
-                                        </svg>
-                                    </span>
-                                    <span>
-                                        Фильтры
-                                    </span>
-                                </button>
-                            </div>
+                            <NavigationDefaultButton
+                                customButtonBaseStyle={styles.filtersIcoButton}
+                                customPopperBaseStyle={styles.filtersPopper}
+                                popperBtnId={'filters-popper'}
+                                placement={"bottom"}
+                                growAnimationStyle={{ transformOrigin: '0 50 0'}}
+                                buttonContent={
+                                    <>
+                                        <span>
+                                            <svg width="15" height="13" viewBox="0 0 15 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M0 1C0 0.447715 0.447715 0 1 0H14C14.5523 0 15 0.447715 15 1V1C15 2.10457 14.1046 3 13 3H2C0.89543 3 0 2.10457 0 1V1Z" fill="#002036"/>
+                                                <path d="M3 6C3 5.44772 3.44772 5 4 5H11C11.5523 5 12 5.44772 12 6V7C12 7.55228 11.5523 8 11 8H4C3.44772 8 3 7.55228 3 7V6Z" fill="#002036"/>
+                                                <path d="M6 10H9V11.5C9 12.3284 8.32843 13 7.5 13V13C6.67157 13 6 12.3284 6 11.5V10Z" fill="#002036"/>
+                                            </svg>
+                                        </span>
+                                            <span>
+                                            Фильтры
+                                        </span>
+                                    </>
+                                }
+                            >
+                                <div className={styles.filtersPopperWrapper}>
+                                    <div className={styles.filtersPopperTitle}>
+                                        <span >
+                                            Фильтр
+                                        </span>
+                                    </div>
+                                    <section className={styles.filtersPopperSection}>
+                                        <span className={styles.filtersPopperNaming}>
+                                            Ключевое слово
+                                        </span>
+                                            <input/>
+                                        <span className={styles.filtersPopperNaming}>
+                                            Поиск карточек
+                                        </span>
+                                    </section>
+                                    <section  className={styles.filtersPopperSection}>
+                                        <span className={styles.filtersPopperNaming}>
+                                            Участники
+                                        </span>
+                                        <div className={styles.checkBoxWrapper}>
+                                            <FormGroup>
+                                                <FormControlLabel control={<Checkbox sx={{ '& + *': { fontSize: '0.9rem' } }}/>} label="Нет участников" />
+                                                <FormControlLabel control={<Checkbox sx={{ '& + *': { fontSize: '0.9rem' } }}/>} label="Для меня" />
+                                            </FormGroup>
+                                        </div>
+                                    </section>
+                                    <section className={styles.filtersPopperSection}>
+                                        <span className={styles.filtersPopperNaming}>
+                                            Срок
+                                        </span>
+                                        <div className={styles.checkBoxWrapper}>
+                                            <FormGroup>
+                                                <FormControlLabel control={<Checkbox sx={{ '& + *': { fontSize: '0.9rem' } }}/>} label="Без даты" />
+                                                <FormControlLabel control={<Checkbox sx={{ '& + *': { fontSize: '0.9rem' } }}/>} label="Просроченные" />
+                                                <FormControlLabel control={<Checkbox sx={{ '& + *': { fontSize: '0.9rem' } }}/>} label="Истекает" />
+                                            </FormGroup>
+                                        </div>
+                                    </section>
+                                    <section className={styles.filtersPopperSection}>
+                                        <span className={styles.filtersPopperNaming}>
+                                            Метки
+                                        </span>
+                                        <div className={styles.checkBoxWrapper}>
+                                            <FormGroup>
+                                                <FormControlLabel control={<Checkbox sx={{ '& + *': { fontSize: '0.9rem' } }}/>} label="Нет меток" />
+                                                <FormControlLabel control={<Checkbox sx={{ '& + *': { fontSize: '0.9rem' } }}/>} label="Красные" />
+                                                <FormControlLabel control={<Checkbox sx={{ '& + *': { fontSize: '0.9rem' } }}/>} label="Синие" />
+                                                <FormControlLabel control={<Checkbox sx={{ '& + *': { fontSize: '0.9rem' } }}/>} label={<div>Буба</div>} />
+                                            </FormGroup>
+                                        </div>
+                                    </section>
+                                </div>
+                            </NavigationDefaultButton>
+                            {/*<div>*/}
+                            {/*    <button className={styles.filtersIcoButton}>*/}
+                            {/*        <span>*/}
+                            {/*            <svg width="15" height="13" viewBox="0 0 15 13" fill="none" xmlns="http://www.w3.org/2000/svg">*/}
+                            {/*                <path d="M0 1C0 0.447715 0.447715 0 1 0H14C14.5523 0 15 0.447715 15 1V1C15 2.10457 14.1046 3 13 3H2C0.89543 3 0 2.10457 0 1V1Z" fill="#002036"/>*/}
+                            {/*                <path d="M3 6C3 5.44772 3.44772 5 4 5H11C11.5523 5 12 5.44772 12 6V7C12 7.55228 11.5523 8 11 8H4C3.44772 8 3 7.55228 3 7V6Z" fill="#002036"/>*/}
+                            {/*                <path d="M6 10H9V11.5C9 12.3284 8.32843 13 7.5 13V13C6.67157 13 6 12.3284 6 11.5V10Z" fill="#002036"/>*/}
+                            {/*            </svg>*/}
+                            {/*        </span>*/}
+                            {/*        <span>*/}
+                            {/*            Фильтры*/}
+                            {/*        </span>*/}
+                            {/*    </button>*/}
+                            {/*</div>*/}
                             <button className={styles.shareIcoButton}>
                                 Share
                             </button>
+
                             <button className={styles.moreOptionsIcoButton}>
                                 <span>
                                     <svg width="18" height="4" viewBox="0 0 18 4" fill="none" xmlns="http://www.w3.org/2000/svg">

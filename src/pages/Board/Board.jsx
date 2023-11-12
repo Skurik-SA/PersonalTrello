@@ -6,152 +6,154 @@ import BoardTitleInput from "../../components/CustomInputs/BoardTitleInput/Board
 import NavigationDefaultButton
     from "../../components/NavigationPanel/NavigationButtons/NavigationDefaultButton/NavigationDefaultButton.jsx";
 import CardBoard from "../../components/TaskCard/CardBoard/CardBoard.jsx";
-import {Checkbox, FormControlLabel, FormGroup} from "@mui/material";
+import {Checkbox, FormControlLabel, FormGroup, ListItemText, MenuItem, Select} from "@mui/material";
+import {useSelector} from "react-redux";
 
 const Board = () => {
-    const data = [
-        {
-            id: uuidv4(),
-            title: 'Залупная2',
-            content: [
-                {
-                    id: uuidv4(),
-                    info: 'Пупа'
-                },
-                {
-                    id: uuidv4(),
-                    info: 'Пришла',
-                },
-                {
-                    id: uuidv4(),
-                    info: 'за',
-                },
-                {
-                    id: uuidv4(),
-                    info: 'Лупой',
-                },
-                {
-                    id: uuidv4(),
-                    info: 'а',
-                },
-                {
-                    id: uuidv4(),
-                    info: 'Лупа',
-                },
-                {
-                    id: uuidv4(),
-                    info: 'Пришла',
-                },
-                {
-                    id: uuidv4(),
-                    info: 'за',
-                },
-                {
-                    id: uuidv4(),
-                    info: 'Пупой'
-                },
-            ],
-        },
-        {
-            id: uuidv4(),
-            title: 'Пиздец3',
-            content: [
-                {
-                    id: uuidv4(),
-                    info: 'Пизда пришла за Лупой, а тут понаписано куча хуйни'
-                },
-                {
-                    id: uuidv4(),
-                    info: 'А мытая лупа пришла за пиздой и хуем, чтоб смачно так отсосать, ну и пиздец же она сосёт. Ну хуйня это веб, я так заебался его писать :(',
-                },
-                {
-                    id: uuidv4(),
-                    info: 'за',
-                },
-                {
-                    id: uuidv4(),
-                    info: 'Лупой',
-                },
-                {
-                    id: uuidv4(),
-                    info: 'а',
-                },
-                {
-                    id: uuidv4(),
-                    info: 'Лупа',
-                },
-                {
-                    id: uuidv4(),
-                    info: 'Пришла',
-                },
-                {
-                    id: uuidv4(),
-                    info: 'за',
-                },
-                {
-                    id: uuidv4(),
-                    info: 'Пупой'
-                },
-            ],
-        },
-        {
-            id: uuidv4(),
-            title: 'Залупная4',
-            content: [
-                {
-                    id: uuidv4(),
-                    info: 'Залупа',
-                },
-                {
-                    id: uuidv4(),
-                    info: 'Пупа',
-                },
-            ],
-        },
-        {
-            id: uuidv4(),
-            title: 'Пиздец5',
-            content: [
-                {
-                    id: uuidv4(),
-                    info: 'Пизда',
-                },
-                {
-                    id: uuidv4(),
-                    info: 'Мытая',
-                },
-            ],
-        },
-        {
-            id: uuidv4(),
-            title: 'Пиздец5',
-            content: [
-                {
-                    id: uuidv4(),
-                    info: 'Пизда',
-                },
-                {
-                    id: uuidv4(),
-                    info: 'Мытая',
-                },
-            ],
-        },
-        {
-            id: uuidv4(),
-            title: 'Пиздец5',
-            content: [
-                {
-                    id: uuidv4(),
-                    info: 'Пизда',
-                },
-                {
-                    id: uuidv4(),
-                    info: 'Мытая',
-                },
-            ],
-        },
-    ]
+    // let data = [
+    //     {
+    //         id: uuidv4(),
+    //         title: 'Залупная2',
+    //         content: [
+    //             {
+    //                 id: uuidv4(),
+    //                 info: 'Пупа'
+    //             },
+    //             {
+    //                 id: uuidv4(),
+    //                 info: 'Пришла',
+    //             },
+    //             {
+    //                 id: uuidv4(),
+    //                 info: 'за',
+    //             },
+    //             {
+    //                 id: uuidv4(),
+    //                 info: 'Лупой',
+    //             },
+    //             {
+    //                 id: uuidv4(),
+    //                 info: 'а',
+    //             },
+    //             {
+    //                 id: uuidv4(),
+    //                 info: 'Лупа',
+    //             },
+    //             {
+    //                 id: uuidv4(),
+    //                 info: 'Пришла',
+    //             },
+    //             {
+    //                 id: uuidv4(),
+    //                 info: 'за',
+    //             },
+    //             {
+    //                 id: uuidv4(),
+    //                 info: 'Пупой'
+    //             },
+    //         ],
+    //     },
+    //     {
+    //         id: uuidv4(),
+    //         title: 'Пиздец3',
+    //         content: [
+    //             {
+    //                 id: uuidv4(),
+    //                 info: 'Пизда пришла за Лупой, а тут понаписано куча хуйни'
+    //             },
+    //             {
+    //                 id: uuidv4(),
+    //                 info: 'А мытая лупа пришла за пиздой и хуем, чтоб смачно так отсосать, ну и пиздец же она сосёт. Ну хуйня это веб, я так заебался его писать :(',
+    //             },
+    //             {
+    //                 id: uuidv4(),
+    //                 info: 'за',
+    //             },
+    //             {
+    //                 id: uuidv4(),
+    //                 info: 'Лупой',
+    //             },
+    //             {
+    //                 id: uuidv4(),
+    //                 info: 'а',
+    //             },
+    //             {
+    //                 id: uuidv4(),
+    //                 info: 'Лупа',
+    //             },
+    //             {
+    //                 id: uuidv4(),
+    //                 info: 'Пришла',
+    //             },
+    //             {
+    //                 id: uuidv4(),
+    //                 info: 'за',
+    //             },
+    //             {
+    //                 id: uuidv4(),
+    //                 info: 'Пупой'
+    //             },
+    //         ],
+    //     },
+    //     {
+    //         id: uuidv4(),
+    //         title: 'Залупная4',
+    //         content: [
+    //             {
+    //                 id: uuidv4(),
+    //                 info: 'Залупа',
+    //             },
+    //             {
+    //                 id: uuidv4(),
+    //                 info: 'Пупа',
+    //             },
+    //         ],
+    //     },
+    //     {
+    //         id: uuidv4(),
+    //         title: 'Пиздец5',
+    //         content: [
+    //             {
+    //                 id: uuidv4(),
+    //                 info: 'Пизда',
+    //             },
+    //             {
+    //                 id: uuidv4(),
+    //                 info: 'Мытая',
+    //             },
+    //         ],
+    //     },
+    //     {
+    //         id: uuidv4(),
+    //         title: 'Пиздец5',
+    //         content: [
+    //             {
+    //                 id: uuidv4(),
+    //                 info: 'Пизда',
+    //             },
+    //             {
+    //                 id: uuidv4(),
+    //                 info: 'Мытая',
+    //             },
+    //         ],
+    //     },
+    //     {
+    //         id: uuidv4(),
+    //         title: 'Пиздец5',
+    //         content: [
+    //             {
+    //                 id: uuidv4(),
+    //                 info: 'Пизда',
+    //             },
+    //             {
+    //                 id: uuidv4(),
+    //                 info: 'Мытая',
+    //             },
+    //         ],
+    //     },
+    // ]
 
+    const data = useSelector(state => state.todolist.data)
 
     const [inVal, setInVal] = useState("Task Board For Study")
     const [iconFavMode, setIconFavMode] = useState(false)
@@ -312,7 +314,10 @@ const Board = () => {
                                         <span className={styles.filtersPopperNaming}>
                                             Ключевое слово
                                         </span>
-                                            <input/>
+                                            <input
+                                                className={styles.filtersSearchInput}
+                                                placeholder={"Введите ключевое слово"}
+                                            />
                                         <span className={styles.filtersPopperNaming}>
                                             Поиск карточек
                                         </span>
@@ -337,6 +342,7 @@ const Board = () => {
                                                 <FormControlLabel control={<Checkbox sx={{ '& + *': { fontSize: '0.9rem' } }}/>} label="Без даты" />
                                                 <FormControlLabel control={<Checkbox sx={{ '& + *': { fontSize: '0.9rem' } }}/>} label="Просроченные" />
                                                 <FormControlLabel control={<Checkbox sx={{ '& + *': { fontSize: '0.9rem' } }}/>} label="Истекает" />
+                                                <FormControlLabel control={<Checkbox sx={{ '& + *': { fontSize: '0.9rem' } }}/>} label="По приоритету" />
                                             </FormGroup>
                                         </div>
                                     </section>
@@ -354,7 +360,11 @@ const Board = () => {
                                                         />
                                                     }
                                                     label={
-                                                        <div style={{background: '#7bbb39', minWidth: '290px', minHeight: '30px', borderRadius: '5px'}}></div>
+                                                        <div style={{background: '#7bbb39'}} className={styles.markStyle}>
+                                                            <span>
+                                                                NameTag
+                                                            </span>
+                                                        </div>
                                                     } />
                                                 <FormControlLabel
                                                     control={
@@ -363,7 +373,9 @@ const Board = () => {
                                                         />
                                                     }
                                                     label={
-                                                        <div style={{background: '#cc2525', minWidth: '290px', minHeight: '30px', borderRadius: '5px'}}></div>
+                                                        <div style={{background: '#cc2525'}} className={styles.markStyle}>
+
+                                                        </div>
                                                     } />
                                                 <FormControlLabel
                                                     control={
@@ -372,27 +384,35 @@ const Board = () => {
                                                     />
                                                 }
                                                     label={
-                                                        <div style={{background: '#32b09c', minWidth: '290px', minHeight: '30px', borderRadius: '5px'}}></div>
+                                                        <div style={{background: '#32b09c'}} className={styles.markStyle}>
+
+                                                        </div>
                                                 } />
+                                                {/*<Select*/}
+                                                {/*    value={checkedColors}*/}
+                                                {/*    onChange={handleCheckedColorsChange}*/}
+                                                {/*    multiple*/}
+                                                {/*    displayEmpty*/}
+                                                {/*    inputProps={{ 'aria-label': 'Without label' }}*/}
+                                                {/*>*/}
+                                                {/*    <MenuItem value="">*/}
+                                                {/*        <em>None</em>*/}
+                                                {/*    </MenuItem>*/}
+                                                {/*    <MenuItem value={10}>*/}
+                                                {/*        <Checkbox*/}
+                                                {/*            sx={{ '& + *': { fontSize: '0.9rem' } }}*/}
+                                                {/*        />*/}
+                                                {/*        <ListItemText primary={"asdas"} />*/}
+                                                {/*    </MenuItem>*/}
+                                                {/*    <MenuItem value={20}>Twenty</MenuItem>*/}
+                                                {/*    <MenuItem value={30}>Thirty</MenuItem>*/}
+                                                {/*</Select>*/}
                                             </FormGroup>
                                         </div>
                                     </section>
                                 </div>
                             </NavigationDefaultButton>
-                            {/*<div>*/}
-                            {/*    <button className={styles.filtersIcoButton}>*/}
-                            {/*        <span>*/}
-                            {/*            <svg width="15" height="13" viewBox="0 0 15 13" fill="none" xmlns="http://www.w3.org/2000/svg">*/}
-                            {/*                <path d="M0 1C0 0.447715 0.447715 0 1 0H14C14.5523 0 15 0.447715 15 1V1C15 2.10457 14.1046 3 13 3H2C0.89543 3 0 2.10457 0 1V1Z" fill="#002036"/>*/}
-                            {/*                <path d="M3 6C3 5.44772 3.44772 5 4 5H11C11.5523 5 12 5.44772 12 6V7C12 7.55228 11.5523 8 11 8H4C3.44772 8 3 7.55228 3 7V6Z" fill="#002036"/>*/}
-                            {/*                <path d="M6 10H9V11.5C9 12.3284 8.32843 13 7.5 13V13C6.67157 13 6 12.3284 6 11.5V10Z" fill="#002036"/>*/}
-                            {/*            </svg>*/}
-                            {/*        </span>*/}
-                            {/*        <span>*/}
-                            {/*            Фильтры*/}
-                            {/*        </span>*/}
-                            {/*    </button>*/}
-                            {/*</div>*/}
+
                             <button className={styles.shareIcoButton}>
                                 Share
                             </button>

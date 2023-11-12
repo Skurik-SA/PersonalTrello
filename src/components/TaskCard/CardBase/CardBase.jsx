@@ -9,24 +9,26 @@ const CardBase = (props) => {
     const {
         card_data,
         index,
-        card_title
+        card_title,
+        titleOnChange,
+        newTaskOnClick,
+        changeTaskInfo,
     } = props
 
-    const [titleText, setTitleText] = useState(card_title)
-
     const [titleTextVisibility, setTitleTextVisibility] = useState(false)
+
+    // const [titleValue, setTitleValue] = useState(card_title)
 
     const wrapRef = useRef(null)
 
     const handleClick = (event) => {
-        if (wrapRef.current && !wrapRef.current.contains(event.target))
-        {
+        if (wrapRef.current && !wrapRef.current.contains(event.target)) {
             document.getElementById(index).blur()
             setTitleTextVisibility(false)
         }
     }
 
-    const test = () => {
+    const swapHeadCardInputElements = () => {
         setTitleTextVisibility(!titleTextVisibility)
         setTimeout(() => {
             document.getElementById(index).focus()
@@ -41,6 +43,8 @@ const CardBase = (props) => {
         }
 
     }, [])
+
+
 
     return (
         <li className={styles.boardLi}>
@@ -61,29 +65,28 @@ const CardBase = (props) => {
                                         maxLength={250}
                                         cols={23}
                                         placeholder={"Введите название"}
-                                        className={styles.titleArea}
-                                        value={titleText}
+                                        className={styles.titleTextArea}
+                                        value={card_title}
                                         spellCheck="false"
                                         ref={wrapRef}
                                         onChange={(e) => {
-                                            setTitleText(e.target.value)
+                                            // setTitleValue(e.target.value)
+                                            titleOnChange(card_data.id, e.target.value)
                                         }}
                                         onKeyDown={(e) => {
                                             if (e.key === 'Enter') {
                                                 e.preventDefault();
                                                 // document.getElementById(index).focus()
                                                 document.getElementById(index).blur()
-                                                console.log(document.getElementById("auf"))
                                                 setTitleTextVisibility(!titleTextVisibility)
                                             }
                                         }}
 
                                     />
                                     :
-                                    <span style={{display: 'flex', paddingLeft: '10px', color: 'white'}}
+                                    <span className={styles.titleSpanArea}
                                           onClick={() => {
-                                              test()
-                                              setTitleText(card_title)
+                                              swapHeadCardInputElements()
                                           }}
                                     >
                                         {card_title}
@@ -112,6 +115,8 @@ const CardBase = (props) => {
                                         >
                                             <CardTasks
                                                 task={task}
+                                                column_id={card_data.id}
+                                                changeTaskInfo={changeTaskInfo}
                                             />
 
                                         </div>
@@ -121,7 +126,12 @@ const CardBase = (props) => {
                             {provided.placeholder}
                         </ol>
                         <div className={styles.cardCellar}>
-                            <button className={styles.cardCellar_contentLeft}>
+                            <button
+                                className={styles.cardCellar_contentLeft}
+                                onClick={() => {
+                                    newTaskOnClick(card_data.id)
+                                }}
+                            >
                                 + Добавить карточку
                             </button>
                             <button className={styles.cardCellar_contentRight}>

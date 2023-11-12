@@ -171,6 +171,27 @@
     padding-bottom: 20px;
 }
 
+.filtersSearchInput {
+    width: 320px;
+    height: 32px;
+    flex-shrink: 0;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: none;
+    background: #8d3c62;
+    color: #DBA498;
+
+    outline: none;
+    padding-left: 10px;
+}
+
+.filtersSearchInput::placeholder {
+    color: rgba(219, 164, 152, 0.8);
+    font-size: 0.9rem;
+}
+
+
+
 .filtersPopperNaming {
     font-size: 0.8rem;
 }
@@ -178,6 +199,20 @@
 .checkBoxWrapper {
     padding-left: 10px;
 }
+
+.markStyle {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding-left: 10px;
+    color: #1f1f1f;
+    min-width: 260px;
+    min-height: 30px;
+    border-radius: 5px;
+}
+
+
 
 
 @media screen and (min-width: 0px) {

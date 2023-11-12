@@ -3,6 +3,7 @@
     position: absolute;
     top: 3px;
     margin-left: 83%;
+    margin-top: 3px;
     padding-top: 3px;
     width: 30px;
     height: 30px;
@@ -15,8 +16,6 @@
     cursor: pointer;
     background: #4d1a33;
 }
-
-
 
 .taskWrapper {
     position: sticky;
@@ -50,6 +49,7 @@
     text-align: left;
     padding: 3px 10px;
     background: #381325;
+    min-height: 30px;
 }
 
 .taskContents {
@@ -57,4 +57,92 @@
     flex-direction: column;
     justify-content: center;
     text-align: left;
+}
+
+.cardEditPopperWrapper {
+    display: flex;
+    flex-direction: column;
+    color: #dc9f92;
+    background: #5b1f3c;
+    min-height: 40px;
+    border-radius: 10px;
+}
+
+.cardEditPopper {
+    display: flex;
+    min-width: 275px;
+    flex-direction: column;
+
+}
+
+.cardEditPopperRow {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.cardEditPopperColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.cardEditPopperSaveButton {
+    cursor: pointer;
+    border: none;
+    border-radius: 8px;
+    padding: 8px;
+    width: 100px;
+}
+
+.cardEditPopperMenuWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    color: white;
+    gap: 5px;
+}
+
+.cardEditPopperMenuButton {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border: none;
+    border-radius: 8px;
+    padding: 10px;
+    background: #381325;
+    letter-spacing: 1px;
+    font-size: 0.85rem;
+}
+
+.cardEditPopperMenuButton:hover {
+    background: #79284f;
+}
+
+.taskTextArea {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: left;
+    padding: 10px 20px;
+    background: #381325;
+    min-height: 60px;
+    resize: none;
+    border: none;
+    font-size: 1rem;
+    font-family: Arial, serif;
+    outline: none;
+    border-radius: 8px;
+
+}
+
+.taskTextArea:focus {
+    border: none;
+    border-radius: 8px;
+    cursor: text;
 }

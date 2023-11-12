@@ -25,6 +25,7 @@
 
     scrollbar-color: #8d3c62 #59263e;
     scrollbar-width: thin;
+    overflow-x: hidden;
 }
 
 .cardHead, .cardCellar {
@@ -90,24 +91,42 @@
 
 
 
-.titleArea {
+.titleTextArea {
     outline: #de609a;
     border: none;
     background: transparent;
     min-height: 20px;
     resize: none;
     overflow: hidden;
-    padding: 6px 10px;
+    padding: 5px 10px;
+    text-align: left;
+    align-items: center;
+    font-size: 0.95rem;
+    cursor: pointer;
+    font-family: Arial, serif;
+    min-width: 210px;
+    max-width: 210px;
+}
+
+.titleTextArea:focus {
+    background: #913661;
+    border-radius: 5px;
+    cursor: text;
+}
+
+.titleSpanArea {
+    display: flex;
+    color: white;
+    background: transparent;
+    min-height: 20px;
+    resize: none;
+    overflow: hidden;
+    padding: 4px 10px;
     text-align: left;
     align-items: center;
     font-size: 1rem;
     cursor: pointer;
-
-}
-
-.titleArea:focus {
-    background: #913661;
-    border-radius: 5px;
-    cursor: text;
+    min-width: 210px;
+    max-width: 210px;
 }
 

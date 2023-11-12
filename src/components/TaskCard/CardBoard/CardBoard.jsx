@@ -3,15 +3,98 @@ import ScrollContainer from "react-indiana-drag-scroll";
 import {DragDropContext, Draggable, Droppable} from "react-beautiful-dnd";
 import CardBase from "../CardBase/CardBase.jsx";
 import {useState} from "react";
+import {v4 as uuidv4} from "uuid";
+import {useDispatch} from "react-redux";
+import {set_todolist} from "../../../redux/store/slices/slice_ToDoList.js";
 
 
 const CardBoard = (props) => {
 
     const {
-        data
+        data,
     } = props
 
     const [clientVisibleData, setClientVisibleData] = useState(data)
+
+    const addNewColumn = () => {
+        const newItems = [
+            ...clientVisibleData,
+            {
+                id: uuidv4(),
+                title: 'Новая колонка',
+                content: [],
+            }
+        ]
+        setClientVisibleData(newItems)
+    }
+
+    const addNewTask = (card_id) => {
+        const columnIndex = clientVisibleData.findIndex((column_id) => column_id.id === card_id)
+
+        const newContentItems = [
+            ...clientVisibleData[columnIndex].content,
+            {
+                id: uuidv4(),
+                info: 'Новая карточка',
+            }
+        ]
+
+        const newEl = [...clientVisibleData]
+
+        newEl[columnIndex] = {
+            ...clientVisibleData[columnIndex],
+            content: newContentItems
+        }
+
+        setClientVisibleData(newEl)
+    }
+
+    const changeTitle = (card_id, value) => {
+        const columnIndex = clientVisibleData.findIndex((column_id) => column_id.id === card_id)
+
+        // let newData = clientVisibleData[columnIndex]
+        let newTitleData = {
+                id: clientVisibleData[columnIndex].id,
+                title: value,
+                content: clientVisibleData[columnIndex].content
+            }
+        const newItems = [...(clientVisibleData.map((column_id, index) =>
+                column_id.id !== card_id
+                    ?
+                        clientVisibleData[index]
+                    :
+                        newTitleData
+        ))]
+
+        setClientVisibleData(newItems)
+    }
+
+    const changeTaskInfo = (task_id, card_id, value) => {
+        const columnIndex = clientVisibleData.findIndex((column_id) => column_id.id === card_id)
+        const taskIndex = clientVisibleData[columnIndex].content.findIndex((task) => task.id === task_id)
+        let newTask = {
+            id: clientVisibleData[columnIndex].content[taskIndex].id,
+            info: value,
+        }
+        const newItems = [...(clientVisibleData.map((column_id, col_index) =>
+            column_id.id !== card_id
+                ?
+                clientVisibleData[col_index]
+                :
+                {
+                    id:  clientVisibleData[col_index].id,
+                    title: clientVisibleData[col_index].title,
+                    content: [...clientVisibleData[col_index].content.map((task, row_index) =>
+                        task.id !== task_id
+                            ?
+                            clientVisibleData[col_index].content[row_index]
+                            :
+                            newTask
+                    )]
+                }
+        ))]
+        setClientVisibleData(newItems)
+    }
 
     const handleOnDragEnd = (results) => {
 
@@ -43,10 +126,12 @@ const CardBoard = (props) => {
         const dataSourceIndex = clientVisibleData.findIndex((nd) => nd.id === source.droppableId)
         const dataDestinationIndex = clientVisibleData.findIndex((nd) => nd.id === destination.droppableId)
         const newDataItems = [...clientVisibleData[dataSourceIndex].content]
+
         const newDestinationItems =
             source.droppableId !== destination.droppableId
                 ? [...clientVisibleData[dataDestinationIndex].content]
                 : newDataItems
+
         const [deletedItem] = newDataItems.splice(source.index, 1)
         newDestinationItems.splice(destination.index, 0, deletedItem)
 
@@ -92,6 +177,9 @@ const CardBoard = (props) => {
                                                 <CardBase
                                                     card_data={card}
                                                     card_title={card.title}
+                                                    titleOnChange={changeTitle}
+                                                    newTaskOnClick={addNewTask}
+                                                    changeTaskInfo={changeTaskInfo}
                                                     index={card.id}
                                                 />
                                             </div>
@@ -102,7 +190,9 @@ const CardBoard = (props) => {
                             </ol>
                         )}
                     </Droppable>
-                    <button className={styles.addNewCardButton}>
+                    <button className={styles.addNewCardButton} onClick={() => {
+                        addNewColumn()
+                    }}>
                         + Добавьте ещё одну колонку
                     </button>
                 </ScrollContainer>

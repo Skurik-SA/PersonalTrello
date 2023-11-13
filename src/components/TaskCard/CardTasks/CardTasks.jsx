@@ -1,7 +1,7 @@
 import styles from "./CardTasks.module.css"
 import {useEffect, useRef, useState} from "react";
 import {
-    createTheme,
+    createTheme, Divider,
     Fade,
     Grow,
     Modal,
@@ -27,6 +27,7 @@ const CardTasks = (props) => {
     const [left, setLeft] = useState(0)
 
     const [value, setValue] = useState(task.info)
+    const [valueDescription, setValueDescription] = useState("")
 
     const handleModalClose = () => setModalOpen(false);
 
@@ -77,85 +78,124 @@ const CardTasks = (props) => {
         },
     });
 
+    const theme2 = createTheme({
+        components: {
+            // Name of the component
+            MuiModal: {
+                styleOverrides: {
+                    // Name of the slot
+                    root: {
+                        // Some CSS
+                        display: 'flex',
+                        background: 'rgba(0, 0, 0, 0.5)',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        overflow: 'auto',
+                        height: '100vh',
+
+                    },
+                    backdrop: {
+                        border: 'none',
+                        background: 'transparent',
+                        paddingTop: '200px'
+                        // transformOrigin: '0 100 0',
+                        // boxShadow: 'none',
+                    }
+                },
+            },
+        },
+    });
+
     return (
        <>
+           <ThemeProvider theme={theme2}>
            <Modal
+               disableAutoFocus
                open={modalOpen}
                onClose={handleModalClose}
-               aria-labelledby="modal-modal-title"
-               aria-describedby="modal-modal-description"
-               style={{overflow: 'auto'}}
+
            >
                    <div className={styles.fullEditWrapper}>
                        <div className={styles.fullEdit}>
-                           <span>Некоторый контент 0</span>
-                           <span>Некоторый контент 0</span>
-                           <span>Некоторый контент 0</span>
-                           <span>Некоторый контент 0</span>
-                           <span>Некоторый контент 0</span>
-                           <span>Некоторый контент 0</span>
-                           <span>Некоторый контент 0</span>
-                           <span>Некоторый контент 0</span>
-                           <span>Некоторый контент 0</span>
-                           <span>Некоторый контент 0</span>
-                           <span>Некоторый контент 0</span>
-                           <span>Некоторый контент 0</span>
-                           <span>Некоторый контент 0</span>
-                           <span>Некоторый контент 0</span>
-                           <span>Некоторый контент 0</span>
-                           <span>Некоторый контент 0</span>
-                           <span>Некоторый контент 0</span>
-                           <span>Некоторый контент 0</span>
-                           <span>Некоторый контент 0</span>
-                           <span>Некоторый контент 0</span>
-                           <span>Некоторый контент 0</span>
-                           <span>Некоторый контент 0</span>
-                           <span>Некоторый контент 0</span>
-                           <span>Некоторый контент 0</span>
-                           <span>Некоторый контент 0</span>
-                           <span>Некоторый контент 0</span>
-                           <span>Некоторый контент 0</span>
-                           <span>Некоторый контент 0</span>
-                           <span>Некоторый контент 0</span>
-                           <span>Некоторый контент 0</span>
-                           <span>Некоторый контент 0</span>
-                           <span>Некоторый контент 0</span>
-                           <span>Некоторый контент 0</span>
-                           <span>Некоторый контент 0</span>
-                           <span>Некоторый контент 0</span>
-                           <span>Некоторый контент 0</span>
-                           <span>Некоторый контент 0</span>
-                           <span>Некоторый контент 0</span>
-                           <span>Некоторый контент 0</span>
-                           <span>Некоторый контент 0</span>
-                           <span>Некоторый контент 0</span>
-                           <span>Некоторый контент 0</span>
-                           <span>Некоторый контент 0</span>
-                           <span>Некоторый контент 0</span>
-                           <span>Некоторый контент 0</span>
-                           <span>Некоторый контент 0</span>
-                           <span>Некоторый контент 0</span>
-                           <span>Некоторый контент 0</span>
-                           <span>Некоторый контент 0</span>
-                           <span>Некоторый контент 0</span>
-                           <span>Некоторый контент 0</span>
-                           <span>Некоторый контент 0</span>
-                           <span>Некоторый контент 0</span>
-                           <span>Некоторый контент 0</span>
-                           <span>Некоторый контент 0</span>
-                           <span>Некоторый контент 0</span>
-                           <span>Некоторый контент 0</span>
-                           <span>Некоторый контент 0</span>
-                           <span>Некоторый контент 0</span>
-                           <span>Некоторый контент 0</span>
-                           <span>Некоторый контент 0</span>
-                           <span>Некоторый контент 0</span>
-                           <span>Некоторый контент 0</span>
-                           <span>Некоторый контент 0    </span>
-                       </div>
+                           <section className={styles.fullEditHead}>
+                               <span className={styles.modalWindowTitleSVG}>
+                                    <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <rect x="0.5" y="0.5" width="14" height="14" stroke="#DBA498"/>
+                                        <rect x="2.72729" y="2.72729" width="9.54545" height="6.81818" fill="#DBA498"/>
+                                        <rect x="2.72729" y="10.9091" width="5.45455" height="1.36364" fill="#DBA498"/>
+                                        <rect x="9.54541" y="10.9091" width="2.72727" height="1.36364" fill="#DBA498"/>
+                                    </svg>
+                               </span>
+                               <div >
+                                   <TextareaAutosize
+                                       value={value}
+                                       className={styles.modalWindowTextArea}
+                                       onChange={(e) => {
+                                           setValue(e.target.value)
+                                           changeTaskInfo(task.id, column_id, value)
+                                       }}
+                                       spellCheck="false"
+                                   />
+                                   <span>
+                                       В колонке
+                                   </span>
+                               </div>
+                               <button className={styles.modalWindowCloseButton} onClick={handleModalClose}>
+                                       <span>
+                                           <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                               <path d="M1 1L12 12" stroke="#DBA498"/>
+                                               <path d="M1 12L12 0.999993" stroke="#DBA498"/>
+                                           </svg>
+                                       </span>
+                               </button>
+                           </section>
 
+                           <section className={styles.fullEditMidWrapper}>
+                               <div className={styles.fullEditDescriptionWrapper}>
+                                   <div className={styles.fullEditDescriptionHeader}>
+                                       <svg width="15" height="14" viewBox="0 0 15 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                           <rect width="15" height="2" rx="1" fill="#DBA498"/>
+                                           <rect y="12" width="9" height="2" rx="1" fill="#DBA498"/>
+                                           <rect y="9" width="15" height="2" rx="1" fill="#DBA498"/>
+                                           <rect y="6" width="15" height="2" rx="1" fill="#DBA498"/>
+                                           <rect y="3" width="15" height="2" rx="1" fill="#DBA498"/>
+                                       </svg>
+                                       <div>
+                                           Описание
+                                       </div>
+                                   </div>
+                                   <TextareaAutosize
+                                       value={valueDescription}
+                                       className={styles.modalWindowTextAreaDescription}
+                                       onChange={(e) => {
+                                           setValueDescription(e.target.value)
+                                       }}
+                                       spellCheck="false"
+                                   />
+                               </div>
+                               <div className={styles.fullEditMenuWrapper}>
+                                   <span className={styles.fullEditMenuSpan}>Добавить на задачу</span>
+                                   <button className={styles.fullEditMenuButton}>Участники</button>
+                                   <button className={styles.fullEditMenuButton}>Приоритет</button>
+                                   <button className={styles.fullEditMenuButton}>Метки</button>
+                                   <button className={styles.fullEditMenuButton}>Чек-лист</button>
+                                   <button className={styles.fullEditMenuButton}>Даты</button>
+                                   <button className={styles.fullEditMenuButton}>Вложение</button>
+                                   <button className={styles.fullEditMenuButton}>Обложка</button>
+                                   <span className={styles.fullEditMenuSpan}>Действия</span>
+                                   <button className={styles.fullEditMenuButton}>Перемещение</button>
+                                   <button className={styles.fullEditMenuButton}>Копирование</button>
+                                   <button className={styles.fullEditMenuButton}>Создать шаблон</button>
+                                   <Divider style={{color: 'white', background: 'white'}}/>
+                                   <button className={styles.fullEditMenuButton}>Архивация</button>
+                                   <button className={styles.fullEditMenuButton}>Поделиться</button>
+
+                               </div>
+                           </section>
+                       </div>
                    </div>
            </Modal>
+           </ThemeProvider>
            <li className={styles.taskContents} >
                <div id={task.id} className={styles.taskWrapper}
                     >
@@ -199,7 +239,12 @@ const CardTasks = (props) => {
                                    </button>
                                </div>
                                <div className={styles.cardEditPopperMenuWrapper}>
-                                   <button className={styles.cardEditPopperMenuButton}>
+                                   <button className={styles.cardEditPopperMenuButton}
+                                           onClick={(e) => {
+                                               handleClose()
+                                               handleClick(e, 'full')
+                                           }}
+                                   >
                                        Открыть задачу
                                    </button>
                                    <button className={styles.cardEditPopperMenuButton}>

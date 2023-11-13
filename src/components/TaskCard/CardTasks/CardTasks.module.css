@@ -50,6 +50,7 @@
     padding: 3px 10px;
     background: #381325;
     min-height: 30px;
+    width: 230px;
 }
 
 .taskContents {
@@ -145,4 +146,22 @@
     border: none;
     border-radius: 8px;
     cursor: text;
+}
+
+.fullEditWrapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 1000px;
+    background: beige;
+    border-radius: 25px;
+    padding: 20px;
+    height: 500px;
+    transform: translate(-50%, -50%);
+}
+
+.fullEdit {
+    display: flex;
+    flex-direction: column;
+
 }

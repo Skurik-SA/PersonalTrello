@@ -15,6 +15,7 @@ const CardBoard = (props) => {
     } = props
 
     const [clientVisibleData, setClientVisibleData] = useState(data)
+    const [markTextShow, setMarkTextShow] = useState(false)
 
     const addNewColumn = () => {
         const newItems = [
@@ -36,6 +37,12 @@ const CardBoard = (props) => {
             {
                 id: uuidv4(),
                 info: 'Новая карточка',
+                marks: [],
+                task_cover: {},
+                deadline: {},
+                task_description: {},
+                sub_tasks: [],
+                comments: [],
             }
         ]
 
@@ -75,6 +82,12 @@ const CardBoard = (props) => {
         let newTask = {
             id: clientVisibleData[columnIndex].content[taskIndex].id,
             info: value,
+            marks: clientVisibleData[columnIndex].content[taskIndex].marks,
+            task_cover: clientVisibleData[columnIndex].content[taskIndex].task_cover,
+            deadline: clientVisibleData[columnIndex].content[taskIndex].deadline,
+            task_description: clientVisibleData[columnIndex].content[taskIndex].task_description,
+            sub_tasks: clientVisibleData[columnIndex].content[taskIndex].sub_tasks,
+            comments: clientVisibleData[columnIndex].content[taskIndex].comments,
         }
         const newItems = [...(clientVisibleData.map((column_id, col_index) =>
             column_id.id !== card_id
@@ -181,6 +194,9 @@ const CardBoard = (props) => {
                                                     newTaskOnClick={addNewTask}
                                                     changeTaskInfo={changeTaskInfo}
                                                     index={card.id}
+
+                                                    markTextShow={markTextShow}
+                                                    setMarkTextShow={setMarkTextShow}
                                                 />
                                             </div>
                                         )}

@@ -13,6 +13,8 @@ const CardBase = (props) => {
         titleOnChange,
         newTaskOnClick,
         changeTaskInfo,
+        markTextShow,
+        setMarkTextShow
     } = props
 
     const [titleTextVisibility, setTitleTextVisibility] = useState(false)
@@ -117,6 +119,9 @@ const CardBase = (props) => {
                                                 task={task}
                                                 column_id={card_data.id}
                                                 changeTaskInfo={changeTaskInfo}
+
+                                                markTextShow={markTextShow}
+                                                setMarkTextShow={setMarkTextShow}
                                             />
 
                                         </div>

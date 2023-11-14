@@ -25,6 +25,9 @@ import Copy from "../../../assets/Icons/Copy.jsx";
 import MakeTemplate from "../../../assets/Icons/MakeTemplate.jsx";
 import Archive from "../../../assets/Icons/Archive.jsx";
 import Share from "../../../assets/Icons/Share.jsx";
+import Task from "../../../assets/Icons/Task.jsx";
+import ExitModal from "../../../assets/Icons/ExitModal.jsx";
+import {Transition} from "react-transition-group";
 
 const CardTasks = (props) => {
 
@@ -32,6 +35,8 @@ const CardTasks = (props) => {
         task,
         column_id,
         changeTaskInfo,
+        markTextShow,
+        setMarkTextShow
     } = props
 
     const [anchorEl, setAnchorEl] = useState(null);
@@ -42,6 +47,35 @@ const CardTasks = (props) => {
 
     const [value, setValue] = useState(task.info)
     const [valueDescription, setValueDescription] = useState("")
+
+    const nodeRef = useRef(null);
+    const duration = 600;
+
+    const defaultStyle = {
+        transition: `max-width ${duration}ms ease-in-out, font-size  ${duration / 2}ms ease-in-out`,
+        maxWidth: 240,
+        fontSize: '0.8rem',
+    }
+
+    const transitionStyles = {
+        entering: {
+            maxWidth: 36,
+            fontSize: '0rem'
+        },
+        entered:  {
+            maxWidth: 36,
+            fontSize: '0rem'
+        },
+        exiting:  {
+            maxWidth: 240,
+            fontSize: '0.8rem'
+        },
+        exited:  {
+            maxWidth: 240,
+            fontSize: '0.8rem',
+        },
+    };
+
 
     const handleModalClose = () => setModalOpen(false);
 
@@ -123,185 +157,178 @@ const CardTasks = (props) => {
     return (
        <>
            <ThemeProvider theme={theme2}>
-           <Modal
-               disableAutoFocus
-               open={modalOpen}
-               onClose={handleModalClose}
-
-           >
-                   <div className={styles.fullEditWrapper}>
-                       <div className={styles.fullEdit}>
-                           <section className={styles.fullEditHead}>
-                               <span className={styles.modalWindowTitleSVG}>
-                                    <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <rect x="0.5" y="0.5" width="14" height="14" stroke="#DBA498"/>
-                                        <rect x="2.72729" y="2.72729" width="9.54545" height="6.81818" fill="#DBA498"/>
-                                        <rect x="2.72729" y="10.9091" width="5.45455" height="1.36364" fill="#DBA498"/>
-                                        <rect x="9.54541" y="10.9091" width="2.72727" height="1.36364" fill="#DBA498"/>
-                                    </svg>
-                               </span>
-                               <div >
-                                   <TextareaAutosize
-                                       value={value}
-                                       className={styles.modalWindowTextArea}
-                                       onChange={(e) => {
-                                           setValue(e.target.value)
-                                           changeTaskInfo(task.id, column_id, value)
-                                       }}
-                                       spellCheck="false"
-                                   />
-                                   <span>
-                                       В колонке
+               <Modal
+                   disableAutoFocus
+                   open={modalOpen}
+                   onClose={handleModalClose}
+               >
+                       <div className={styles.fullEditWrapper}>
+                           <div className={styles.fullEdit}>
+                               <section className={styles.fullEditHead}>
+                                   <span className={styles.modalWindowTitleSVG}>
+                                       <Task/>
                                    </span>
-                                   <div>
-                                       <span>Метки</span>
-                                       <span>Уведомления</span>
-                                       <span>Срок</span>
-                                   </div>
-                               </div>
-                               <button className={styles.modalWindowCloseButton} onClick={handleModalClose}>
+                                   <div >
+                                       <TextareaAutosize
+                                           value={value}
+                                           className={styles.modalWindowTextArea}
+                                           onChange={(e) => {
+                                               setValue(e.target.value)
+                                           }}
+                                           onBlur={() => {
+                                               changeTaskInfo(task.id, column_id, value)
+                                           }}
+                                           spellCheck="false"
+                                       />
                                        <span>
-                                           <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                               <path d="M1 1L12 12" stroke="#DBA498"/>
-                                               <path d="M1 12L12 0.999993" stroke="#DBA498"/>
-                                           </svg>
+                                           В колонке
                                        </span>
-                               </button>
-                           </section>
-
-                           <section className={styles.fullEditMidWrapper}>
-                               <div className={styles.fullEditDescriptionWrapper}>
-                                   <div className={styles.fullEditDescriptionHeader}>
-                                       <Description/>
                                        <div>
-                                           Описание
+                                           <span>Метки</span>
+                                           <span>Уведомления</span>
+                                           <span>Срок</span>
                                        </div>
                                    </div>
-                                   <TextareaAutosize
-                                       value={valueDescription}
-                                       className={styles.modalWindowTextAreaDescription}
-                                       onChange={(e) => {
-                                           setValueDescription(e.target.value)
-                                       }}
-                                       spellCheck="false"
-                                   />
-                                   <div>
-                                       <CheckList/>
-                                       <div>Чек-лист</div>
-                                   </div>
-                                   <div>
-                                       <Comments/>
-                                       <div>Комментарии</div>
-                                   </div>
-                               </div>
-                               <div className={styles.fullEditMenuWrapper}>
-                                   <span className={styles.fullEditMenuSpan}>Добавить на задачу</span>
-                                   <button className={styles.fullEditMenuButton}>
+                                   <button className={styles.modalWindowCloseButton} onClick={handleModalClose}>
                                        <span>
-                                           <Participants/>
-                                       </span>
-                                       <span>
-                                           Участники
+                                           <ExitModal/>
                                        </span>
                                    </button>
-                                   <button className={styles.fullEditMenuButton}>
-                                       <span>
-                                            <Priority/>
-                                       </span>
-                                       <span>
-                                           Приоритет
-                                       </span>
-                                   </button>
-                                   <button className={styles.fullEditMenuButton}>
-                                       <span>
-                                           <Marks/>
-                                       </span>
-                                       <span>
-                                           Метки
-                                       </span>
-                                   </button>
-                                   <button className={styles.fullEditMenuButton}>
-                                       <span>
-                                            <CheckList/>
-                                       </span>
-                                       <span>
-                                           Чек-лист
-                                       </span>
-                                   </button>
-                                   <button className={styles.fullEditMenuButton}>
-                                       <span>
-                                           <Dates/>
-                                       </span>
-                                       <span>
-                                           Даты
-                                       </span>
-                                   </button>
-                                   <button className={styles.fullEditMenuButton}>
-                                       <span>
-                                           <Attachments/>
-                                       </span>
-                                       <span>
-                                           Вложение
-                                       </span>
-                                   </button>
-                                   <button className={styles.fullEditMenuButton}>
-                                       <span>
-                                           <Cover/>
-                                       </span>
-                                       <span>
-                                           Обложка
-                                       </span>
-                                   </button>
-                                   <span className={styles.fullEditMenuSpan}>
-                                       Действия
-                                   </span>
-                                   <button className={styles.fullEditMenuButton}>
-                                        <span>
-                                            <Moving/>
-                                        </span>
-                                       <span>
-                                           Перемещение
-                                       </span>
-                                   </button>
-                                   <button className={styles.fullEditMenuButton}>
-                                       <span>
-                                           <Copy/>
-                                       </span>
-                                       <span>
-                                           Копирование
-                                       </span>
-                                   </button>
-                                   <button className={styles.fullEditMenuButton}>
-                                       <span>
-                                           <MakeTemplate/>
-                                       </span>
-                                       <span>
-                                           Создать шаблон
-                                       </span>
-                                   </button>
-                                   <Divider style={{color: '#DBA498', background: '#DBA498'}}/>
-                                   <button className={styles.fullEditMenuButton}>
-                                       <span>
-                                           <Archive/>
-                                       </span>
-                                       <span>
-                                           Архивация
-                                       </span>
-                                   </button>
-                                   <button className={styles.fullEditMenuButton}>
-                                       <span>
-                                           <Share/>
-                                       </span>
-                                       <span>
-                                           Поделиться
-                                       </span>
-                                   </button>
+                               </section>
 
-                               </div>
-                           </section>
+                               <section className={styles.fullEditMidWrapper}>
+                                   <div className={styles.fullEditDescriptionWrapper}>
+                                       <div className={styles.fullEditDescriptionHeader}>
+                                           <Description/>
+                                           <div>
+                                               Описание
+                                           </div>
+                                       </div>
+                                       <TextareaAutosize
+                                           value={valueDescription}
+                                           className={styles.modalWindowTextAreaDescription}
+                                           onChange={(e) => {
+                                               setValueDescription(e.target.value)
+                                           }}
+                                           spellCheck="false"
+                                       />
+                                       <div>
+                                           <CheckList/>
+                                           <div>Чек-лист</div>
+                                       </div>
+                                       <div>
+                                           <Comments/>
+                                           <div>Комментарии</div>
+                                       </div>
+                                   </div>
+                                   <div className={styles.fullEditMenuWrapper}>
+                                       <span className={styles.fullEditMenuSpan}>Добавить на задачу</span>
+                                       <button className={styles.fullEditMenuButton}>
+                                           <span>
+                                               <Participants/>
+                                           </span>
+                                           <span>
+                                               Участники
+                                           </span>
+                                       </button>
+                                       <button className={styles.fullEditMenuButton}>
+                                           <span>
+                                                <Priority/>
+                                           </span>
+                                           <span>
+                                               Приоритет
+                                           </span>
+                                       </button>
+                                       <button className={styles.fullEditMenuButton}>
+                                           <span>
+                                               <Marks/>
+                                           </span>
+                                           <span>
+                                               Метки
+                                           </span>
+                                       </button>
+                                       <button className={styles.fullEditMenuButton}>
+                                           <span>
+                                                <CheckList/>
+                                           </span>
+                                           <span>
+                                               Чек-лист
+                                           </span>
+                                       </button>
+                                       <button className={styles.fullEditMenuButton}>
+                                           <span>
+                                               <Dates/>
+                                           </span>
+                                           <span>
+                                               Даты
+                                           </span>
+                                       </button>
+                                       <button className={styles.fullEditMenuButton}>
+                                           <span>
+                                               <Attachments/>
+                                           </span>
+                                           <span>
+                                               Вложение
+                                           </span>
+                                       </button>
+                                       <button className={styles.fullEditMenuButton}>
+                                           <span>
+                                               <Cover/>
+                                           </span>
+                                           <span>
+                                               Обложка
+                                           </span>
+                                       </button>
+                                       <span className={styles.fullEditMenuSpan}>
+                                           Действия
+                                       </span>
+                                       <button className={styles.fullEditMenuButton}>
+                                            <span>
+                                                <Moving/>
+                                            </span>
+                                           <span>
+                                               Перемещение
+                                           </span>
+                                       </button>
+                                       <button className={styles.fullEditMenuButton}>
+                                           <span>
+                                               <Copy/>
+                                           </span>
+                                           <span>
+                                               Копирование
+                                           </span>
+                                       </button>
+                                       <button className={styles.fullEditMenuButton}>
+                                           <span>
+                                               <MakeTemplate/>
+                                           </span>
+                                           <span>
+                                               Создать шаблон
+                                           </span>
+                                       </button>
+                                       <Divider style={{color: '#DBA498', background: '#DBA498'}}/>
+                                       <button className={styles.fullEditMenuButton}>
+                                           <span>
+                                               <Archive/>
+                                           </span>
+                                           <span>
+                                               Архивация
+                                           </span>
+                                       </button>
+                                       <button className={styles.fullEditMenuButton}>
+                                           <span>
+                                               <Share/>
+                                           </span>
+                                           <span>
+                                               Поделиться
+                                           </span>
+                                       </button>
+
+                                   </div>
+                               </section>
+                           </div>
                        </div>
-                   </div>
-           </Modal>
+               </Modal>
            </ThemeProvider>
            <li className={styles.taskContents} >
                <div id={task.id} className={styles.taskWrapper}
@@ -352,22 +379,52 @@ const CardTasks = (props) => {
                                                handleClick(e, 'full')
                                            }}
                                    >
-                                       Открыть задачу
+                                       <span>
+                                           <Task/>
+                                       </span>
+                                       <span>
+                                           Открыть задачу
+                                       </span>
                                    </button>
                                    <button className={styles.cardEditPopperMenuButton}>
-                                       Изменить метки
+                                        <span>
+                                            <Marks/>
+                                        </span>
+                                        <span>
+                                            Изменить метки
+                                        </span>
                                    </button>
                                    <button className={styles.cardEditPopperMenuButton}>
-                                       Изменить приоритет
+                                       <span>
+                                            <Priority/>
+                                       </span>
+                                       <span>
+                                            Изменить приоритет
+                                       </span>
                                    </button>
                                    <button className={styles.cardEditPopperMenuButton}>
-                                       Переместить
+                                       <span>
+                                            <Moving/>
+                                       </span>
+                                       <span>
+                                            Переместить
+                                       </span>
                                    </button>
                                    <button className={styles.cardEditPopperMenuButton}>
-                                       Копировать
+                                       <span>
+                                            <Copy/>
+                                       </span>
+                                       <span>
+                                            Копировать
+                                       </span>
                                    </button>
                                    <button className={styles.cardEditPopperMenuButton}>
-                                       Изменить даты
+                                       <span>
+                                            <Dates/>
+                                       </span>
+                                       <span>
+                                            Изменить даты
+                                       </span>
                                    </button>
                                    <button className={styles.cardEditPopperMenuButton}>
                                        Удалить
@@ -376,12 +433,46 @@ const CardTasks = (props) => {
                            </div>
                        </Popover>
                    </ThemeProvider>
-                   <div className={styles.taskText}
-                        onClick={(e) => {
-                            handleClick(e, 'full')
-                        }}
-                   >
-                       {task.info}
+                   <div>
+                       {task.marks.length > 0
+                           ?
+                           <Transition  nodeRef={nodeRef} in={markTextShow} timeout={duration}>
+                               {state => (
+                                   <div className={styles.taskMarksWrapper}>
+                                       {task.marks.map((mark, i) =>
+                                           <div
+                                               key={i}
+                                                className={styles.taskMark}
+                                                style={{
+                                                    ...defaultStyle,
+                                                    ...transitionStyles[state],
+                                                    background: `${mark.color}`,
+                                                    color: `${mark.font_color}`
+                                                }}
+                                                onClick={() => {
+                                                    setMarkTextShow(!markTextShow)
+                                                }}
+                                                ref={nodeRef}
+                                           >
+                                                <span className={styles.taskSpanContent} >
+                                                    {mark.mark_text}
+                                                </span>
+                                           </div>
+                                       )}
+                                   </div>
+                               )}
+                           </Transition>
+                           :
+                           <>
+                           </>
+                       }
+                        <div className={styles.taskText}
+                             onClick={(e) => {
+                                 handleClick(e, 'full')
+                             }}
+                        >
+                            {task.info}
+                        </div>
                    </div>
                    <button className={styles.editTaskButton}
                            onClick={(e) => {
@@ -389,12 +480,12 @@ const CardTasks = (props) => {
                                handleClick(e, 'mini')
                            }}
                    >
-                    <span>
-                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <rect x="0.706004" width="11.0543" height="2.98189" transform="matrix(0.706004 -0.708208 0.706004 0.708208 2.88603 9.03698)" stroke="#DBA498"/>
-                            <path d="M1.57791 12.417L2.10495 9.14641L4.8383 11.8883L1.57791 12.417Z" fill="#DBA498"/>
-                        </svg>
-                    </span>
+                        <span>
+                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="0.706004" width="11.0543" height="2.98189" transform="matrix(0.706004 -0.708208 0.706004 0.708208 2.88603 9.03698)" stroke="#DBA498"/>
+                                <path d="M1.57791 12.417L2.10495 9.14641L4.8383 11.8883L1.57791 12.417Z" fill="#DBA498"/>
+                            </svg>
+                        </span>
                    </button>
                </div>
            </li>

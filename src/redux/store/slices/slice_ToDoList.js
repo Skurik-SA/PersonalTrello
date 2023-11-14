@@ -19,7 +19,61 @@ const Slice_ToDoList = createSlice({
                             'Не надо (Не надо)\n' +
                             'Но всё разрушится, мы погибнем\n' +
                             'Если захочешь — моргни мне\n' +
-                            'Ты думаешь: спасём мир… Нет\n'
+                            'Ты думаешь: спасём мир… Нет\n',
+                        marks: [
+                            {
+                                font_color: 'black',
+                                color: 'red',
+                                mark_text: 'Poof'
+                            },
+                            {
+                                font_color: 'black',
+                                color: 'green',
+                                mark_text: 'Woof'
+                            },
+                        ],
+                        task_cover: {
+                            type: '',
+                            color: ''
+                        },
+                        deadline: {
+                            type: '',
+                            remaining: '',
+                            end: '',
+                        },
+                        task_description: {
+                            text: '',
+                        },
+                        sub_tasks: [
+                            {
+                                isChecked: false,
+                                label: 'sub_task 1',
+                                deadline: {
+                                    type: '',
+                                    remaining: '',
+                                    end: '',
+                                }
+                            },
+                            {
+                                isChecked: true,
+                                label: 'sub_task 2',
+                                deadline: {
+                                    type: '',
+                                    remaining: '',
+                                    end: '',
+                                }
+                            },
+                        ],
+                        comments: [
+                            {
+                                author: 'Dog',
+                                text: 'Cool!',
+                            },
+                            {
+                                author: 'Cat',
+                                text: 'Cool',
+                            },
+                        ]
                     },
                     {
                         id: uuidv4(),
@@ -30,6 +84,33 @@ const Slice_ToDoList = createSlice({
                             'Но всё разрушится, мы погибнем\n' +
                             'Если захочешь — моргни мне\n' +
                             'Ты думаешь: спасём мир… Нет',
+                        marks: [
+                            {
+                                font_color: 'white',
+                                color: '#3b328d',
+                                mark_text: 'Poof'
+                            },
+                            {
+                                font_color: 'black',
+                                color: '#32858d',
+                                mark_text: 'Some dogs go to Heaven'
+                            },
+                            {
+                                font_color: 'black',
+                                color: '#498d32',
+                                mark_text: 'But what about cats?'
+                            },
+                            {
+                                font_color: 'black',
+                                color: '#8a8d32',
+                                mark_text: 'Nobody knows...'
+                            },
+                        ],
+                        task_cover: {},
+                        deadline: {},
+                        task_description: {},
+                        sub_tasks: [],
+                        comments: [],
                     },
                     {
                         id: uuidv4(),
@@ -40,6 +121,12 @@ const Slice_ToDoList = createSlice({
                             'Да, хочется, но колется\n' +
                             'Оставьте нас на улице\n' +
                             'Не вернёмся и простудимся',
+                        marks: [],
+                        task_cover: {},
+                        deadline: {},
+                        task_description: {},
+                        sub_tasks: [],
+                        comments: [],
                     },
                     {
                         id: uuidv4(),
@@ -50,6 +137,12 @@ const Slice_ToDoList = createSlice({
                             'И на небе не было луны\n' +
                             'Валились камни и валуны\n' +
                             'Недоразумение — это я и ты',
+                        marks: [],
+                        task_cover: {},
+                        deadline: {},
+                        task_description: {},
+                        sub_tasks: [],
+                        comments: [],
                     },
                     {
                         id: uuidv4(),
@@ -60,6 +153,12 @@ const Slice_ToDoList = createSlice({
                             'Я не искал любви\n' +
                             'Неси меня туда\n' +
                             'Куда несут цветы\n',
+                        marks: [],
+                        task_cover: {},
+                        deadline: {},
+                        task_description: {},
+                        sub_tasks: [],
+                        comments: [],
                     },
                     {
                         id: uuidv4(),
@@ -70,6 +169,12 @@ const Slice_ToDoList = createSlice({
                             'Но всё разрушится, мы погибнем\n' +
                             'Если захочешь — моргни мне\n' +
                             'Ты думаешь: спасём мир…',
+                        marks: [],
+                        task_cover: {},
+                        deadline: {},
+                        task_description: {},
+                        sub_tasks: [],
+                        comments: [],
                     },
                     {
                         id: uuidv4(),
@@ -80,6 +185,12 @@ const Slice_ToDoList = createSlice({
                             'И на небе не было луны\n' +
                             'Валились камни и валуны\n' +
                             'Недоразумение — это я и ты',
+                        marks: [],
+                        task_cover: {},
+                        deadline: {},
+                        task_description: {},
+                        sub_tasks: [],
+                        comments: [],
                     },
                     {
                         id: uuidv4(),
@@ -90,10 +201,22 @@ const Slice_ToDoList = createSlice({
                             'И на небе не было луны\n' +
                             'Валились камни и валуны\n' +
                             'Недоразумение — это я и ты',
+                        marks: [],
+                        task_cover: {},
+                        deadline: {},
+                        task_description: {},
+                        sub_tasks: [],
+                        comments: [],
                     },
                     {
                         id: uuidv4(),
-                        info: 'Тудудуду'
+                        info: 'Тудудуду',
+                        marks: [],
+                        task_cover: {},
+                        deadline: {},
+                        task_description: {},
+                        sub_tasks: [],
+                        comments: [],
                     },
                 ],
             },
@@ -106,54 +229,147 @@ const Slice_ToDoList = createSlice({
                         info: 'А ты улетишь туда, где будет теплей\n' +
                             'Оставишь белые ночи, меня и апрель\n' +
                             'А ты улетишь туда, где будет теплей\n' +
-                            'Оставишь белые ночи\n'
+                            'Оставишь белые ночи\n',
+                        marks: [
+                            {
+                                font_color: 'white',
+                                color: '#3b328d',
+                                mark_text: 'Tooooooooooooo much very long marks you is not good)'
+                            },
+                            {
+                                font_color: 'black',
+                                color: '#32858d',
+                                mark_text: 'I am really serious, stop doing put it here'
+                            },
+                            {
+                                font_color: 'black',
+                                color: '#498d32',
+                                mark_text: 'Why are you not listening me?!?!?!!!!!!!!'
+                            },
+                            {
+                                font_color: 'black',
+                                color: '#8a8d32',
+                                mark_text: 'Whatever...'
+                            },
+                        ],
+                        task_cover: {},
+                        deadline: {},
+                        task_description: {},
+                        sub_tasks: [],
+                        comments: [],
                     },
                     {
                         id: uuidv4(),
                         info: 'Поменяю города и не забуду твою улыбку',
+                        marks: [],
+                        task_cover: {},
+                        deadline: {},
+                        task_description: {},
+                        sub_tasks: [],
+                        comments: [],
                     },
                     {
                         id: uuidv4(),
                         info: 'Может, я ушёл навсегда',
+                        marks: [],
+                        task_cover: {},
+                        deadline: {},
+                        task_description: {},
+                        sub_tasks: [],
+                        comments: [],
                     },
                     {
                         id: uuidv4(),
                         info: 'Но буду помнить свою ошибку',
+                        marks: [],
+                        task_cover: {},
+                        deadline: {},
+                        task_description: {},
+                        sub_tasks: [],
+                        comments: [],
                     },
                     {
                         id: uuidv4(),
                         info: 'Я помню каменный остров, там сияю как фосфор',
+                        marks: [],
+                        task_cover: {},
+                        deadline: {},
+                        task_description: {},
+                        sub_tasks: [],
+                        comments: [],
                     },
                     {
                         id: uuidv4(),
                         info: 'Бегу от друзей, играю в прятки',
+                        marks: [],
+                        task_cover: {},
+                        deadline: {},
+                        task_description: {},
+                        sub_tasks: [],
+                        comments: [],
                     },
                     {
                         id: uuidv4(),
                         info: 'Со сломанным носом взлетаю в космос',
+                        marks: [],
+                        task_cover: {},
+                        deadline: {},
+                        task_description: {},
+                        sub_tasks: [],
+                        comments: [],
                     },
                     {
                         id: uuidv4(),
                         info: 'Ты меня вспомнишь вряд ли',
+                        marks: [],
+                        task_cover: {},
+                        deadline: {},
+                        task_description: {},
+                        sub_tasks: [],
+                        comments: [],
                     },
                     {
                         id: uuidv4(),
                         info: 'Мы сейчас забиты делом с головой\n' +
-                            'Ты помнишь меня — я был не такой'
+                            'Ты помнишь меня — я был не такой',
+                        marks: [],
+                        task_cover: {},
+                        deadline: {},
+                        task_description: {},
+                        sub_tasks: [],
+                        comments: [],
                     },
                     {
                         id: uuidv4(),
                         info: 'Что послужит нам чертой между небом и землёй?\n' +
                             'И я когда-нибудь вернусь домой',
+                        marks: [],
+                        task_cover: {},
+                        deadline: {},
+                        task_description: {},
+                        sub_tasks: [],
+                        comments: [],
                     },
                     {
                         id: uuidv4(),
                         info: 'Там будешь ты, и ты пойдёшь со мной\n' +
                             'Свет в конце тоннеля станет путевой звездой',
+                        marks: [],
+                        task_cover: {},
+                        deadline: {},
+                        task_description: {},
+                        sub_tasks: [],
+                        comments: [],
                     },
                     {
                         id: uuidv4(),
-                        info: 'Между небом и землёй'
+                        info: 'Между небом и землёй',
+                        marks: [],
+                        task_cover: {},
+                        deadline: {},
+                        task_description: {},
+                        sub_tasks: [],
+                        comments: [],
                     },
                     {
                         id: uuidv4(),
@@ -163,14 +379,26 @@ const Slice_ToDoList = createSlice({
                             'Провожаю взглядом\n' +
                             'Твоя пустая квартира, когда-нибудь я\n' +
                             'Появлюсь в ней, не с ней\n' +
-                            'Не с ней'
+                            'Не с ней',
+                        marks: [],
+                        task_cover: {},
+                        deadline: {},
+                        task_description: {},
+                        sub_tasks: [],
+                        comments: [],
                     },
                     {
                         id: uuidv4(),
                         info: 'А ты улетишь туда, где будет теплей\n' +
                             'Оставишь белые ночи, меня и апрель\n' +
                             'Я знаю: ты улетишь, и я оставлю себе\n' +
-                            'Эти белые ночи на чёрный день'
+                            'Эти белые ночи на чёрный день',
+                        marks: [],
+                        task_cover: {},
+                        deadline: {},
+                        task_description: {},
+                        sub_tasks: [],
+                        comments: [],
                     },
                     {
                         id: uuidv4(),
@@ -181,7 +409,13 @@ const Slice_ToDoList = createSlice({
                             'Был влюблённым подростком, таким и остался\n' +
                             'Бежал от проблем, заливаясь ядом\n' +
                             'Со сломанным носом взлетаем в космос\n' +
-                            'Но тебя нету'
+                            'Но тебя нету',
+                        marks: [],
+                        task_cover: {},
+                        deadline: {},
+                        task_description: {},
+                        sub_tasks: [],
+                        comments: [],
                     },
                     {
                         id: uuidv4(),
@@ -192,7 +426,13 @@ const Slice_ToDoList = createSlice({
                             'А ты улетишь туда, где будет теплей\n' +
                             'Оставишь белые ночи, меня и апрель\n' +
                             'Я знаю: ты улетишь, и я оставлю себе\n' +
-                            'Эти белые ночи на чёрный день'
+                            'Эти белые ночи на чёрный день',
+                        marks: [],
+                        task_cover: {},
+                        deadline: {},
+                        task_description: {},
+                        sub_tasks: [],
+                        comments: [],
                     },
                 ],
             },
@@ -203,22 +443,52 @@ const Slice_ToDoList = createSlice({
                     {
                         id: uuidv4(),
                         info: 'Boom-boom',
+                        marks: [],
+                        task_cover: {},
+                        deadline: {},
+                        task_description: {},
+                        sub_tasks: [],
+                        comments: [],
                     },
                     {
                         id: uuidv4(),
                         info: 'Crack-Crack',
+                        marks: [],
+                        task_cover: {},
+                        deadline: {},
+                        task_description: {},
+                        sub_tasks: [],
+                        comments: [],
                     },
                     {
                         id: uuidv4(),
                         info: 'Wock-wock',
+                        marks: [],
+                        task_cover: {},
+                        deadline: {},
+                        task_description: {},
+                        sub_tasks: [],
+                        comments: [],
                     },
                     {
                         id: uuidv4(),
                         info: 'Zzzzzzz',
+                        marks: [],
+                        task_cover: {},
+                        deadline: {},
+                        task_description: {},
+                        sub_tasks: [],
+                        comments: [],
                     },
                     {
                         id: uuidv4(),
                         info: 'Pffffffff',
+                        marks: [],
+                        task_cover: {},
+                        deadline: {},
+                        task_description: {},
+                        sub_tasks: [],
+                        comments: [],
                     },
                 ],
             },
@@ -244,6 +514,12 @@ const Slice_ToDoList = createSlice({
                             'Слёзы текут, но это пока\n' +
                             'На лице улыбка останется на века\n' +
                             'За какие ошибки, от какого греха? (А?)',
+                        marks: [],
+                        task_cover: {},
+                        deadline: {},
+                        task_description: {},
+                        sub_tasks: [],
+                        comments: [],
                     },
                     {
                         id: uuidv4(),
@@ -263,6 +539,12 @@ const Slice_ToDoList = createSlice({
                             'Но надеюсь, встретимся в новой цивилизации\n' +
                             'А может быть, даже и не река выходит из берегов\n' +
                             'Кто выдумал берега?',
+                        marks: [],
+                        task_cover: {},
+                        deadline: {},
+                        task_description: {},
+                        sub_tasks: [],
+                        comments: [],
                     },
                     {
                         id: uuidv4(),
@@ -274,6 +556,12 @@ const Slice_ToDoList = createSlice({
                             'Я запихан в это тело в наказание за проступки\n' +
                             'О которых я понятия не имею и не буду (Е)\n' +
                             'Не ебу, иначе чем мне объяснить настолько сильный зуд, а (У)',
+                        marks: [],
+                        task_cover: {},
+                        deadline: {},
+                        task_description: {},
+                        sub_tasks: [],
+                        comments: [],
                     },
                     {
                         id: uuidv4(),
@@ -285,6 +573,12 @@ const Slice_ToDoList = createSlice({
                             'Ни молитвы, ни казнь и ни суд (Е)\n' +
                             'Нас не спасут (Чё?). Мало интересуем\n' +
                             'Красотку, что держит косу, а\n',
+                        marks: [],
+                        task_cover: {},
+                        deadline: {},
+                        task_description: {},
+                        sub_tasks: [],
+                        comments: [],
                     },
                     {
                         id: uuidv4(),
@@ -304,6 +598,12 @@ const Slice_ToDoList = createSlice({
                             'Слёзы текут, но это пока\n' +
                             'На лице улыбка останется на века\n' +
                             'За какие ошибки, от какого греха?',
+                        marks: [],
+                        task_cover: {},
+                        deadline: {},
+                        task_description: {},
+                        sub_tasks: [],
+                        comments: [],
                     },
                 ],
             },
@@ -314,14 +614,32 @@ const Slice_ToDoList = createSlice({
                     {
                         id: uuidv4(),
                         info: 'Row 1',
+                        marks: [],
+                        task_cover: {},
+                        deadline: {},
+                        task_description: {},
+                        sub_tasks: [],
+                        comments: [],
                     },
                     {
                         id: uuidv4(),
                         info: 'Row 2',
+                        marks: [],
+                        task_cover: {},
+                        deadline: {},
+                        task_description: {},
+                        sub_tasks: [],
+                        comments: [],
                     },
                     {
                         id: uuidv4(),
                         info: 'Row 3',
+                        marks: [],
+                        task_cover: {},
+                        deadline: {},
+                        task_description: {},
+                        sub_tasks: [],
+                        comments: [],
                     },
                 ],
             },
@@ -332,10 +650,22 @@ const Slice_ToDoList = createSlice({
                     {
                         id: uuidv4(),
                         info: 'Заключительная информация',
+                        marks: [],
+                        task_cover: {},
+                        deadline: {},
+                        task_description: {},
+                        sub_tasks: [],
+                        comments: [],
                     },
                     {
                         id: uuidv4(),
                         info: 'Находится тут',
+                        marks: [],
+                        task_cover: {},
+                        deadline: {},
+                        task_description: {},
+                        sub_tasks: [],
+                        comments: [],
                     },
                 ],
             },

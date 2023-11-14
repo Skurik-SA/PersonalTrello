@@ -198,19 +198,20 @@
 
 .fullEditMenuButton {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: flex-start;
-    justify-content: center;
+    justify-content: flex-start;
 
     background: #381325;
     letter-spacing: 1px;
 
-    width: 165px;
-    padding: 10px 10px 10px 20px;
+    width: 170px;
+    padding: 10px 10px 10px 15px;
     cursor: pointer;
 
     border: none;
     border-radius: 5px;
+    gap: 15px;
 }
 
 .fullEditMenuButton:hover {
@@ -251,7 +252,8 @@
 }
 
 .modalWindowTextAreaDescription {
-    min-width: 470px;
+    min-width: 446px;
+    margin-left: 24px;
 }
 
 .taskTextArea:focus {

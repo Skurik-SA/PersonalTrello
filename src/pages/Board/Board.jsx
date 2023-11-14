@@ -8,151 +8,9 @@ import NavigationDefaultButton
 import CardBoard from "../../components/TaskCard/CardBoard/CardBoard.jsx";
 import {Checkbox, FormControlLabel, FormGroup, ListItemText, MenuItem, Select} from "@mui/material";
 import {useSelector} from "react-redux";
+import Share from "../../assets/Icons/Share.jsx";
 
 const Board = () => {
-    // let data = [
-    //     {
-    //         id: uuidv4(),
-    //         title: 'Залупная2',
-    //         content: [
-    //             {
-    //                 id: uuidv4(),
-    //                 info: 'Пупа'
-    //             },
-    //             {
-    //                 id: uuidv4(),
-    //                 info: 'Пришла',
-    //             },
-    //             {
-    //                 id: uuidv4(),
-    //                 info: 'за',
-    //             },
-    //             {
-    //                 id: uuidv4(),
-    //                 info: 'Лупой',
-    //             },
-    //             {
-    //                 id: uuidv4(),
-    //                 info: 'а',
-    //             },
-    //             {
-    //                 id: uuidv4(),
-    //                 info: 'Лупа',
-    //             },
-    //             {
-    //                 id: uuidv4(),
-    //                 info: 'Пришла',
-    //             },
-    //             {
-    //                 id: uuidv4(),
-    //                 info: 'за',
-    //             },
-    //             {
-    //                 id: uuidv4(),
-    //                 info: 'Пупой'
-    //             },
-    //         ],
-    //     },
-    //     {
-    //         id: uuidv4(),
-    //         title: 'Пиздец3',
-    //         content: [
-    //             {
-    //                 id: uuidv4(),
-    //                 info: 'Пизда пришла за Лупой, а тут понаписано куча хуйни'
-    //             },
-    //             {
-    //                 id: uuidv4(),
-    //                 info: 'А мытая лупа пришла за пиздой и хуем, чтоб смачно так отсосать, ну и пиздец же она сосёт. Ну хуйня это веб, я так заебался его писать :(',
-    //             },
-    //             {
-    //                 id: uuidv4(),
-    //                 info: 'за',
-    //             },
-    //             {
-    //                 id: uuidv4(),
-    //                 info: 'Лупой',
-    //             },
-    //             {
-    //                 id: uuidv4(),
-    //                 info: 'а',
-    //             },
-    //             {
-    //                 id: uuidv4(),
-    //                 info: 'Лупа',
-    //             },
-    //             {
-    //                 id: uuidv4(),
-    //                 info: 'Пришла',
-    //             },
-    //             {
-    //                 id: uuidv4(),
-    //                 info: 'за',
-    //             },
-    //             {
-    //                 id: uuidv4(),
-    //                 info: 'Пупой'
-    //             },
-    //         ],
-    //     },
-    //     {
-    //         id: uuidv4(),
-    //         title: 'Залупная4',
-    //         content: [
-    //             {
-    //                 id: uuidv4(),
-    //                 info: 'Залупа',
-    //             },
-    //             {
-    //                 id: uuidv4(),
-    //                 info: 'Пупа',
-    //             },
-    //         ],
-    //     },
-    //     {
-    //         id: uuidv4(),
-    //         title: 'Пиздец5',
-    //         content: [
-    //             {
-    //                 id: uuidv4(),
-    //                 info: 'Пизда',
-    //             },
-    //             {
-    //                 id: uuidv4(),
-    //                 info: 'Мытая',
-    //             },
-    //         ],
-    //     },
-    //     {
-    //         id: uuidv4(),
-    //         title: 'Пиздец5',
-    //         content: [
-    //             {
-    //                 id: uuidv4(),
-    //                 info: 'Пизда',
-    //             },
-    //             {
-    //                 id: uuidv4(),
-    //                 info: 'Мытая',
-    //             },
-    //         ],
-    //     },
-    //     {
-    //         id: uuidv4(),
-    //         title: 'Пиздец5',
-    //         content: [
-    //             {
-    //                 id: uuidv4(),
-    //                 info: 'Пизда',
-    //             },
-    //             {
-    //                 id: uuidv4(),
-    //                 info: 'Мытая',
-    //             },
-    //         ],
-    //     },
-    // ]
-
     const data = useSelector(state => state.todolist.data)
 
     const [inVal, setInVal] = useState("Task Board For Study")
@@ -414,7 +272,12 @@ const Board = () => {
                             </NavigationDefaultButton>
 
                             <button className={styles.shareIcoButton}>
-                                Share
+                                <span>
+                                    <Share/>
+                                </span>
+                                <span>
+                                    Поделиться
+                                </span>
                             </button>
 
                             <button className={styles.moreOptionsIcoButton}>

@@ -11,6 +11,20 @@ import {
     ThemeProvider,
     Typography
 } from "@mui/material";
+import Description from "../../../assets/Icons/Description.jsx";
+import CheckList from "../../../assets/Icons/CheckList.jsx";
+import Comments from "../../../assets/Icons/Comments.jsx";
+import Participants from "../../../assets/Icons/Participants.jsx";
+import Priority from "../../../assets/Icons/Priority.jsx";
+import Marks from "../../../assets/Icons/Marks.jsx";
+import Dates from "../../../assets/Icons/Dates.jsx";
+import Attachments from "../../../assets/Icons/Attachments.jsx";
+import Cover from "../../../assets/Icons/Cover.jsx";
+import Moving from "../../../assets/Icons/Moving.jsx";
+import Copy from "../../../assets/Icons/Copy.jsx";
+import MakeTemplate from "../../../assets/Icons/MakeTemplate.jsx";
+import Archive from "../../../assets/Icons/Archive.jsx";
+import Share from "../../../assets/Icons/Share.jsx";
 
 const CardTasks = (props) => {
 
@@ -139,6 +153,11 @@ const CardTasks = (props) => {
                                    <span>
                                        В колонке
                                    </span>
+                                   <div>
+                                       <span>Метки</span>
+                                       <span>Уведомления</span>
+                                       <span>Срок</span>
+                                   </div>
                                </div>
                                <button className={styles.modalWindowCloseButton} onClick={handleModalClose}>
                                        <span>
@@ -153,13 +172,7 @@ const CardTasks = (props) => {
                            <section className={styles.fullEditMidWrapper}>
                                <div className={styles.fullEditDescriptionWrapper}>
                                    <div className={styles.fullEditDescriptionHeader}>
-                                       <svg width="15" height="14" viewBox="0 0 15 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                           <rect width="15" height="2" rx="1" fill="#DBA498"/>
-                                           <rect y="12" width="9" height="2" rx="1" fill="#DBA498"/>
-                                           <rect y="9" width="15" height="2" rx="1" fill="#DBA498"/>
-                                           <rect y="6" width="15" height="2" rx="1" fill="#DBA498"/>
-                                           <rect y="3" width="15" height="2" rx="1" fill="#DBA498"/>
-                                       </svg>
+                                       <Description/>
                                        <div>
                                            Описание
                                        </div>
@@ -172,23 +185,117 @@ const CardTasks = (props) => {
                                        }}
                                        spellCheck="false"
                                    />
+                                   <div>
+                                       <CheckList/>
+                                       <div>Чек-лист</div>
+                                   </div>
+                                   <div>
+                                       <Comments/>
+                                       <div>Комментарии</div>
+                                   </div>
                                </div>
                                <div className={styles.fullEditMenuWrapper}>
                                    <span className={styles.fullEditMenuSpan}>Добавить на задачу</span>
-                                   <button className={styles.fullEditMenuButton}>Участники</button>
-                                   <button className={styles.fullEditMenuButton}>Приоритет</button>
-                                   <button className={styles.fullEditMenuButton}>Метки</button>
-                                   <button className={styles.fullEditMenuButton}>Чек-лист</button>
-                                   <button className={styles.fullEditMenuButton}>Даты</button>
-                                   <button className={styles.fullEditMenuButton}>Вложение</button>
-                                   <button className={styles.fullEditMenuButton}>Обложка</button>
-                                   <span className={styles.fullEditMenuSpan}>Действия</span>
-                                   <button className={styles.fullEditMenuButton}>Перемещение</button>
-                                   <button className={styles.fullEditMenuButton}>Копирование</button>
-                                   <button className={styles.fullEditMenuButton}>Создать шаблон</button>
-                                   <Divider style={{color: 'white', background: 'white'}}/>
-                                   <button className={styles.fullEditMenuButton}>Архивация</button>
-                                   <button className={styles.fullEditMenuButton}>Поделиться</button>
+                                   <button className={styles.fullEditMenuButton}>
+                                       <span>
+                                           <Participants/>
+                                       </span>
+                                       <span>
+                                           Участники
+                                       </span>
+                                   </button>
+                                   <button className={styles.fullEditMenuButton}>
+                                       <span>
+                                            <Priority/>
+                                       </span>
+                                       <span>
+                                           Приоритет
+                                       </span>
+                                   </button>
+                                   <button className={styles.fullEditMenuButton}>
+                                       <span>
+                                           <Marks/>
+                                       </span>
+                                       <span>
+                                           Метки
+                                       </span>
+                                   </button>
+                                   <button className={styles.fullEditMenuButton}>
+                                       <span>
+                                            <CheckList/>
+                                       </span>
+                                       <span>
+                                           Чек-лист
+                                       </span>
+                                   </button>
+                                   <button className={styles.fullEditMenuButton}>
+                                       <span>
+                                           <Dates/>
+                                       </span>
+                                       <span>
+                                           Даты
+                                       </span>
+                                   </button>
+                                   <button className={styles.fullEditMenuButton}>
+                                       <span>
+                                           <Attachments/>
+                                       </span>
+                                       <span>
+                                           Вложение
+                                       </span>
+                                   </button>
+                                   <button className={styles.fullEditMenuButton}>
+                                       <span>
+                                           <Cover/>
+                                       </span>
+                                       <span>
+                                           Обложка
+                                       </span>
+                                   </button>
+                                   <span className={styles.fullEditMenuSpan}>
+                                       Действия
+                                   </span>
+                                   <button className={styles.fullEditMenuButton}>
+                                        <span>
+                                            <Moving/>
+                                        </span>
+                                       <span>
+                                           Перемещение
+                                       </span>
+                                   </button>
+                                   <button className={styles.fullEditMenuButton}>
+                                       <span>
+                                           <Copy/>
+                                       </span>
+                                       <span>
+                                           Копирование
+                                       </span>
+                                   </button>
+                                   <button className={styles.fullEditMenuButton}>
+                                       <span>
+                                           <MakeTemplate/>
+                                       </span>
+                                       <span>
+                                           Создать шаблон
+                                       </span>
+                                   </button>
+                                   <Divider style={{color: '#DBA498', background: '#DBA498'}}/>
+                                   <button className={styles.fullEditMenuButton}>
+                                       <span>
+                                           <Archive/>
+                                       </span>
+                                       <span>
+                                           Архивация
+                                       </span>
+                                   </button>
+                                   <button className={styles.fullEditMenuButton}>
+                                       <span>
+                                           <Share/>
+                                       </span>
+                                       <span>
+                                           Поделиться
+                                       </span>
+                                   </button>
 
                                </div>
                            </section>

@@ -350,6 +350,40 @@ const CardTasks = (props) => {
                                <div className={styles.cardEditPopperColumn}>
                                    <div className={styles.cardEditPopperWrapper} >
                                        <div className={styles.cardEditPopper}>
+                                           <div className={styles.marksPopper}>
+                                               {task.marks.length > 0
+                                                   ?
+                                                   <Transition  nodeRef={nodeRef} in={markTextShow} timeout={duration}>
+                                                       {state => (
+                                                           <div className={styles.taskMarksWrapper}>
+                                                               {task.marks.map((mark, i) =>
+                                                                   <div
+                                                                       key={i}
+                                                                       className={styles.taskMark}
+                                                                       style={{
+                                                                           ...defaultStyle,
+                                                                           ...transitionStyles[state],
+                                                                           background: `${mark.color}`,
+                                                                           color: `${mark.font_color}`
+                                                                       }}
+                                                                       onClick={() => {
+                                                                           setMarkTextShow(!markTextShow)
+                                                                       }}
+                                                                       ref={nodeRef}
+                                                                   >
+                                                                        <span className={styles.taskSpanContent} >
+                                                                            {mark.mark_text}
+                                                                        </span>
+                                                                   </div>
+                                                               )}
+                                                           </div>
+                                                       )}
+                                                   </Transition>
+                                                   :
+                                                   <>
+                                                   </>
+                                               }
+                                           </div>
                                            <TextareaAutosize
                                                className={styles.taskTextArea}
                                                value={value}

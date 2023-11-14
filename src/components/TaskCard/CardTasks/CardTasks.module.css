@@ -131,7 +131,7 @@
     flex-direction: column;
     justify-content: center;
     text-align: left;
-    padding: 10px 20px;
+    padding: 10px 10px;
     background: #381325;
     min-height: 60px;
     resize: none;
@@ -147,6 +147,13 @@
     border: none;
     border-radius: 8px;
     cursor: text;
+}
+
+.marksPopper {
+    display: flex;
+    padding-left: 10px;
+    width: 250px;
+    cursor: pointer;
 }
 
 .fullEditWrapper {
@@ -301,7 +308,7 @@
     padding-right: 5px;
     border-radius: 10px;
     min-width: 36px;
-    min-height: 10px;
+    min-height: 8px;
     opacity: 70%;
     max-width: 240px;
 }

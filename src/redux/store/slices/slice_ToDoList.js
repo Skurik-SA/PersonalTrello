@@ -33,8 +33,9 @@ const Slice_ToDoList = createSlice({
                             },
                         ],
                         task_cover: {
-                            type: '',
-                            color: ''
+                            // none | header | full
+                            type: 'header',
+                            color: 'red'
                         },
                         deadline: {
                             type: '',

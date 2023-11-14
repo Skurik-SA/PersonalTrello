@@ -183,11 +183,6 @@ const CardTasks = (props) => {
                                        <span>
                                            В колонке
                                        </span>
-                                       <div>
-                                           <span>Метки</span>
-                                           <span>Уведомления</span>
-                                           <span>Срок</span>
-                                       </div>
                                    </div>
                                    <button className={styles.modalWindowCloseButton} onClick={handleModalClose}>
                                        <span>
@@ -198,6 +193,12 @@ const CardTasks = (props) => {
 
                                <section className={styles.fullEditMidWrapper}>
                                    <div className={styles.fullEditDescriptionWrapper}>
+                                       <div>
+                                           <span>Метки: </span>
+                                           <span>Уведомления: </span>
+                                           <span>Срок: </span>
+                                           <span>Статус: </span>
+                                       </div>
                                        <div className={styles.fullEditDescriptionHeader}>
                                            <Description/>
                                            <div>

@@ -183,6 +183,7 @@ const CardTasks = (props) => {
                                        <span>
                                            В колонке
                                        </span>
+
                                    </div>
                                    <button className={styles.modalWindowCloseButton} onClick={handleModalClose}>
                                        <span>
@@ -468,6 +469,7 @@ const CardTasks = (props) => {
                            </div>
                        </Popover>
                    </ThemeProvider>
+
                    <div>
                        {task.marks.length > 0
                            ?

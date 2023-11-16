@@ -57,7 +57,7 @@ const ContentChangeMark = (props) => {
 
     const dumpMark = () => {
         setNewMark({
-            id: marks.length + 1,
+            id: marks.length + 2,
             font_color: '#000',
             color: "#" + Math.random().toString(16).substr(-6),
             mark_text: ''
@@ -178,12 +178,10 @@ const ContentChangeMark = (props) => {
                     <div className={styles.contentEditMarkButtonsWrapper}>
                         <button className={styles.contentEditMarkCreateButton} onClick={() => {
                             dispatch(create_new_mark(newMark))
+                            setWindowSelector("choose")
                             dumpMark()
                         }}>
                             Создать
-                        </button>
-                        <button className={styles.contentEditMarkCreateButton}>
-                            Удалить
                         </button>
                     </div>
                 </div>

@@ -6,6 +6,9 @@
     justify-content: center;
     align-items: center;
     padding-top: 15px;
+
+    border: #8d325f 1px solid;
+    border-radius: 16px;
 }
 
 .contentChangeMark_title {
@@ -51,7 +54,7 @@
 
     gap: 10px;
     padding: 15px;
-    max-height: calc(100vh - 200px);
+    max-height: calc(100vh - 300px);
     scrollbar-color: #8d3c62 #59263e;
     scrollbar-width: thin;
     overflow-y: auto;

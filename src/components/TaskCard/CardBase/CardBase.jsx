@@ -13,6 +13,7 @@ const CardBase = (props) => {
         titleOnChange,
         newTaskOnClick,
         changeTaskInfo,
+        onChangeCardMark,
         markTextShow,
         setMarkTextShow
     } = props
@@ -119,6 +120,7 @@ const CardBase = (props) => {
                                                 task={task}
                                                 column_id={card_data.id}
                                                 changeTaskInfo={changeTaskInfo}
+                                                onChangeCardMark={onChangeCardMark}
 
                                                 markTextShow={markTextShow}
                                                 setMarkTextShow={setMarkTextShow}

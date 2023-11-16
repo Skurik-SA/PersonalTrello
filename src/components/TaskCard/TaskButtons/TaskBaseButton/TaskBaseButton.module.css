@@ -1,0 +1,28 @@
+
+.taskBaseButtonWrapper {
+    display: flex;
+    flex-direction: column;
+    background: #260d19;
+    min-height: 300px;
+    min-width: 300px;
+    border-radius: 20px;
+}
+
+.cardEditPopperMenuButton {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    cursor: pointer;
+    border: none;
+    border-radius: 8px;
+    padding: 10px;
+    gap: 10px;
+    background: #381325;
+    letter-spacing: 1px;
+    font-size: 0.85rem;
+}
+
+.cardEditPopperMenuButton:hover {
+    background: #79284f;
+}

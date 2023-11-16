@@ -4,8 +4,8 @@ import {DragDropContext, Draggable, Droppable} from "react-beautiful-dnd";
 import CardBase from "../CardBase/CardBase.jsx";
 import {useState} from "react";
 import {v4 as uuidv4} from "uuid";
-import {useDispatch} from "react-redux";
-import {set_todolist} from "../../../redux/store/slices/slice_ToDoList.js";
+import {useDispatch, useSelector} from "react-redux";
+import {set_selected_task_byData, set_todolist} from "../../../redux/store/slices/slice_ToDoList.js";
 
 
 const CardBoard = (props) => {
@@ -16,6 +16,77 @@ const CardBoard = (props) => {
 
     const [clientVisibleData, setClientVisibleData] = useState(data)
     const [markTextShow, setMarkTextShow] = useState(false)
+    // Это костыль, но зато какой, потом с бэком скорее всего менять придётся
+    const dispatch = useDispatch()
+
+    const onChangeCardMark = (task_id, new_mark) => {
+
+        const findColumnIndex = (type) => {
+            let colIndex = {
+                index: -1,
+                id: '',
+            }
+
+            clientVisibleData.map((column, i) => column.content.map((el) => {
+                if (el.id === task_id) {
+                    colIndex = {
+                        index: i,
+                        id: column.id
+                    }
+                }
+            }))
+
+            if (type === 'id')
+                return colIndex.id
+            else if (type === 'index')
+                return colIndex.index
+        }
+
+        const validateMark = (taskMarks) => {
+            for (let i = 0; i < taskMarks.length; i++) {
+                if (taskMarks[i].id === new_mark.id) {
+
+                    return taskMarks.filter((mark) => mark.id !== new_mark.id)
+                }
+            }
+            return [...taskMarks, new_mark]
+        }
+
+        const columnId = findColumnIndex('id')
+        const columnIndex = findColumnIndex('index')
+        const taskIndex = clientVisibleData[columnIndex].content.findIndex((task) => task.id === task_id)
+        let newTask = {
+            id: clientVisibleData[columnIndex].content[taskIndex].id,
+            info: clientVisibleData[columnIndex].content[taskIndex].info,
+            marks: validateMark(clientVisibleData[columnIndex].content[taskIndex].marks),
+            task_cover: clientVisibleData[columnIndex].content[taskIndex].task_cover,
+            deadline: clientVisibleData[columnIndex].content[taskIndex].deadline,
+            task_description: clientVisibleData[columnIndex].content[taskIndex].task_description,
+            sub_tasks: clientVisibleData[columnIndex].content[taskIndex].sub_tasks,
+            comments: clientVisibleData[columnIndex].content[taskIndex].comments,
+        }
+        const newItems = [...(clientVisibleData.map((column_id, col_index) =>
+            column_id.id !== columnId
+                ?
+                clientVisibleData[col_index]
+                :
+                {
+                    id:  clientVisibleData[col_index].id,
+                    title: clientVisibleData[col_index].title,
+                    content: [...clientVisibleData[col_index].content.map((task, row_index) =>
+                        task.id !== task_id
+                            ?
+                            clientVisibleData[col_index].content[row_index]
+                            :
+                            newTask
+                    )]
+                }
+        ))]
+
+        setClientVisibleData(newItems)
+        // Это костыль, но зато какой, потом с бэком скорее всего менять придётся
+        dispatch(set_selected_task_byData(newItems))
+    }
 
     const addNewColumn = () => {
         const newItems = [
@@ -193,6 +264,8 @@ const CardBoard = (props) => {
                                                     titleOnChange={changeTitle}
                                                     newTaskOnClick={addNewTask}
                                                     changeTaskInfo={changeTaskInfo}
+                                                    onChangeCardMark={onChangeCardMark}
+
                                                     index={card.id}
 
                                                     markTextShow={markTextShow}

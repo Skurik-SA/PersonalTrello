@@ -1,0 +1,212 @@
+
+
+.contentChangeMarkWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 15px;
+}
+
+.contentChangeMark_title {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 10px;
+    font-size: 1rem;
+    letter-spacing: 1px;
+}
+
+.contentChangeMark_exit, .contentReturn_return {
+    position: absolute;
+    right: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    padding: 8px;
+    border: none;
+    border-radius: 10px;
+    background: transparent;
+    cursor: pointer;
+}
+
+.contentReturn_return {
+    width: 32px;
+    padding: 8px 10px 8px 9px;
+    right: 0;
+    left: 15px;
+}
+
+.contentChangeMark_exit:hover, .contentReturn_return:hover {
+    background: rgba(141, 60, 98, 0.5);
+}
+
+.contentChangeMark, .contentEditMarkWrapper {
+    display: flex;
+    flex-direction: column;
+
+    gap: 10px;
+    padding: 15px;
+    max-height: calc(100vh - 200px);
+    scrollbar-color: #8d3c62 #59263e;
+    scrollbar-width: thin;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.contentEditMarkWrapper {
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
+    padding: 5px;
+}
+
+.contentChangeMark_input {
+    height: 26px;
+    width: 96%;
+    flex-shrink: 0;
+    font-size: 1rem;
+    border-radius: 3px;
+    border: none;
+    background: #8d3c62;
+    color: #DBA498;
+
+    outline: none;
+    padding-left: 10px;
+}
+
+.contentChangeMark_input::placeholder {
+    color: #DBA498;
+}
+
+.contentChangeMark_subTitle {
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+}
+
+.contentChangeMark_markStyle {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding-left: 10px;
+    color: #1f1f1f;
+    width: 180px;
+    max-width: 180px;
+    min-height: 30px;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.contentChangeMark_spanContent {
+    max-width: 180px;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.contentChangeMark_markStyle:hover {
+    opacity: 70%;
+}
+
+.contentChangeMark_createNewMark {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    padding: 8px;
+    border: none;
+    border-radius: 5px;
+    background: #606060;
+    cursor: pointer;
+}
+
+.contentChangeMark_createNewMark:hover {
+    background: #7e7e7e;
+}
+
+.contentChangeMark_createNewMark:active {
+    background: #606060;
+}
+
+.contentChangeMark_fromControl {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+
+
+.contentChangeMark_editMark {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    padding: 8px;
+    border: none;
+    border-radius: 10px;
+    background: transparent;
+    cursor: pointer;
+}
+
+.contentChangeMark_editMark:hover {
+    background: rgba(141, 60, 98, 0.5);
+}
+
+.contentEditMark_newMarkPresentation {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #313131;
+    height: 80px;
+
+}
+
+.contentEditMark_newMarkPresentation_Span {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+
+    padding-left: 10px;
+
+    max-width: 210px;
+    min-width: 210px;
+    border-radius: 5px;
+    height: 36px;
+
+    user-select: none;
+    cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+}
+
+.contentEditMarkButtonsWrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 10px 10px;
+}
+
+.contentEditMarkCreateButton {
+    cursor: pointer;
+    border: none;
+    border-radius: 15px;
+    padding: 8px;
+    width: 100px;
+}
+
+.contentEditMarkCreateButton:hover {
+    background: #3b3b3b;
+}

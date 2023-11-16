@@ -5,6 +5,86 @@ import {v4 as uuidv4} from "uuid";
 const Slice_ToDoList = createSlice({
     name: "todolist",
     initialState: {
+        selected_task: {
+            card_id: '',
+            id: '',
+            info: '',
+            marks: [],
+            task_cover: {},
+            deadline: {},
+            task_description: {},
+            sub_tasks: [],
+            comments: [],
+        },
+        mark_store: [
+            {
+                id: 1,
+                font_color: 'black',
+                color: 'red',
+                mark_text: 'Poof'
+            },
+
+            {
+                id: 2,
+                font_color: 'black',
+                color: 'green',
+                mark_text: 'Woof'
+            },
+            {
+                id: 3,
+                font_color: 'white',
+                color: '#3b328d',
+                mark_text: 'Poof'
+            },
+            {
+                id: 4,
+                font_color: 'black',
+                color: '#32858d',
+                mark_text: 'Some dogs go to Heaven'
+            },
+            {
+                id: 5,
+                font_color: 'black',
+                color: '#498d32',
+                mark_text: 'But what about cats?'
+            },
+            {
+                id: 6,
+                font_color: 'black',
+                color: '#8a8d32',
+                mark_text: 'Nobody knows...'
+            },
+            {
+                id: 7,
+                font_color: 'white',
+                color: '#3b328d',
+                mark_text: 'Tooooooooooooo much very long marks you is not good)'
+            },
+            {
+                id: 8,
+                font_color: 'black',
+                color: '#32858d',
+                mark_text: 'I am really serious, stop doing put it here'
+            },
+            {
+                id: 9,
+                font_color: 'black',
+                color: '#498d32',
+                mark_text: 'Why are you not listening me?!?!?!!!!!!!!'
+            },
+            {
+                id: 10,
+                font_color: 'black',
+                color: '#8a8d32',
+                mark_text: 'Whatever...'
+            },
+            {
+                id: 11,
+                font_color: 'black',
+                color: 'white',
+                mark_text: ''
+            },
+        ],
         data: [
             {
                 id: uuidv4(),
@@ -22,11 +102,13 @@ const Slice_ToDoList = createSlice({
                             'Ты думаешь: спасём мир… Нет\n',
                         marks: [
                             {
+                                id: 1,
                                 font_color: 'black',
                                 color: 'red',
                                 mark_text: 'Poof'
                             },
                             {
+                                id: 2,
                                 font_color: 'black',
                                 color: 'green',
                                 mark_text: 'Woof'
@@ -87,21 +169,25 @@ const Slice_ToDoList = createSlice({
                             'Ты думаешь: спасём мир… Нет',
                         marks: [
                             {
+                                id: 3,
                                 font_color: 'white',
                                 color: '#3b328d',
                                 mark_text: 'Poof'
                             },
                             {
+                                id: 4,
                                 font_color: 'black',
                                 color: '#32858d',
                                 mark_text: 'Some dogs go to Heaven'
                             },
                             {
+                                id: 5,
                                 font_color: 'black',
                                 color: '#498d32',
                                 mark_text: 'But what about cats?'
                             },
                             {
+                                id: 6,
                                 font_color: 'black',
                                 color: '#8a8d32',
                                 mark_text: 'Nobody knows...'
@@ -233,21 +319,25 @@ const Slice_ToDoList = createSlice({
                             'Оставишь белые ночи\n',
                         marks: [
                             {
+                                id: 7,
                                 font_color: 'white',
                                 color: '#3b328d',
                                 mark_text: 'Tooooooooooooo much very long marks you is not good)'
                             },
                             {
+                                id: 8,
                                 font_color: 'black',
                                 color: '#32858d',
                                 mark_text: 'I am really serious, stop doing put it here'
                             },
                             {
+                                id: 9,
                                 font_color: 'black',
                                 color: '#498d32',
                                 mark_text: 'Why are you not listening me?!?!?!!!!!!!!'
                             },
                             {
+                                id: 10,
                                 font_color: 'black',
                                 color: '#8a8d32',
                                 mark_text: 'Whatever...'
@@ -675,7 +765,35 @@ const Slice_ToDoList = createSlice({
     reducers: {
         set_todolist(state, action) {
             state.data = action.payload
+
         },
+        set_mark_store(state, action) {
+            state.mark_store = action.payload
+        },
+        // set_data_content_marks(state, action) {
+        //
+        // },
+        set_selected_task_byId(state, action) {
+            state.data.map((card) => {
+                card.content.map((task) => {
+                    if (task.id === action.payload) {
+                        state.selected_task = task
+                    }
+                })
+            })
+        },
+        set_selected_task_byData(state, action) {
+            state.data.map((card) => {
+                card.content.map((task) => {
+                    if (task.id === action.payload.id) {
+                        state.selected_task = action.payload
+                    }
+                })
+            })
+        },
+        create_new_mark(state, action) {
+            state.mark_store.push(action.payload)
+        }
     }
 })
 
@@ -683,4 +801,7 @@ export default Slice_ToDoList.reducer
 
 export const {
     set_todolist,
+    set_selected_task_byId,
+    set_selected_task_byData,
+    create_new_mark
 } = Slice_ToDoList.actions

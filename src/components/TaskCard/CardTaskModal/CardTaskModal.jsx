@@ -18,6 +18,9 @@ import Archive from "../../../assets/Icons/Archive.jsx";
 import Share from "../../../assets/Icons/Share.jsx";
 import {useState} from "react";
 import ButtonChangeMark from "../TaskButtons/ButtonChangeMark/ButtonChangeMark.jsx";
+import {useSelector} from "react-redux";
+import Notifications from "../../../assets/Icons/Notifications.jsx";
+import Eye from "../../../assets/Icons/Eye.jsx";
 
 const CardTaskModal = (props) => {
 
@@ -31,6 +34,8 @@ const CardTaskModal = (props) => {
         column_id,
         onChangeCardMark,
     } = props
+
+    const marks = useSelector(state => state.todolist.mark_store)
 
     const handleModalClose = () => setModalOpen(false);
     const [valueDescription, setValueDescription] = useState("")
@@ -107,9 +112,57 @@ const CardTaskModal = (props) => {
 
                         <section className={styles.fullEditMidWrapper}>
                             <div className={styles.fullEditDescriptionWrapper}>
-                                <div>
-                                    <span>Метки: </span>
-                                    <span>Уведомления: </span>
+                                <div style={{display: 'flex', flexDirection: 'column'}}>
+                                    <div className={styles.fullEditMarksWrapper}>
+                                        <div className={styles.fullEditDescriptionHeader}>
+                                            <Marks/>
+                                            <span> Метки: </span>
+                                        </div>
+                                        <div >
+                                            {task.marks.map((mark) =>
+                                                <div key={mark.id} className={styles.fullEditMarksTaskMark} style={{background: `${mark.color}`, color: `${mark.font_color}`}}>
+                                                    <ButtonChangeMark
+                                                        onChangeCardMark={onChangeCardMark}
+                                                        task_id={task.id}
+                                                        card_marks={task.marks}
+                                                        renderByAnchor={true}
+
+                                                        button_id={"modal-card-marks"}
+                                                        buttonIcon={<></>}
+                                                        buttonContent={
+                                                            <span className={styles.fullEditMarksTaskSpanContent} style={{color: `${mark.font_color}`}}>
+                                                                {mark.mark_text}
+                                                            </span>
+                                                        }
+                                                        rootButtonStyle={styles.fullEditMarkButton}
+                                                    />
+                                                </div>
+                                            )}
+                                            <div className={styles.fullEditMarksTaskMark}>
+                                                <ButtonChangeMark
+                                                    onChangeCardMark={onChangeCardMark}
+                                                    task_id={task.id}
+                                                    card_marks={task.marks}
+                                                    renderByAnchor={true}
+
+                                                    button_id={"modal-card-marks"}
+                                                    buttonIcon={<></>}
+                                                    buttonContent={"+"}
+                                                    rootButtonStyle={styles.fullEditAddMarkButton}
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className={styles.fullEditDescriptionHeader}>
+                                        <Notifications/>
+                                        <span> Уведомления: </span>
+                                        <button className={styles.subscribeButton}>
+                                            <span>
+                                                <Eye/>
+                                            </span>
+                                            Подписаться
+                                        </button>
+                                    </div>
                                     <span>Срок: </span>
                                     <span>Статус: </span>
                                 </div>
@@ -127,11 +180,11 @@ const CardTaskModal = (props) => {
                                     }}
                                     spellCheck="false"
                                 />
-                                <div>
+                                <div className={styles.fullEditDescriptionHeader}>
                                     <CheckList/>
                                     <div>Чек-лист</div>
                                 </div>
-                                <div>
+                                <div className={styles.fullEditDescriptionHeader}>
                                     <Comments/>
                                     <div>Комментарии</div>
                                 </div>

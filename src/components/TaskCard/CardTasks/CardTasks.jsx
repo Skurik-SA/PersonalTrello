@@ -81,8 +81,8 @@ const CardTasks = (props) => {
 
             setTop(yPosition)
             setLeft(xPosition)
-            console.log(task)
-            console.log(column_id)
+            // console.log(task)
+            // console.log(column_id)
         }
         else if (type === 'full') {
             setModalOpen(true);

@@ -32,7 +32,7 @@
     flex-direction: row;
     justify-content: flex-start;
     align-items: flex-start;
-    margin-top: 60px;
+    margin-top: 30px;
     gap: 20px;
 }
 
@@ -70,6 +70,8 @@
     background: #8d325f;
 }
 
+
+
 .fullEditDescriptionWrapper {
     display: flex;
     flex-direction: column;
@@ -82,7 +84,7 @@
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    align-items: flex-start;
+    align-items: center;
     gap: 10px;
 }
 
@@ -132,4 +134,88 @@
 .modalWindowTitleSVG {
     margin-right: 5px;
     padding-top: 5px;
+}
+
+.fullEditAddMarkButton, .fullEditMarkButton, .subscribeButton {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background: #672244;
+    letter-spacing: 1px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+
+    border: none;
+    border-radius: 5px;
+}
+
+.fullEditAddMarkButton {
+    padding-left: 10px;
+}
+
+.fullEditAddMarkButton:hover, .subscribeButton:hover {
+    background: #8d325f;
+}
+
+.subscribeButton {
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    background: #48182f;
+    width: 140px;
+}
+
+.fullEditMarkButton {
+    background: transparent;
+    width: 100%;
+    min-height: 30px;
+    opacity: 80%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.fullEditAddMarkButton:hover {
+    background: #8d325f;
+    opacity: 100%;
+}
+
+.fullEditMarksWrapper {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    max-width: calc(100% - 100px);
+}
+
+.fullEditMarksTaskMark {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.8rem;
+    border-radius: 5px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    min-width: 40px;
+    min-height: 30px;
+    opacity: 85%;
+    max-width: 300px;
+}
+
+.fullEditMarksTaskMark:hover {
+    opacity: 100%;
+}
+
+
+
+.fullEditMarksTaskSpanContent {
+    white-space: nowrap;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

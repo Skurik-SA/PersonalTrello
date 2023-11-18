@@ -14,6 +14,7 @@ const ButtonChangeMark = (props) => {
 
         button_id,
         buttonContent,
+        buttonIcon,
         rootPopoverStyle,
         rootButtonStyle,
     } = props
@@ -33,7 +34,7 @@ const ButtonChangeMark = (props) => {
             popover_id={"button-popper"}
             button_id={button_id ? button_id : "change-marks"}
             buttonContent={buttonContent ? buttonContent : "Изменить метки"}
-            buttonIcon={<Marks/>}
+            buttonIcon={buttonIcon ? buttonIcon : <Marks/>}
 
             rootPopoverStyle={rootPopoverStyle}
             rootButtonStyle={rootButtonStyle}

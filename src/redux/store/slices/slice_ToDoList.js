@@ -793,6 +793,19 @@ const Slice_ToDoList = createSlice({
         },
         create_new_mark(state, action) {
             state.mark_store.push(action.payload)
+        },
+        edit_mark(state, action) {
+            state.mark_store = state.mark_store.map((mark) => {
+                if (mark.id === action.payload.id) {
+                    return action.payload
+                }
+                else {
+                    return mark
+                }
+            })
+        },
+        delete_mark(state, action) {
+            state.mark_store = state.mark_store.filter((mark) => mark.id !== action.payload.id)
         }
     }
 })
@@ -803,5 +816,7 @@ export const {
     set_todolist,
     set_selected_task_byId,
     set_selected_task_byData,
-    create_new_mark
+    create_new_mark,
+    edit_mark,
+    delete_mark
 } = Slice_ToDoList.actions

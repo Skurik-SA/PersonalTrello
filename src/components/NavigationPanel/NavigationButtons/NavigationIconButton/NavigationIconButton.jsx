@@ -27,7 +27,7 @@ const NavigationIconButton = () => {
                 }
             }
             catch (err) {
-                console.log("ads")
+                // console.log("ads")
             }
         }
         document.addEventListener("mousedown", handler)

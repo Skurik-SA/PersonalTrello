@@ -5,7 +5,7 @@ import CardBase from "../CardBase/CardBase.jsx";
 import {useState} from "react";
 import {v4 as uuidv4} from "uuid";
 import {useDispatch, useSelector} from "react-redux";
-import {set_selected_task_byData, set_todolist} from "../../../redux/store/slices/slice_ToDoList.js";
+import {delete_mark, set_selected_task_byData, set_todolist} from "../../../redux/store/slices/slice_ToDoList.js";
 
 
 const CardBoard = (props) => {
@@ -19,7 +19,7 @@ const CardBoard = (props) => {
     // Это костыль, но зато какой, потом с бэком скорее всего менять придётся
     const dispatch = useDispatch()
 
-    const onChangeCardMark = (task_id, new_mark) => {
+    const onChangeCardMark = (task_id, new_mark, type="add") => {
 
         const findColumnIndex = (type) => {
             let colIndex = {
@@ -44,9 +44,23 @@ const CardBoard = (props) => {
 
         const validateMark = (taskMarks) => {
             for (let i = 0; i < taskMarks.length; i++) {
-                if (taskMarks[i].id === new_mark.id) {
-
+                if (type === "delete") {
                     return taskMarks.filter((mark) => mark.id !== new_mark.id)
+                }
+                if (taskMarks[i].id === new_mark.id) {
+                    if (type === "add") {
+                        return taskMarks.filter((mark) => mark.id !== new_mark.id)
+                    }
+                    if (type === "edit") {
+                        return taskMarks.map((mark) => {
+                            if (mark.id === new_mark.id) {
+                                return new_mark
+                            }
+                            else {
+                                return mark
+                            }
+                        })
+                    }
                 }
             }
             return [...taskMarks, new_mark]
@@ -65,6 +79,7 @@ const CardBoard = (props) => {
             sub_tasks: clientVisibleData[columnIndex].content[taskIndex].sub_tasks,
             comments: clientVisibleData[columnIndex].content[taskIndex].comments,
         }
+
         const newItems = [...(clientVisibleData.map((column_id, col_index) =>
             column_id.id !== columnId
                 ?

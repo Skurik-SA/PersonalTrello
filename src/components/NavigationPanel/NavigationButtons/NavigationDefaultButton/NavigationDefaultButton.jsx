@@ -17,6 +17,7 @@ const NavigationDefaultButton = (props) => {
         customPopperBaseStyle,
         growAnimationStyle,
         clickClose= false,
+        clickCloseOutside = true,
     } = props
 
     const [anchorEl, setAnchorEl] = useState(null);
@@ -34,21 +35,23 @@ const NavigationDefaultButton = (props) => {
     let buttonPopperRef = useRef(null)
 
     useEffect(() => {
-        let handler = (e) => {
-            try {
-                if (!popperRef2.current.contains(e.target) && !buttonPopperRef.current.contains(e.target)) {
-                    setAnchorEl(null);
-                    setAnimElFlag(false)
+        if (clickCloseOutside) {
+            let handler = (e) => {
+                try {
+                    if (!popperRef2.current.contains(e.target) && !buttonPopperRef.current.contains(e.target)) {
+                        setAnchorEl(null);
+                        setAnimElFlag(false)
+                    }
+                }
+                catch (err) {
+                    // console.log("ads")
                 }
             }
-            catch (err) {
-                console.log("ads")
-            }
-        }
-        document.addEventListener("mousedown", handler)
+            document.addEventListener("mousedown", handler)
 
-        return () => {
-            document.removeEventListener("mousedown", handler)
+            return () => {
+                document.removeEventListener("mousedown", handler)
+            }
         }
     })
 

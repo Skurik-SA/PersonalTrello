@@ -5,30 +5,29 @@ import Pen from "../../../../assets/Icons/Pen.jsx";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
 import {ChromePicker} from "react-color";
-import {create_new_mark} from "../../../../redux/store/slices/slice_ToDoList.js";
+import {create_new_mark, delete_mark, edit_mark} from "../../../../redux/store/slices/slice_ToDoList.js";
 
 const ContentChangeMark = (props) => {
 
     const dispatch = useDispatch()
     const marks = useSelector(state => state.todolist.mark_store)
 
-    const [windowSelector, setWindowSelector] = useState("choose")
+    const [windowSelector, setWindowSelector] = useState("choose") // choose || edit || create
 
     const [bgcolor, setBgcolor] = useState("#4B0F29")
     const [newMarkText, setNewMarkText] = useState("")
     const [newMarkFontColor, setNewMarkFontColor] = useState("#000")
     const [newMark, setNewMark] = useState({
-        id: marks.length + 1,
+        id: marks[marks.length - 1].id + 1,
         font_color: '#000',
         color: "#" + Math.random().toString(16).substr(-6),
         mark_text: ''
     })
 
     const handleColorPickChange = (color) => {
-        console.log(color.hex)
         setBgcolor(color.hex)
         setNewMark({
-            id: marks.length + 1,
+            id: windowSelector === 'edit' ? newMark.id : marks[marks.length - 1].id + 1,
             font_color: newMark.font_color,
             color: color.hex,
             mark_text: newMark.mark_text
@@ -38,7 +37,7 @@ const ContentChangeMark = (props) => {
     const onNewMarkTextChange = (e) => {
         setNewMarkText(e.target.value)
         setNewMark({
-            id: marks.length + 1,
+            id: windowSelector === 'edit' ? newMark.id : marks[marks.length - 1].id + 1,
             font_color: newMark.font_color,
             color: newMark.color,
             mark_text: e.target.value
@@ -48,7 +47,7 @@ const ContentChangeMark = (props) => {
     const onNewMarkFontColorClick = () => {
         setNewMarkFontColor(newMarkFontColor === "#000" ? "#fff" : "#000")
         setNewMark({
-            id: marks.length + 1,
+            id: windowSelector === 'edit' ? newMark.id : marks[marks.length - 1].id + 1,
             font_color: newMarkFontColor === "#000" ? "#fff" : "#000",
             color: newMark.color,
             mark_text: newMark.mark_text
@@ -56,8 +55,32 @@ const ContentChangeMark = (props) => {
     }
 
     const dumpMark = () => {
+        setNewMarkText("")
+        setNewMarkFontColor("#000")
         setNewMark({
-            id: marks.length + 2,
+            id: windowSelector === 'edit' ? newMark.id : marks[marks.length - 1].id + 1,
+            font_color: '#000',
+            color: "#" + Math.random().toString(16).substr(-6),
+            mark_text: ''
+        })
+    }
+
+    const toEditMark = (id, markFontColor, markBackgroundColor, markText) => {
+        setNewMarkText(markText)
+        setNewMarkFontColor(markFontColor)
+        setNewMark({
+            id: id,
+            font_color: markFontColor,
+            color: markBackgroundColor,
+            mark_text: markText
+        })
+    }
+
+    const toNewMark = () => {
+        setNewMarkText("")
+        setNewMarkFontColor("#000")
+        setNewMark({
+            id: marks[marks.length - 1].id + 1,
             font_color: '#000',
             color: "#" + Math.random().toString(16).substr(-6),
             mark_text: ''
@@ -78,9 +101,10 @@ const ContentChangeMark = (props) => {
     return (
         <div className={styles.contentChangeMarkWrapper}>
             <div className={styles.contentChangeMark_title}>
-                {windowSelector === 'edit'
+                {windowSelector === 'edit' || windowSelector === 'create'
                     ?
                     <button className={styles.contentReturn_return} onClick={() => {
+                        console.log(marks)
                         setWindowSelector("choose")
                         dumpMark()
                     }}>
@@ -119,7 +143,7 @@ const ContentChangeMark = (props) => {
                                                         card_marks.findIndex((nd) => nd.id === mark.id) !== -1
                                                     }
                                                     onChange={() => {
-                                                        onChangeCardMark(task_id, mark)
+                                                        onChangeCardMark(task_id, mark, "add")
                                                     }}
                                                     sx={{ '& + *': { fontSize: '0.9rem' } }}
                                                 />
@@ -132,14 +156,20 @@ const ContentChangeMark = (props) => {
                                                 </div>
                                             }
                                         />
-                                        <button className={styles.contentChangeMark_editMark}>
+                                        <button className={styles.contentChangeMark_editMark} onClick={() => {
+                                            toEditMark(mark.id, mark.font_color, mark.color, mark.mark_text)
+                                            setWindowSelector("edit")
+                                        }}>
                                             <Pen/>
                                         </button>
                                     </div>
                                 )}
                             </FormGroup>
                         </div>
-                        <button className={styles.contentChangeMark_createNewMark} onClick={() => setWindowSelector("edit")}>
+                        <button className={styles.contentChangeMark_createNewMark} onClick={() => {
+                            toNewMark()
+                            setWindowSelector("create")
+                        }}>
                             Создать новую метку
                         </button>
                     </div>
@@ -176,13 +206,48 @@ const ContentChangeMark = (props) => {
                         </ChromePicker>
                     </div>
                     <div className={styles.contentEditMarkButtonsWrapper}>
-                        <button className={styles.contentEditMarkCreateButton} onClick={() => {
-                            dispatch(create_new_mark(newMark))
-                            setWindowSelector("choose")
-                            dumpMark()
-                        }}>
-                            Создать
-                        </button>
+                        {windowSelector === 'create'
+                            ?
+                                <button className={styles.contentEditMarkCreateButton} onClick={() => {
+                                    dispatch(create_new_mark(newMark))
+                                    setWindowSelector("choose")
+                                    dumpMark()
+                                }}>
+                                    Создать
+                                </button>
+                            :
+                                <></>
+                        }
+                        {windowSelector === 'edit'
+                            ?
+                            <button className={styles.contentEditMarkCreateButton} onClick={() => {
+                                // dispatch(create_new_mark(newMark))
+                                setWindowSelector("choose")
+                                dispatch(edit_mark(newMark))
+                                onChangeCardMark(task_id, newMark, "edit")
+                                dumpMark()
+
+                            }}>
+                                Сохранить
+                            </button>
+                            :
+                            <></>
+                        }
+                        {windowSelector === 'edit'
+                            ?
+                                <button className={styles.contentEditMarkCreateButton} onClick={() => {
+                                    // dispatch(create_new_mark(newMark))
+                                    setWindowSelector("choose")
+                                    onChangeCardMark(task_id, newMark, "delete")
+                                    dispatch(delete_mark(newMark))
+                                    dumpMark()
+                                }}>
+                                    Удалить
+                                </button>
+                            :
+                                <>
+                                </>
+                        }
                     </div>
                 </div>
 

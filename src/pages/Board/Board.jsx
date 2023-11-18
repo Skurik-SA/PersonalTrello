@@ -147,6 +147,7 @@ const Board = () => {
                                 popperBtnId={'filters-popper'}
                                 placement={"bottom"}
                                 growAnimationStyle={{ transformOrigin: '0 50 0'}}
+                                clickCloseOutside={false}
                                 buttonContent={
                                     <>
                                         <span>

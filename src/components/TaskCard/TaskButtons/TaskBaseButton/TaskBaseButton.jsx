@@ -77,6 +77,8 @@ const TaskBaseButton = (props) => {
                         boxShadow: 'none',
                         color: 'white',
                         overflow: 'hidden',
+                        border: '#8d325f 1px solid',
+                        borderRadius: '20px',
                     }
                 },
             },
@@ -128,7 +130,7 @@ const TaskBaseButton = (props) => {
                 <span>
                     {buttonIcon}
                 </span>
-                <span>
+                <span className={styles.buttonTextMobile}>
                     {buttonContent}
                 </span>
             </button>

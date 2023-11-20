@@ -14,8 +14,8 @@ import Copy from "../../../assets/Icons/Copy.jsx";
 import Task from "../../../assets/Icons/Task.jsx";
 import {Transition} from "react-transition-group";
 import CardTaskModal from "../CardTaskModal/CardTaskModal.jsx";
-import TaskBaseButton from "../TaskButtons/TaskBaseButton/TaskBaseButton.jsx";
 import ButtonChangeMark from "../TaskButtons/ButtonChangeMark/ButtonChangeMark.jsx";
+import ButtonMoveCard from "../TaskButtons/ButtonMoveCard/ButtonMoveCard.jsx";
 
 const CardTasks = (props) => {
 
@@ -268,14 +268,17 @@ const CardTasks = (props) => {
                                             Изменить приоритет
                                        </span>
                                    </button>
-                                   <button className={styles.cardEditPopperMenuButton}>
-                                       <span>
-                                            <Moving/>
-                                       </span>
-                                       <span>
-                                            Переместить
-                                       </span>
-                                   </button>
+                                   <ButtonMoveCard
+                                       task_id={task.id}
+                                   />
+                                   {/*<button className={styles.cardEditPopperMenuButton}>*/}
+                                   {/*    <span>*/}
+                                   {/*         <Moving/>*/}
+                                   {/*    </span>*/}
+                                   {/*    <span>*/}
+                                   {/*         Переместить*/}
+                                   {/*    </span>*/}
+                                   {/*</button>*/}
                                    <button className={styles.cardEditPopperMenuButton}>
                                        <span>
                                             <Copy/>

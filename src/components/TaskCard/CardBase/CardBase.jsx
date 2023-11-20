@@ -1,8 +1,40 @@
 import styles from "./CardBase.module.css"
-import {useEffect, useRef, useState} from "react";
+import {Component, PureComponent, useEffect, useRef, useState} from "react";
 import {TextareaAutosize} from "@mui/material";
 import CardTasks from "../CardTasks/CardTasks.jsx";
 import {Draggable, Droppable} from "react-beautiful-dnd";
+
+
+class InnerCardTaskList extends Component {
+    shouldComponentUpdate(nextProps) {
+        if (
+            nextProps.column_id === this.props.column_id &&
+            nextProps.task === this.props.task &&
+            nextProps.changeTaskInfo === this.props.changeTaskInfo &&
+            nextProps.onChangeCardMark === this.props.onChangeCardMark &&
+            nextProps.markTextShow === this.props.markTextShow &&
+            nextProps.setMarkTextShow === this.props.setMarkTextShow
+        ) {
+            return false;
+        }
+
+        return true
+
+    }
+
+    render() {
+        return <CardTasks
+                    key={this.props.task.id}
+                    task={this.props.task}
+                    column_id={this.props.column_id}
+                    changeTaskInfo={this.props.changeTaskInfo}
+                    onChangeCardMark={this.props.onChangeCardMark}
+
+                    markTextShow={this.props.markTextShow}
+                    setMarkTextShow={this.props.setMarkTextShow}
+                />
+    }
+}
 
 const CardBase = (props) => {
 
@@ -59,6 +91,8 @@ const CardBase = (props) => {
                         ref={provided.innerRef}
                     >
                         <div className={styles.cardHead}>
+                            {/*<InnerList booba={"Game"}/>*/}
+
                             <div className={styles.cardHead_contentLeft}>
                                 {titleTextVisibility
                                     ?
@@ -116,7 +150,18 @@ const CardBase = (props) => {
                                             {...provided.draggableProps}
                                             ref={provided.innerRef}
                                         >
-                                            <CardTasks
+                                            {/*<CardTasks*/}
+                                            {/*    key={task.id}*/}
+                                            {/*    task={task}*/}
+                                            {/*    column_id={card_data.id}*/}
+                                            {/*    changeTaskInfo={changeTaskInfo}*/}
+                                            {/*    onChangeCardMark={onChangeCardMark}*/}
+
+                                            {/*    markTextShow={markTextShow}*/}
+                                            {/*    setMarkTextShow={setMarkTextShow}*/}
+                                            {/*/>*/}
+                                            <InnerCardTaskList
+                                                key={task.id}
                                                 task={task}
                                                 column_id={card_data.id}
                                                 changeTaskInfo={changeTaskInfo}
@@ -124,8 +169,7 @@ const CardBase = (props) => {
 
                                                 markTextShow={markTextShow}
                                                 setMarkTextShow={setMarkTextShow}
-                                            />
-
+                                                />
                                         </div>
                                     )}
                                 </Draggable>

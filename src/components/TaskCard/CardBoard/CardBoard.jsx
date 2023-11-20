@@ -2,11 +2,40 @@ import styles from "./CardBoard.module.css"
 import ScrollContainer from "react-indiana-drag-scroll";
 import {DragDropContext, Draggable, Droppable} from "react-beautiful-dnd";
 import CardBase from "../CardBase/CardBase.jsx";
-import {useState} from "react";
+import {PureComponent, useState} from "react";
 import {v4 as uuidv4} from "uuid";
-import {useDispatch, useSelector} from "react-redux";
-import {delete_mark, set_selected_task_byData, set_todolist} from "../../../redux/store/slices/slice_ToDoList.js";
+import {useDispatch} from "react-redux";
+import {set_selected_task_byData, set_todolist} from "../../../redux/store/slices/slice_ToDoList.js";
 
+class InnerCardList extends PureComponent {
+    render() {
+        const {
+            card_data,
+            card_title,
+            titleOnChange,
+            newTaskOnClick,
+            changeTaskInfo,
+            onChangeCardMark,
+            index,
+            markTextShow,
+            setMarkTextShow
+        } = this.props
+
+        return <CardBase
+                    card_data={card_data}
+                    card_title={card_title}
+                    titleOnChange={titleOnChange}
+                    newTaskOnClick={newTaskOnClick}
+                    changeTaskInfo={changeTaskInfo}
+                    onChangeCardMark={onChangeCardMark}
+
+                    index={index}
+
+                    markTextShow={markTextShow}
+                    setMarkTextShow={setMarkTextShow}
+                />
+    }
+}
 
 const CardBoard = (props) => {
 
@@ -193,6 +222,7 @@ const CardBoard = (props) => {
                 }
         ))]
         setClientVisibleData(newItems)
+        dispatch(set_todolist(newItems))
     }
 
     const handleOnDragEnd = (results) => {
@@ -273,7 +303,7 @@ const CardBoard = (props) => {
                                                 {...provided.draggableProps}
                                                 ref={provided.innerRef}
                                             >
-                                                <CardBase
+                                                <InnerCardList
                                                     card_data={card}
                                                     card_title={card.title}
                                                     titleOnChange={changeTitle}
@@ -286,6 +316,19 @@ const CardBoard = (props) => {
                                                     markTextShow={markTextShow}
                                                     setMarkTextShow={setMarkTextShow}
                                                 />
+                                                {/*<CardBase*/}
+                                                {/*    card_data={card}*/}
+                                                {/*    card_title={card.title}*/}
+                                                {/*    titleOnChange={changeTitle}*/}
+                                                {/*    newTaskOnClick={addNewTask}*/}
+                                                {/*    changeTaskInfo={changeTaskInfo}*/}
+                                                {/*    onChangeCardMark={onChangeCardMark}*/}
+
+                                                {/*    index={card.id}*/}
+
+                                                {/*    markTextShow={markTextShow}*/}
+                                                {/*    setMarkTextShow={setMarkTextShow}*/}
+                                                {/*/>*/}
                                             </div>
                                         )}
                                     </Draggable>

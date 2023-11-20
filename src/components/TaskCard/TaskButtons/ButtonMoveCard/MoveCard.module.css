@@ -1,0 +1,83 @@
+.contentMoveCardWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 15px;
+
+    /*border: #8d325f 1px solid;*/
+    /*border-radius: 16px;*/
+}
+
+.contentMoveCard_title {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 10px;
+    font-size: 1rem;
+    letter-spacing: 1px;
+}
+
+.contentMoveCard_exit {
+    position: absolute;
+    right: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    padding: 8px;
+    border: none;
+    border-radius: 10px;
+    background: transparent;
+    cursor: pointer;
+}
+
+.contentMoveCard_exit:hover {
+    background: rgba(141, 60, 98, 0.5);
+}
+
+.contentMoveCard_movingSector {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+
+    padding-top: 15px;
+
+    width: 240px;
+}
+
+.contentMoveCard_buttonsUp {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.contentMoveCard_buttonsDown {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+
+    width: 100%;
+}
+
+.contentMoveCard_button {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 4px;
+    padding-left: 10px;
+
+    font-size: 0.7rem;
+
+    height: 40px;
+
+    cursor: pointer;
+}

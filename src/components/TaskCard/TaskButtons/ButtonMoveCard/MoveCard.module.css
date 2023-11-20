@@ -59,6 +59,44 @@
     width: 100%;
 }
 
+.contentMoveCard_buttonUp, .contentMoveCard_buttonMove {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding-left: 10px;
+
+    background: transparent;
+    border: #8d325f 1px solid;
+    font-size: 0.9rem;
+
+    height: 40px;
+
+    cursor: pointer;
+}
+
+.contentMoveCard_buttonMove {
+    border: #49328d 1px solid;
+}
+
+.contentMoveCard_buttonUp:hover {
+    background: #8d325f;
+}
+
+.contentMoveCard_buttonMove:hover {
+    background: #553aa6;
+}
+
+.contentMoveCard_buttonUp:active {
+    background: #621b40;
+}
+
+.contentMoveCard_buttonMove:active {
+    background: #382572;
+}
+
+
 .contentMoveCard_buttonsDown {
     display: flex;
     flex-direction: row;
@@ -81,3 +119,4 @@
 
     cursor: pointer;
 }
+

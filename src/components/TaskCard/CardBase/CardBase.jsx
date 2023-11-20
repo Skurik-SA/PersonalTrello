@@ -1,5 +1,5 @@
 import styles from "./CardBase.module.css"
-import {Component, PureComponent, useEffect, useRef, useState} from "react";
+import {Component, useEffect, useRef, useState} from "react";
 import {TextareaAutosize} from "@mui/material";
 import CardTasks from "../CardTasks/CardTasks.jsx";
 import {Draggable, Droppable} from "react-beautiful-dnd";
@@ -19,7 +19,6 @@ class InnerCardTaskList extends Component {
         }
 
         return true
-
     }
 
     render() {

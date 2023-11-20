@@ -48,6 +48,10 @@ const CardBoard = (props) => {
     // Это костыль, но зато какой, потом с бэком скорее всего менять придётся
     const dispatch = useDispatch()
 
+    const moveCardViaButtons = () => {
+
+    }
+
     const onChangeCardMark = (task_id, new_mark, type="add") => {
 
         const findColumnIndex = (type) => {
@@ -221,6 +225,7 @@ const CardBoard = (props) => {
                     )]
                 }
         ))]
+
         setClientVisibleData(newItems)
         dispatch(set_todolist(newItems))
     }
@@ -276,6 +281,7 @@ const CardBoard = (props) => {
         }
 
         setClientVisibleData(newEl)
+        // dispatch(set_todolist(newEl))
     }
 
     return (

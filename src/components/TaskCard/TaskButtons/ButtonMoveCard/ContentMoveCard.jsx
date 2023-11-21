@@ -2,7 +2,6 @@ import styles from "./MoveCard.module.css"
 import ExitModal from "../../../../assets/Icons/ExitModal.jsx";
 import {createTheme, ThemeProvider, FormControl, InputLabel, MenuItem, Select, Divider} from "@mui/material";
 import {useState} from "react";
-import {useSelector} from "react-redux";
 import {useColumnIndexViaTaskId} from "../../../../hooks/useColumnIndexViaTaskId.js";
 
 const ContentMoveCard = (props) => {

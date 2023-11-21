@@ -21,6 +21,8 @@ import ButtonChangeMark from "../TaskButtons/ButtonChangeMark/ButtonChangeMark.j
 import {useSelector} from "react-redux";
 import Notifications from "../../../assets/Icons/Notifications.jsx";
 import Eye from "../../../assets/Icons/Eye.jsx";
+import ButtonMoveCard from "../TaskButtons/ButtonMoveCard/ButtonMoveCard.jsx";
+import Status from "../../../assets/Icons/Status.jsx";
 
 const CardTaskModal = (props) => {
 
@@ -33,6 +35,9 @@ const CardTaskModal = (props) => {
         task,
         column_id,
         onChangeCardMark,
+        clientVisibleData,
+        moveCardViaButtons,
+        onChangeDescription
     } = props
 
     const marks = useSelector(state => state.todolist.mark_store)
@@ -100,8 +105,7 @@ const CardTaskModal = (props) => {
                                 />
                                 <span>
                                            В колонке
-                                       </span>
-
+                                </span>
                             </div>
                             <button className={styles.modalWindowCloseButton} onClick={handleModalClose}>
                                    <span>
@@ -163,8 +167,14 @@ const CardTaskModal = (props) => {
                                             Подписаться
                                         </button>
                                     </div>
-                                    <span>Срок: </span>
-                                    <span>Статус: </span>
+                                    <div className={styles.fullEditDescriptionHeader}>
+                                        <Dates/>
+                                        <span>Срок: </span>
+                                    </div>
+                                    <div className={styles.fullEditDescriptionHeader}>
+                                        <Status/>
+                                        <span>Статус: </span>
+                                    </div>
                                 </div>
                                 <div className={styles.fullEditDescriptionHeader}>
                                     <Description/>
@@ -178,7 +188,15 @@ const CardTaskModal = (props) => {
                                     onChange={(e) => {
                                         setValueDescription(e.target.value)
                                     }}
+                                    onKeyDown={(e) => {
+                                        if (e.key === 'Escape' || e.key === 'Enter') {
+                                            onChangeDescription(task.id, column_id, e.target.value)
+                                        }
+                                    }}
                                     spellCheck="false"
+                                    onMouseOut={(e) => {
+                                        onChangeDescription(task.id, column_id, e.target.value)
+                                    }}
                                 />
                                 <div className={styles.fullEditDescriptionHeader}>
                                     <CheckList/>
@@ -251,15 +269,16 @@ const CardTaskModal = (props) => {
                                 </button>
                                 <span className={styles.fullEditMenuSpan}>
                                            Действия
-                                       </span>
-                                <button className={styles.fullEditMenuButton}>
-                                    <span>
-                                        <Moving/>
-                                    </span>
-                                    <span>
-                                               Перемещение
-                                    </span>
-                                </button>
+                               </span>
+                                <ButtonMoveCard
+                                    clientVisibleData={clientVisibleData}
+                                    moveCardViaButtons={moveCardViaButtons}
+                                    task_id={task.id}
+                                    renderByAnchor={true}
+                                    buttonContent={"Перемещение"}
+                                    button_id={"modal-move-card-to"}
+                                    rootButtonStyle={styles.fullEditMenuButton}
+                                />
                                 <button className={styles.fullEditMenuButton}>
                                     <span>
                                        <Copy/>

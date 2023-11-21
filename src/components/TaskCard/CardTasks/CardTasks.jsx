@@ -7,9 +7,7 @@ import {
     ThemeProvider,
 } from "@mui/material";
 import Priority from "../../../assets/Icons/Priority.jsx";
-import Marks from "../../../assets/Icons/Marks.jsx";
 import Dates from "../../../assets/Icons/Dates.jsx";
-import Moving from "../../../assets/Icons/Moving.jsx";
 import Copy from "../../../assets/Icons/Copy.jsx";
 import Task from "../../../assets/Icons/Task.jsx";
 import {Transition} from "react-transition-group";
@@ -27,7 +25,9 @@ const CardTasks = (props) => {
         markTextShow,
         setMarkTextShow,
         clientVisibleData,
-        moveCardViaButtons
+        moveCardViaButtons,
+        onChangeDescription,
+
     } = props
 
     const [anchorEl, setAnchorEl] = useState(null);
@@ -131,6 +131,10 @@ const CardTasks = (props) => {
                changeTaskInfo={changeTaskInfo}
                task={task}
                column_id={column_id}
+               onChangeDescription={onChangeDescription}
+
+               clientVisibleData={clientVisibleData}
+               moveCardViaButtons={moveCardViaButtons}
                onChangeCardMark={onChangeCardMark}
            />
            <li className={styles.taskContents} >
@@ -227,41 +231,11 @@ const CardTasks = (props) => {
                                            Открыть задачу
                                        </span>
                                    </button>
-
-                                   {/*<TaskBaseButton*/}
-                                   {/*    // open={open2}*/}
-                                   {/*    // top={top2}*/}
-                                   {/*    // left={left2}*/}
-                                   {/*    // anchorEl={anchorEl2}*/}
-                                   {/*    // setAnchorEl={setAnchorEl2}*/}
-                                   {/*    id={"marks"}*/}
-                                   {/*    buttonContent={"adsada"}*/}
-                                   {/*    buttonIcon={<Marks/>}*/}
-                                   {/*>*/}
-                                   {/* /!*     Тут ребёнок*!/*/}
-                                   {/*</TaskBaseButton>*/}
-                                   {/*<button*/}
-                                   {/*    className={styles.cardEditPopperMenuButton}*/}
-                                   {/*    onClick={(e) => {*/}
-                                   {/*        // handleClick(e, 'mini_secondary')*/}
-                                   {/*        console.log("asdasdad")*/}
-                                   {/*    }}*/}
-                                   {/*>*/}
-                                   {/*     <span>*/}
-                                   {/*         <Marks/>*/}
-                                   {/*     </span>*/}
-
-                                   {/*     <span>*/}
-                                   {/*         Изменить метки*/}
-                                   {/*     </span>*/}
-                                   {/*</button>*/}
                                     <ButtonChangeMark
                                         onChangeCardMark={onChangeCardMark}
                                         task_id={task.id}
                                         card_marks={task.marks}
                                     />
-
-
                                    <button className={styles.cardEditPopperMenuButton}>
                                        <span>
                                             <Priority/>
@@ -275,14 +249,6 @@ const CardTasks = (props) => {
                                        moveCardViaButtons={moveCardViaButtons}
                                        task_id={task.id}
                                    />
-                                   {/*<button className={styles.cardEditPopperMenuButton}>*/}
-                                   {/*    <span>*/}
-                                   {/*         <Moving/>*/}
-                                   {/*    </span>*/}
-                                   {/*    <span>*/}
-                                   {/*         Переместить*/}
-                                   {/*    </span>*/}
-                                   {/*</button>*/}
                                    <button className={styles.cardEditPopperMenuButton}>
                                        <span>
                                             <Copy/>

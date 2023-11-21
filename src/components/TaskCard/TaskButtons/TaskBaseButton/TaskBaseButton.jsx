@@ -2,7 +2,7 @@ import styles from "./TaskBaseButton.module.css"
 import {createTheme, Popover, ThemeProvider} from "@mui/material";
 import {useState} from "react";
 import {useDispatch} from "react-redux";
-import {set_selected_task_byId} from "../../../../redux/store/slices/slice_ToDoList.js";
+// import {set_selected_task_byId} from "../../../../redux/store/slices/slice_ToDoList.js";
 
 const TaskBaseButton = (props) => {
 
@@ -45,7 +45,7 @@ const TaskBaseButton = (props) => {
 
 
     const handleClick = (event) => {
-        dispatch(set_selected_task_byId(task_id))
+        // dispatch(set_selected_task_byId(task_id))
 
         setAnchorEl(event.currentTarget);
 

@@ -776,24 +776,24 @@ const Slice_ToDoList = createSlice({
         // set_data_content_marks(state, action) {
         //
         // },
-        set_selected_task_byId(state, action) {
-            state.data.map((card) => {
-                card.content.map((task) => {
-                    if (task.id === action.payload) {
-                        state.selected_task = task
-                    }
-                })
-            })
-        },
-        set_selected_task_byData(state, action) {
-            state.data.map((card) => {
-                card.content.map((task) => {
-                    if (task.id === action.payload.id) {
-                        state.selected_task = action.payload
-                    }
-                })
-            })
-        },
+        // set_selected_task_byId(state, action) {
+        //     state.data.map((card) => {
+        //         card.content.map((task) => {
+        //             if (task.id === action.payload) {
+        //                 state.selected_task = task
+        //             }
+        //         })
+        //     })
+        // },
+        // set_selected_task_byData(state, action) {
+        //     state.data.map((card) => {
+        //         card.content.map((task) => {
+        //             if (task.id === action.payload.id) {
+        //                 state.selected_task = action.payload
+        //             }
+        //         })
+        //     })
+        // },
         create_new_mark(state, action) {
             state.mark_store.push(action.payload)
         },

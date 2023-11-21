@@ -761,11 +761,14 @@ const Slice_ToDoList = createSlice({
                 ],
             },
         ],
+        column_list: []
     },
     reducers: {
         set_todolist(state, action) {
             state.data = action.payload
-
+        },
+        set_column_list(state, action) {
+            state.column_list = action.payload
         },
         set_mark_store(state, action) {
             state.mark_store = action.payload
@@ -818,5 +821,6 @@ export const {
     set_selected_task_byData,
     create_new_mark,
     edit_mark,
-    delete_mark
+    delete_mark,
+    set_column_list,
 } = Slice_ToDoList.actions

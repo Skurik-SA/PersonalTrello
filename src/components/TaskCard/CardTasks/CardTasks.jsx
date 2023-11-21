@@ -25,7 +25,9 @@ const CardTasks = (props) => {
         changeTaskInfo,
         onChangeCardMark,
         markTextShow,
-        setMarkTextShow
+        setMarkTextShow,
+        clientVisibleData,
+        moveCardViaButtons
     } = props
 
     const [anchorEl, setAnchorEl] = useState(null);
@@ -269,6 +271,8 @@ const CardTasks = (props) => {
                                        </span>
                                    </button>
                                    <ButtonMoveCard
+                                       clientVisibleData={clientVisibleData}
+                                       moveCardViaButtons={moveCardViaButtons}
                                        task_id={task.id}
                                    />
                                    {/*<button className={styles.cardEditPopperMenuButton}>*/}

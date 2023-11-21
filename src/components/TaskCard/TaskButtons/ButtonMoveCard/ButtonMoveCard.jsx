@@ -9,6 +9,8 @@ const ButtonMoveCard = (props) => {
     const {
         task_id,
         renderByAnchor,
+        clientVisibleData,
+        moveCardViaButtons,
 
         button_id,
         buttonContent,
@@ -40,6 +42,8 @@ const ButtonMoveCard = (props) => {
             rootButtonStyle={rootButtonStyle}
         >
             <ContentMoveCard
+                clientVisibleData={clientVisibleData}
+                moveCardViaButtons={moveCardViaButtons}
                 task_id={task_id}
                 handleClose={handleClose}
             />

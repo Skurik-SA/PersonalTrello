@@ -2,10 +2,10 @@ import styles from "./CardBoard.module.css"
 import ScrollContainer from "react-indiana-drag-scroll";
 import {DragDropContext, Draggable, Droppable} from "react-beautiful-dnd";
 import CardBase from "../CardBase/CardBase.jsx";
-import {PureComponent, useState} from "react";
+import {PureComponent, useMemo, useState} from "react";
 import {v4 as uuidv4} from "uuid";
 import {useDispatch} from "react-redux";
-import {set_selected_task_byData, set_todolist} from "../../../redux/store/slices/slice_ToDoList.js";
+import {set_column_list, set_selected_task_byData, set_todolist} from "../../../redux/store/slices/slice_ToDoList.js";
 
 class InnerCardList extends PureComponent {
     render() {
@@ -18,7 +18,9 @@ class InnerCardList extends PureComponent {
             onChangeCardMark,
             index,
             markTextShow,
-            setMarkTextShow
+            setMarkTextShow,
+            clientVisibleData,
+            moveCardViaButtons
         } = this.props
 
         return <CardBase
@@ -28,6 +30,8 @@ class InnerCardList extends PureComponent {
                     newTaskOnClick={newTaskOnClick}
                     changeTaskInfo={changeTaskInfo}
                     onChangeCardMark={onChangeCardMark}
+                    clientVisibleData={clientVisibleData}
+                    moveCardViaButtons={moveCardViaButtons}
 
                     index={index}
 
@@ -44,12 +48,65 @@ const CardBoard = (props) => {
     } = props
 
     const [clientVisibleData, setClientVisibleData] = useState(data)
+
     const [markTextShow, setMarkTextShow] = useState(false)
     // Это костыль, но зато какой, потом с бэком скорее всего менять придётся
     const dispatch = useDispatch()
 
-    const moveCardViaButtons = () => {
+    // Вроде багов нет
+    const moveCardViaButtons = (
+        source_task_id,
+        // source_column_id,
+        destination_task_index,
+        destination_column_index
+        ) => {
 
+        const findColumnIndex = (type) => {
+            let colIndex = {
+                index: -1,
+                id: '',
+            }
+
+            clientVisibleData.map((column, i) => column.content.map((el) => {
+                if (el.id === source_task_id) {
+                    colIndex = {
+                        index: i,
+                        id: column.id
+                    }
+                }
+            }))
+
+            if (type === 'id')
+                return colIndex.id
+            else if (type === 'index')
+                return colIndex.index
+        }
+
+        const source_column_index = findColumnIndex('index')
+        const source_task_index = clientVisibleData[source_column_index].content.findIndex((row) => row.id === source_task_id)
+        const newDataItems = [...clientVisibleData[source_column_index].content]
+
+        const newDestinationItems =
+            source_column_index !== destination_column_index
+                ? [...clientVisibleData[destination_column_index].content]
+                : newDataItems
+
+        const [deletedItem] = newDataItems.splice(source_task_index, 1)
+        newDestinationItems.splice(destination_task_index, 0, deletedItem)
+
+        const newEl = [...clientVisibleData]
+
+        newEl[source_column_index] = {
+            ...clientVisibleData[source_column_index],
+            content: newDataItems
+        }
+
+        newEl[destination_column_index] = {
+            ...clientVisibleData[destination_column_index],
+            content: newDestinationItems
+        }
+
+        setClientVisibleData(newEl)
     }
 
     const onChangeCardMark = (task_id, new_mark, type="add") => {
@@ -227,7 +284,6 @@ const CardBoard = (props) => {
         ))]
 
         setClientVisibleData(newItems)
-        dispatch(set_todolist(newItems))
     }
 
     const handleOnDragEnd = (results) => {
@@ -281,7 +337,6 @@ const CardBoard = (props) => {
         }
 
         setClientVisibleData(newEl)
-        // dispatch(set_todolist(newEl))
     }
 
     return (
@@ -318,7 +373,8 @@ const CardBoard = (props) => {
                                                     onChangeCardMark={onChangeCardMark}
 
                                                     index={card.id}
-
+                                                    clientVisibleData={clientVisibleData}
+                                                    moveCardViaButtons={moveCardViaButtons}
                                                     markTextShow={markTextShow}
                                                     setMarkTextShow={setMarkTextShow}
                                                 />

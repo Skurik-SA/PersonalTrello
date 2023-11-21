@@ -13,7 +13,9 @@ class InnerCardTaskList extends Component {
             nextProps.changeTaskInfo === this.props.changeTaskInfo &&
             nextProps.onChangeCardMark === this.props.onChangeCardMark &&
             nextProps.markTextShow === this.props.markTextShow &&
-            nextProps.setMarkTextShow === this.props.setMarkTextShow
+            nextProps.setMarkTextShow === this.props.setMarkTextShow &&
+            nextProps.clientVisibleData === this.props.clientVisibleData &&
+            nextProps.moveCardViaButtons === this.props.moveCardViaButtons
         ) {
             return false;
         }
@@ -28,9 +30,10 @@ class InnerCardTaskList extends Component {
                     column_id={this.props.column_id}
                     changeTaskInfo={this.props.changeTaskInfo}
                     onChangeCardMark={this.props.onChangeCardMark}
-
+                    clientVisibleData={this.props.clientVisibleData}
                     markTextShow={this.props.markTextShow}
                     setMarkTextShow={this.props.setMarkTextShow}
+                    moveCardViaButtons={this.props.moveCardViaButtons}
                 />
     }
 }
@@ -46,7 +49,9 @@ const CardBase = (props) => {
         changeTaskInfo,
         onChangeCardMark,
         markTextShow,
-        setMarkTextShow
+        setMarkTextShow,
+        clientVisibleData,
+        moveCardViaButtons
     } = props
 
     const [titleTextVisibility, setTitleTextVisibility] = useState(false)
@@ -166,6 +171,8 @@ const CardBase = (props) => {
                                                 changeTaskInfo={changeTaskInfo}
                                                 onChangeCardMark={onChangeCardMark}
 
+                                                clientVisibleData={clientVisibleData}
+                                                moveCardViaButtons={moveCardViaButtons}
                                                 markTextShow={markTextShow}
                                                 setMarkTextShow={setMarkTextShow}
                                                 />

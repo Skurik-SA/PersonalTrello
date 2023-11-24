@@ -68,7 +68,7 @@ const ContentMoveCard = (props) => {
                         },
                     },
                     select: {
-                        fontSize: '0.8rem',
+                        fontSize: '1rem',
                         color: 'white',
                     },
                     icon: {
@@ -91,7 +91,7 @@ const ContentMoveCard = (props) => {
                 styleOverrides: {
                     root: {
                         color: "white !important",
-                        fontSize: '0.9rem',
+                        fontSize: '1.1rem',
 
                     },
                 }
@@ -100,7 +100,7 @@ const ContentMoveCard = (props) => {
                 styleOverrides: {
                     root: {
                         background: '#8d325f',
-                        width: '240px',
+                        width: '270px',
                     },
                 }
             }
@@ -154,6 +154,7 @@ const ContentMoveCard = (props) => {
                     }
                 </div>
                 <Divider />
+                    <span>Переместить в...</span>
                     <FormControl sx={{  width: '100%' }} size="small">
                         <InputLabel id="board-select-helper-label" >Доска</InputLabel>
                         <Select
@@ -168,7 +169,7 @@ const ContentMoveCard = (props) => {
                         </Select>
                     </FormControl>
                 <div className={styles.contentMoveCard_buttonsDown}>
-                    <FormControl sx={{  width: '55%' }} size="small">
+                    <FormControl sx={{  width: 'calc(55% + 100px)' }} size="small">
                         <InputLabel id="column-select-helper-label" >Колонка</InputLabel>
                         <Select
                             labelId="column-select-helper-label"

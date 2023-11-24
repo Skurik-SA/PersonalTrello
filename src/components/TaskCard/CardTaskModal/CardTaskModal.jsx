@@ -295,7 +295,7 @@ const CardTaskModal = (props) => {
                                                Создать шаблон
                                     </span>
                                 </button>
-                                <Divider style={{color: '#DBA498', background: '#DBA498'}}/>
+                                <Divider style={{color: '#DBA498', background: '#DBA498', width: '170px'}}/>
                                 <button className={styles.fullEditMenuButton}>
                                     <span>
                                        <Archive/>

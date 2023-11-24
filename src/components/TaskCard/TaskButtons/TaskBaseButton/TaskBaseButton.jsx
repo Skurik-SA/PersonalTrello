@@ -54,10 +54,14 @@ const TaskBaseButton = (props) => {
         let xPosition = rect.left;
         let yPosition = rect.top + element.offsetHeight + 2;
 
+
+        // let poppppover = (document.getElementById(id)).getBoundingClientRect()
         setTop(yPosition)
         setLeft(xPosition)
         console.log(xPosition)
         console.log(yPosition)
+        console.log(rect)
+        // console.log(poppppover.)
     }
 
 
@@ -102,6 +106,7 @@ const TaskBaseButton = (props) => {
                     transitionDuration={100}
                 >
                     <div
+                        id={"ch-div"}
                         className={
                             rootPopoverStyle
                                 ?
@@ -109,6 +114,10 @@ const TaskBaseButton = (props) => {
                                 :
                                     styles.taskBaseButtonWrapper
                         }
+                        onMouseUp={() => {
+                            console.log((document.getElementById(id)).getBoundingClientRect())
+                            console.log(anchorEl)
+                        }}
                     >
                         {children}
                     </div>

@@ -219,3 +219,28 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+@media screen and (min-width: 300px) {
+
+    .fullEditWrapper {
+        width: 370px;
+    }
+    .modalWindowTextArea {
+        min-width: 230px;
+    }
+    .modalWindowTextAreaDescription {
+        min-width: 160px;
+    }
+}
+
+@media screen and (min-width: 600px) {
+    .fullEditWrapper {
+        width: 740px;
+    }
+    .modalWindowTextArea {
+        min-width: 600px;
+    }
+    .modalWindowTextAreaDescription {
+        min-width: 446px;
+    }
+}

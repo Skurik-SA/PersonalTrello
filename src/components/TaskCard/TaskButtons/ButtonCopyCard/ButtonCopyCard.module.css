@@ -1,0 +1,209 @@
+.contentCopyCardWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    /*border: #8d325f 1px solid;*/
+    /*border-radius: 16px;*/
+}
+
+.contentCopyCard_title {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 10px;
+    font-size: 1rem;
+    letter-spacing: 1px;
+}
+
+.contentCopyCard_exit {
+    position: absolute;
+    right: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    padding: 8px;
+    border: none;
+    border-radius: 10px;
+    background: transparent;
+    cursor: pointer;
+}
+
+.contentCopyCard_exit:hover {
+    background: rgba(141, 60, 98, 0.5);
+}
+
+.contentCopyCard_movingSector {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+
+    padding: 15px;
+    width: 270px;
+
+    max-height: 800px;
+    scrollbar-color: #8d3c62 #59263e;
+    scrollbar-width: thin;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.contentCopyCard_textArea {
+    border: none;
+    overflow: auto;
+    outline: none;
+
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    width: 240px;
+    height: 100px;
+    max-height: 380px;
+    resize: vertical;
+
+    background: #561c39;
+
+    padding: 10px;
+    font-size: 1rem;
+}
+
+.contentCopyCard_checkBoxesWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.contentCopyCard_textArea::-moz-selection {
+    background: #565656;
+
+}
+
+.contentCopyCard_textArea::selection {
+    background: #565656;
+}
+
+.contentCopyCard_controlWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.contentCopyCard_buttonMove {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding-left: 10px;
+
+    background: transparent;
+    border: #8d325f 1px solid;
+    border-radius: 5px;
+    font-size: 0.9rem;
+
+    min-height: 40px;
+
+    cursor: pointer;
+}
+.contentCopyCard_buttonMove {
+    border: #49328d 1px solid;
+}
+.contentCopyCard_buttonMove:hover {
+    background: #553aa6;
+}
+.contentCopyCard_buttonMove:active {
+    background: #382572;
+}
+.contentCopyCard_buttonsDown {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+
+    width: 100%;
+}
+
+.contentCopyCard_button {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 4px;
+    padding-left: 10px;
+
+    font-size: 0.7rem;
+
+    height: 100px;
+
+    cursor: pointer;
+}
+
+@media screen and (min-width: 300px) {
+    .contentCopyCard_textArea {
+        resize: none;
+        height: 200px;
+    }
+
+
+}
+
+@media screen and (min-width: 600px) {
+    .contentCopyCard_textArea {
+        resize: vertical;
+        height: 60px;
+    }
+}
+
+@media screen and (min-width: 600px) and (min-height: 300px){
+    .contentCopyCard_controlWrapper {
+        max-height: 100px;
+        scrollbar-color: #8d3c62 #59263e;
+        scrollbar-width: thin;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .contentCopyCard_textArea {
+        resize: none;
+        height: 100px;
+    }
+}
+
+@media screen and (min-width: 600px) and (min-height: 601px){
+    .contentCopyCard_controlWrapper {
+        max-height: unset;
+        scrollbar-color: unset;
+        scrollbar-width: unset;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .contentCopyCard_textArea {
+        resize: vertical;
+        height: 100px;
+    }
+}
+
+@media screen and (min-width: 600px) and (min-height: 801px){
+    .contentCopyCard_controlWrapper {
+        max-height: unset;
+        scrollbar-color: unset;
+        scrollbar-width: unset;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .contentCopyCard_textArea {
+        resize: vertical;
+        height: 100px;
+    }
+}

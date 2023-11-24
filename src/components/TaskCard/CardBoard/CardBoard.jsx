@@ -121,6 +121,7 @@ const CardBoard = (props) => {
             deadline: clientVisibleData[columnIndex].content[taskIndex].deadline,
             task_description: value,
             sub_tasks: clientVisibleData[columnIndex].content[taskIndex].sub_tasks,
+            priority: clientVisibleData[columnIndex].content[taskIndex].priority,
             comments: clientVisibleData[columnIndex].content[taskIndex].comments,
         }
         const newItems = [...(clientVisibleData.map((column_id, col_index) =>
@@ -212,6 +213,7 @@ const CardBoard = (props) => {
                             deadline: clientVisibleData[col_index].content[row_index].deadline,
                             task_description: clientVisibleData[col_index].content[row_index].task_description,
                             sub_tasks: clientVisibleData[col_index].content[row_index].sub_tasks,
+                            priority: clientVisibleData[col_index].content[row_index].priority,
                             comments: clientVisibleData[col_index].content[row_index].comments,
                         }
                     })]
@@ -246,6 +248,11 @@ const CardBoard = (props) => {
                 deadline: {},
                 task_description: {},
                 sub_tasks: [],
+                priority : {
+                    id: 0,
+                    type: 'default',
+                    label: 'Нет установлен'
+                },
                 comments: [],
             }
         ]
@@ -291,6 +298,7 @@ const CardBoard = (props) => {
             deadline: clientVisibleData[columnIndex].content[taskIndex].deadline,
             task_description: clientVisibleData[columnIndex].content[taskIndex].task_description,
             sub_tasks: clientVisibleData[columnIndex].content[taskIndex].sub_tasks,
+            priority: clientVisibleData[columnIndex].content[taskIndex].priority,
             comments: clientVisibleData[columnIndex].content[taskIndex].comments,
         }
         const newItems = [...(clientVisibleData.map((column_id, col_index) =>
@@ -407,19 +415,6 @@ const CardBoard = (props) => {
                                                     markTextShow={markTextShow}
                                                     setMarkTextShow={setMarkTextShow}
                                                 />
-                                                {/*<CardBase*/}
-                                                {/*    card_data={card}*/}
-                                                {/*    card_title={card.title}*/}
-                                                {/*    titleOnChange={changeTitle}*/}
-                                                {/*    newTaskOnClick={addNewTask}*/}
-                                                {/*    changeTaskInfo={changeTaskInfo}*/}
-                                                {/*    onChangeCardMark={onChangeCardMark}*/}
-
-                                                {/*    index={card.id}*/}
-
-                                                {/*    markTextShow={markTextShow}*/}
-                                                {/*    setMarkTextShow={setMarkTextShow}*/}
-                                                {/*/>*/}
                                             </div>
                                         )}
                                     </Draggable>

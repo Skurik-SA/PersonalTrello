@@ -216,3 +216,27 @@
     opacity: 0;
     transition: max-width 200ms;
 }
+
+@media screen and (min-width: 300px) {
+    .cardEditPopperMenuButton {
+        flex-direction: column;
+        justify-content: center;
+        padding: 14px;
+        gap: 0;
+    }
+    .buttonTextMobile {
+        font-size: 0;
+    }
+}
+
+@media screen and (min-width: 600px) {
+    .cardEditPopperMenuButton {
+        flex-direction: row;
+        justify-content: flex-start;
+        padding: 10px;
+        gap: 10px;
+    }
+    .buttonTextMobile {
+        font-size: 0.85rem;
+    }
+}

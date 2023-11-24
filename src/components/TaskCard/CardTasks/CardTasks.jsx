@@ -14,6 +14,11 @@ import {Transition} from "react-transition-group";
 import CardTaskModal from "../CardTaskModal/CardTaskModal.jsx";
 import ButtonChangeMark from "../TaskButtons/ButtonChangeMark/ButtonChangeMark.jsx";
 import ButtonMoveCard from "../TaskButtons/ButtonMoveCard/ButtonMoveCard.jsx";
+import ButtonDate from "../TaskButtons/ButtonDate/ButtonDate.jsx";
+import ButtonCopyCard from "../TaskButtons/ButtonCopyCard/ButtonCopyCard.jsx";
+import Delete from "../../../assets/Icons/Delete.jsx";
+import ButtonDeleteCard from "../TaskButtons/ButtonDeleteCard/ButtonDeleteCard.jsx";
+import ButtonChangePriorityCard from "../TaskButtons/ButtonChangePriorityCard/ButtonChangePriorityCard.jsx";
 
 const CardTasks = (props) => {
 
@@ -74,7 +79,7 @@ const CardTasks = (props) => {
 
     const handleClick = (event, type) => {
 
-        if (type === 'mini') {
+        if (type === 'mini' || event.type === 'contextmenu') {
             setAnchorEl(event.currentTarget);
             var element = document.getElementById(task.id);
             var rect = element.getBoundingClientRect();
@@ -137,7 +142,12 @@ const CardTasks = (props) => {
                moveCardViaButtons={moveCardViaButtons}
                onChangeCardMark={onChangeCardMark}
            />
-           <li className={styles.taskContents} >
+           <li className={styles.taskContents}
+               onContextMenu={(e) => {
+                   e.preventDefault()
+                   handleClick(e, 'mini')
+               }}
+           >
                <div id={task.id} className={styles.taskWrapper}>
                    <ThemeProvider theme={theme}>
                        <Popover
@@ -227,7 +237,7 @@ const CardTasks = (props) => {
                                        <span>
                                            <Task/>
                                        </span>
-                                       <span>
+                                       <span className={styles.buttonTextMobile}>
                                            Открыть задачу
                                        </span>
                                    </button>
@@ -236,38 +246,27 @@ const CardTasks = (props) => {
                                         task_id={task.id}
                                         card_marks={task.marks}
                                     />
-                                   <button className={styles.cardEditPopperMenuButton}>
-                                       <span>
-                                            <Priority/>
-                                       </span>
-                                       <span>
-                                            Изменить приоритет
-                                       </span>
-                                   </button>
+                                   <ButtonChangePriorityCard
+                                       clientVisibleData={clientVisibleData}
+                                       task_id={task.id}
+                                   />
                                    <ButtonMoveCard
                                        clientVisibleData={clientVisibleData}
                                        moveCardViaButtons={moveCardViaButtons}
                                        task_id={task.id}
                                    />
-                                   <button className={styles.cardEditPopperMenuButton}>
-                                       <span>
-                                            <Copy/>
-                                       </span>
-                                       <span>
-                                            Копировать
-                                       </span>
-                                   </button>
-                                   <button className={styles.cardEditPopperMenuButton}>
-                                       <span>
-                                            <Dates/>
-                                       </span>
-                                       <span>
-                                            Изменить даты
-                                       </span>
-                                   </button>
-                                   <button className={styles.cardEditPopperMenuButton}>
-                                       Удалить
-                                   </button>
+                                   <ButtonCopyCard
+                                       clientVisibleData={clientVisibleData}
+                                       task_id={task.id}
+                                   />
+                                   <ButtonDate
+                                       clientVisibleData={clientVisibleData}
+                                       task_id={task.id}
+                                   />
+                                   <ButtonDeleteCard
+                                       clientVisibleData={clientVisibleData}
+                                       task_id={task.id}
+                                   />
                                </div>
                            </div>
                        </Popover>
@@ -319,6 +318,7 @@ const CardTasks = (props) => {
                                e.stopPropagation();
                                handleClick(e, 'mini')
                            }}
+
                    >
                         <span>
                             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">

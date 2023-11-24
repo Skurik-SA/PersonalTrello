@@ -4,6 +4,7 @@
     justify-content: center;
     align-items: center;
     padding-top: 15px;
+    padding-bottom: 15px;
 
     /*border: #8d325f 1px solid;*/
     /*border-radius: 16px;*/
@@ -48,7 +49,7 @@
 
     padding-top: 15px;
 
-    width: 240px;
+    width: 270px;
 }
 
 .contentMoveCard_buttonsUp {
@@ -69,6 +70,7 @@
 
     background: transparent;
     border: #8d325f 1px solid;
+    border-radius: 5px;
     font-size: 0.9rem;
 
     height: 40px;

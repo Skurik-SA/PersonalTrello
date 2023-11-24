@@ -147,6 +147,11 @@ const Slice_ToDoList = createSlice({
                                 }
                             },
                         ],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [
                             {
                                 author: 'Dog',
@@ -197,6 +202,11 @@ const Slice_ToDoList = createSlice({
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                     {
@@ -213,6 +223,11 @@ const Slice_ToDoList = createSlice({
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                     {
@@ -229,6 +244,11 @@ const Slice_ToDoList = createSlice({
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                     {
@@ -245,6 +265,11 @@ const Slice_ToDoList = createSlice({
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                     {
@@ -261,6 +286,11 @@ const Slice_ToDoList = createSlice({
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                     {
@@ -277,6 +307,11 @@ const Slice_ToDoList = createSlice({
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                     {
@@ -293,6 +328,11 @@ const Slice_ToDoList = createSlice({
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                     {
@@ -303,6 +343,11 @@ const Slice_ToDoList = createSlice({
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                 ],
@@ -347,6 +392,11 @@ const Slice_ToDoList = createSlice({
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                     {
@@ -357,6 +407,11 @@ const Slice_ToDoList = createSlice({
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                     {
@@ -367,6 +422,11 @@ const Slice_ToDoList = createSlice({
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                     {
@@ -377,6 +437,11 @@ const Slice_ToDoList = createSlice({
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                     {
@@ -387,6 +452,11 @@ const Slice_ToDoList = createSlice({
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                     {
@@ -397,6 +467,11 @@ const Slice_ToDoList = createSlice({
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                     {
@@ -407,6 +482,11 @@ const Slice_ToDoList = createSlice({
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                     {
@@ -417,6 +497,11 @@ const Slice_ToDoList = createSlice({
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                     {
@@ -428,6 +513,11 @@ const Slice_ToDoList = createSlice({
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                     {
@@ -439,6 +529,11 @@ const Slice_ToDoList = createSlice({
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                     {
@@ -450,6 +545,11 @@ const Slice_ToDoList = createSlice({
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                     {
@@ -460,6 +560,11 @@ const Slice_ToDoList = createSlice({
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                     {
@@ -476,6 +581,11 @@ const Slice_ToDoList = createSlice({
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                     {
@@ -489,6 +599,11 @@ const Slice_ToDoList = createSlice({
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                     {
@@ -506,6 +621,11 @@ const Slice_ToDoList = createSlice({
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                     {
@@ -523,6 +643,11 @@ const Slice_ToDoList = createSlice({
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                 ],
@@ -539,6 +664,11 @@ const Slice_ToDoList = createSlice({
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                     {
@@ -549,6 +679,11 @@ const Slice_ToDoList = createSlice({
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                     {
@@ -559,6 +694,11 @@ const Slice_ToDoList = createSlice({
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                     {
@@ -569,6 +709,11 @@ const Slice_ToDoList = createSlice({
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                     {
@@ -579,6 +724,11 @@ const Slice_ToDoList = createSlice({
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                 ],
@@ -610,6 +760,11 @@ const Slice_ToDoList = createSlice({
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                     {
@@ -635,6 +790,11 @@ const Slice_ToDoList = createSlice({
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                     {
@@ -652,6 +812,11 @@ const Slice_ToDoList = createSlice({
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                     {
@@ -669,6 +834,11 @@ const Slice_ToDoList = createSlice({
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                     {
@@ -694,6 +864,11 @@ const Slice_ToDoList = createSlice({
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                 ],
@@ -710,6 +885,11 @@ const Slice_ToDoList = createSlice({
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                     {
@@ -720,6 +900,11 @@ const Slice_ToDoList = createSlice({
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                     {
@@ -730,6 +915,11 @@ const Slice_ToDoList = createSlice({
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                 ],
@@ -746,6 +936,11 @@ const Slice_ToDoList = createSlice({
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                     {
@@ -756,6 +951,11 @@ const Slice_ToDoList = createSlice({
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                 ],

@@ -63,16 +63,39 @@ const ContentCopyCard = (props) => {
 
     const {
         clientVisibleData,
+        task,
         task_id,
         copyCardTo,
         handleClose,
         popover_id,
         button_id,
+
+        copiedValue = ""
     } = props
 
     const [column, setColumn] = useState(0);
     const [row, setRow] = useState(0);
     const [board, setBoard] = useState(0);
+    const [textAreaValue, setTextAreaValue] = useState(copiedValue)
+
+    const [checkedMarks, setCheckedMarks] = useState(true);
+    const [checkedSubTasks, setCheckedSubTasks] = useState(true);
+    const [checkedDescription, setCheckedDescription] = useState(true);
+
+    const handleChangeMarks = (event) => {
+        setCheckedMarks(event.target.checked);
+        console.log(event.target.checked)
+        console.log(checkedMarks)
+    };
+
+    const handleChangeSubTasks = (event) => {
+        setCheckedSubTasks(event.target.checked);
+    };
+
+    const handleChangeDescription = (event) => {
+        setCheckedDescription(event.target.checked);
+    };
+
     const handleChangeColumn = (event) => {
         setColumn(event.target.value);
         setRow(1)
@@ -86,9 +109,25 @@ const ContentCopyCard = (props) => {
         setBoard(event.target.value);
     };
 
-    const onClickCopyCard = (source_task_id, destination_task_index, destination_column_index) => {
+    const onClickCopyCard = (
+        source_task_id,
+        destination_task_index,
+        destination_column_index,
+        isCopyMarks,
+        isCopySubTasks,
+        isCopyDescription,
+        value,
+    ) => {
         // if (current_column_id)
-        copyCardTo(source_task_id, destination_task_index, destination_column_index)
+        copyCardTo(
+            source_task_id,
+            destination_task_index,
+            destination_column_index,
+            isCopyMarks,
+            isCopySubTasks,
+            isCopyDescription,
+            value,
+        )
         handleClose()
     }
 
@@ -174,6 +213,8 @@ const ContentCopyCard = (props) => {
                     <div>
                         <textarea
                             id={'text-area-copy'}
+                            value={textAreaValue}
+                            onChange={(e) => setTextAreaValue(e.target.value)}
                             className={styles.contentCopyCard_textArea}
                             onMouseMove={() => {
                                 if (
@@ -200,30 +241,39 @@ const ContentCopyCard = (props) => {
 
                         <div className={styles.contentCopyCard_checkBoxesWrapper}>
                             <FormControlLabel
-                                control={<Checkbox
-                                    defaultChecked
-                                    size="small"
-                                    checkedIcon={<BpCheckedIcon />}
-                                    icon={<BpIcon />}
-                                />}
-                                label={`Метки (${1})`}
+                                control={
+                                    <Checkbox
+                                        checked={checkedMarks}
+                                        onChange={handleChangeMarks}
+                                        size="small"
+                                        checkedIcon={<BpCheckedIcon />}
+                                        icon={<BpIcon />}
+                                    />
+                                }
+                                label={`Метки (${task.marks.length})`}
                             />
                             <FormControlLabel
-                                control={<Checkbox
-                                    defaultChecked
-                                    size="small"
-                                    checkedIcon={<BpCheckedIcon />}
-                                    icon={<BpIcon />}
-                                />}
-                                label={`Чек-листы (${3})`}
+                                control={
+                                    <Checkbox
+                                        checked={checkedSubTasks}
+                                        onChange={handleChangeSubTasks}
+                                        size="small"
+                                        checkedIcon={<BpCheckedIcon />}
+                                        icon={<BpIcon />}
+                                    />
+                                }
+                                label={`Чек-листы (${task.sub_tasks.length})`}
                             />
                             <FormControlLabel
-                                control={<Checkbox
-                                    defaultChecked
-                                    size="small"
-                                    checkedIcon={<BpCheckedIcon />}
-                                    icon={<BpIcon />}
-                                />}
+                                control={
+                                    <Checkbox
+                                        checked={checkedDescription}
+                                        onChange={handleChangeDescription}
+                                        size="small"
+                                        checkedIcon={<BpCheckedIcon />}
+                                        icon={<BpIcon />}
+                                    />
+                                }
                                 label={`Описание`}
                             />
                         </div>
@@ -291,7 +341,7 @@ const ContentCopyCard = (props) => {
                         <button
                             className={styles.contentCopyCard_buttonMove}
                             style={{width: '100%'}}
-                            onClick={() => onClickCopyCard(task_id, row, column)}
+                            onClick={() => onClickCopyCard(task_id, row, column, checkedMarks, checkedSubTasks, checkedDescription, textAreaValue)}
                         >
                         <span >
                             Копировать

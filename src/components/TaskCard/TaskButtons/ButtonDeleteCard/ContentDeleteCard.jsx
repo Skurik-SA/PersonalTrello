@@ -6,6 +6,8 @@ const ContentDeleteCard = (props) => {
     const {
         clientVisibleData,
         task_id,
+        column_id,
+        deleteCard,
         handleClose,
     } = props
 
@@ -19,9 +21,9 @@ const ContentDeleteCard = (props) => {
             </div>
             <div className={styles.contentDeleteWrapper}>
                 <button className={styles.contentDeleteCard_archiveButton}>
-                    Сохранить
+                    Архивировать
                 </button>
-                <button className={styles.contentDeleteCard_deleteButton}>
+                <button className={styles.contentDeleteCard_deleteButton} onClick={() => deleteCard(task_id, column_id)}>
                     Удалить
                 </button>
             </div>

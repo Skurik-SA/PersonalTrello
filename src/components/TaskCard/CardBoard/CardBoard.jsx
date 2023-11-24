@@ -20,7 +20,9 @@ class InnerCardList extends PureComponent {
             setMarkTextShow,
             clientVisibleData,
             moveCardViaButtons,
-            onChangeDescription
+            onChangeDescription,
+            copyCardTo,
+            deleteCard
         } = this.props
 
         return <CardBase
@@ -32,6 +34,8 @@ class InnerCardList extends PureComponent {
                     onChangeCardMark={onChangeCardMark}
                     clientVisibleData={clientVisibleData}
                     moveCardViaButtons={moveCardViaButtons}
+                    copyCardTo={copyCardTo}
+                    deleteCard={deleteCard}
                     onChangeDescription={onChangeDescription}
 
                     index={index}
@@ -105,6 +109,84 @@ const CardBoard = (props) => {
         newEl[destination_column_index] = {
             ...clientVisibleData[destination_column_index],
             content: newDestinationItems
+        }
+
+        setClientVisibleData(newEl)
+    }
+
+    const copyCardTo = (
+        source_task_id,
+        // source_column_id,
+        destination_task_index,
+        destination_column_index,
+
+        isCopyMarks,
+        isCopySubTasks,
+        isCopyDescription,
+        value,
+    ) => {
+        const findColumnIndex = (type) => {
+            let colIndex = {
+                index: -1,
+                id: '',
+            }
+
+            clientVisibleData.map((column, i) => column.content.map((el) => {
+                if (el.id === source_task_id) {
+                    colIndex = {
+                        index: i,
+                        id: column.id
+                    }
+                }
+            }))
+
+            if (type === 'id')
+                return colIndex.id
+            else if (type === 'index')
+                return colIndex.index
+        }
+
+        const source_column_index = findColumnIndex('index') // Откуда колонка
+        const source_task_index = clientVisibleData[source_column_index].content.findIndex((row) => row.id === source_task_id) // Откуда карточка
+        const newDataItems = [...clientVisibleData[source_column_index].content]
+
+        const newDestinationItems = [...clientVisibleData[destination_column_index].content]
+
+        const [gotItem] = newDataItems.splice(source_task_index, 1)
+        const copiedItem = {
+            id: uuidv4(),
+            info: value ? value : gotItem.info,
+            marks: isCopyMarks ? gotItem.marks : [],
+            task_cover: gotItem.task_cover,
+            deadline: gotItem.deadline,
+            task_description: isCopyDescription ? gotItem.task_description : {},
+            sub_tasks: isCopySubTasks ? gotItem.sub_tasks : [],
+            priority: gotItem.priority,
+            comments: gotItem.comments,
+        }
+        newDestinationItems.splice(destination_task_index, 0, copiedItem)
+
+        const newEl = [...clientVisibleData]
+
+        newEl[destination_column_index] = {
+            ...clientVisibleData[destination_column_index],
+            content: newDestinationItems
+        }
+
+        setClientVisibleData(newEl)
+    }
+
+    const deleteCard = (task_id, card_id) => {
+        const columnIndex = clientVisibleData.findIndex((column_id) => column_id.id === card_id)
+        // const taskIndex = clientVisibleData[columnIndex].content.findIndex((task) => task.id === task_id)
+        const newColumnData = [...clientVisibleData[columnIndex].content.filter((row) => row.id !== task_id)]
+        // newColumnData = newColumnData.map((row, index) => taskIndex !== index)
+
+        const newEl = [...clientVisibleData]
+
+        newEl[columnIndex] = {
+            ...clientVisibleData[columnIndex],
+            content: newColumnData
         }
 
         setClientVisibleData(newEl)
@@ -401,17 +483,22 @@ const CardBoard = (props) => {
                                                 ref={provided.innerRef}
                                             >
                                                 <InnerCardList
+                                                    index={card.id}
                                                     card_data={card}
                                                     card_title={card.title}
-                                                    titleOnChange={changeTitle}
+                                                    clientVisibleData={clientVisibleData}
+
                                                     newTaskOnClick={addNewTask}
+
+                                                    titleOnChange={changeTitle}
                                                     changeTaskInfo={changeTaskInfo}
                                                     onChangeCardMark={onChangeCardMark}
                                                     onChangeDescription={onChangeDescription}
 
-                                                    index={card.id}
-                                                    clientVisibleData={clientVisibleData}
                                                     moveCardViaButtons={moveCardViaButtons}
+                                                    copyCardTo={copyCardTo}
+                                                    deleteCard={deleteCard}
+
                                                     markTextShow={markTextShow}
                                                     setMarkTextShow={setMarkTextShow}
                                                 />

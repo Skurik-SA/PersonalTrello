@@ -16,6 +16,8 @@ class InnerCardTaskList extends Component {
             nextProps.setMarkTextShow === this.props.setMarkTextShow &&
             nextProps.clientVisibleData === this.props.clientVisibleData &&
             nextProps.moveCardViaButtons === this.props.moveCardViaButtons &&
+            nextProps.copyCardTo === this.props.copyCardTo &&
+            nextProps.deleteCard === this.props.deleteCard &&
             nextProps.onChangeDescription === this.props.onChangeDescription
         ) {
             return false;
@@ -35,6 +37,8 @@ class InnerCardTaskList extends Component {
                     markTextShow={this.props.markTextShow}
                     setMarkTextShow={this.props.setMarkTextShow}
                     moveCardViaButtons={this.props.moveCardViaButtons}
+                    copyCardTo={this.props.copyCardTo}
+                    deleteCard={this.props.deleteCard}
                     onChangeDescription={this.props.onChangeDescription}
                 />
     }
@@ -54,7 +58,9 @@ const CardBase = (props) => {
         setMarkTextShow,
         clientVisibleData,
         moveCardViaButtons,
-        onChangeDescription
+        onChangeDescription,
+        copyCardTo,
+        deleteCard
     } = props
 
     const [titleTextVisibility, setTitleTextVisibility] = useState(false)
@@ -177,6 +183,8 @@ const CardBase = (props) => {
 
                                                 clientVisibleData={clientVisibleData}
                                                 moveCardViaButtons={moveCardViaButtons}
+                                                copyCardTo={copyCardTo}
+                                                deleteCard={deleteCard}
                                                 markTextShow={markTextShow}
                                                 setMarkTextShow={setMarkTextShow}
                                                 />

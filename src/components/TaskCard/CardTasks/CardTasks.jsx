@@ -32,7 +32,8 @@ const CardTasks = (props) => {
         clientVisibleData,
         moveCardViaButtons,
         onChangeDescription,
-
+        copyCardTo,
+        deleteCard
     } = props
 
     const [anchorEl, setAnchorEl] = useState(null);
@@ -257,6 +258,9 @@ const CardTasks = (props) => {
                                    />
                                    <ButtonCopyCard
                                        clientVisibleData={clientVisibleData}
+                                       task={task}
+                                       copyCardTo={copyCardTo}
+                                       copiedValue={value}
                                        task_id={task.id}
                                    />
                                    <ButtonDate
@@ -265,6 +269,8 @@ const CardTasks = (props) => {
                                    />
                                    <ButtonDeleteCard
                                        clientVisibleData={clientVisibleData}
+                                       column_id={column_id}
+                                       deleteCard={deleteCard}
                                        task_id={task.id}
                                    />
                                </div>

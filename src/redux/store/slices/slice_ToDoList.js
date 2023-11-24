@@ -129,22 +129,50 @@ const Slice_ToDoList = createSlice({
                         },
                         sub_tasks: [
                             {
-                                isChecked: false,
-                                label: 'sub_task 1',
-                                deadline: {
-                                    type: '',
-                                    remaining: '',
-                                    end: '',
-                                }
+                                title: 'check-list-1',
+                                check_list: [
+                                    {
+                                        isChecked: false,
+                                        label: 'sub_task 1',
+                                        deadline: {
+                                            type: '',
+                                            remaining: '',
+                                            end: '',
+                                        }
+                                    },
+                                    {
+                                        isChecked: false,
+                                        label: 'sub_task 2',
+                                        deadline: {
+                                            type: '',
+                                            remaining: '',
+                                            end: '',
+                                        }
+                                    },
+                                ]
                             },
                             {
-                                isChecked: true,
-                                label: 'sub_task 2',
-                                deadline: {
-                                    type: '',
-                                    remaining: '',
-                                    end: '',
-                                }
+                                title: 'check-list-2',
+                                check_list: [
+                                    {
+                                        isChecked: true,
+                                        label: 'sub_task 1',
+                                        deadline: {
+                                            type: '',
+                                            remaining: '',
+                                            end: '',
+                                        }
+                                    },
+                                    {
+                                        isChecked: true,
+                                        label: 'sub_task 2',
+                                        deadline: {
+                                            type: '',
+                                            remaining: '',
+                                            end: '',
+                                        }
+                                    },
+                                ]
                             },
                         ],
                         priority : {

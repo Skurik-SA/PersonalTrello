@@ -120,16 +120,20 @@ const Slice_ToDoList = createSlice({
                             color: 'red'
                         },
                         deadline: {
-                            type: '',
-                            remaining: '',
-                            end: '',
+                            // type: 'NotSoon', // (?) Скоро истекает [SoonExpires] / Выполнено [Done] / Нескоро [NotSoon] / Просрочено [Failed]
+                            // remaining: '', //
+                            // end: '', // set date
+                            // dateJsFormatDate: {},
+                            // dateJsFormatTime: {},
                         },
                         task_description: {
-                            text: '',
+                            text: 'Что-то тут не чисто',
                         },
                         sub_tasks: [
                             {
                                 title: 'check-list-1',
+                                success_amount: 0,
+                                total_amount: 2,
                                 check_list: [
                                     {
                                         isChecked: false,
@@ -138,6 +142,8 @@ const Slice_ToDoList = createSlice({
                                             type: '',
                                             remaining: '',
                                             end: '',
+                                            dateJsFormatDate: {},
+                                            dateJsFormatTime: {},
                                         }
                                     },
                                     {
@@ -147,12 +153,16 @@ const Slice_ToDoList = createSlice({
                                             type: '',
                                             remaining: '',
                                             end: '',
+                                            dateJsFormatDate: {},
+                                            dateJsFormatTime: {},
                                         }
                                     },
                                 ]
                             },
                             {
                                 title: 'check-list-2',
+                                success_amount: 2,
+                                total_amount: 2,
                                 check_list: [
                                     {
                                         isChecked: true,

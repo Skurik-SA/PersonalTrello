@@ -18,6 +18,7 @@ class InnerCardTaskList extends Component {
             nextProps.moveCardViaButtons === this.props.moveCardViaButtons &&
             nextProps.copyCardTo === this.props.copyCardTo &&
             nextProps.deleteCard === this.props.deleteCard &&
+            nextProps.setDeadline === this.props.setDeadline &&
             nextProps.onChangeDescription === this.props.onChangeDescription
         ) {
             return false;
@@ -39,6 +40,7 @@ class InnerCardTaskList extends Component {
                     moveCardViaButtons={this.props.moveCardViaButtons}
                     copyCardTo={this.props.copyCardTo}
                     deleteCard={this.props.deleteCard}
+                    setDeadline={this.props.setDeadline}
                     onChangeDescription={this.props.onChangeDescription}
                 />
     }
@@ -60,7 +62,8 @@ const CardBase = (props) => {
         moveCardViaButtons,
         onChangeDescription,
         copyCardTo,
-        deleteCard
+        deleteCard,
+        setDeadline
     } = props
 
     const [titleTextVisibility, setTitleTextVisibility] = useState(false)
@@ -185,6 +188,8 @@ const CardBase = (props) => {
                                                 moveCardViaButtons={moveCardViaButtons}
                                                 copyCardTo={copyCardTo}
                                                 deleteCard={deleteCard}
+                                                setDeadline={setDeadline}
+
                                                 markTextShow={markTextShow}
                                                 setMarkTextShow={setMarkTextShow}
                                                 />

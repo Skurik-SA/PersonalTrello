@@ -217,6 +217,34 @@
     transition: max-width 200ms;
 }
 
+.cardTasks_downLabelsWrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.cardTasks_downLabel, .cardTasks_downLabelDate {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.9rem;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.cardTasks_downLabelDate {
+    padding: 4px;
+    border-radius: 5px;
+    background: #722eb9; /* Много времени 4, 5, 6, ...*/
+    background: #2d600f; /* Выполнено boolFlag */
+    background: #600f27; /* Просрочено -1, -2, -3, ...*/
+    background: #833606; /* Истекает скоро 0, 1, 2, 3*/
+}
+
 @media screen and (min-width: 300px) {
     .cardEditPopperMenuButton {
         flex-direction: column;

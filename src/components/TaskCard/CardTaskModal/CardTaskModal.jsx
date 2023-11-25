@@ -23,6 +23,10 @@ import Notifications from "../../../assets/Icons/Notifications.jsx";
 import Eye from "../../../assets/Icons/Eye.jsx";
 import ButtonMoveCard from "../TaskButtons/ButtonMoveCard/ButtonMoveCard.jsx";
 import Status from "../../../assets/Icons/Status.jsx";
+import ButtonDate from "../TaskButtons/ButtonDate/ButtonDate.jsx";
+import ButtonCopyCard from "../TaskButtons/ButtonCopyCard/ButtonCopyCard.jsx";
+import ButtonDeleteCard from "../TaskButtons/ButtonDeleteCard/ButtonDeleteCard.jsx";
+import ButtonChangePriorityCard from "../TaskButtons/ButtonChangePriorityCard/ButtonChangePriorityCard.jsx";
 
 const CardTaskModal = (props) => {
 
@@ -37,7 +41,10 @@ const CardTaskModal = (props) => {
         onChangeCardMark,
         clientVisibleData,
         moveCardViaButtons,
-        onChangeDescription
+        onChangeDescription,
+        copyCardTo,
+        deleteCard,
+        setDeadline
     } = props
 
     const marks = useSelector(state => state.todolist.mark_store)
@@ -217,14 +224,21 @@ const CardTaskModal = (props) => {
                                            Участники
                                     </span>
                                 </button>
-                                <button className={styles.fullEditMenuButton}>
-                                    <span>
-                                                <Priority/>
-                                    </span>
-                                    <span>
-                                               Приоритет
-                                    </span>
-                                </button>
+                                {/*<button className={styles.fullEditMenuButton}>*/}
+                                {/*    <span>*/}
+                                {/*                <Priority/>*/}
+                                {/*    </span>*/}
+                                {/*    <span>*/}
+                                {/*               Приоритет*/}
+                                {/*    </span>*/}
+                                {/*</button>*/}
+                                <ButtonChangePriorityCard
+                                    clientVisibleData={clientVisibleData}
+                                    task_id={task.id}
+                                    button_id={"modal-card-priority"}
+                                    buttonContent={"Приоритет"}
+                                    rootButtonStyle={styles.fullEditMenuButton}
+                                />
                                 <ButtonChangeMark
                                     onChangeCardMark={onChangeCardMark}
                                     task_id={task.id}
@@ -243,14 +257,18 @@ const CardTaskModal = (props) => {
                                                Чек-лист
                                     </span>
                                 </button>
-                                <button className={styles.fullEditMenuButton}>
-                                    <span>
-                                               <Dates/>
-                                    </span>
-                                    <span>
-                                               Даты
-                                    </span>
-                                </button>
+                                <ButtonDate
+                                    clientVisibleData={clientVisibleData}
+                                    setDeadline={setDeadline}
+                                    task_id={task.id}
+                                    task={task}
+                                    column_id={column_id}
+
+                                    renderByAnchor={true}
+                                    buttonContent={"Даты"}
+                                    button_id={"modal-date-to"}
+                                    rootButtonStyle={styles.fullEditMenuButton}
+                                />
                                 <button className={styles.fullEditMenuButton}>
                                     <span>
                                        <Attachments/>
@@ -269,24 +287,29 @@ const CardTaskModal = (props) => {
                                 </button>
                                 <span className={styles.fullEditMenuSpan}>
                                            Действия
-                               </span>
+                                </span>
                                 <ButtonMoveCard
                                     clientVisibleData={clientVisibleData}
                                     moveCardViaButtons={moveCardViaButtons}
                                     task_id={task.id}
+
                                     renderByAnchor={true}
                                     buttonContent={"Перемещение"}
                                     button_id={"modal-move-card-to"}
                                     rootButtonStyle={styles.fullEditMenuButton}
                                 />
-                                <button className={styles.fullEditMenuButton}>
-                                    <span>
-                                       <Copy/>
-                                    </span>
-                                    <span>
-                                               Копирование
-                                    </span>
-                                </button>
+                                <ButtonCopyCard
+                                    clientVisibleData={clientVisibleData}
+                                    task={task}
+                                    copyCardTo={copyCardTo}
+                                    copiedValue={taskTitleValue}
+                                    task_id={task.id}
+
+                                    renderByAnchor={true}
+                                    buttonContent={"Копирование"}
+                                    button_id={"modal-copy-card-to"}
+                                    rootButtonStyle={styles.fullEditMenuButton}
+                                />
                                 <button className={styles.fullEditMenuButton}>
                                     <span>
                                        <MakeTemplate/>
@@ -295,15 +318,22 @@ const CardTaskModal = (props) => {
                                                Создать шаблон
                                     </span>
                                 </button>
-                                <Divider style={{color: '#DBA498', background: '#DBA498', width: '170px'}}/>
-                                <button className={styles.fullEditMenuButton}>
-                                    <span>
-                                       <Archive/>
-                                    </span>
-                                    <span>
-                                               Архивация
-                                    </span>
-                                </button>
+                                <Divider
+                                    className={styles.fullEditDivider}
+
+                                />
+                                <ButtonDeleteCard
+                                    clientVisibleData={clientVisibleData}
+                                    column_id={column_id}
+                                    deleteCard={deleteCard}
+                                    task_id={task.id}
+
+                                    renderByAnchor={true}
+                                    buttonIcon={<Archive/>}
+                                    buttonContent={"Архивация"}
+                                    button_id={"modal-delete-card-from"}
+                                    rootButtonStyle={styles.fullEditMenuButton}
+                                />
                                 <button className={styles.fullEditMenuButton}>
                                     <span>
                                        <Share/>

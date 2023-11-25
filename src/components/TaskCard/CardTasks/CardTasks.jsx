@@ -1,5 +1,5 @@
 import styles from "./CardTasks.module.css"
-import {useRef, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {
     createTheme,
     Popover,
@@ -19,6 +19,15 @@ import ButtonCopyCard from "../TaskButtons/ButtonCopyCard/ButtonCopyCard.jsx";
 import Delete from "../../../assets/Icons/Delete.jsx";
 import ButtonDeleteCard from "../TaskButtons/ButtonDeleteCard/ButtonDeleteCard.jsx";
 import ButtonChangePriorityCard from "../TaskButtons/ButtonChangePriorityCard/ButtonChangePriorityCard.jsx";
+import Pen from "../../../assets/Icons/Pen.jsx";
+import Description from "../../../assets/Icons/Description.jsx";
+import Comments from "../../../assets/Icons/Comments.jsx";
+import CheckList from "../../../assets/Icons/CheckList.jsx";
+import Eye from "../../../assets/Icons/Eye.jsx";
+import Notifications from "../../../assets/Icons/Notifications.jsx";
+import {sum} from "lodash-es";
+import dayjs from "dayjs";
+import {useCurrentDate} from "../../../hooks/useCurrentDate.js";
 
 const CardTasks = (props) => {
 
@@ -33,7 +42,8 @@ const CardTasks = (props) => {
         moveCardViaButtons,
         onChangeDescription,
         copyCardTo,
-        deleteCard
+        deleteCard,
+        setDeadline
     } = props
 
     const [anchorEl, setAnchorEl] = useState(null);
@@ -43,6 +53,11 @@ const CardTasks = (props) => {
     const [left, setLeft] = useState(0)
 
     const [value, setValue] = useState(task.info)
+
+    const [currentDate, setCurrentDate, daysLeft, smallDeadlineDate] = useCurrentDate(task.deadline.dateJsFormatDate)
+
+    const [totalSubTasks, setTotalSubTasks] = useState(sum(task.sub_tasks.map((task) => task.total_amount)))
+    const [totalSuccessSubTasks, setTotalSuccessSubTasks] = useState(sum(task.sub_tasks.map((task) => task.success_amount)))
 
     const nodeRef = useRef(null);
     const duration = 600;
@@ -77,6 +92,9 @@ const CardTasks = (props) => {
         },
     };
 
+    // useEffect(() => {
+    //     setCurrentDate(task.deadline.dateJsFormatDate)
+    // }, [currentDate])
 
     const handleClick = (event, type) => {
 
@@ -125,7 +143,9 @@ const CardTasks = (props) => {
         },
     });
 
-
+    useEffect(() => {
+        // console.log(daysLeft)
+    }, [currentDate, daysLeft])
 
     return (
        <>
@@ -138,6 +158,9 @@ const CardTasks = (props) => {
                task={task}
                column_id={column_id}
                onChangeDescription={onChangeDescription}
+               copyCardTo={copyCardTo}
+               deleteCard={deleteCard}
+               setDeadline={setDeadline}
 
                clientVisibleData={clientVisibleData}
                moveCardViaButtons={moveCardViaButtons}
@@ -265,7 +288,10 @@ const CardTasks = (props) => {
                                    />
                                    <ButtonDate
                                        clientVisibleData={clientVisibleData}
+                                       setDeadline={setDeadline}
                                        task_id={task.id}
+                                       task={task}
+                                       column_id={column_id}
                                    />
                                    <ButtonDeleteCard
                                        clientVisibleData={clientVisibleData}
@@ -318,19 +344,80 @@ const CardTasks = (props) => {
                         >
                             {task.info}
                         </div>
+                       <div className={styles.cardTasks_downLabelsWrapper}
+                            onClick={(e) => {
+                                handleClick(e, 'full')
+                            }}
+                       >
+                           {task.deadline.dateJsFormatDate
+                                ?
+                               <div className={styles.cardTasks_downLabelDate} style={
+                                   task.deadline.type === 'Done'
+                                       ?
+                                            {background: "#2d600f"}
+                                       :
+                                            daysLeft < 0
+                                                ?
+                                                    {background: "#600f27"}
+                                                :
+                                                    3 >= daysLeft > 0
+                                                    ?
+                                                        {background: '#833606'}
+                                                    :
+                                                        {
+                                                            background: 'transparent',
+                                                            border: '1px solid #722eb9'
+                                                        }
+                                                        /*{background: '#722eb9'}*/
+                               }>
+                                    <Dates/>
+                                    <div>
+                                        {dayjs(task.deadline.dateJsFormatDate).format('DD MMM')}
+                                    </div>
+                               </div>
+                               :
+                               <></>
+                           }
+                           {task.task_description.text
+                               ?
+                               <div className={styles.cardTasks_downLabel}>
+                                   <Description/>
+                               </div>
+                               :
+                               <></>
+                           }
+                           {task.comments && task.comments.length > 0
+                               ?
+                               <div className={styles.cardTasks_downLabel}>
+                                   <Comments/>
+                                   {task.comments.length}
+                               </div>
+                               :
+                               <></>
+                           }
+                           {task.sub_tasks && task.sub_tasks.length > 0
+                               ?
+                               <div className={styles.cardTasks_downLabel}>
+                                   <CheckList/>
+                                   {totalSuccessSubTasks}/{totalSubTasks}
+                               </div>
+                               :
+                               <></>
+                           }
+                           {/*<div className={styles.cardTasks_downLabel}>*/}
+                           {/*    <Notifications/>*/}
+                           {/*    5*/}
+                           {/*</div>*/}
+                       </div>
                    </div>
                    <button className={styles.editTaskButton}
                            onClick={(e) => {
                                e.stopPropagation();
                                handleClick(e, 'mini')
                            }}
-
                    >
                         <span>
-                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <rect x="0.706004" width="11.0543" height="2.98189" transform="matrix(0.706004 -0.708208 0.706004 0.708208 2.88603 9.03698)" stroke="#DBA498"/>
-                                <path d="M1.57791 12.417L2.10495 9.14641L4.8383 11.8883L1.57791 12.417Z" fill="#DBA498"/>
-                            </svg>
+                            <Pen/>
                         </span>
                    </button>
                </div>

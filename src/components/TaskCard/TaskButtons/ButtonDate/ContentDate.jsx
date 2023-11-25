@@ -13,11 +13,19 @@ const ContentDate = (props) => {
     const {
         clientVisibleData,
         task_id,
-        handleClose
+        column_id,
+        setDeadline,
+        handleClose,
+        task,
     } = props
 
-    const [date, setDate] = useState(dayjs())
+    const [date, setDate] = useState(task.deadline.dateJsFormatDate ? task.deadline.dateJsFormatDate : dayjs().locale('ru'))
     const [time, setTime] = useState()
+
+    const onChangeDate = (newValue) => {
+        setDate(newValue)
+        console.log(newValue)
+    }
 
     const onChangeTime = (newValue) => {
         setTime(newValue)
@@ -33,15 +41,22 @@ const ContentDate = (props) => {
                 </button>
             </div>
             <div className={styles.contentDate_wrapper}>
-                <CustomDatePicker value={date} setValue={setDate}/>
+                <CustomDatePicker value={date} setValue={onChangeDate}/>
                 <div className={styles.contentDate_inputLayout}>
-                    <CustomDateField value={date} setValue={setDate}/>
+                    <CustomDateField value={date} setValue={onChangeDate}/>
                     <CustomTimeField value={time} setValue={onChangeTime}/>
                 </div>
-                <button className={styles.contentDate_saveButton}>
+                <button className={styles.contentDate_saveButton}
+                        onClick={() => setDeadline(task_id, column_id, date, "set")}
+                >
                     Сохранить
                 </button>
-                <button className={styles.contentDate_deleteButton}>
+                <button className={styles.contentDate_deleteButton}
+                        onClick={() => {
+                            setDeadline(task_id, column_id, date, "delete")
+                            handleClose()
+                        }}
+                >
                     Удалить
                 </button>
             </div>

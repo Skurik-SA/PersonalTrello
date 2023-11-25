@@ -5,6 +5,9 @@ import CardBase from "../CardBase/CardBase.jsx";
 import {PureComponent, useState} from "react";
 import {v4 as uuidv4} from "uuid";
 import {useDispatch} from "react-redux";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime.js";
+import {flushSync} from "react-dom";
 
 class InnerCardList extends PureComponent {
     render() {
@@ -22,7 +25,8 @@ class InnerCardList extends PureComponent {
             moveCardViaButtons,
             onChangeDescription,
             copyCardTo,
-            deleteCard
+            deleteCard,
+            setDeadline
         } = this.props
 
         return <CardBase
@@ -36,6 +40,7 @@ class InnerCardList extends PureComponent {
                     moveCardViaButtons={moveCardViaButtons}
                     copyCardTo={copyCardTo}
                     deleteCard={deleteCard}
+                    setDeadline={setDeadline}
                     onChangeDescription={onChangeDescription}
 
                     index={index}
@@ -176,11 +181,62 @@ const CardBoard = (props) => {
         setClientVisibleData(newEl)
     }
 
+
+
+    const setDeadline = (task_id, card_id, date, action="set") => {
+        const columnIndex = clientVisibleData.findIndex((column_id) => column_id.id === card_id)
+        const taskIndex = clientVisibleData[columnIndex].content.findIndex((task) => task.id === task_id)
+        dayjs.extend(relativeTime)
+
+        // let newDataItems = [...clientVisibleData[columnIndex].content]
+        let newTask = {
+            id: clientVisibleData[columnIndex].content[taskIndex].id,
+            info: clientVisibleData[columnIndex].content[taskIndex].info,
+            marks: clientVisibleData[columnIndex].content[taskIndex].marks,
+            task_cover: clientVisibleData[columnIndex].content[taskIndex].task_cover,
+            deadline: action === "set" ? {
+                type: '',
+                remaining: '',
+                end: '',
+                dateJsFormatDate: date,
+                dateJsFormatTime: {},
+            } : {},
+            task_description: clientVisibleData[columnIndex].content[taskIndex].task_description,
+            sub_tasks: clientVisibleData[columnIndex].content[taskIndex].sub_tasks,
+            priority: clientVisibleData[columnIndex].content[taskIndex].priority,
+            comments: clientVisibleData[columnIndex].content[taskIndex].comments,
+        }
+        // newDataItems[taskIndex].deadline.dateJsFormatDate = date
+
+        const newItems = [...(clientVisibleData.map((column_id, col_index) =>
+            column_id.id !== card_id
+                ?
+                clientVisibleData[col_index]
+                :
+                {
+                    id:  clientVisibleData[col_index].id,
+                    title: clientVisibleData[col_index].title,
+                    content: [...clientVisibleData[col_index].content.map((task, row_index) =>
+                        task.id !== task_id
+                            ?
+                            clientVisibleData[col_index].content[row_index]
+                            :
+                            newTask
+                    )]
+                }
+        ))]
+
+        setClientVisibleData(newItems)
+        console.log(dayjs(date).format('DD MMM') )
+        console.log(date )
+        console.log(dayjs().locale('ru').to(dayjs(date)) )
+        console.log(date.diff(dayjs().locale('ru'), 'day') < 3 )
+
+    }
+
     const deleteCard = (task_id, card_id) => {
         const columnIndex = clientVisibleData.findIndex((column_id) => column_id.id === card_id)
-        // const taskIndex = clientVisibleData[columnIndex].content.findIndex((task) => task.id === task_id)
         const newColumnData = [...clientVisibleData[columnIndex].content.filter((row) => row.id !== task_id)]
-        // newColumnData = newColumnData.map((row, index) => taskIndex !== index)
 
         const newEl = [...clientVisibleData]
 
@@ -454,7 +510,9 @@ const CardBoard = (props) => {
             content: newDestinationItems
         }
 
-        setClientVisibleData(newEl)
+        flushSync(() => {
+            setClientVisibleData(newEl)
+        });
     }
 
     return (
@@ -498,6 +556,7 @@ const CardBoard = (props) => {
                                                     moveCardViaButtons={moveCardViaButtons}
                                                     copyCardTo={copyCardTo}
                                                     deleteCard={deleteCard}
+                                                    setDeadline={setDeadline}
 
                                                     markTextShow={markTextShow}
                                                     setMarkTextShow={setMarkTextShow}

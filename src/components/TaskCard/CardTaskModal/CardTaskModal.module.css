@@ -58,7 +58,7 @@
     letter-spacing: 1px;
 
     width: 170px;
-    padding: 5px 5px 5px 10px;
+    padding: 10px 5px 5px 10px;
     cursor: pointer;
 
     border: none;
@@ -70,7 +70,11 @@
     background: #8d325f;
 }
 
-
+.fullEditDivider {
+    color: #DBA498;
+    background: #DBA498;
+    width: 170px;
+}
 
 .fullEditDescriptionWrapper {
     display: flex;
@@ -199,21 +203,25 @@
     align-items: center;
     font-size: 0.8rem;
     border-radius: 5px;
-    margin-right: 10px;
-    margin-bottom: 10px;
+    margin-right: 5px;
+    margin-bottom: 2px;
     min-width: 40px;
     min-height: 30px;
     opacity: 85%;
-    max-width: 300px;
+    max-width: 500px;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .fullEditMarksTaskMark:hover {
     opacity: 100%;
 }
 
-
-
 .fullEditMarksTaskSpanContent {
+    width: 300px;
     white-space: nowrap;
 
     overflow: hidden;
@@ -221,9 +229,17 @@
 }
 
 @media screen and (min-width: 300px) {
-
+    .fullEditMenuSpan {
+        display: none;
+    }
     .fullEditWrapper {
         width: 370px;
+    }
+    .fullEditMenuButton {
+        width: 36px;
+    }
+    .fullEditDivider {
+        width: 36px;
     }
     .modalWindowTextArea {
         min-width: 230px;
@@ -234,8 +250,17 @@
 }
 
 @media screen and (min-width: 600px) {
+    .fullEditMenuSpan {
+        display: flex;
+    }
     .fullEditWrapper {
         width: 740px;
+    }
+    .fullEditMenuButton {
+        width: 170px;
+    }
+    .fullEditDivider {
+        width: 170px;
     }
     .modalWindowTextArea {
         min-width: 600px;

@@ -245,6 +245,30 @@
     background: #833606; /* Истекает скоро 0, 1, 2, 3*/
 }
 
+.cardTasks_dateLogoClock, .cardTasks_dateLogoCheckList {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.25s;
+}
+
+.cardTasks_dateLogoCheckList {
+    position: absolute;
+    opacity: 0;
+    scale: 0.8;
+}
+
+.cardTasks_downLabelDate:hover .cardTasks_dateLogoClock{
+    opacity: 0;
+    scale: 0.8;
+}
+
+.cardTasks_downLabelDate:hover .cardTasks_dateLogoCheckList{
+    opacity: 1;
+    scale: 1;
+}
+
 @media screen and (min-width: 300px) {
     .cardEditPopperMenuButton {
         flex-direction: column;

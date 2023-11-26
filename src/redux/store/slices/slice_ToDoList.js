@@ -392,6 +392,102 @@ const Slice_ToDoList = createSlice({
             },
             {
                 id: uuidv4(),
+                title: 'То, что необходимо сейчас реализовать',
+                content: [
+                    {
+                        id: uuidv4(),
+                        info: 'Чек-лист',
+                        marks: [],
+                        task_cover: {},
+                        deadline: {},
+                        task_description: {},
+                        sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
+                        comments: [],
+                    },
+                    {
+                        id: uuidv4(),
+                        info: 'Приоритет',
+                        marks: [],
+                        task_cover: {},
+                        deadline: {},
+                        task_description: {},
+                        sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
+                        comments: [],
+                    },
+                    {
+                        id: uuidv4(),
+                        info: 'Фильтрация',
+                        marks: [],
+                        task_cover: {},
+                        deadline: {},
+                        task_description: {},
+                        sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
+                        comments: [],
+                    },
+                    {
+                        id: uuidv4(),
+                        info: 'Уведомления',
+                        marks: [],
+                        task_cover: {},
+                        deadline: {},
+                        task_description: {},
+                        sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
+                        comments: [],
+                    },
+                    {
+                        id: uuidv4(),
+                        info: 'Комментарии',
+                        marks: [],
+                        task_cover: {},
+                        deadline: {},
+                        task_description: {},
+                        sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
+                        comments: [],
+                    },
+                    {
+                        id: uuidv4(),
+                        info: 'Архивация',
+                        marks: [],
+                        task_cover: {},
+                        deadline: {},
+                        task_description: {},
+                        sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
+                        comments: [],
+                    },
+                ],
+            },
+            {
+                id: uuidv4(),
                 title: 'Каменный остров',
                 content: [
                     {

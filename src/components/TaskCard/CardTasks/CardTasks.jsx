@@ -6,9 +6,7 @@ import {
     TextareaAutosize,
     ThemeProvider,
 } from "@mui/material";
-import Priority from "../../../assets/Icons/Priority.jsx";
 import Dates from "../../../assets/Icons/Dates.jsx";
-import Copy from "../../../assets/Icons/Copy.jsx";
 import Task from "../../../assets/Icons/Task.jsx";
 import {Transition} from "react-transition-group";
 import CardTaskModal from "../CardTaskModal/CardTaskModal.jsx";
@@ -16,21 +14,21 @@ import ButtonChangeMark from "../TaskButtons/ButtonChangeMark/ButtonChangeMark.j
 import ButtonMoveCard from "../TaskButtons/ButtonMoveCard/ButtonMoveCard.jsx";
 import ButtonDate from "../TaskButtons/ButtonDate/ButtonDate.jsx";
 import ButtonCopyCard from "../TaskButtons/ButtonCopyCard/ButtonCopyCard.jsx";
-import Delete from "../../../assets/Icons/Delete.jsx";
 import ButtonDeleteCard from "../TaskButtons/ButtonDeleteCard/ButtonDeleteCard.jsx";
 import ButtonChangePriorityCard from "../TaskButtons/ButtonChangePriorityCard/ButtonChangePriorityCard.jsx";
 import Pen from "../../../assets/Icons/Pen.jsx";
 import Description from "../../../assets/Icons/Description.jsx";
 import Comments from "../../../assets/Icons/Comments.jsx";
 import CheckList from "../../../assets/Icons/CheckList.jsx";
-import Eye from "../../../assets/Icons/Eye.jsx";
-import Notifications from "../../../assets/Icons/Notifications.jsx";
 import {sum} from "lodash-es";
 import dayjs from "dayjs";
 import {useCurrentDate} from "../../../hooks/useCurrentDate.js";
+import WorkDone from "../../../assets/Icons/WorkDone.jsx";
+import EmptyBox from "../../../assets/Icons/EmptyBox.jsx";
+import * as deadline from  "../../../utils/StatusConstants.js";
+import Notifications from "../../../assets/Icons/Notifications.jsx";
 
 const CardTasks = (props) => {
-
     const {
         task,
         column_id,
@@ -97,7 +95,7 @@ const CardTasks = (props) => {
     // }, [currentDate])
 
     const handleClick = (event, type) => {
-
+        console.log(task.task_description.text)
         if (type === 'mini' || event.type === 'contextmenu') {
             setAnchorEl(event.currentTarget);
             var element = document.getElementById(task.id);
@@ -351,26 +349,56 @@ const CardTasks = (props) => {
                        >
                            {task.deadline.dateJsFormatDate
                                 ?
-                               <div className={styles.cardTasks_downLabelDate} style={
-                                   task.deadline.type === 'Done'
-                                       ?
-                                            {background: "#2d600f"}
-                                       :
-                                            daysLeft < 0
-                                                ?
-                                                    {background: "#600f27"}
-                                                :
-                                                    3 >= daysLeft > 0
+                               <div className={styles.cardTasks_downLabelDate}
+                                    onClick={(e) => {
+                                        e.stopPropagation()
+                                        if (task.deadline.type === deadline.DONE) {
+                                            setDeadline(task.id, column_id, task.deadline.dateJsFormatDate, "set", deadline.NOT_DONE)
+                                        }
+                                        else {
+                                            setDeadline(task.id, column_id, task.deadline.dateJsFormatDate, "set", deadline.DONE)
+                                        }
+                                    }}
+                                    style={
+                                       task.deadline.type === deadline.DONE
+                                           ?
+                                                {background: "#2d600f"}
+                                           :
+                                                daysLeft < 0
                                                     ?
-                                                        {background: '#833606'}
+                                                        {background: "#600f27"}
                                                     :
-                                                        {
-                                                            background: 'transparent',
-                                                            border: '1px solid #722eb9'
-                                                        }
-                                                        /*{background: '#722eb9'}*/
-                               }>
-                                    <Dates/>
+                                                        3 >= daysLeft > 0
+                                                        ?
+                                                            {background: '#833606'}
+                                                        :
+                                                            {
+                                                                background: 'transparent',
+                                                                border: '1px solid #722eb9'
+                                                            }
+                                                            /*{background: '#722eb9'}*/
+                                    }
+                               >
+                                   {task.deadline.type === deadline.DONE
+                                       ?
+                                        <>
+                                            <span className={styles.cardTasks_dateLogoClock}>
+                                                <Dates/>
+                                            </span>
+                                            <span className={styles.cardTasks_dateLogoCheckList}>
+                                                <WorkDone/>
+                                            </span>
+                                        </>
+                                       :
+                                       <>
+                                            <span className={styles.cardTasks_dateLogoClock} >
+                                                <Dates/>
+                                            </span>
+                                           <span className={styles.cardTasks_dateLogoCheckList} >
+                                                <EmptyBox/>
+                                            </span>
+                                       </>
+                                   }
                                     <div>
                                         {dayjs(task.deadline.dateJsFormatDate).format('DD MMM')}
                                     </div>
@@ -404,10 +432,10 @@ const CardTasks = (props) => {
                                :
                                <></>
                            }
-                           {/*<div className={styles.cardTasks_downLabel}>*/}
-                           {/*    <Notifications/>*/}
-                           {/*    5*/}
-                           {/*</div>*/}
+                           <div className={styles.cardTasks_downLabel}>
+                               <Notifications/>
+                               5
+                           </div>
                        </div>
                    </div>
                    <button className={styles.editTaskButton}

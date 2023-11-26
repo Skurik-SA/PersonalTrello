@@ -6,13 +6,10 @@ import Description from "../../../assets/Icons/Description.jsx";
 import CheckList from "../../../assets/Icons/CheckList.jsx";
 import Comments from "../../../assets/Icons/Comments.jsx";
 import Participants from "../../../assets/Icons/Participants.jsx";
-import Priority from "../../../assets/Icons/Priority.jsx";
 import Marks from "../../../assets/Icons/Marks.jsx";
 import Dates from "../../../assets/Icons/Dates.jsx";
 import Attachments from "../../../assets/Icons/Attachments.jsx";
 import Cover from "../../../assets/Icons/Cover.jsx";
-import Moving from "../../../assets/Icons/Moving.jsx";
-import Copy from "../../../assets/Icons/Copy.jsx";
 import MakeTemplate from "../../../assets/Icons/MakeTemplate.jsx";
 import Archive from "../../../assets/Icons/Archive.jsx";
 import Share from "../../../assets/Icons/Share.jsx";
@@ -27,6 +24,10 @@ import ButtonDate from "../TaskButtons/ButtonDate/ButtonDate.jsx";
 import ButtonCopyCard from "../TaskButtons/ButtonCopyCard/ButtonCopyCard.jsx";
 import ButtonDeleteCard from "../TaskButtons/ButtonDeleteCard/ButtonDeleteCard.jsx";
 import ButtonChangePriorityCard from "../TaskButtons/ButtonChangePriorityCard/ButtonChangePriorityCard.jsx";
+import dayjs from "dayjs";
+import WorkDone from "../../../assets/Icons/WorkDone.jsx";
+import EmptyBox from "../../../assets/Icons/EmptyBox.jsx";
+import * as deadline from  "../../../utils/StatusConstants.js";
 
 const CardTaskModal = (props) => {
 
@@ -50,7 +51,7 @@ const CardTaskModal = (props) => {
     const marks = useSelector(state => state.todolist.mark_store)
 
     const handleModalClose = () => setModalOpen(false);
-    const [valueDescription, setValueDescription] = useState("")
+    const [valueDescription, setValueDescription] = useState(task.task_description.text)
 
     const theme2 = createTheme({
         components: {
@@ -123,7 +124,7 @@ const CardTaskModal = (props) => {
 
                         <section className={styles.fullEditMidWrapper}>
                             <div className={styles.fullEditDescriptionWrapper}>
-                                <div style={{display: 'flex', flexDirection: 'column'}}>
+                                <div style={{display: 'flex', flexDirection: 'column', gap: '10px'}}>
                                     <div className={styles.fullEditMarksWrapper}>
                                         <div className={styles.fullEditDescriptionHeader}>
                                             <Marks/>
@@ -166,7 +167,7 @@ const CardTaskModal = (props) => {
                                     </div>
                                     <div className={styles.fullEditDescriptionHeader}>
                                         <Notifications/>
-                                        <span> Уведомления: </span>
+                                        <span className={styles.fullEditDescriptionHeader_Label}> Уведомления: </span>
                                         <button className={styles.subscribeButton}>
                                             <span>
                                                 <Eye/>
@@ -174,14 +175,69 @@ const CardTaskModal = (props) => {
                                             Подписаться
                                         </button>
                                     </div>
-                                    <div className={styles.fullEditDescriptionHeader}>
-                                        <Dates/>
-                                        <span>Срок: </span>
-                                    </div>
-                                    <div className={styles.fullEditDescriptionHeader}>
-                                        <Status/>
-                                        <span>Статус: </span>
-                                    </div>
+                                    {task.deadline.dateJsFormatDate
+                                        ?
+                                        <div className={styles.fullEditDescriptionHeader}>
+                                            <Dates/>
+                                            <span className={styles.fullEditDescriptionHeader_Label}>
+                                                Срок:
+                                            </span>
+                                            <span className={
+                                                    task.deadline.type === deadline.DONE
+                                                        ?
+                                                            styles.fullEditDescriptionHeader_DeadlineDone
+                                                        :
+                                                            styles.fullEditDescriptionHeader_DeadlineNotDone
+                                                    }
+
+                                                  onClick={(e) => {
+                                                      e.stopPropagation()
+                                                      if (task.deadline.type === deadline.DONE) {
+                                                          setDeadline(task.id, column_id, task.deadline.dateJsFormatDate, "set", deadline.NOT_DONE)
+                                                      }
+                                                      else {
+                                                          setDeadline(task.id, column_id, task.deadline.dateJsFormatDate, "set", deadline.DONE)
+                                                      }
+                                                  }}
+                                            >
+                                                {task.deadline.type === deadline.DONE
+                                                    ?
+                                                    <WorkDone/>
+                                                    :
+                                                    <EmptyBox/>
+                                                }
+                                                <span>
+                                                    {dayjs(task.deadline.dateJsFormatDate).format("DD-MMM-YYYY")}
+                                                </span>
+                                            </span>
+                                        </div>
+                                        :
+                                        <></>
+                                    }
+                                    {task.deadline.type
+                                        ?
+                                        <div className={styles.fullEditDescriptionHeader}>
+                                            <Status/>
+                                            <span className={styles.fullEditDescriptionHeader_Label}>Статус: </span>
+                                            <span>
+                                                {task.deadline.type === deadline.FAILED ?
+                                                    "Срок сдачи просрочен" : <></>
+                                                }
+                                                {task.deadline.type === deadline.DONE ?
+                                                    "Задание выполнено" : <></>
+                                                }
+                                                {task.deadline.type === deadline.SOON_EXPIRE ?
+                                                    "Срок сдачи скоро истекает" : <></>
+                                                }
+                                                {task.deadline.type === deadline.NOT_DONE ?
+                                                    "Срок сдачи нескоро" : <></>
+                                                }
+                                            </span>
+                                        </div>
+                                        :
+                                        <></>
+
+                                    }
                                 </div>
                                 <div className={styles.fullEditDescriptionHeader}>
                                     <Description/>
@@ -197,12 +253,12 @@ const CardTaskModal = (props) => {
                                     }}
                                     onKeyDown={(e) => {
                                         if (e.key === 'Escape' || e.key === 'Enter') {
-                                            onChangeDescription(task.id, column_id, e.target.value)
+                                            onChangeDescription(task.id, column_id, valueDescription)
                                         }
                                     }}
                                     spellCheck="false"
                                     onMouseOut={(e) => {
-                                        onChangeDescription(task.id, column_id, e.target.value)
+                                        onChangeDescription(task.id, column_id, valueDescription)
                                     }}
                                 />
                                 <div className={styles.fullEditDescriptionHeader}>

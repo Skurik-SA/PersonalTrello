@@ -1,0 +1,6 @@
+export const NOT_DONE = "NotDone"
+export const DONE = "Done"
+export const NOT_SOON = "NotSoon"
+export const SOON_EXPIRE = "SoonExpire"
+export const FAILED = "Failed"
+export const UNSET = "Unset"

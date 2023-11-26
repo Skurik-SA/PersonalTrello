@@ -47,7 +47,7 @@ const ContentDate = (props) => {
                     <CustomTimeField value={time} setValue={onChangeTime}/>
                 </div>
                 <button className={styles.contentDate_saveButton}
-                        onClick={() => setDeadline(task_id, column_id, date, "set")}
+                        onClick={() => setDeadline(task_id, column_id, date, "set", "NotDone")}
                 >
                     Сохранить
                 </button>

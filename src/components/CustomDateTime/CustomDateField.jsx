@@ -59,7 +59,7 @@ const CustomDateField = (props) => {
                                 "&:hover > fieldset": { borderColor: "#C7C8CD" },
                                 height: "48px",
                                 borderRadius: "6px",
-                                backgroundColor: 'transparent',
+                                backgroundColor: 'rgba(221,158,246,0.38)',
                                 color: 'white',
                             },
 

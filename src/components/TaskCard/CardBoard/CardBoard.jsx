@@ -8,6 +8,7 @@ import {useDispatch} from "react-redux";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime.js";
 import {flushSync} from "react-dom";
+import {DONE, FAILED, NOT_DONE, SOON_EXPIRE, UNSET} from "../../../utils/StatusConstants.js";
 
 class InnerCardList extends PureComponent {
     render() {
@@ -183,10 +184,24 @@ const CardBoard = (props) => {
 
 
 
-    const setDeadline = (task_id, card_id, date, action="set") => {
+    const setDeadline = (task_id, card_id, date, action="set", type='') => {
+        dayjs.extend(relativeTime)
         const columnIndex = clientVisibleData.findIndex((column_id) => column_id.id === card_id)
         const taskIndex = clientVisibleData[columnIndex].content.findIndex((task) => task.id === task_id)
-        dayjs.extend(relativeTime)
+
+        let deadlineType = UNSET
+        if (type === DONE) {
+            deadlineType = DONE
+        } else if (type === NOT_DONE) {
+            const daysLeft = date.diff(dayjs().locale('ru'), 'day', true) // Можно в remaining записывать
+            if (daysLeft < 0) {
+                deadlineType = FAILED
+            } else if (3 >= daysLeft > 0) {
+                deadlineType = SOON_EXPIRE
+            } else {
+                deadlineType = NOT_DONE
+            }
+        }
 
         // let newDataItems = [...clientVisibleData[columnIndex].content]
         let newTask = {
@@ -195,7 +210,7 @@ const CardBoard = (props) => {
             marks: clientVisibleData[columnIndex].content[taskIndex].marks,
             task_cover: clientVisibleData[columnIndex].content[taskIndex].task_cover,
             deadline: action === "set" ? {
-                type: '',
+                type: deadlineType,
                 remaining: '',
                 end: '',
                 dateJsFormatDate: date,
@@ -257,7 +272,9 @@ const CardBoard = (props) => {
             marks: clientVisibleData[columnIndex].content[taskIndex].marks,
             task_cover: clientVisibleData[columnIndex].content[taskIndex].task_cover,
             deadline: clientVisibleData[columnIndex].content[taskIndex].deadline,
-            task_description: value,
+            task_description: {
+                text: value
+            },
             sub_tasks: clientVisibleData[columnIndex].content[taskIndex].sub_tasks,
             priority: clientVisibleData[columnIndex].content[taskIndex].priority,
             comments: clientVisibleData[columnIndex].content[taskIndex].comments,

@@ -84,12 +84,40 @@
     gap: 10px;
 }
 
-.fullEditDescriptionHeader {
+.fullEditDescriptionHeader, .fullEditDescriptionHeader_DeadlineNotDone, .fullEditDescriptionHeader_DeadlineDone {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
     gap: 10px;
+}
+
+.fullEditDescriptionHeader_DeadlineNotDone, .fullEditDescriptionHeader_DeadlineDone {
+    color: white;
+    border-radius: 6px;
+    padding: 5px 10px;
+    background: rgba(89, 26, 58, 0.8);
+    cursor: pointer;
+}
+
+.fullEditDescriptionHeader_DeadlineDone {
+    background: rgba(26, 89, 29, 0.8);
+}
+
+.fullEditDescriptionHeader_DeadlineNotDone:hover {
+    background: rgb(121, 35, 76);
+}
+
+.fullEditDescriptionHeader_DeadlineDone:hover {
+    background: rgb(42, 145, 50);
+}
+
+.fullEditDescriptionHeader_Label {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    width: 150px;
 }
 
 .modalWindowTextArea, .modalWindowTextAreaDescription {
@@ -148,7 +176,6 @@
     letter-spacing: 1px;
     padding-top: 5px;
     padding-bottom: 5px;
-    width: 30px;
     height: 30px;
     cursor: pointer;
 
@@ -158,6 +185,7 @@
 
 .fullEditAddMarkButton {
     padding-left: 10px;
+    width: 30px;
 }
 
 .fullEditAddMarkButton:hover, .subscribeButton:hover {

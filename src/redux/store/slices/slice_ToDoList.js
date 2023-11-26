@@ -137,7 +137,7 @@ const Slice_ToDoList = createSlice({
                                 check_list: [
                                     {
                                         isChecked: false,
-                                        label: 'sub_task 1',
+                                        label: 'sub_task 1.1',
                                         deadline: {
                                             type: '',
                                             remaining: '',
@@ -148,7 +148,7 @@ const Slice_ToDoList = createSlice({
                                     },
                                     {
                                         isChecked: false,
-                                        label: 'sub_task 2',
+                                        label: 'sub_task 1.2',
                                         deadline: {
                                             type: '',
                                             remaining: '',
@@ -166,7 +166,7 @@ const Slice_ToDoList = createSlice({
                                 check_list: [
                                     {
                                         isChecked: true,
-                                        label: 'sub_task 1',
+                                        label: 'sub_task 2.1',
                                         deadline: {
                                             type: '',
                                             remaining: '',
@@ -175,7 +175,7 @@ const Slice_ToDoList = createSlice({
                                     },
                                     {
                                         isChecked: true,
-                                        label: 'sub_task 2',
+                                        label: 'sub_task 2.2',
                                         deadline: {
                                             type: '',
                                             remaining: '',
@@ -183,6 +183,12 @@ const Slice_ToDoList = createSlice({
                                         }
                                     },
                                 ]
+                            },
+                            {
+                                title: 'Очень большое название для чек-листа, чтобы проверить как реагирует интерфейс на это',
+                                success_amount: 0,
+                                total_amount: 0,
+                                check_list: []
                             },
                         ],
                         priority : {

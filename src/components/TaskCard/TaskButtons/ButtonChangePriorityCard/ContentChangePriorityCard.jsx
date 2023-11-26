@@ -92,8 +92,8 @@ const ContentChangePriorityCard = (props) => {
                 styleOverrides: {
                     root: {
                         color: "white !important",
-                        fontSize: '1.1rem',
-
+                        fontSize: '1rem',
+                        top: -5
                     },
                 }
             },
@@ -118,7 +118,7 @@ const ContentChangePriorityCard = (props) => {
                             value={taskPriority}
                             label="Приоритет"
                             onChange={handleChangeTaskPriority}
-
+                            size={"small"}
                         >
                             {task_priorities.map((pr) =>
                                 <MenuItem key={pr.id} value={pr.type}>{pr.label}</MenuItem>

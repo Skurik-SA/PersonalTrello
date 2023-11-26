@@ -7,7 +7,7 @@
     border-radius: 20px;
 }
 
-.contentChangePriorityWrapper {
+.contentCheckListWrapper {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -18,18 +18,18 @@
     /*border-radius: 16px;*/
 }
 
-.contentChangePriority_title {
+.contentCheckList_title {
     width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding-bottom: 10px;
+    padding-bottom: 20px;
     font-size: 1rem;
     letter-spacing: 1px;
 }
 
-.contentChangePriority_exit {
+.contentCheckList_exit {
     position: absolute;
     right: 25px;
     display: flex;
@@ -44,11 +44,11 @@
     cursor: pointer;
 }
 
-.contentChangePriority_exit:hover {
+.contentCheckList_exit:hover {
     background: rgba(141, 60, 98, 0.5);
 }
 
-.contentChangePriorityControlsWrapper {
+.contentCheckListControlsWrapper {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -57,7 +57,26 @@
     gap: 20px;
 }
 
-.contentChangePriority_setButton{
+.contentCheckList_inputWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 90%;
+}
+
+.contentCheckList_label {
+    font-size: 0.9rem;
+}
+
+.contentCheckList_input {
+
+    padding-left: 10px;
+    height: 25px;
+    width: 95%;
+}
+
+.contentCheckList_setButton{
     height: 40px;
     width: 90%;
 
@@ -70,11 +89,11 @@
     font-size: 1rem;
 }
 
-.contentChangePriority_setButton:hover {
+.contentCheckList_setButton:hover {
     background: #6089f3;
 }
 
-.contentChangePriority_setButton:active {
+.contentCheckList_setButton:active {
     background: #32404d;
 }
 

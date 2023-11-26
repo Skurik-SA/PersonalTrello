@@ -14,8 +14,8 @@ import {
 import {useState} from "react";
 
 
-const BpIcon = styled('span')(({ theme }) => ({
-    borderRadius: 3,
+export const BpIcon = styled('span')(({ theme }) => ({
+    borderRadius: 0,
     width: 16,
     height: 16,
     boxShadow:
@@ -41,7 +41,7 @@ const BpIcon = styled('span')(({ theme }) => ({
     },
 }));
 
-const BpCheckedIcon = styled(BpIcon)({
+export const BpCheckedIcon = styled(BpIcon)({
     backgroundColor: '#137cbd',
     backgroundImage: 'linear-gradient(180deg,hsla(0,0%,100%,.1),hsla(0,0%,100%,0))',
     '&:before': {

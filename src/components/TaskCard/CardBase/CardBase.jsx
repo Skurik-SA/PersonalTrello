@@ -19,6 +19,7 @@ class InnerCardTaskList extends Component {
             nextProps.copyCardTo === this.props.copyCardTo &&
             nextProps.deleteCard === this.props.deleteCard &&
             nextProps.setDeadline === this.props.setDeadline &&
+            nextProps.addNewCheckList === this.props.addNewCheckList &&
             nextProps.onChangeDescription === this.props.onChangeDescription
         ) {
             return false;
@@ -41,6 +42,7 @@ class InnerCardTaskList extends Component {
                     copyCardTo={this.props.copyCardTo}
                     deleteCard={this.props.deleteCard}
                     setDeadline={this.props.setDeadline}
+                    addNewCheckList={this.props.addNewCheckList}
                     onChangeDescription={this.props.onChangeDescription}
                 />
     }
@@ -63,7 +65,8 @@ const CardBase = (props) => {
         onChangeDescription,
         copyCardTo,
         deleteCard,
-        setDeadline
+        setDeadline,
+        addNewCheckList
     } = props
 
     const [titleTextVisibility, setTitleTextVisibility] = useState(false)
@@ -189,6 +192,7 @@ const CardBase = (props) => {
                                                 copyCardTo={copyCardTo}
                                                 deleteCard={deleteCard}
                                                 setDeadline={setDeadline}
+                                                addNewCheckList={addNewCheckList}
 
                                                 markTextShow={markTextShow}
                                                 setMarkTextShow={setMarkTextShow}

@@ -27,7 +27,8 @@ class InnerCardList extends PureComponent {
             onChangeDescription,
             copyCardTo,
             deleteCard,
-            setDeadline
+            setDeadline,
+            addNewCheckList
         } = this.props
 
         return <CardBase
@@ -43,7 +44,7 @@ class InnerCardList extends PureComponent {
                     deleteCard={deleteCard}
                     setDeadline={setDeadline}
                     onChangeDescription={onChangeDescription}
-
+                    addNewCheckList={addNewCheckList}
                     index={index}
 
                     markTextShow={markTextShow}
@@ -299,6 +300,26 @@ const CardBoard = (props) => {
 
         console.log(newItems)
         setClientVisibleData(newItems)
+    }
+
+    const addNewCheckList = (task_id, card_id, value) => {
+        const columnIndex = clientVisibleData.findIndex((column_id) => column_id.id === card_id)
+        const taskIndex = clientVisibleData[columnIndex].content.findIndex((task) => task.id === task_id)
+
+        const newSubTasks = [...clientVisibleData[columnIndex].content[taskIndex].sub_tasks,
+            {
+                title: value ? value : 'Чек-лист',
+                success_amount: 0,
+                total_amount: 0,
+                check_list: []
+            }
+        ]
+
+        const newEl = [...clientVisibleData]
+
+        newEl[columnIndex].content[taskIndex].sub_tasks = [...newSubTasks]
+
+        setClientVisibleData(newEl)
     }
 
     const onChangeCardMark = (task_id, new_mark, type="add") => {
@@ -574,6 +595,7 @@ const CardBoard = (props) => {
                                                     copyCardTo={copyCardTo}
                                                     deleteCard={deleteCard}
                                                     setDeadline={setDeadline}
+                                                    addNewCheckList={addNewCheckList}
 
                                                     markTextShow={markTextShow}
                                                     setMarkTextShow={setMarkTextShow}

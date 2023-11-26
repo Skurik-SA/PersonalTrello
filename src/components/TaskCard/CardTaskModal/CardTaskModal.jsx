@@ -1,4 +1,4 @@
-import {createTheme, Divider, Modal, TextareaAutosize, ThemeProvider} from "@mui/material";
+import {Checkbox, createTheme, Divider, FormControlLabel, Modal, TextareaAutosize, ThemeProvider} from "@mui/material";
 import styles from "./CardTaskModal.module.css"
 import Task from "../../../assets/Icons/Task.jsx";
 import ExitModal from "../../../assets/Icons/ExitModal.jsx";
@@ -28,6 +28,8 @@ import dayjs from "dayjs";
 import WorkDone from "../../../assets/Icons/WorkDone.jsx";
 import EmptyBox from "../../../assets/Icons/EmptyBox.jsx";
 import * as deadline from  "../../../utils/StatusConstants.js";
+import {BpCheckedIcon, BpIcon} from "../TaskButtons/ButtonCopyCard/ContentCopyCard.jsx";
+import ButtonCheckList from "../TaskButtons/ButtonCheckListCard/ButtonCheckList.jsx";
 
 const CardTaskModal = (props) => {
 
@@ -45,7 +47,8 @@ const CardTaskModal = (props) => {
         onChangeDescription,
         copyCardTo,
         deleteCard,
-        setDeadline
+        setDeadline,
+        addNewCheckList
     } = props
 
     const marks = useSelector(state => state.todolist.mark_store)
@@ -261,9 +264,42 @@ const CardTaskModal = (props) => {
                                         onChangeDescription(task.id, column_id, valueDescription)
                                     }}
                                 />
-                                <div className={styles.fullEditDescriptionHeader}>
-                                    <CheckList/>
-                                    <div>Чек-лист</div>
+                                <div>
+                                    {task.sub_tasks && task.sub_tasks.map((sub_task, index) =>
+                                        <div key={index} style={{paddingBottom: '20px'}}>
+                                            <div className={styles.fullEditDescriptionHeader} style={{height: '100%', alignItems: 'flex-start'}}>
+                                                <div style={{paddingTop: '5px'}}>
+                                                    <CheckList/>
+                                                </div>
+                                                <div style={{fontSize: '1.1rem', textDecoration: 'underline'}}>
+                                                    {sub_task.title}
+                                                </div>
+                                            </div>
+                                            <div style={{display: 'flex', flexDirection: 'column'}}>
+                                                {sub_task.check_list && sub_task.check_list.map((list, jindex) =>
+                                                    <FormControlLabel
+                                                        key={jindex + 100}
+                                                        control={
+                                                            <Checkbox
+                                                                // checked={checkedDescription}
+                                                                // onChange={handleChangeDescription}
+                                                                size="small"
+                                                                checkedIcon={<BpCheckedIcon />}
+                                                                icon={<BpIcon />}
+                                                                sx={{
+                                                                    paddingLeft: '10px'
+                                                                }}
+                                                            />
+                                                        }
+                                                        label={<span>{list.label}</span>}
+                                                    />
+                                                )}
+                                            </div>
+                                            <button>
+                                                Добавить элемент
+                                            </button>
+                                        </div>
+                                    )}
                                 </div>
                                 <div className={styles.fullEditDescriptionHeader}>
                                     <Comments/>
@@ -305,14 +341,24 @@ const CardTaskModal = (props) => {
                                     buttonContent={"Метки"}
                                     rootButtonStyle={styles.fullEditMenuButton}
                                 />
-                                <button className={styles.fullEditMenuButton}>
-                                    <span>
-                                                <CheckList/>
-                                    </span>
-                                    <span>
-                                               Чек-лист
-                                    </span>
-                                </button>
+                                {/*<button className={styles.fullEditMenuButton}>*/}
+                                {/*    <span>*/}
+                                {/*                <CheckList/>*/}
+                                {/*    </span>*/}
+                                {/*    <span>*/}
+                                {/*               Чек-лист*/}
+                                {/*    </span>*/}
+                                {/*</button>*/}
+                                <ButtonCheckList
+                                    task_id={task.id}
+                                    task={task}
+                                    column_id={column_id}
+                                    addNewCheckList={addNewCheckList}
+                                    renderByAnchor={true}
+                                    buttonContent={"Чек-листы"}
+                                    button_id={"modal-check-list-card"}
+                                    rootButtonStyle={styles.fullEditMenuButton}
+                                />
                                 <ButtonDate
                                     clientVisibleData={clientVisibleData}
                                     setDeadline={setDeadline}

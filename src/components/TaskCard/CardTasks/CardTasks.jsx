@@ -41,7 +41,8 @@ const CardTasks = (props) => {
         onChangeDescription,
         copyCardTo,
         deleteCard,
-        setDeadline
+        setDeadline,
+        addNewCheckList
     } = props
 
     const [anchorEl, setAnchorEl] = useState(null);
@@ -159,6 +160,7 @@ const CardTasks = (props) => {
                copyCardTo={copyCardTo}
                deleteCard={deleteCard}
                setDeadline={setDeadline}
+               addNewCheckList={addNewCheckList}
 
                clientVisibleData={clientVisibleData}
                moveCardViaButtons={moveCardViaButtons}

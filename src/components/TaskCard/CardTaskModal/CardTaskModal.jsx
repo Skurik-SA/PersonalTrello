@@ -1,4 +1,13 @@
-import {Checkbox, createTheme, Divider, FormControlLabel, Modal, TextareaAutosize, ThemeProvider} from "@mui/material";
+import {
+    Checkbox,
+    createTheme,
+    Divider,
+    FormControlLabel,
+    Modal,
+    Popover,
+    TextareaAutosize,
+    ThemeProvider
+} from "@mui/material";
 import styles from "./CardTaskModal.module.css"
 import Task from "../../../assets/Icons/Task.jsx";
 import ExitModal from "../../../assets/Icons/ExitModal.jsx";
@@ -13,7 +22,7 @@ import Cover from "../../../assets/Icons/Cover.jsx";
 import MakeTemplate from "../../../assets/Icons/MakeTemplate.jsx";
 import Archive from "../../../assets/Icons/Archive.jsx";
 import Share from "../../../assets/Icons/Share.jsx";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import ButtonChangeMark from "../TaskButtons/ButtonChangeMark/ButtonChangeMark.jsx";
 import {useSelector} from "react-redux";
 import Notifications from "../../../assets/Icons/Notifications.jsx";
@@ -30,6 +39,7 @@ import EmptyBox from "../../../assets/Icons/EmptyBox.jsx";
 import * as deadline from  "../../../utils/StatusConstants.js";
 import {BpCheckedIcon, BpIcon} from "../TaskButtons/ButtonCopyCard/ContentCopyCard.jsx";
 import ButtonCheckList from "../TaskButtons/ButtonCheckListCard/ButtonCheckList.jsx";
+import {sum} from "lodash-es";
 
 const CardTaskModal = (props) => {
 
@@ -48,6 +58,12 @@ const CardTaskModal = (props) => {
         copyCardTo,
         deleteCard,
         setDeadline,
+        addNewTaskIntoCheckList,
+        onChangeCheckListCheckBox,
+        onChangeValueCheckBox,
+        totalSubTasks,
+        totalSuccessSubTasks,
+
         addNewCheckList
     } = props
 
@@ -55,6 +71,11 @@ const CardTaskModal = (props) => {
 
     const handleModalClose = () => setModalOpen(false);
     const [valueDescription, setValueDescription] = useState(task.task_description.text)
+
+    const [currentTaskValue, setCurrentTaskValue] = useState("")
+
+    const [targetElement, setTargetElement] = useState("")
+    const [targetElementData, setTargetElementData] = useState("")
 
     const theme2 = createTheme({
         components: {
@@ -81,8 +102,30 @@ const CardTaskModal = (props) => {
                     }
                 },
             },
+            MuiPopover: {
+                styleOverrides: {
+                    root: {
+                        background: "transparent"
+                    }
+                }
+            }
         },
     });
+
+    const [anchorEl, setAnchorEl] = useState(null);
+
+    const handleClickAddButton = (event) => {
+        setAnchorEl(event.currentTarget);
+        console.log(event)
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+        setCurrentTaskValue("")
+    };
+
+    const open = Boolean(anchorEl);
+    const id = open ? 'simple-popover' : undefined;
 
     return (
         <ThemeProvider theme={theme2}>
@@ -264,6 +307,80 @@ const CardTaskModal = (props) => {
                                         onChangeDescription(task.id, column_id, valueDescription)
                                     }}
                                 />
+                                <Popover
+                                    id={id}
+                                    open={open}
+                                    anchorEl={anchorEl}
+                                    onClose={handleClose}
+                                    anchorOrigin={{
+                                        vertical: 'top',
+                                        horizontal: 'left',
+                                    }}
+                                    transformOrigin={{
+                                        vertical: 'top',
+                                        horizontal: 'left',
+                                    }}
+                                >
+                                    <div>
+                                        <textarea
+                                            value={currentTaskValue}
+                                            onChange={(e) => {
+                                                setCurrentTaskValue(e.target.value)
+                                            }}
+                                            style={{
+                                                width: '470px',
+                                                height: '45px'
+                                            }}
+                                        />
+                                        <div>
+                                            {targetElement === 'add'
+                                                ?
+                                                <button onClick={() => {
+                                                    console.log(anchorEl)
+                                                    addNewTaskIntoCheckList(
+                                                        targetElementData.task_id,
+                                                        targetElementData.column_id,
+                                                        targetElementData.sub_task_id,
+                                                        currentTaskValue
+                                                    )
+                                                    handleClose()
+                                                }}
+                                                >
+                                                    Добавить
+                                                </button>
+                                                :
+                                                <></>
+                                            }
+                                            {targetElement === 'label'
+                                                ?
+                                                <button onClick={() => {
+                                                    console.log(anchorEl)
+                                                    onChangeValueCheckBox(
+                                                        targetElementData.task_id,
+                                                        targetElementData.column_id,
+                                                        targetElementData.sub_task_id,
+                                                        targetElementData.check_box_id,
+                                                        currentTaskValue
+                                                    )
+                                                    handleClose()
+                                                }}
+                                                >
+                                                    Сохранить
+                                                </button>
+                                                :
+                                                <>
+                                                </>
+                                            }
+                                            <button
+                                                onClick={() => {
+                                                    handleClose()
+                                                }}
+                                            >
+                                                Отмена
+                                            </button>
+                                        </div>
+                                    </div>
+                                </Popover>
                                 <div>
                                     {task.sub_tasks && task.sub_tasks.map((sub_task, index) =>
                                         <div key={index} style={{paddingBottom: '20px'}}>
@@ -275,14 +392,22 @@ const CardTaskModal = (props) => {
                                                     {sub_task.title}
                                                 </div>
                                             </div>
+                                            <progress
+                                                id={`progress-${sub_task.id}`}
+                                                style={{width: '500px', transition: 'all 1s'}}
+                                                max={task.sub_tasks[index].check_list.length}
+                                                value={task.sub_tasks[index].success_amount}>
+                                            </progress>
                                             <div style={{display: 'flex', flexDirection: 'column'}}>
                                                 {sub_task.check_list && sub_task.check_list.map((list, jindex) =>
                                                     <FormControlLabel
                                                         key={jindex + 100}
                                                         control={
                                                             <Checkbox
-                                                                // checked={checkedDescription}
-                                                                // onChange={handleChangeDescription}
+                                                                checked={task.sub_tasks[index].check_list[jindex].isChecked}
+                                                                onChange={(e) => {
+                                                                    onChangeCheckListCheckBox(task.id, column_id, sub_task.id, list.id, e.target.checked)
+                                                                }}
                                                                 size="small"
                                                                 checkedIcon={<BpCheckedIcon />}
                                                                 icon={<BpIcon />}
@@ -291,11 +416,38 @@ const CardTaskModal = (props) => {
                                                                 }}
                                                             />
                                                         }
-                                                        label={<span>{list.label}</span>}
+                                                        label={
+                                                            <span
+                                                                style={{userSelect: 'none'}}
+                                                                onClick={(e) => {
+                                                                    e.preventDefault()
+                                                                    handleClickAddButton(e)
+                                                                    setTargetElement("label")
+                                                                    setCurrentTaskValue(task.sub_tasks[index].check_list[jindex].label)
+                                                                    setTargetElementData({
+                                                                        task_id: task.id,
+                                                                        column_id: column_id,
+                                                                        sub_task_id: sub_task.id,
+                                                                        check_box_id: task.sub_tasks[index].check_list[jindex].id
+                                                                    })
+                                                                }}
+                                                            >
+                                                                {list.label}
+                                                            </span>
+                                                    }
                                                     />
                                                 )}
                                             </div>
-                                            <button>
+                                            <button onClick={(e) => {
+                                                handleClickAddButton(e)
+                                                setTargetElement("add")
+                                                setTargetElementData({
+                                                    task_id: task.id,
+                                                    column_id: column_id,
+                                                    sub_task_id: sub_task.id
+                                                })
+                                                // addNewTaskIntoCheckList(task.id, column_id, sub_task.id)
+                                            }}>
                                                 Добавить элемент
                                             </button>
                                         </div>

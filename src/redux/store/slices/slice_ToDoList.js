@@ -131,11 +131,13 @@ const Slice_ToDoList = createSlice({
                         },
                         sub_tasks: [
                             {
+                                id: uuidv4(),
                                 title: 'check-list-1',
                                 success_amount: 0,
                                 total_amount: 2,
                                 check_list: [
                                     {
+                                        id: uuidv4(),
                                         isChecked: false,
                                         label: 'sub_task 1.1',
                                         deadline: {
@@ -147,6 +149,7 @@ const Slice_ToDoList = createSlice({
                                         }
                                     },
                                     {
+                                        id: uuidv4(),
                                         isChecked: false,
                                         label: 'sub_task 1.2',
                                         deadline: {
@@ -160,11 +163,13 @@ const Slice_ToDoList = createSlice({
                                 ]
                             },
                             {
+                                id: uuidv4(),
                                 title: 'check-list-2',
                                 success_amount: 2,
                                 total_amount: 2,
                                 check_list: [
                                     {
+                                        id: uuidv4(),
                                         isChecked: true,
                                         label: 'sub_task 2.1',
                                         deadline: {
@@ -174,6 +179,7 @@ const Slice_ToDoList = createSlice({
                                         }
                                     },
                                     {
+                                        id: uuidv4(),
                                         isChecked: true,
                                         label: 'sub_task 2.2',
                                         deadline: {
@@ -185,6 +191,7 @@ const Slice_ToDoList = createSlice({
                                 ]
                             },
                             {
+                                id: uuidv4(),
                                 title: 'Очень большое название для чек-листа, чтобы проверить как реагирует интерфейс на это',
                                 success_amount: 0,
                                 total_amount: 0,

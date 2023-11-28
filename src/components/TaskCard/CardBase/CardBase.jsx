@@ -20,6 +20,9 @@ class InnerCardTaskList extends Component {
             nextProps.deleteCard === this.props.deleteCard &&
             nextProps.setDeadline === this.props.setDeadline &&
             nextProps.addNewCheckList === this.props.addNewCheckList &&
+            nextProps.addNewTaskIntoCheckList === this.props.addNewTaskIntoCheckList &&
+            nextProps.onChangeCheckListCheckBox === this.props.onChangeCheckListCheckBox &&
+            nextProps.onChangeValueCheckBox === this.props.onChangeValueCheckBox &&
             nextProps.onChangeDescription === this.props.onChangeDescription
         ) {
             return false;
@@ -43,6 +46,9 @@ class InnerCardTaskList extends Component {
                     deleteCard={this.props.deleteCard}
                     setDeadline={this.props.setDeadline}
                     addNewCheckList={this.props.addNewCheckList}
+                    addNewTaskIntoCheckList={this.props.addNewTaskIntoCheckList}
+                    onChangeCheckListCheckBox={this.props.onChangeCheckListCheckBox}
+                    onChangeValueCheckBox={this.props.onChangeValueCheckBox}
                     onChangeDescription={this.props.onChangeDescription}
                 />
     }
@@ -66,6 +72,9 @@ const CardBase = (props) => {
         copyCardTo,
         deleteCard,
         setDeadline,
+        addNewTaskIntoCheckList,
+        onChangeCheckListCheckBox,
+        onChangeValueCheckBox,
         addNewCheckList
     } = props
 
@@ -186,6 +195,7 @@ const CardBase = (props) => {
                                                 changeTaskInfo={changeTaskInfo}
                                                 onChangeCardMark={onChangeCardMark}
                                                 onChangeDescription={onChangeDescription}
+                                                addNewTaskIntoCheckList={addNewTaskIntoCheckList}
 
                                                 clientVisibleData={clientVisibleData}
                                                 moveCardViaButtons={moveCardViaButtons}
@@ -193,6 +203,8 @@ const CardBase = (props) => {
                                                 deleteCard={deleteCard}
                                                 setDeadline={setDeadline}
                                                 addNewCheckList={addNewCheckList}
+                                                onChangeCheckListCheckBox={onChangeCheckListCheckBox}
+                                                onChangeValueCheckBox={onChangeValueCheckBox}
 
                                                 markTextShow={markTextShow}
                                                 setMarkTextShow={setMarkTextShow}

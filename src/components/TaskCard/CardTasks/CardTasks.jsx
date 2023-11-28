@@ -42,6 +42,10 @@ const CardTasks = (props) => {
         copyCardTo,
         deleteCard,
         setDeadline,
+        addNewTaskIntoCheckList,
+        onChangeCheckListCheckBox,
+        onChangeValueCheckBox,
+
         addNewCheckList
     } = props
 
@@ -121,7 +125,6 @@ const CardTasks = (props) => {
     const open = Boolean(anchorEl);
     const id = open ? 'card-popover' : undefined;
 
-
     const theme = createTheme({
         components: {
             // Name of the component
@@ -143,6 +146,8 @@ const CardTasks = (props) => {
     });
 
     useEffect(() => {
+        setTotalSuccessSubTasks(sum(task.sub_tasks.map((task) => task.success_amount)))
+        setTotalSubTasks(sum(task.sub_tasks.map((task) => task.total_amount)))
         // console.log(daysLeft)
     }, [currentDate, daysLeft])
 
@@ -161,6 +166,11 @@ const CardTasks = (props) => {
                deleteCard={deleteCard}
                setDeadline={setDeadline}
                addNewCheckList={addNewCheckList}
+               addNewTaskIntoCheckList={addNewTaskIntoCheckList}
+               onChangeCheckListCheckBox={onChangeCheckListCheckBox}
+               totalSubTasks={totalSubTasks}
+               totalSuccessSubTasks={totalSuccessSubTasks}
+               onChangeValueCheckBox={onChangeValueCheckBox}
 
                clientVisibleData={clientVisibleData}
                moveCardViaButtons={moveCardViaButtons}

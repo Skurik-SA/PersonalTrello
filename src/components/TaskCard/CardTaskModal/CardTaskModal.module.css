@@ -256,6 +256,83 @@
     text-overflow: ellipsis;
 }
 
+.checkBoxLabel {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 490px;
+
+    border-radius: 6px;
+    background: transparent;
+}
+
+.checkBoxLabel:hover {
+    background: #8d3c62;
+
+}
+
+.checkBoxSpan {
+    padding-left: 10px;
+    user-select: none;
+}
+
+.checkBoxIcons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-right: 10px;
+}
+
+.checkBoxIconDates {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.checkBoxIconContext, .checkBoxIconDates {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 4px;
+}
+
+.checkBoxIconContext {
+    height: 15px;
+    width: 15px;
+}
+
+.checkBoxIconDates:hover, .checkBoxIconContext:hover {
+    background: #da6099;
+    border-radius:15px;
+}
+
+.checkBoxAddButton {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    margin-top: 8px;
+
+    background: #48182f;
+
+    cursor: pointer;
+}
+
+.checkBoxAddButton:hover {
+    background: #832854;
+}
+
+
+
 @media screen and (min-width: 300px) {
     .fullEditMenuSpan {
         display: none;

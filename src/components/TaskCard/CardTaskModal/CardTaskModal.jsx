@@ -392,12 +392,22 @@ const CardTaskModal = (props) => {
                                                     {sub_task.title}
                                                 </div>
                                             </div>
-                                            <progress
-                                                id={`progress-${sub_task.id}`}
-                                                style={{width: '500px', transition: 'all 1s'}}
-                                                max={task.sub_tasks[index].check_list.length}
-                                                value={task.sub_tasks[index].success_amount}>
-                                            </progress>
+                                            <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                                                <span style={{width: '50px'}}>
+                                                    {task.sub_tasks[index].check_list.length
+                                                        ?
+                                                        `${Math.trunc(task.sub_tasks[index].success_amount * 100 / task.sub_tasks[index].check_list.length)} %`
+                                                        :
+                                                        `0 %`
+                                                    }
+                                                </span>
+                                                <progress
+                                                    id={`progress-${sub_task.id}`}
+                                                    style={{width: '470px', transition: 'all 1s'}}
+                                                    max={task.sub_tasks[index].check_list.length}
+                                                    value={task.sub_tasks[index].success_amount}>
+                                                </progress>
+                                            </div>
                                             <div style={{display: 'flex', flexDirection: 'column'}}>
                                                 {sub_task.check_list && sub_task.check_list.map((list, jindex) =>
                                                     <FormControlLabel
@@ -411,14 +421,18 @@ const CardTaskModal = (props) => {
                                                                 size="small"
                                                                 checkedIcon={<BpCheckedIcon />}
                                                                 icon={<BpIcon />}
-                                                                sx={{
-                                                                    paddingLeft: '10px'
-                                                                }}
+
                                                             />
                                                         }
                                                         label={
+                                                        <div className={styles.checkBoxLabel}>
                                                             <span
-                                                                style={{userSelect: 'none'}}
+                                                                className={styles.checkBoxSpan}
+                                                                style={
+                                                                    task.sub_tasks[index].check_list[jindex].isChecked ?
+                                                                    {textDecoration: 'line-through', opacity: 0.7} :
+                                                                        {}
+                                                                }
                                                                 onClick={(e) => {
                                                                     e.preventDefault()
                                                                     handleClickAddButton(e)
@@ -434,11 +448,34 @@ const CardTaskModal = (props) => {
                                                             >
                                                                 {list.label}
                                                             </span>
+                                                            <div className={styles.checkBoxIcons}>
+                                                                <span className={styles.checkBoxIconDates}
+                                                                    onClick={(e) => {
+                                                                        e.preventDefault()
+                                                                    }}
+                                                                >
+                                                                    <Dates/>
+                                                                </span>
+                                                                <span className={styles.checkBoxIconContext}
+                                                                      onClick={(e) => {
+                                                                          e.preventDefault()
+                                                                      }}
+                                                                >
+                                                                    <svg width="15" height="3" viewBox="0 0 15 3" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <rect width="3" height="3" fill="#DBA498"/>
+                                                                    <rect x="12" width="3" height="3" fill="#DBA498"/>
+                                                                    <rect x="6" width="3" height="3" fill="#DBA498"/>
+                                                                    </svg>
+                                                                </span>
+                                                            </div>
+                                                        </div>
                                                     }
                                                     />
                                                 )}
                                             </div>
-                                            <button onClick={(e) => {
+                                            <button
+                                                className={styles.checkBoxAddButton}
+                                                onClick={(e) => {
                                                 handleClickAddButton(e)
                                                 setTargetElement("add")
                                                 setTargetElementData({

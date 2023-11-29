@@ -323,26 +323,54 @@ const CardTaskModal = (props) => {
                                 >
                                     <div>
                                         <textarea
+                                            id={"task-area"}
                                             value={currentTaskValue}
+                                            autoFocus={true}
                                             onChange={(e) => {
                                                 setCurrentTaskValue(e.target.value)
                                             }}
-                                            style={{
-                                                width: '470px',
-                                                height: '45px'
-                                            }}
-                                        />
-                                        <div>
-                                            {targetElement === 'add'
-                                                ?
-                                                <button onClick={() => {
-                                                    console.log(anchorEl)
+                                            onKeyDown={(e) => {
+                                                if (e.key === 'Enter' && currentTaskValue !== "" && targetElement === 'add') {
                                                     addNewTaskIntoCheckList(
                                                         targetElementData.task_id,
                                                         targetElementData.column_id,
                                                         targetElementData.sub_task_id,
                                                         currentTaskValue
                                                     )
+                                                    setCurrentTaskValue("")
+                                                    document.getElementById("task-area").focus()
+                                                }
+                                                else if (e.key === 'Enter' && currentTaskValue !== "" && targetElement === 'label') {
+                                                    console.log("ads")
+                                                    onChangeValueCheckBox(
+                                                        targetElementData.task_id,
+                                                        targetElementData.column_id,
+                                                        targetElementData.sub_task_id,
+                                                        targetElementData.check_box_id,
+                                                        currentTaskValue
+                                                    )
+                                                    handleClose()
+                                                }
+                                                else if (e.key === 'Enter' && currentTaskValue !== "") {
+                                                    handleClose()
+                                                }
+                                            }}
+                                            className={styles.addInput}
+
+                                        />
+                                        <div>
+                                            {targetElement === 'add'
+                                                ?
+                                                <button onClick={() => {
+                                                    console.log(anchorEl)
+                                                    if (currentTaskValue.length > 0) {
+                                                        addNewTaskIntoCheckList(
+                                                            targetElementData.task_id,
+                                                            targetElementData.column_id,
+                                                            targetElementData.sub_task_id,
+                                                            currentTaskValue
+                                                        )
+                                                    }
                                                     handleClose()
                                                 }}
                                                 >
@@ -392,7 +420,7 @@ const CardTaskModal = (props) => {
                                                     {sub_task.title}
                                                 </div>
                                             </div>
-                                            <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                                            <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center'}}>
                                                 <span style={{width: '50px'}}>
                                                     {task.sub_tasks[index].check_list.length
                                                         ?
@@ -403,7 +431,7 @@ const CardTaskModal = (props) => {
                                                 </span>
                                                 <progress
                                                     id={`progress-${sub_task.id}`}
-                                                    style={{width: '470px', transition: 'all 1s'}}
+                                                    style={{width: '460px', transition: 'all 1s'}}
                                                     max={task.sub_tasks[index].check_list.length}
                                                     value={task.sub_tasks[index].success_amount}>
                                                 </progress>

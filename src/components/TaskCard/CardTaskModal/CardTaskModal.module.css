@@ -269,8 +269,8 @@
 
 .checkBoxLabel:hover {
     background: #8d3c62;
-
 }
+
 
 .checkBoxSpan {
     padding-left: 10px;
@@ -299,6 +299,7 @@
     justify-content: center;
     align-items: center;
     padding: 4px;
+    opacity: 0;
 }
 
 .checkBoxIconContext {
@@ -306,9 +307,30 @@
     width: 15px;
 }
 
+.checkBoxLabel:hover .checkBoxIconContext {
+    opacity: 1;
+}
+
+.checkBoxLabel:hover .checkBoxIconDates {
+    opacity: 1;
+}
+
 .checkBoxIconDates:hover, .checkBoxIconContext:hover {
     background: #da6099;
     border-radius:15px;
+}
+
+.addInput {
+    width: 450px;
+    height: 45px;
+    white-space: nowrap;
+}
+
+.progressBar {
+    width: 450px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
 }
 
 .checkBoxAddButton {

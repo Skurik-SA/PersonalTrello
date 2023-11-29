@@ -19,6 +19,7 @@ const ContentChangeMark = (props) => {
     const [newMarkFontColor, setNewMarkFontColor] = useState("#000")
     const [newMark, setNewMark] = useState({
         id: marks[marks.length - 1].id + 1,
+        // id: marks[marks.length - 1].id + 1,
         font_color: '#000',
         color: "#" + Math.random().toString(16).substr(-6),
         mark_text: ''

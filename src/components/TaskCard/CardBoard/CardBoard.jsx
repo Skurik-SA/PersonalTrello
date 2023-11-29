@@ -10,6 +10,7 @@ import relativeTime from "dayjs/plugin/relativeTime.js";
 import {flushSync} from "react-dom";
 import {DONE, FAILED, NOT_DONE, SOON_EXPIRE, UNSET} from "../../../utils/StatusConstants.js";
 import {cloneDeep} from "lodash-es";
+import {set_todolist} from "../../../redux/store/slices/slice_ToDoList.js";
 
 class InnerCardList extends PureComponent {
     render() {
@@ -508,6 +509,8 @@ const CardBoard = (props) => {
                         newTitleData
         ))]
 
+        dispatch(set_todolist(newItems))
+
         setClientVisibleData(newItems)
     }
 
@@ -543,6 +546,7 @@ const CardBoard = (props) => {
                 }
         ))]
 
+        dispatch(set_todolist(newItems))
         setClientVisibleData(newItems)
     }
 
@@ -605,6 +609,8 @@ const CardBoard = (props) => {
             ...clientVisibleData[dataDestinationIndex],
             content: newDestinationItems
         }
+
+        dispatch(set_todolist(newEl))
 
         flushSync(() => {
             setClientVisibleData(newEl)

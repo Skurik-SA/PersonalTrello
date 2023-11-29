@@ -17,7 +17,6 @@ const Board = () => {
     const [iconFavMode, setIconFavMode] = useState(false)
     const [iconPrivacyMode, setIconPrivacyMode] = useState(0)
 
-
     return (
         <>
             <div style={{display: 'flex', height: '100%'}}>

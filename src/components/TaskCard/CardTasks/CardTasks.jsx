@@ -323,10 +323,10 @@ const CardTasks = (props) => {
                    </ThemeProvider>
 
                    <div>
-                       <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+                       <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center'}}>
                            {task.priority && task.priority.type !== 'default'
                                 ?
-                               <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', background: '#000148FF', padding: '5px', borderRadius: '10px'}}>
+                               <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', background: '#000148FF', padding: '4px', fontSize: '0.9rem', borderRadius: '10px'}}>
                                    {task.priority.label}
                                </div>
                                :

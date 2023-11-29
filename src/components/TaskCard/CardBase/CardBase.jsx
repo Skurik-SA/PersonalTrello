@@ -90,7 +90,7 @@ const CardBase = (props) => {
 
     const [titleTextVisibility, setTitleTextVisibility] = useState(false)
 
-    // const [titleValue, setTitleValue] = useState(card_title)
+    const [titleValue, setTitleValue] = useState(card_title)
 
     const wrapRef = useRef(null)
 
@@ -141,12 +141,11 @@ const CardBase = (props) => {
                                         cols={23}
                                         placeholder={"Введите название"}
                                         className={styles.titleTextArea}
-                                        value={card_title}
+                                        value={titleValue}
                                         spellCheck="false"
                                         ref={wrapRef}
                                         onChange={(e) => {
-                                            // setTitleValue(e.target.value)
-                                            titleOnChange(card_data.id, e.target.value)
+                                            setTitleValue(e.target.value)
                                         }}
                                         onKeyDown={(e) => {
                                             if (e.key === 'Enter') {
@@ -155,6 +154,9 @@ const CardBase = (props) => {
                                                 document.getElementById(index).blur()
                                                 setTitleTextVisibility(!titleTextVisibility)
                                             }
+                                        }}
+                                        onBlur={(e) => {
+                                            titleOnChange(card_data.id, e.target.value)
                                         }}
 
                                     />

@@ -464,7 +464,7 @@ const CardTaskModal = (props) => {
                                 <div>
                                     {task.sub_tasks && task.sub_tasks.map((sub_task, index) =>
                                         <div key={index} style={{paddingBottom: '20px'}}>
-                                            <div className={styles.fullEditDescriptionHeader} style={{height: '100%', alignItems: 'center', justifyContent: 'space-between', marginRight:'20px'}}>
+                                            <div className={styles.fullEditDescriptionHeader_CheckList}>
                                                 <div style={{display: 'flex', flexDirection: 'row', gap: '10px'}}>
                                                     <div style={{paddingTop: '5px'}}>
                                                         <CheckList/>
@@ -493,7 +493,8 @@ const CardTaskModal = (props) => {
                                                 </span>
                                                 <progress
                                                     id={`progress-${sub_task.id}`}
-                                                    style={{width: '460px', transition: 'all 1s'}}
+                                                    // style={{width: '460px', transition: 'all 1s'}}
+                                                    className={styles.progressBar}
                                                     max={task.sub_tasks[index].check_list.length}
                                                     value={task.sub_tasks[index].success_amount}>
                                                 </progress>

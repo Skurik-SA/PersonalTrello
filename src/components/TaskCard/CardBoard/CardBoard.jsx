@@ -319,6 +319,7 @@ const CardBoard = (props) => {
         const taskIndex = clientVisibleData[columnIndex].content.findIndex((task) => task.id === task_id)
         const sub_tasks = clientVisibleData[columnIndex].content[taskIndex].sub_tasks.filter((task) => task.id !== sub_task_id)
 
+
         const newData = cloneDeep(clientVisibleData)
         newData[columnIndex].content[taskIndex].sub_tasks = sub_tasks
         setClientVisibleData(newData)
@@ -334,6 +335,7 @@ const CardBoard = (props) => {
         if (checked) {
             newData[columnIndex].content[taskIndex].sub_tasks[subTaskIndex].success_amount -= 1
         }
+        newData[columnIndex].content[taskIndex].sub_tasks[subTaskIndex].total_amount -= 1
         newData[columnIndex].content[taskIndex].sub_tasks[subTaskIndex].check_list = newCheckBoxesArray
         setClientVisibleData(newData)
     }

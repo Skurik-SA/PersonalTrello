@@ -62,6 +62,8 @@ const CardTaskModal = (props) => {
         onChangeCheckListCheckBox,
         onChangeValueCheckBox,
         deleteSomeCheckList,
+        deleteSomeCheckBox,
+
         totalSubTasks,
         totalSuccessSubTasks,
 
@@ -106,7 +108,10 @@ const CardTaskModal = (props) => {
             MuiPopover: {
                 styleOverrides: {
                     root: {
-                        background: "transparent"
+                        background: "none"
+                    },
+                    paper: {
+                        background: 'none'
                     }
                 }
             }
@@ -114,10 +119,14 @@ const CardTaskModal = (props) => {
     });
 
     const [anchorEl, setAnchorEl] = useState(null);
+    const [anchorEl2, setAnchorEl2] = useState(null);
 
     const handleClickAddButton = (event) => {
         setAnchorEl(event.currentTarget);
-        console.log(event)
+    };
+
+    const handleClickActionButton = (event) => {
+        setAnchorEl2(event.currentTarget);
     };
 
     const handleClose = () => {
@@ -125,8 +134,16 @@ const CardTaskModal = (props) => {
         setCurrentTaskValue("")
     };
 
+    const handleClose2 = () => {
+        setAnchorEl2(null);
+    };
+
     const open = Boolean(anchorEl);
-    const id = open ? 'simple-popover' : undefined;
+    const open2 = Boolean(anchorEl2);
+    const id = open ? 'editing-popover' : undefined;
+    const id2 = open2 ? 'action-popover' : undefined;
+
+
 
     return (
         <ThemeProvider theme={theme2}>
@@ -410,6 +427,40 @@ const CardTaskModal = (props) => {
                                         </div>
                                     </div>
                                 </Popover>
+                                <Popover
+                                    id={id2}
+                                    open={open2}
+                                    anchorEl={anchorEl2}
+                                    onClose={handleClose2}
+                                    anchorOrigin={{
+                                        vertical: 'bottom',
+                                        horizontal: 'left',
+                                    }}
+                                    transformOrigin={{
+                                        vertical: 'top',
+                                        horizontal: 'left',
+                                    }}
+                                >
+                                    <div>
+                                        <div style={{display: 'flex', flexDirection: 'column'}}>
+                                            <button>Создать карточку</button>
+                                            <button
+                                                onClick={() => {
+                                                    deleteSomeCheckBox(
+                                                        targetElementData.task_id,
+                                                        targetElementData.column_id,
+                                                        targetElementData.sub_task_id,
+                                                        targetElementData.check_box_id,
+                                                        targetElementData.checked
+                                                    )
+                                                    handleClose2()
+                                                }}
+                                            >
+                                                Удалить
+                                            </button>
+                                        </div>
+                                    </div>
+                                </Popover>
                                 <div>
                                     {task.sub_tasks && task.sub_tasks.map((sub_task, index) =>
                                         <div key={index} style={{paddingBottom: '20px'}}>
@@ -433,7 +484,7 @@ const CardTaskModal = (props) => {
                                             </div>
                                             <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center'}}>
                                                 <span style={{width: '50px'}}>
-                                                    {task.sub_tasks[index].check_list.length
+                                                    {task.sub_tasks[index].check_list.length > 0
                                                         ?
                                                         `${Math.trunc(task.sub_tasks[index].success_amount * 100 / task.sub_tasks[index].check_list.length)} %`
                                                         :
@@ -491,6 +542,7 @@ const CardTaskModal = (props) => {
                                                                 <span className={styles.checkBoxIconDates}
                                                                     onClick={(e) => {
                                                                         e.preventDefault()
+                                                                        handleClickActionButton(e)
                                                                     }}
                                                                 >
                                                                     <Dates/>
@@ -498,6 +550,14 @@ const CardTaskModal = (props) => {
                                                                 <span className={styles.checkBoxIconContext}
                                                                       onClick={(e) => {
                                                                           e.preventDefault()
+                                                                          handleClickActionButton(e)
+                                                                          setTargetElementData({
+                                                                              task_id: task.id,
+                                                                              column_id: column_id,
+                                                                              sub_task_id: sub_task.id,
+                                                                              check_box_id: task.sub_tasks[index].check_list[jindex].id,
+                                                                              checked: task.sub_tasks[index].check_list[jindex].isChecked,
+                                                                          })
                                                                       }}
                                                                 >
                                                                     <svg width="15" height="3" viewBox="0 0 15 3" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -544,14 +604,6 @@ const CardTaskModal = (props) => {
                                            Участники
                                     </span>
                                 </button>
-                                {/*<button className={styles.fullEditMenuButton}>*/}
-                                {/*    <span>*/}
-                                {/*                <Priority/>*/}
-                                {/*    </span>*/}
-                                {/*    <span>*/}
-                                {/*               Приоритет*/}
-                                {/*    </span>*/}
-                                {/*</button>*/}
                                 <ButtonChangePriorityCard
                                     clientVisibleData={clientVisibleData}
                                     task_id={task.id}
@@ -569,14 +621,6 @@ const CardTaskModal = (props) => {
                                     buttonContent={"Метки"}
                                     rootButtonStyle={styles.fullEditMenuButton}
                                 />
-                                {/*<button className={styles.fullEditMenuButton}>*/}
-                                {/*    <span>*/}
-                                {/*                <CheckList/>*/}
-                                {/*    </span>*/}
-                                {/*    <span>*/}
-                                {/*               Чек-лист*/}
-                                {/*    </span>*/}
-                                {/*</button>*/}
                                 <ButtonCheckList
                                     task_id={task.id}
                                     task={task}

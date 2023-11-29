@@ -24,6 +24,7 @@ class InnerCardTaskList extends Component {
             nextProps.onChangeCheckListCheckBox === this.props.onChangeCheckListCheckBox &&
             nextProps.onChangeValueCheckBox === this.props.onChangeValueCheckBox &&
             nextProps.deleteSomeCheckList === this.props.deleteSomeCheckList &&
+            nextProps.deleteSomeCheckBox === this.props.deleteSomeCheckBox &&
             nextProps.onChangeDescription === this.props.onChangeDescription
         ) {
             return false;
@@ -51,6 +52,7 @@ class InnerCardTaskList extends Component {
                     onChangeCheckListCheckBox={this.props.onChangeCheckListCheckBox}
                     onChangeValueCheckBox={this.props.onChangeValueCheckBox}
                     deleteSomeCheckList={this.props.deleteSomeCheckList}
+                    deleteSomeCheckBox={this.props.deleteSomeCheckBox}
                     onChangeDescription={this.props.onChangeDescription}
                 />
     }
@@ -78,6 +80,7 @@ const CardBase = (props) => {
         onChangeCheckListCheckBox,
         onChangeValueCheckBox,
         deleteSomeCheckList,
+        deleteSomeCheckBox,
 
         addNewCheckList
     } = props
@@ -210,6 +213,7 @@ const CardBase = (props) => {
                                                 onChangeCheckListCheckBox={onChangeCheckListCheckBox}
                                                 onChangeValueCheckBox={onChangeValueCheckBox}
                                                 deleteSomeCheckList={deleteSomeCheckList}
+                                                deleteSomeCheckBox={deleteSomeCheckBox}
 
                                                 markTextShow={markTextShow}
                                                 setMarkTextShow={setMarkTextShow}

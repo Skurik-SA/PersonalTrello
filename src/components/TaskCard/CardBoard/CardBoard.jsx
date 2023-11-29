@@ -33,6 +33,7 @@ class InnerCardList extends PureComponent {
             onChangeCheckListCheckBox,
             onChangeValueCheckBox,
             deleteSomeCheckList,
+            deleteSomeCheckBox,
 
             addNewCheckList
         } = this.props
@@ -56,6 +57,7 @@ class InnerCardList extends PureComponent {
                     onChangeCheckListCheckBox={onChangeCheckListCheckBox}
                     onChangeValueCheckBox={onChangeValueCheckBox}
                     deleteSomeCheckList={deleteSomeCheckList}
+                    deleteSomeCheckBox={deleteSomeCheckBox}
 
                     markTextShow={markTextShow}
                     setMarkTextShow={setMarkTextShow}
@@ -319,6 +321,20 @@ const CardBoard = (props) => {
 
         const newData = cloneDeep(clientVisibleData)
         newData[columnIndex].content[taskIndex].sub_tasks = sub_tasks
+        setClientVisibleData(newData)
+    }
+
+    const deleteSomeCheckBox = (task_id, card_id, sub_task_id, check_box_id, checked) => {
+        const columnIndex = clientVisibleData.findIndex((column_id) => column_id.id === card_id)
+        const taskIndex = clientVisibleData[columnIndex].content.findIndex((task) => task.id === task_id)
+        const subTaskIndex = clientVisibleData[columnIndex].content[taskIndex].sub_tasks.findIndex((task) => task.id === sub_task_id)
+        const newCheckBoxesArray = clientVisibleData[columnIndex].content[taskIndex].sub_tasks[subTaskIndex].check_list.filter((task) => task.id !== check_box_id)
+
+        const newData = cloneDeep(clientVisibleData)
+        if (checked) {
+            newData[columnIndex].content[taskIndex].sub_tasks[subTaskIndex].success_amount -= 1
+        }
+        newData[columnIndex].content[taskIndex].sub_tasks[subTaskIndex].check_list = newCheckBoxesArray
         setClientVisibleData(newData)
     }
 
@@ -627,6 +643,7 @@ const CardBoard = (props) => {
                                                     onChangeCheckListCheckBox={onChangeCheckListCheckBox}
                                                     onChangeValueCheckBox={onChangeValueCheckBox}
                                                     deleteSomeCheckList={deleteSomeCheckList}
+                                                    deleteSomeCheckBox={deleteSomeCheckBox}
 
                                                     moveCardViaButtons={moveCardViaButtons}
                                                     copyCardTo={copyCardTo}

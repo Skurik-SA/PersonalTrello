@@ -295,7 +295,7 @@ const ContentCopyCard = (props) => {
                             </Select>
                         </FormControl>
                         <div className={styles.contentCopyCard_buttonsDown}>
-                            <FormControl sx={{  width: 'calc(55% + 100px)' }} size="small">
+                            <FormControl sx={{  width: 'calc(55% + 100px)', maxWidth: '200px' }} size="small">
                                 <InputLabel id="column-select-helper-label" >Колонка</InputLabel>
                                 <Select
                                     labelId="column-select-helper-label"

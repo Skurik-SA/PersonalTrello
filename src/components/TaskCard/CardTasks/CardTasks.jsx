@@ -45,6 +45,7 @@ const CardTasks = (props) => {
         addNewTaskIntoCheckList,
         onChangeCheckListCheckBox,
         onChangeValueCheckBox,
+        deleteSomeCheckList,
 
         addNewCheckList
     } = props
@@ -171,6 +172,7 @@ const CardTasks = (props) => {
                totalSubTasks={totalSubTasks}
                totalSuccessSubTasks={totalSuccessSubTasks}
                onChangeValueCheckBox={onChangeValueCheckBox}
+               deleteSomeCheckList={deleteSomeCheckList}
 
                clientVisibleData={clientVisibleData}
                moveCardViaButtons={moveCardViaButtons}

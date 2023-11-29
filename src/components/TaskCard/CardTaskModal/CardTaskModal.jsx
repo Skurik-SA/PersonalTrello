@@ -61,6 +61,7 @@ const CardTaskModal = (props) => {
         addNewTaskIntoCheckList,
         onChangeCheckListCheckBox,
         onChangeValueCheckBox,
+        deleteSomeCheckList,
         totalSubTasks,
         totalSuccessSubTasks,
 
@@ -412,13 +413,23 @@ const CardTaskModal = (props) => {
                                 <div>
                                     {task.sub_tasks && task.sub_tasks.map((sub_task, index) =>
                                         <div key={index} style={{paddingBottom: '20px'}}>
-                                            <div className={styles.fullEditDescriptionHeader} style={{height: '100%', alignItems: 'flex-start'}}>
-                                                <div style={{paddingTop: '5px'}}>
-                                                    <CheckList/>
+                                            <div className={styles.fullEditDescriptionHeader} style={{height: '100%', alignItems: 'center', justifyContent: 'space-between', marginRight:'20px'}}>
+                                                <div style={{display: 'flex', flexDirection: 'row', gap: '10px'}}>
+                                                    <div style={{paddingTop: '5px'}}>
+                                                        <CheckList/>
+                                                    </div>
+                                                    <div style={{fontSize: '1.1rem', textDecoration: 'underline'}}>
+                                                        {sub_task.title}
+                                                    </div>
                                                 </div>
-                                                <div style={{fontSize: '1.1rem', textDecoration: 'underline'}}>
-                                                    {sub_task.title}
-                                                </div>
+                                                <button
+                                                    className={styles.checkBoxAddButton}
+                                                    onClick={() => {
+                                                        deleteSomeCheckList(task.id, column_id, sub_task.id)
+                                                    }}
+                                                >
+                                                    Удалить
+                                                </button>
                                             </div>
                                             <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center'}}>
                                                 <span style={{width: '50px'}}>

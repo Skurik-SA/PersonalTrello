@@ -32,6 +32,7 @@ class InnerCardList extends PureComponent {
             addNewTaskIntoCheckList,
             onChangeCheckListCheckBox,
             onChangeValueCheckBox,
+            deleteSomeCheckList,
 
             addNewCheckList
         } = this.props
@@ -54,6 +55,7 @@ class InnerCardList extends PureComponent {
                     addNewTaskIntoCheckList={addNewTaskIntoCheckList}
                     onChangeCheckListCheckBox={onChangeCheckListCheckBox}
                     onChangeValueCheckBox={onChangeValueCheckBox}
+                    deleteSomeCheckList={deleteSomeCheckList}
 
                     markTextShow={markTextShow}
                     setMarkTextShow={setMarkTextShow}
@@ -307,6 +309,16 @@ const CardBoard = (props) => {
 
         const newData = cloneDeep(clientVisibleData)
         newData[columnIndex].content[taskIndex].sub_tasks.push(newCheckList)
+        setClientVisibleData(newData)
+    }
+
+    const deleteSomeCheckList = (task_id, card_id, sub_task_id) => {
+        const columnIndex = clientVisibleData.findIndex((column_id) => column_id.id === card_id)
+        const taskIndex = clientVisibleData[columnIndex].content.findIndex((task) => task.id === task_id)
+        const sub_tasks = clientVisibleData[columnIndex].content[taskIndex].sub_tasks.filter((task) => task.id !== sub_task_id)
+
+        const newData = cloneDeep(clientVisibleData)
+        newData[columnIndex].content[taskIndex].sub_tasks = sub_tasks
         setClientVisibleData(newData)
     }
 
@@ -614,6 +626,7 @@ const CardBoard = (props) => {
                                                     addNewTaskIntoCheckList={addNewTaskIntoCheckList}
                                                     onChangeCheckListCheckBox={onChangeCheckListCheckBox}
                                                     onChangeValueCheckBox={onChangeValueCheckBox}
+                                                    deleteSomeCheckList={deleteSomeCheckList}
 
                                                     moveCardViaButtons={moveCardViaButtons}
                                                     copyCardTo={copyCardTo}

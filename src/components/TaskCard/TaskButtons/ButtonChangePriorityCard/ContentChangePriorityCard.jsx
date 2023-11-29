@@ -8,6 +8,8 @@ const ContentChangePriorityCard = (props) => {
     const {
         clientVisibleData,
         task_id,
+        column_id,
+        setPriorityCard,
         handleClose,
     } = props
 
@@ -121,12 +123,16 @@ const ContentChangePriorityCard = (props) => {
                             size={"small"}
                         >
                             {task_priorities.map((pr) =>
-                                <MenuItem key={pr.id} value={pr.type}>{pr.label}</MenuItem>
+                                <MenuItem key={pr.id} value={pr.id}>{pr.label}</MenuItem>
                             )}
                         </Select>
                     </FormControl>
                 </ThemeProvider>
-                <button className={styles.contentChangePriority_setButton}>
+                <button className={styles.contentChangePriority_setButton}
+                        onClick={() => {
+                            setPriorityCard(task_id, column_id, task_priorities[taskPriority])
+                        }}
+                >
                     Установить
                 </button>
             </div>

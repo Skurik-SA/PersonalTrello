@@ -34,6 +34,7 @@ class InnerCardList extends PureComponent {
             onChangeValueCheckBox,
             deleteSomeCheckList,
             deleteSomeCheckBox,
+            setPriorityCard,
 
             addNewCheckList
         } = this.props
@@ -58,6 +59,7 @@ class InnerCardList extends PureComponent {
                     onChangeValueCheckBox={onChangeValueCheckBox}
                     deleteSomeCheckList={deleteSomeCheckList}
                     deleteSomeCheckBox={deleteSomeCheckBox}
+                    setPriorityCard={setPriorityCard}
 
                     markTextShow={markTextShow}
                     setMarkTextShow={setMarkTextShow}
@@ -237,11 +239,6 @@ const CardBoard = (props) => {
         ))]
 
         setClientVisibleData(newItems)
-        // console.log(dayjs(date).format('DD MMM') )
-        // console.log(date )
-        // console.log(dayjs().locale('ru').to(dayjs(date)) )
-        // console.log(date.diff(dayjs().locale('ru'), 'day') < 3 )
-
     }
 
     const deleteCard = (task_id, card_id) => {
@@ -549,6 +546,16 @@ const CardBoard = (props) => {
         setClientVisibleData(newItems)
     }
 
+    const setPriorityCard = (task_id, card_id, priority_data) => {
+        console.log(priority_data)
+        const columnIndex = clientVisibleData.findIndex((column_id) => column_id.id === card_id)
+        const taskIndex = clientVisibleData[columnIndex].content.findIndex((task) => task.id === task_id)
+
+        const newData = cloneDeep(clientVisibleData)
+        newData[columnIndex].content[taskIndex].priority = priority_data
+        setClientVisibleData(newData)
+    }
+
     const handleOnDragEnd = (results) => {
 
         const {source, destination, type} = results
@@ -646,6 +653,7 @@ const CardBoard = (props) => {
                                                     onChangeValueCheckBox={onChangeValueCheckBox}
                                                     deleteSomeCheckList={deleteSomeCheckList}
                                                     deleteSomeCheckBox={deleteSomeCheckBox}
+                                                    setPriorityCard={setPriorityCard}
 
                                                     moveCardViaButtons={moveCardViaButtons}
                                                     copyCardTo={copyCardTo}

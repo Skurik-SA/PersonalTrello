@@ -63,6 +63,7 @@ const CardTaskModal = (props) => {
         onChangeValueCheckBox,
         deleteSomeCheckList,
         deleteSomeCheckBox,
+        setPriorityCard,
 
         totalSubTasks,
         totalSuccessSubTasks,
@@ -608,7 +609,10 @@ const CardTaskModal = (props) => {
                                 <ButtonChangePriorityCard
                                     clientVisibleData={clientVisibleData}
                                     task_id={task.id}
+                                    setPriorityCard={setPriorityCard}
+                                    column_id={column_id}
                                     button_id={"modal-card-priority"}
+
                                     buttonContent={"Приоритет"}
                                     rootButtonStyle={styles.fullEditMenuButton}
                                 />

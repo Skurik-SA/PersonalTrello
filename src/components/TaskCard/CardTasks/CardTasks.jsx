@@ -47,6 +47,7 @@ const CardTasks = (props) => {
         onChangeValueCheckBox,
         deleteSomeCheckList,
         deleteSomeCheckBox,
+        setPriorityCard,
 
         addNewCheckList
     } = props
@@ -175,6 +176,7 @@ const CardTasks = (props) => {
                onChangeValueCheckBox={onChangeValueCheckBox}
                deleteSomeCheckList={deleteSomeCheckList}
                deleteSomeCheckBox={deleteSomeCheckBox}
+               setPriorityCard={setPriorityCard}
 
                clientVisibleData={clientVisibleData}
                moveCardViaButtons={moveCardViaButtons}
@@ -286,6 +288,8 @@ const CardTasks = (props) => {
                                     />
                                    <ButtonChangePriorityCard
                                        clientVisibleData={clientVisibleData}
+                                       setPriorityCard={setPriorityCard}
+                                       column_id={column_id}
                                        task_id={task.id}
                                    />
                                    <ButtonMoveCard
@@ -319,6 +323,16 @@ const CardTasks = (props) => {
                    </ThemeProvider>
 
                    <div>
+                       <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+                           {task.priority && task.priority.type !== 'default'
+                                ?
+                               <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', background: '#000148FF', padding: '5px', borderRadius: '10px'}}>
+                                   {task.priority.label}
+                               </div>
+                               :
+                               <></>
+                           }
+                       </div>
                        {task.marks.length > 0
                            ?
                            <Transition  nodeRef={nodeRef} in={markTextShow} timeout={duration}>

@@ -7,9 +7,11 @@ import Priority from "../../../../assets/Icons/Priority.jsx";
 const ButtonChangePriorityCard = (props) => {
 
     const {
+        column_id,
         task_id,
         renderByAnchor,
         clientVisibleData,
+        setPriorityCard,
 
         button_id,
         buttonContent,
@@ -42,7 +44,9 @@ const ButtonChangePriorityCard = (props) => {
         >
             <ContentChangePriorityCard
                 clientVisibleData={clientVisibleData}
+                setPriorityCard={setPriorityCard}
                 task_id={task_id}
+                column_id={column_id}
                 handleClose={handleClose}
             />
         </TaskBaseButton>

@@ -9,16 +9,18 @@ import CardBoard from "../../components/TaskCard/CardBoard/CardBoard.jsx";
 import {Checkbox, FormControlLabel, FormGroup, ListItemText, MenuItem, Select} from "@mui/material";
 import {useSelector} from "react-redux";
 import Share from "../../assets/Icons/Share.jsx";
+import BoardContext from "../../context/BoardContext.jsx";
 
 const Board = () => {
     const data = useSelector(state => state.todolist.data)
+    const [clientVisibleData, setClientVisibleData] = useState(data)
 
     const [inVal, setInVal] = useState("Task Board For Study")
     const [iconFavMode, setIconFavMode] = useState(false)
     const [iconPrivacyMode, setIconPrivacyMode] = useState(0)
 
     return (
-        <>
+        <BoardContext.Provider value={{clientVisibleData, setClientVisibleData}}>
             <div style={{display: 'flex', height: '100%'}}>
                 <div style={{display: 'flex', flexDirection: 'column'}}>
                     <SideBar/>
@@ -296,7 +298,7 @@ const Board = () => {
                     <CardBoard data={data}/>
                 </div>
             </div>
-        </>
+        </BoardContext.Provider>
     )
 }
 

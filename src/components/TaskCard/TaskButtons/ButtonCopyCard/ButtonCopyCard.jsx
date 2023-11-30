@@ -11,8 +11,6 @@ const ButtonCopyCard = (props) => {
     const {
         task_id,
         renderByAnchor,
-        clientVisibleData,
-        copyCardTo,
 
         button_id,
         buttonContent,
@@ -49,10 +47,8 @@ const ButtonCopyCard = (props) => {
             <ContentCopyCard
                 popover_id={"button-popper"}
                 button_id={button_id ? button_id : "copy-card"}
-                copyCardTo={copyCardTo}
                 copiedValue={copiedValue}
 
-                clientVisibleData={clientVisibleData}
                 task={task}
                 task_id={task_id}
                 handleClose={handleClose}

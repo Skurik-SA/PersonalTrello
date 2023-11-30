@@ -1,8 +1,12 @@
 import styles from "./CardBase.module.css"
-import {Component, useEffect, useRef, useState} from "react";
+import {Component, useContext, useEffect, useRef, useState} from "react";
 import {TextareaAutosize} from "@mui/material";
 import CardTasks from "../CardTasks/CardTasks.jsx";
 import {Draggable, Droppable} from "react-beautiful-dnd";
+import BoardContext from "../../../context/BoardContext.jsx";
+import {set_todolist} from "../../../redux/store/slices/slice_ToDoList.js";
+import {useDispatch} from "react-redux";
+import {v4 as uuidv4} from "uuid";
 
 
 class InnerCardTaskList extends Component {
@@ -10,23 +14,16 @@ class InnerCardTaskList extends Component {
         if (
             nextProps.column_id === this.props.column_id &&
             nextProps.task === this.props.task &&
-            nextProps.changeTaskInfo === this.props.changeTaskInfo &&
             nextProps.onChangeCardMark === this.props.onChangeCardMark &&
             nextProps.markTextShow === this.props.markTextShow &&
             nextProps.setMarkTextShow === this.props.setMarkTextShow &&
             nextProps.clientVisibleData === this.props.clientVisibleData &&
-            nextProps.moveCardViaButtons === this.props.moveCardViaButtons &&
-            nextProps.copyCardTo === this.props.copyCardTo &&
-            nextProps.deleteCard === this.props.deleteCard &&
-            nextProps.setDeadline === this.props.setDeadline &&
             nextProps.addNewCheckList === this.props.addNewCheckList &&
             nextProps.addNewTaskIntoCheckList === this.props.addNewTaskIntoCheckList &&
             nextProps.onChangeCheckListCheckBox === this.props.onChangeCheckListCheckBox &&
             nextProps.onChangeValueCheckBox === this.props.onChangeValueCheckBox &&
             nextProps.deleteSomeCheckList === this.props.deleteSomeCheckList &&
-            nextProps.deleteSomeCheckBox === this.props.deleteSomeCheckBox &&
-            nextProps.setPriorityCard === this.props.setPriorityCard &&
-            nextProps.onChangeDescription === this.props.onChangeDescription
+            nextProps.deleteSomeCheckBox === this.props.deleteSomeCheckBox
         ) {
             return false;
         }
@@ -39,23 +36,16 @@ class InnerCardTaskList extends Component {
                     key={this.props.task.id}
                     task={this.props.task}
                     column_id={this.props.column_id}
-                    changeTaskInfo={this.props.changeTaskInfo}
                     onChangeCardMark={this.props.onChangeCardMark}
                     clientVisibleData={this.props.clientVisibleData}
                     markTextShow={this.props.markTextShow}
                     setMarkTextShow={this.props.setMarkTextShow}
-                    moveCardViaButtons={this.props.moveCardViaButtons}
-                    copyCardTo={this.props.copyCardTo}
-                    deleteCard={this.props.deleteCard}
-                    setDeadline={this.props.setDeadline}
                     addNewCheckList={this.props.addNewCheckList}
                     addNewTaskIntoCheckList={this.props.addNewTaskIntoCheckList}
                     onChangeCheckListCheckBox={this.props.onChangeCheckListCheckBox}
                     onChangeValueCheckBox={this.props.onChangeValueCheckBox}
                     deleteSomeCheckList={this.props.deleteSomeCheckList}
                     deleteSomeCheckBox={this.props.deleteSomeCheckBox}
-                    setPriorityCard={this.props.setPriorityCard}
-                    onChangeDescription={this.props.onChangeDescription}
                 />
     }
 }
@@ -66,27 +56,25 @@ const CardBase = (props) => {
         card_data,
         index,
         card_title,
-        titleOnChange,
-        newTaskOnClick,
-        changeTaskInfo,
+        // newTaskOnClick,
         onChangeCardMark,
         markTextShow,
         setMarkTextShow,
-        clientVisibleData,
-        moveCardViaButtons,
-        onChangeDescription,
-        copyCardTo,
-        deleteCard,
-        setDeadline,
         addNewTaskIntoCheckList,
         onChangeCheckListCheckBox,
         onChangeValueCheckBox,
         deleteSomeCheckList,
         deleteSomeCheckBox,
-        setPriorityCard,
 
         addNewCheckList
     } = props
+
+
+    const {
+        clientVisibleData,
+        setClientVisibleData
+    } = useContext(BoardContext)
+    const dispatch = useDispatch()
 
     const [titleTextVisibility, setTitleTextVisibility] = useState(false)
 
@@ -107,6 +95,62 @@ const CardBase = (props) => {
             document.getElementById(index).focus()
         }, 50);
     }
+
+    const titleOnChange = (card_id, value) => {
+        const columnIndex = clientVisibleData.findIndex((column_id) => column_id.id === card_id)
+
+        // let newData = clientVisibleData[columnIndex]
+        let newTitleData = {
+            id: clientVisibleData[columnIndex].id,
+            title: value,
+            content: clientVisibleData[columnIndex].content
+        }
+        const newItems = [...(clientVisibleData.map((column_id, index) =>
+            column_id.id !== card_id
+                ?
+                clientVisibleData[index]
+                :
+                newTitleData
+        ))]
+
+        dispatch(set_todolist(newItems))
+
+        setClientVisibleData(newItems)
+    }
+
+    const newTaskOnClick = (card_id) => {
+        const columnIndex = clientVisibleData.findIndex((column_id) => column_id.id === card_id)
+
+        const newContentItems = [
+            ...clientVisibleData[columnIndex].content,
+            {
+                id: uuidv4(),
+                info: 'Новая карточка',
+                marks: [],
+                task_cover: {},
+                deadline: {},
+                task_description: {},
+                sub_tasks: [],
+                priority : {
+                    id: 0,
+                    type: 'default',
+                    label: 'Нет установлен'
+                },
+                comments: [],
+            }
+        ]
+
+        const newEl = [...clientVisibleData]
+
+        newEl[columnIndex] = {
+            ...clientVisibleData[columnIndex],
+            content: newContentItems
+        }
+
+        setClientVisibleData(newEl)
+    }
+
+
 
     useEffect(() => {
         document.addEventListener("mousedown", handleClick)
@@ -204,22 +248,15 @@ const CardBase = (props) => {
                                                 key={task.id}
                                                 task={task}
                                                 column_id={card_data.id}
-                                                changeTaskInfo={changeTaskInfo}
                                                 onChangeCardMark={onChangeCardMark}
-                                                onChangeDescription={onChangeDescription}
                                                 addNewTaskIntoCheckList={addNewTaskIntoCheckList}
 
                                                 clientVisibleData={clientVisibleData}
-                                                moveCardViaButtons={moveCardViaButtons}
-                                                copyCardTo={copyCardTo}
-                                                deleteCard={deleteCard}
-                                                setDeadline={setDeadline}
                                                 addNewCheckList={addNewCheckList}
                                                 onChangeCheckListCheckBox={onChangeCheckListCheckBox}
                                                 onChangeValueCheckBox={onChangeValueCheckBox}
                                                 deleteSomeCheckList={deleteSomeCheckList}
                                                 deleteSomeCheckBox={deleteSomeCheckBox}
-                                                setPriorityCard={setPriorityCard}
 
                                                 markTextShow={markTextShow}
                                                 setMarkTextShow={setMarkTextShow}

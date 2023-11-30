@@ -10,8 +10,6 @@ const ButtonMoveCard = (props) => {
         task_id,
         column_id,
         renderByAnchor,
-        clientVisibleData,
-        deleteCard,
 
         button_id,
         buttonContent,
@@ -43,10 +41,8 @@ const ButtonMoveCard = (props) => {
             rootButtonStyle={rootButtonStyle}
         >
             <ContentDeleteCard
-                clientVisibleData={clientVisibleData}
                 task_id={task_id}
                 column_id={column_id}
-                deleteCard={deleteCard}
                 handleClose={handleClose}
             />
         </TaskBaseButton>

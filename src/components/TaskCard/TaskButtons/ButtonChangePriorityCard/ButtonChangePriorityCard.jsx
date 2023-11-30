@@ -10,8 +10,6 @@ const ButtonChangePriorityCard = (props) => {
         column_id,
         task_id,
         renderByAnchor,
-        clientVisibleData,
-        setPriorityCard,
 
         button_id,
         buttonContent,
@@ -43,8 +41,6 @@ const ButtonChangePriorityCard = (props) => {
             rootButtonStyle={rootButtonStyle}
         >
             <ContentChangePriorityCard
-                clientVisibleData={clientVisibleData}
-                setPriorityCard={setPriorityCard}
                 task_id={task_id}
                 column_id={column_id}
                 handleClose={handleClose}

@@ -11,7 +11,10 @@ import {
     Select, styled,
     ThemeProvider
 } from "@mui/material";
-import {useState} from "react";
+import {useContext, useState} from "react";
+import {findColumnIndex} from "../../../../utils/FindColumnIndex.js";
+import {v4 as uuidv4} from "uuid";
+import BoardContext from "../../../../context/BoardContext.jsx";
 
 
 export const BpIcon = styled('span')(({ theme }) => ({
@@ -62,16 +65,22 @@ export const BpCheckedIcon = styled(BpIcon)({
 const ContentCopyCard = (props) => {
 
     const {
-        clientVisibleData,
+        // clientVisibleData,
         task,
         task_id,
-        copyCardTo,
+        // copyCardTo,
         handleClose,
         popover_id,
         button_id,
 
         copiedValue = ""
     } = props
+
+
+    const {
+        clientVisibleData,
+        setClientVisibleData
+    } = useContext(BoardContext)
 
     const [column, setColumn] = useState(0);
     const [row, setRow] = useState(0);
@@ -108,6 +117,50 @@ const ContentCopyCard = (props) => {
     const handleChangeBoard = (event) => {
         setBoard(event.target.value);
     };
+
+    const copyCardTo = (
+        source_task_id,
+        // source_column_id,
+        destination_task_index,
+        destination_column_index,
+
+        isCopyMarks,
+        isCopySubTasks,
+        isCopyDescription,
+        value,
+    ) => {
+
+        const source_column_index = findColumnIndex(clientVisibleData, source_task_id,'index') // Откуда колонка
+
+        const source_task_index = clientVisibleData[source_column_index].content.findIndex((row) => row.id === source_task_id) // Откуда карточка
+        const newDataItems = [...clientVisibleData[source_column_index].content]
+
+        const newDestinationItems = [...clientVisibleData[destination_column_index].content]
+
+        const [gotItem] = newDataItems.splice(source_task_index, 1)
+        const copiedItem = {
+            id: uuidv4(),
+            info: value ? value : gotItem.info,
+            marks: isCopyMarks ? gotItem.marks : [],
+            task_cover: gotItem.task_cover,
+            deadline: gotItem.deadline,
+            task_description: isCopyDescription ? gotItem.task_description : {},
+            // Знаю косяк с копирование id
+            sub_tasks: isCopySubTasks ? gotItem.sub_tasks : [],
+            priority: gotItem.priority,
+            comments: gotItem.comments,
+        }
+        newDestinationItems.splice(destination_task_index, 0, copiedItem)
+
+        const newEl = [...clientVisibleData]
+
+        newEl[destination_column_index] = {
+            ...clientVisibleData[destination_column_index],
+            content: newDestinationItems
+        }
+
+        setClientVisibleData(newEl)
+    }
 
     const onClickCopyCard = (
         source_task_id,

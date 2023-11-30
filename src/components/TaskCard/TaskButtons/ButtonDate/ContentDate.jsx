@@ -3,18 +3,18 @@ import styles from "./ButtonDate.module.css"
 import ExitModal from "../../../../assets/Icons/ExitModal.jsx";
 import CustomDatePicker from "../../../CustomDateTime/CustomDatePicker.jsx";
 import CustomDateField from "../../../CustomDateTime/CustomDateField.jsx";
-import {useState} from "react";
+import {useContext, useState} from "react";
 import dayjs from "dayjs";
 import CustomTimeField from "../../../CustomDateTime/CustomTimeField.jsx";
-
+import {DONE, FAILED, NOT_DONE, SOON_EXPIRE, UNSET} from "../../../../utils/StatusConstants.js";
+import BoardContext from "../../../../context/BoardContext.jsx";
 
 const ContentDate = (props) => {
 
     const {
-        clientVisibleData,
         task_id,
+        setDeadLine,
         column_id,
-        setDeadline,
         handleClose,
         task,
     } = props
@@ -32,6 +32,7 @@ const ContentDate = (props) => {
         console.log(newValue)
     }
 
+
     return (
         <div className={styles.contentDateWrapper}>
             <div className={styles.contentDate_title}>
@@ -47,13 +48,13 @@ const ContentDate = (props) => {
                     <CustomTimeField value={time} setValue={onChangeTime}/>
                 </div>
                 <button className={styles.contentDate_saveButton}
-                        onClick={() => setDeadline(task_id, column_id, date, "set", "NotDone")}
+                        onClick={() => setDeadLine(task_id, column_id, date, "set", "NotDone")}
                 >
                     Сохранить
                 </button>
                 <button className={styles.contentDate_deleteButton}
                         onClick={() => {
-                            setDeadline(task_id, column_id, date, "delete")
+                            setDeadLine(task_id, column_id, date, "delete")
                             handleClose()
                         }}
                 >

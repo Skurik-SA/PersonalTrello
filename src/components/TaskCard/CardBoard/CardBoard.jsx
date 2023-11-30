@@ -2,40 +2,32 @@ import styles from "./CardBoard.module.css"
 import ScrollContainer from "react-indiana-drag-scroll";
 import {DragDropContext, Draggable, Droppable} from "react-beautiful-dnd";
 import CardBase from "../CardBase/CardBase.jsx";
-import {PureComponent, useState} from "react";
+import {PureComponent, useContext, useState} from "react";
 import {v4 as uuidv4} from "uuid";
 import {useDispatch} from "react-redux";
 import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime.js";
 import {flushSync} from "react-dom";
 import {DONE, FAILED, NOT_DONE, SOON_EXPIRE, UNSET} from "../../../utils/StatusConstants.js";
 import {cloneDeep} from "lodash-es";
 import {set_todolist} from "../../../redux/store/slices/slice_ToDoList.js";
+import BoardContext from "../../../context/BoardContext.jsx";
+import {findColumnIndex} from "../../../utils/FindColumnIndex.js";
 
 class InnerCardList extends PureComponent {
     render() {
         const {
             card_data,
             card_title,
-            titleOnChange,
-            newTaskOnClick,
-            changeTaskInfo,
             onChangeCardMark,
             index,
             markTextShow,
             setMarkTextShow,
             clientVisibleData,
-            moveCardViaButtons,
-            onChangeDescription,
-            copyCardTo,
-            deleteCard,
-            setDeadline,
             addNewTaskIntoCheckList,
             onChangeCheckListCheckBox,
             onChangeValueCheckBox,
             deleteSomeCheckList,
             deleteSomeCheckBox,
-            setPriorityCard,
 
             addNewCheckList
         } = this.props
@@ -43,16 +35,8 @@ class InnerCardList extends PureComponent {
         return <CardBase
                     card_data={card_data}
                     card_title={card_title}
-                    titleOnChange={titleOnChange}
-                    newTaskOnClick={newTaskOnClick}
-                    changeTaskInfo={changeTaskInfo}
                     onChangeCardMark={onChangeCardMark}
                     clientVisibleData={clientVisibleData}
-                    moveCardViaButtons={moveCardViaButtons}
-                    copyCardTo={copyCardTo}
-                    deleteCard={deleteCard}
-                    setDeadline={setDeadline}
-                    onChangeDescription={onChangeDescription}
                     addNewCheckList={addNewCheckList}
                     index={index}
                     addNewTaskIntoCheckList={addNewTaskIntoCheckList}
@@ -60,7 +44,6 @@ class InnerCardList extends PureComponent {
                     onChangeValueCheckBox={onChangeValueCheckBox}
                     deleteSomeCheckList={deleteSomeCheckList}
                     deleteSomeCheckBox={deleteSomeCheckBox}
-                    setPriorityCard={setPriorityCard}
 
                     markTextShow={markTextShow}
                     setMarkTextShow={setMarkTextShow}
@@ -70,229 +53,21 @@ class InnerCardList extends PureComponent {
 
 const CardBoard = (props) => {
 
-    const {
-        data,
-    } = props
+    // const {
+    //
+    // } = props
 
-    const [clientVisibleData, setClientVisibleData] = useState(data)
+    // const [clientVisibleData, setClientVisibleData] = useState(data)
+    const {
+        clientVisibleData,
+        setClientVisibleData
+    } = useContext(BoardContext)
 
     const [markTextShow, setMarkTextShow] = useState(false)
     // Это костыль, но зато какой, потом с бэком скорее всего менять придётся
     const dispatch = useDispatch()
 
-    const findColumnIndex = (fullData, source_task_id, type) => {
-        let colIndex = {
-            index: -1,
-            id: '',
-        }
 
-        fullData.map((column, i) => column.content.map((el) => {
-            if (el.id === source_task_id) {
-                colIndex = {
-                    index: i,
-                    id: column.id
-                }
-            }
-        }))
-
-        if (type === 'id')
-            return colIndex.id
-        else if (type === 'index')
-            return colIndex.index
-    }
-
-    // Вроде багов нет
-    const moveCardViaButtons = (
-        source_task_id,
-        // source_column_id,
-        destination_task_index,
-        destination_column_index
-        ) => {
-
-        const source_column_index = findColumnIndex(clientVisibleData, source_task_id,'index')
-
-        const source_task_index = clientVisibleData[source_column_index].content.findIndex((row) => row.id === source_task_id)
-        const newDataItems = [...clientVisibleData[source_column_index].content]
-
-        const newDestinationItems =
-            source_column_index !== destination_column_index
-                ? [...clientVisibleData[destination_column_index].content]
-                : newDataItems
-
-        const [deletedItem] = newDataItems.splice(source_task_index, 1)
-        newDestinationItems.splice(destination_task_index, 0, deletedItem)
-
-        const newEl = [...clientVisibleData]
-
-        newEl[source_column_index] = {
-            ...clientVisibleData[source_column_index],
-            content: newDataItems
-        }
-
-        newEl[destination_column_index] = {
-            ...clientVisibleData[destination_column_index],
-            content: newDestinationItems
-        }
-
-        setClientVisibleData(newEl)
-    }
-
-    const copyCardTo = (
-        source_task_id,
-        // source_column_id,
-        destination_task_index,
-        destination_column_index,
-
-        isCopyMarks,
-        isCopySubTasks,
-        isCopyDescription,
-        value,
-    ) => {
-
-        const source_column_index = findColumnIndex(clientVisibleData, source_task_id,'index') // Откуда колонка
-
-        const source_task_index = clientVisibleData[source_column_index].content.findIndex((row) => row.id === source_task_id) // Откуда карточка
-        const newDataItems = [...clientVisibleData[source_column_index].content]
-
-        const newDestinationItems = [...clientVisibleData[destination_column_index].content]
-
-        const [gotItem] = newDataItems.splice(source_task_index, 1)
-        const copiedItem = {
-            id: uuidv4(),
-            info: value ? value : gotItem.info,
-            marks: isCopyMarks ? gotItem.marks : [],
-            task_cover: gotItem.task_cover,
-            deadline: gotItem.deadline,
-            task_description: isCopyDescription ? gotItem.task_description : {},
-            sub_tasks: isCopySubTasks ? gotItem.sub_tasks : [],
-            priority: gotItem.priority,
-            comments: gotItem.comments,
-        }
-        newDestinationItems.splice(destination_task_index, 0, copiedItem)
-
-        const newEl = [...clientVisibleData]
-
-        newEl[destination_column_index] = {
-            ...clientVisibleData[destination_column_index],
-            content: newDestinationItems
-        }
-
-        setClientVisibleData(newEl)
-    }
-
-
-
-    const setDeadline = (task_id, card_id, date, action="set", type='') => {
-        dayjs.extend(relativeTime)
-        const columnIndex = clientVisibleData.findIndex((column_id) => column_id.id === card_id)
-        const taskIndex = clientVisibleData[columnIndex].content.findIndex((task) => task.id === task_id)
-
-        let deadlineType = UNSET
-        if (type === DONE) {
-            deadlineType = DONE
-        } else if (type === NOT_DONE) {
-            const daysLeft = date.diff(dayjs().locale('ru'), 'day', true) // Можно в remaining записывать
-            if (daysLeft < 0) {
-                deadlineType = FAILED
-            } else if (3 >= daysLeft > 0) {
-                deadlineType = SOON_EXPIRE
-            } else {
-                deadlineType = NOT_DONE
-            }
-        }
-
-        // let newDataItems = [...clientVisibleData[columnIndex].content]
-        let newTask = {
-            id: clientVisibleData[columnIndex].content[taskIndex].id,
-            info: clientVisibleData[columnIndex].content[taskIndex].info,
-            marks: clientVisibleData[columnIndex].content[taskIndex].marks,
-            task_cover: clientVisibleData[columnIndex].content[taskIndex].task_cover,
-            deadline: action === "set" ? {
-                type: deadlineType,
-                remaining: '',
-                end: '',
-                dateJsFormatDate: date,
-                dateJsFormatTime: {},
-            } : {},
-            task_description: clientVisibleData[columnIndex].content[taskIndex].task_description,
-            sub_tasks: clientVisibleData[columnIndex].content[taskIndex].sub_tasks,
-            priority: clientVisibleData[columnIndex].content[taskIndex].priority,
-            comments: clientVisibleData[columnIndex].content[taskIndex].comments,
-        }
-        // newDataItems[taskIndex].deadline.dateJsFormatDate = date
-
-        const newItems = [...(clientVisibleData.map((column_id, col_index) =>
-            column_id.id !== card_id
-                ?
-                clientVisibleData[col_index]
-                :
-                {
-                    id:  clientVisibleData[col_index].id,
-                    title: clientVisibleData[col_index].title,
-                    content: [...clientVisibleData[col_index].content.map((task, row_index) =>
-                        task.id !== task_id
-                            ?
-                            clientVisibleData[col_index].content[row_index]
-                            :
-                            newTask
-                    )]
-                }
-        ))]
-
-        setClientVisibleData(newItems)
-    }
-
-    const deleteCard = (task_id, card_id) => {
-        const columnIndex = clientVisibleData.findIndex((column_id) => column_id.id === card_id)
-        const newColumnData = [...clientVisibleData[columnIndex].content.filter((row) => row.id !== task_id)]
-
-        const newEl = [...clientVisibleData]
-
-        newEl[columnIndex] = {
-            ...clientVisibleData[columnIndex],
-            content: newColumnData
-        }
-
-        setClientVisibleData(newEl)
-    }
-
-    const onChangeDescription = (task_id, card_id, value) => {
-        const columnIndex = clientVisibleData.findIndex((column_id) => column_id.id === card_id)
-        const taskIndex = clientVisibleData[columnIndex].content.findIndex((task) => task.id === task_id)
-        let newTask = {
-            id: clientVisibleData[columnIndex].content[taskIndex].id,
-            info: clientVisibleData[columnIndex].content[taskIndex].info,
-            marks: clientVisibleData[columnIndex].content[taskIndex].marks,
-            task_cover: clientVisibleData[columnIndex].content[taskIndex].task_cover,
-            deadline: clientVisibleData[columnIndex].content[taskIndex].deadline,
-            task_description: {
-                text: value
-            },
-            sub_tasks: clientVisibleData[columnIndex].content[taskIndex].sub_tasks,
-            priority: clientVisibleData[columnIndex].content[taskIndex].priority,
-            comments: clientVisibleData[columnIndex].content[taskIndex].comments,
-        }
-        const newItems = [...(clientVisibleData.map((column_id, col_index) =>
-            column_id.id !== card_id
-                ?
-                clientVisibleData[col_index]
-                :
-                {
-                    id:  clientVisibleData[col_index].id,
-                    title: clientVisibleData[col_index].title,
-                    content: [...clientVisibleData[col_index].content.map((task, row_index) =>
-                        task.id !== task_id
-                            ?
-                            clientVisibleData[col_index].content[row_index]
-                            :
-                            newTask
-                    )]
-                }
-        ))]
-
-        console.log(newItems)
-        setClientVisibleData(newItems)
-    }
     const addNewCheckList = (task_id, card_id, value) => {
         const columnIndex = clientVisibleData.findIndex((column_id) => column_id.id === card_id)
         const taskIndex = clientVisibleData[columnIndex].content.findIndex((task) => task.id === task_id)
@@ -460,105 +235,7 @@ const CardBoard = (props) => {
         setClientVisibleData(newItems)
     }
 
-    const addNewTask = (card_id) => {
-        const columnIndex = clientVisibleData.findIndex((column_id) => column_id.id === card_id)
 
-        const newContentItems = [
-            ...clientVisibleData[columnIndex].content,
-            {
-                id: uuidv4(),
-                info: 'Новая карточка',
-                marks: [],
-                task_cover: {},
-                deadline: {},
-                task_description: {},
-                sub_tasks: [],
-                priority : {
-                    id: 0,
-                    type: 'default',
-                    label: 'Нет установлен'
-                },
-                comments: [],
-            }
-        ]
-
-        const newEl = [...clientVisibleData]
-
-        newEl[columnIndex] = {
-            ...clientVisibleData[columnIndex],
-            content: newContentItems
-        }
-
-        setClientVisibleData(newEl)
-    }
-
-    const changeTitle = (card_id, value) => {
-        const columnIndex = clientVisibleData.findIndex((column_id) => column_id.id === card_id)
-
-        // let newData = clientVisibleData[columnIndex]
-        let newTitleData = {
-                id: clientVisibleData[columnIndex].id,
-                title: value,
-                content: clientVisibleData[columnIndex].content
-            }
-        const newItems = [...(clientVisibleData.map((column_id, index) =>
-                column_id.id !== card_id
-                    ?
-                        clientVisibleData[index]
-                    :
-                        newTitleData
-        ))]
-
-        dispatch(set_todolist(newItems))
-
-        setClientVisibleData(newItems)
-    }
-
-    const changeTaskInfo = (task_id, card_id, value) => {
-        const columnIndex = clientVisibleData.findIndex((column_id) => column_id.id === card_id)
-        const taskIndex = clientVisibleData[columnIndex].content.findIndex((task) => task.id === task_id)
-        let newTask = {
-            id: clientVisibleData[columnIndex].content[taskIndex].id,
-            info: value,
-            marks: clientVisibleData[columnIndex].content[taskIndex].marks,
-            task_cover: clientVisibleData[columnIndex].content[taskIndex].task_cover,
-            deadline: clientVisibleData[columnIndex].content[taskIndex].deadline,
-            task_description: clientVisibleData[columnIndex].content[taskIndex].task_description,
-            sub_tasks: clientVisibleData[columnIndex].content[taskIndex].sub_tasks,
-            priority: clientVisibleData[columnIndex].content[taskIndex].priority,
-            comments: clientVisibleData[columnIndex].content[taskIndex].comments,
-        }
-        const newItems = [...(clientVisibleData.map((column_id, col_index) =>
-            column_id.id !== card_id
-                ?
-                clientVisibleData[col_index]
-                :
-                {
-                    id:  clientVisibleData[col_index].id,
-                    title: clientVisibleData[col_index].title,
-                    content: [...clientVisibleData[col_index].content.map((task, row_index) =>
-                        task.id !== task_id
-                            ?
-                            clientVisibleData[col_index].content[row_index]
-                            :
-                            newTask
-                    )]
-                }
-        ))]
-
-        dispatch(set_todolist(newItems))
-        setClientVisibleData(newItems)
-    }
-
-    const setPriorityCard = (task_id, card_id, priority_data) => {
-        console.log(priority_data)
-        const columnIndex = clientVisibleData.findIndex((column_id) => column_id.id === card_id)
-        const taskIndex = clientVisibleData[columnIndex].content.findIndex((task) => task.id === task_id)
-
-        const newData = cloneDeep(clientVisibleData)
-        newData[columnIndex].content[taskIndex].priority = priority_data
-        setClientVisibleData(newData)
-    }
 
     const handleOnDragEnd = (results) => {
 
@@ -648,23 +325,14 @@ const CardBoard = (props) => {
                                                     card_title={card.title}
                                                     clientVisibleData={clientVisibleData}
 
-                                                    newTaskOnClick={addNewTask}
 
-                                                    titleOnChange={changeTitle}
-                                                    changeTaskInfo={changeTaskInfo}
                                                     onChangeCardMark={onChangeCardMark}
-                                                    onChangeDescription={onChangeDescription}
                                                     addNewTaskIntoCheckList={addNewTaskIntoCheckList}
                                                     onChangeCheckListCheckBox={onChangeCheckListCheckBox}
                                                     onChangeValueCheckBox={onChangeValueCheckBox}
                                                     deleteSomeCheckList={deleteSomeCheckList}
                                                     deleteSomeCheckBox={deleteSomeCheckBox}
-                                                    setPriorityCard={setPriorityCard}
 
-                                                    moveCardViaButtons={moveCardViaButtons}
-                                                    copyCardTo={copyCardTo}
-                                                    deleteCard={deleteCard}
-                                                    setDeadline={setDeadline}
                                                     addNewCheckList={addNewCheckList}
 
                                                     markTextShow={markTextShow}

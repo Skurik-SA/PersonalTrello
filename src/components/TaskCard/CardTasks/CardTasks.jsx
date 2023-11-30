@@ -1,5 +1,5 @@
 import styles from "./CardTasks.module.css"
-import {useEffect, useRef, useState} from "react";
+import {useContext, useEffect, useRef, useState} from "react";
 import {
     createTheme,
     Popover,
@@ -27,30 +27,35 @@ import WorkDone from "../../../assets/Icons/WorkDone.jsx";
 import EmptyBox from "../../../assets/Icons/EmptyBox.jsx";
 import * as deadline from  "../../../utils/StatusConstants.js";
 import Notifications from "../../../assets/Icons/Notifications.jsx";
+import {DONE, FAILED, NOT_DONE, SOON_EXPIRE, UNSET} from "../../../utils/StatusConstants.js";
+import relativeTime from "dayjs/plugin/relativeTime.js";
+import BoardContext from "../../../context/BoardContext.jsx";
+import {set_todolist} from "../../../redux/store/slices/slice_ToDoList.js";
 
 const CardTasks = (props) => {
     const {
         task,
         column_id,
-        changeTaskInfo,
+        // changeTaskInfo,
         onChangeCardMark,
         markTextShow,
         setMarkTextShow,
-        clientVisibleData,
-        moveCardViaButtons,
-        onChangeDescription,
-        copyCardTo,
-        deleteCard,
-        setDeadline,
+        // clientVisibleData,
+        // onChangeDescription,
         addNewTaskIntoCheckList,
         onChangeCheckListCheckBox,
         onChangeValueCheckBox,
         deleteSomeCheckList,
         deleteSomeCheckBox,
-        setPriorityCard,
 
         addNewCheckList
     } = props
+
+
+    const {
+        clientVisibleData,
+        setClientVisibleData
+    } = useContext(BoardContext)
 
     const [anchorEl, setAnchorEl] = useState(null);
     const [modalOpen, setModalOpen] = useState(false);
@@ -97,6 +102,141 @@ const CardTasks = (props) => {
             minHeight: '20px'
         },
     };
+
+    const changeTaskInfo = (task_id, card_id, value) => {
+        const columnIndex = clientVisibleData.findIndex((column_id) => column_id.id === card_id)
+        const taskIndex = clientVisibleData[columnIndex].content.findIndex((task) => task.id === task_id)
+        let newTask = {
+            id: clientVisibleData[columnIndex].content[taskIndex].id,
+            info: value,
+            marks: clientVisibleData[columnIndex].content[taskIndex].marks,
+            task_cover: clientVisibleData[columnIndex].content[taskIndex].task_cover,
+            deadline: clientVisibleData[columnIndex].content[taskIndex].deadline,
+            task_description: clientVisibleData[columnIndex].content[taskIndex].task_description,
+            sub_tasks: clientVisibleData[columnIndex].content[taskIndex].sub_tasks,
+            priority: clientVisibleData[columnIndex].content[taskIndex].priority,
+            comments: clientVisibleData[columnIndex].content[taskIndex].comments,
+        }
+        const newItems = [...(clientVisibleData.map((column_id, col_index) =>
+            column_id.id !== card_id
+                ?
+                clientVisibleData[col_index]
+                :
+                {
+                    id:  clientVisibleData[col_index].id,
+                    title: clientVisibleData[col_index].title,
+                    content: [...clientVisibleData[col_index].content.map((task, row_index) =>
+                        task.id !== task_id
+                            ?
+                            clientVisibleData[col_index].content[row_index]
+                            :
+                            newTask
+                    )]
+                }
+        ))]
+
+        dispatch(set_todolist(newItems))
+        setClientVisibleData(newItems)
+    }
+
+    const setDeadLine = (task_id, card_id, date, action="set", type='') => {
+        dayjs.extend(relativeTime)
+        const columnIndex = clientVisibleData.findIndex((column_id) => column_id.id === card_id)
+        const taskIndex = clientVisibleData[columnIndex].content.findIndex((task) => task.id === task_id)
+
+        let deadlineType = UNSET
+        if (type === DONE) {
+            deadlineType = DONE
+        } else if (type === NOT_DONE) {
+            const daysLeft = date.diff(dayjs().locale('ru'), 'day', true) // Можно в remaining записывать
+            if (daysLeft < 0) {
+                deadlineType = FAILED
+            } else if (3 >= daysLeft > 0) {
+                deadlineType = SOON_EXPIRE
+            } else {
+                deadlineType = NOT_DONE
+            }
+        }
+
+        // let newDataItems = [...clientVisibleData[columnIndex].content]
+        let newTask = {
+            id: clientVisibleData[columnIndex].content[taskIndex].id,
+            info: clientVisibleData[columnIndex].content[taskIndex].info,
+            marks: clientVisibleData[columnIndex].content[taskIndex].marks,
+            task_cover: clientVisibleData[columnIndex].content[taskIndex].task_cover,
+            deadline: action === "set" ? {
+                type: deadlineType,
+                remaining: '',
+                end: '',
+                dateJsFormatDate: date,
+                dateJsFormatTime: {},
+            } : {},
+            task_description: clientVisibleData[columnIndex].content[taskIndex].task_description,
+            sub_tasks: clientVisibleData[columnIndex].content[taskIndex].sub_tasks,
+            priority: clientVisibleData[columnIndex].content[taskIndex].priority,
+            comments: clientVisibleData[columnIndex].content[taskIndex].comments,
+        }
+        // newDataItems[taskIndex].deadline.dateJsFormatDate = date
+
+        const newItems = [...(clientVisibleData.map((column_id, col_index) =>
+            column_id.id !== card_id
+                ?
+                clientVisibleData[col_index]
+                :
+                {
+                    id:  clientVisibleData[col_index].id,
+                    title: clientVisibleData[col_index].title,
+                    content: [...clientVisibleData[col_index].content.map((task, row_index) =>
+                        task.id !== task_id
+                            ?
+                            clientVisibleData[col_index].content[row_index]
+                            :
+                            newTask
+                    )]
+                }
+        ))]
+
+        setClientVisibleData(newItems)
+    }
+
+    const onChangeDescription = (task_id, card_id, value) => {
+        const columnIndex = clientVisibleData.findIndex((column_id) => column_id.id === card_id)
+        const taskIndex = clientVisibleData[columnIndex].content.findIndex((task) => task.id === task_id)
+        let newTask = {
+            id: clientVisibleData[columnIndex].content[taskIndex].id,
+            info: clientVisibleData[columnIndex].content[taskIndex].info,
+            marks: clientVisibleData[columnIndex].content[taskIndex].marks,
+            task_cover: clientVisibleData[columnIndex].content[taskIndex].task_cover,
+            deadline: clientVisibleData[columnIndex].content[taskIndex].deadline,
+            task_description: {
+                text: value
+            },
+            sub_tasks: clientVisibleData[columnIndex].content[taskIndex].sub_tasks,
+            priority: clientVisibleData[columnIndex].content[taskIndex].priority,
+            comments: clientVisibleData[columnIndex].content[taskIndex].comments,
+        }
+        const newItems = [...(clientVisibleData.map((column_id, col_index) =>
+            column_id.id !== card_id
+                ?
+                clientVisibleData[col_index]
+                :
+                {
+                    id:  clientVisibleData[col_index].id,
+                    title: clientVisibleData[col_index].title,
+                    content: [...clientVisibleData[col_index].content.map((task, row_index) =>
+                        task.id !== task_id
+                            ?
+                            clientVisibleData[col_index].content[row_index]
+                            :
+                            newTask
+                    )]
+                }
+        ))]
+
+        console.log(newItems)
+        setClientVisibleData(newItems)
+    }
+
 
     // useEffect(() => {
     //     setCurrentDate(task.deadline.dateJsFormatDate)
@@ -165,9 +305,7 @@ const CardTasks = (props) => {
                task={task}
                column_id={column_id}
                onChangeDescription={onChangeDescription}
-               copyCardTo={copyCardTo}
-               deleteCard={deleteCard}
-               setDeadline={setDeadline}
+               setDeadLine={setDeadLine}
                addNewCheckList={addNewCheckList}
                addNewTaskIntoCheckList={addNewTaskIntoCheckList}
                onChangeCheckListCheckBox={onChangeCheckListCheckBox}
@@ -176,10 +314,8 @@ const CardTasks = (props) => {
                onChangeValueCheckBox={onChangeValueCheckBox}
                deleteSomeCheckList={deleteSomeCheckList}
                deleteSomeCheckBox={deleteSomeCheckBox}
-               setPriorityCard={setPriorityCard}
 
                clientVisibleData={clientVisibleData}
-               moveCardViaButtons={moveCardViaButtons}
                onChangeCardMark={onChangeCardMark}
            />
            <li className={styles.taskContents}
@@ -287,34 +423,25 @@ const CardTasks = (props) => {
                                         card_marks={task.marks}
                                     />
                                    <ButtonChangePriorityCard
-                                       clientVisibleData={clientVisibleData}
-                                       setPriorityCard={setPriorityCard}
                                        column_id={column_id}
                                        task_id={task.id}
                                    />
                                    <ButtonMoveCard
-                                       clientVisibleData={clientVisibleData}
-                                       moveCardViaButtons={moveCardViaButtons}
                                        task_id={task.id}
                                    />
                                    <ButtonCopyCard
-                                       clientVisibleData={clientVisibleData}
                                        task={task}
-                                       copyCardTo={copyCardTo}
                                        copiedValue={value}
                                        task_id={task.id}
                                    />
                                    <ButtonDate
-                                       clientVisibleData={clientVisibleData}
-                                       setDeadline={setDeadline}
+                                       setDeadLine={setDeadLine}
                                        task_id={task.id}
                                        task={task}
                                        column_id={column_id}
                                    />
                                    <ButtonDeleteCard
-                                       clientVisibleData={clientVisibleData}
                                        column_id={column_id}
-                                       deleteCard={deleteCard}
                                        task_id={task.id}
                                    />
                                </div>
@@ -383,10 +510,10 @@ const CardTasks = (props) => {
                                     onClick={(e) => {
                                         e.stopPropagation()
                                         if (task.deadline.type === deadline.DONE) {
-                                            setDeadline(task.id, column_id, task.deadline.dateJsFormatDate, "set", deadline.NOT_DONE)
+                                            setDeadLine(task.id, column_id, task.deadline.dateJsFormatDate, "set", deadline.NOT_DONE)
                                         }
                                         else {
-                                            setDeadline(task.id, column_id, task.deadline.dateJsFormatDate, "set", deadline.DONE)
+                                            setDeadLine(task.id, column_id, task.deadline.dateJsFormatDate, "set", deadline.DONE)
                                         }
                                     }}
                                     style={

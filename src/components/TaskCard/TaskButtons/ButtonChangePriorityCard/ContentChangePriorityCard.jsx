@@ -1,17 +1,22 @@
 import styles from "./ButtonChangePriorityCard.module.css"
 import ExitModal from "../../../../assets/Icons/ExitModal.jsx";
 import {createTheme, FormControl, InputLabel, MenuItem, Select, ThemeProvider} from "@mui/material";
-import {useState} from "react";
+import {useContext, useState} from "react";
+import {cloneDeep} from "lodash-es";
+import BoardContext from "../../../../context/BoardContext.jsx";
 
 const ContentChangePriorityCard = (props) => {
 
     const {
-        clientVisibleData,
         task_id,
         column_id,
-        setPriorityCard,
         handleClose,
     } = props
+
+    const {
+        clientVisibleData,
+        setClientVisibleData
+    } = useContext(BoardContext)
 
     const task_priorities = [
         {
@@ -40,6 +45,16 @@ const ContentChangePriorityCard = (props) => {
     const handleChangeTaskPriority = (event) => {
         setTaskPriority(event.target.value);
     };
+
+    const setPriorityCard = (task_id, card_id, priority_data) => {
+        console.log(priority_data)
+        const columnIndex = clientVisibleData.findIndex((column_id) => column_id.id === card_id)
+        const taskIndex = clientVisibleData[columnIndex].content.findIndex((task) => task.id === task_id)
+
+        const newData = cloneDeep(clientVisibleData)
+        newData[columnIndex].content[taskIndex].priority = priority_data
+        setClientVisibleData(newData)
+    }
 
     const theme2 = createTheme({
         components: {

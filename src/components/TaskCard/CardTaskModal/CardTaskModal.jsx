@@ -53,18 +53,15 @@ const CardTaskModal = (props) => {
         column_id,
         onChangeCardMark,
         clientVisibleData,
-        moveCardViaButtons,
         onChangeDescription,
-        copyCardTo,
-        deleteCard,
-        setDeadline,
         addNewTaskIntoCheckList,
         onChangeCheckListCheckBox,
         onChangeValueCheckBox,
         deleteSomeCheckList,
         deleteSomeCheckBox,
-        setPriorityCard,
 
+
+        setDeadLine,
         totalSubTasks,
         totalSuccessSubTasks,
 
@@ -258,10 +255,10 @@ const CardTaskModal = (props) => {
                                                   onClick={(e) => {
                                                       e.stopPropagation()
                                                       if (task.deadline.type === deadline.DONE) {
-                                                          setDeadline(task.id, column_id, task.deadline.dateJsFormatDate, "set", deadline.NOT_DONE)
+                                                          setDeadLine(task.id, column_id, task.deadline.dateJsFormatDate, "set", deadline.NOT_DONE)
                                                       }
                                                       else {
-                                                          setDeadline(task.id, column_id, task.deadline.dateJsFormatDate, "set", deadline.DONE)
+                                                          setDeadLine(task.id, column_id, task.deadline.dateJsFormatDate, "set", deadline.DONE)
                                                       }
                                                   }}
                                             >
@@ -607,9 +604,7 @@ const CardTaskModal = (props) => {
                                     </span>
                                 </button>
                                 <ButtonChangePriorityCard
-                                    clientVisibleData={clientVisibleData}
                                     task_id={task.id}
-                                    setPriorityCard={setPriorityCard}
                                     column_id={column_id}
                                     button_id={"modal-card-priority"}
 
@@ -637,8 +632,7 @@ const CardTaskModal = (props) => {
                                     rootButtonStyle={styles.fullEditMenuButton}
                                 />
                                 <ButtonDate
-                                    clientVisibleData={clientVisibleData}
-                                    setDeadline={setDeadline}
+                                    setDeadLine={setDeadLine}
                                     task_id={task.id}
                                     task={task}
                                     column_id={column_id}
@@ -668,8 +662,6 @@ const CardTaskModal = (props) => {
                                            Действия
                                 </span>
                                 <ButtonMoveCard
-                                    clientVisibleData={clientVisibleData}
-                                    moveCardViaButtons={moveCardViaButtons}
                                     task_id={task.id}
 
                                     renderByAnchor={true}
@@ -678,9 +670,7 @@ const CardTaskModal = (props) => {
                                     rootButtonStyle={styles.fullEditMenuButton}
                                 />
                                 <ButtonCopyCard
-                                    clientVisibleData={clientVisibleData}
                                     task={task}
-                                    copyCardTo={copyCardTo}
                                     copiedValue={taskTitleValue}
                                     task_id={task.id}
 
@@ -702,9 +692,7 @@ const CardTaskModal = (props) => {
 
                                 />
                                 <ButtonDeleteCard
-                                    clientVisibleData={clientVisibleData}
                                     column_id={column_id}
-                                    deleteCard={deleteCard}
                                     task_id={task.id}
 
                                     renderByAnchor={true}

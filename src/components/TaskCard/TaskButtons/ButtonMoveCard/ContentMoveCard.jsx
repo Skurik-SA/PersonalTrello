@@ -1,17 +1,22 @@
 import styles from "./MoveCard.module.css"
 import ExitModal from "../../../../assets/Icons/ExitModal.jsx";
 import {createTheme, ThemeProvider, FormControl, InputLabel, MenuItem, Select, Divider} from "@mui/material";
-import {useState} from "react";
+import {useContext, useState} from "react";
 import {useColumnIndexViaTaskId} from "../../../../hooks/useColumnIndexViaTaskId.js";
+import BoardContext from "../../../../context/BoardContext.jsx";
+import {findColumnIndex} from "../../../../utils/FindColumnIndex.js";
 
 const ContentMoveCard = (props) => {
     // Нужны соседние колонки
     const {
         task_id,
-        clientVisibleData,
-        moveCardViaButtons,
         handleClose,
     } = props
+
+    const {
+        clientVisibleData,
+        setClientVisibleData
+    } = useContext(BoardContext)
 
     const [column, setColumn] = useState(0);
     const [row, setRow] = useState(0);
@@ -37,6 +42,41 @@ const ContentMoveCard = (props) => {
     const handleChangeBoard = (event) => {
         setBoard(event.target.value);
     };
+
+    const moveCardViaButtons = (
+        source_task_id,
+        // source_column_id,
+        destination_task_index,
+        destination_column_index
+    ) => {
+
+        const source_column_index = findColumnIndex(clientVisibleData, source_task_id, 'index')
+
+        const source_task_index = clientVisibleData[source_column_index].content.findIndex((row) => row.id === source_task_id)
+        const newDataItems = [...clientVisibleData[source_column_index].content]
+
+        const newDestinationItems =
+            source_column_index !== destination_column_index
+                ? [...clientVisibleData[destination_column_index].content]
+                : newDataItems
+
+        const [deletedItem] = newDataItems.splice(source_task_index, 1)
+        newDestinationItems.splice(destination_task_index, 0, deletedItem)
+
+        const newEl = [...clientVisibleData]
+
+        newEl[source_column_index] = {
+            ...clientVisibleData[source_column_index],
+            content: newDataItems
+        }
+
+        newEl[destination_column_index] = {
+            ...clientVisibleData[destination_column_index],
+            content: newDestinationItems
+        }
+
+        setClientVisibleData(newEl)
+    }
 
     const theme2 = createTheme({
         components: {

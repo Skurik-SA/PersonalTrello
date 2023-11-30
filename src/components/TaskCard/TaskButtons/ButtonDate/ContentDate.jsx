@@ -8,12 +8,12 @@ import dayjs from "dayjs";
 import CustomTimeField from "../../../CustomDateTime/CustomTimeField.jsx";
 import {DONE, FAILED, NOT_DONE, SOON_EXPIRE, UNSET} from "../../../../utils/StatusConstants.js";
 import BoardContext from "../../../../context/BoardContext.jsx";
+import {useDeadLine} from "../../../../hooks/useDeadLine.js";
 
 const ContentDate = (props) => {
 
     const {
         task_id,
-        setDeadLine,
         column_id,
         handleClose,
         task,
@@ -21,6 +21,8 @@ const ContentDate = (props) => {
 
     const [date, setDate] = useState(task.deadline.dateJsFormatDate ? task.deadline.dateJsFormatDate : dayjs().locale('ru'))
     const [time, setTime] = useState()
+
+    const setDeadLine = useDeadLine()
 
     const onChangeDate = (newValue) => {
         setDate(newValue)

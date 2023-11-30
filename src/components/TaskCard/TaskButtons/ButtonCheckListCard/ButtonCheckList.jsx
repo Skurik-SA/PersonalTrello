@@ -3,14 +3,13 @@ import TaskBaseButton from "../TaskBaseButton/TaskBaseButton.jsx";
 import {useState} from "react";
 import ContentCheckList from "./ContentCheckList.jsx";
 import CheckList from "../../../../assets/Icons/CheckList.jsx";
+import {useCheckListActions} from "../../../../hooks/useCheckListActions.js";
 
 const ButtonCheckList = (props) => {
 
     const {
         task_id,
         column_id,
-
-        addNewCheckList,
 
         renderByAnchor,
         button_id,
@@ -26,6 +25,7 @@ const ButtonCheckList = (props) => {
     const handleClose = () => {
         setAnchorEl(null)
     }
+
 
     return (
         <TaskBaseButton
@@ -45,7 +45,6 @@ const ButtonCheckList = (props) => {
             <ContentCheckList
                 task_id={task_id}
                 column_id={column_id}
-                addNewCheckList={addNewCheckList}
                 handleClose={handleClose}
             />
         </TaskBaseButton>

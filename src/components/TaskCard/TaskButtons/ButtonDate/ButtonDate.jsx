@@ -11,7 +11,6 @@ const ButtonDate = (props) => {
         task_id,
         column_id,
         renderByAnchor,
-        setDeadLine,
         task,
 
         button_id,
@@ -46,7 +45,6 @@ const ButtonDate = (props) => {
             <ContentDate
                 task_id={task_id}
                 column_id={column_id}
-                setDeadLine={setDeadLine}
                 handleClose={handleClose}
                 task={task}
             />

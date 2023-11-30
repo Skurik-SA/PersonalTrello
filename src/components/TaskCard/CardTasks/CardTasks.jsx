@@ -31,24 +31,16 @@ import {DONE, FAILED, NOT_DONE, SOON_EXPIRE, UNSET} from "../../../utils/StatusC
 import relativeTime from "dayjs/plugin/relativeTime.js";
 import BoardContext from "../../../context/BoardContext.jsx";
 import {set_todolist} from "../../../redux/store/slices/slice_ToDoList.js";
+import {useDispatch} from "react-redux";
+import {useDeadLine} from "../../../hooks/useDeadLine.js";
 
 const CardTasks = (props) => {
     const {
         task,
         column_id,
-        // changeTaskInfo,
         onChangeCardMark,
         markTextShow,
         setMarkTextShow,
-        // clientVisibleData,
-        // onChangeDescription,
-        addNewTaskIntoCheckList,
-        onChangeCheckListCheckBox,
-        onChangeValueCheckBox,
-        deleteSomeCheckList,
-        deleteSomeCheckBox,
-
-        addNewCheckList
     } = props
 
 
@@ -56,6 +48,9 @@ const CardTasks = (props) => {
         clientVisibleData,
         setClientVisibleData
     } = useContext(BoardContext)
+
+    const dispatch = useDispatch()
+    const setDeadLine = useDeadLine()
 
     const [anchorEl, setAnchorEl] = useState(null);
     const [modalOpen, setModalOpen] = useState(false);
@@ -139,65 +134,6 @@ const CardTasks = (props) => {
         setClientVisibleData(newItems)
     }
 
-    const setDeadLine = (task_id, card_id, date, action="set", type='') => {
-        dayjs.extend(relativeTime)
-        const columnIndex = clientVisibleData.findIndex((column_id) => column_id.id === card_id)
-        const taskIndex = clientVisibleData[columnIndex].content.findIndex((task) => task.id === task_id)
-
-        let deadlineType = UNSET
-        if (type === DONE) {
-            deadlineType = DONE
-        } else if (type === NOT_DONE) {
-            const daysLeft = date.diff(dayjs().locale('ru'), 'day', true) // Можно в remaining записывать
-            if (daysLeft < 0) {
-                deadlineType = FAILED
-            } else if (3 >= daysLeft > 0) {
-                deadlineType = SOON_EXPIRE
-            } else {
-                deadlineType = NOT_DONE
-            }
-        }
-
-        // let newDataItems = [...clientVisibleData[columnIndex].content]
-        let newTask = {
-            id: clientVisibleData[columnIndex].content[taskIndex].id,
-            info: clientVisibleData[columnIndex].content[taskIndex].info,
-            marks: clientVisibleData[columnIndex].content[taskIndex].marks,
-            task_cover: clientVisibleData[columnIndex].content[taskIndex].task_cover,
-            deadline: action === "set" ? {
-                type: deadlineType,
-                remaining: '',
-                end: '',
-                dateJsFormatDate: date,
-                dateJsFormatTime: {},
-            } : {},
-            task_description: clientVisibleData[columnIndex].content[taskIndex].task_description,
-            sub_tasks: clientVisibleData[columnIndex].content[taskIndex].sub_tasks,
-            priority: clientVisibleData[columnIndex].content[taskIndex].priority,
-            comments: clientVisibleData[columnIndex].content[taskIndex].comments,
-        }
-        // newDataItems[taskIndex].deadline.dateJsFormatDate = date
-
-        const newItems = [...(clientVisibleData.map((column_id, col_index) =>
-            column_id.id !== card_id
-                ?
-                clientVisibleData[col_index]
-                :
-                {
-                    id:  clientVisibleData[col_index].id,
-                    title: clientVisibleData[col_index].title,
-                    content: [...clientVisibleData[col_index].content.map((task, row_index) =>
-                        task.id !== task_id
-                            ?
-                            clientVisibleData[col_index].content[row_index]
-                            :
-                            newTask
-                    )]
-                }
-        ))]
-
-        setClientVisibleData(newItems)
-    }
 
     const onChangeDescription = (task_id, card_id, value) => {
         const columnIndex = clientVisibleData.findIndex((column_id) => column_id.id === card_id)
@@ -236,11 +172,6 @@ const CardTasks = (props) => {
         console.log(newItems)
         setClientVisibleData(newItems)
     }
-
-
-    // useEffect(() => {
-    //     setCurrentDate(task.deadline.dateJsFormatDate)
-    // }, [currentDate])
 
     const handleClick = (event, type) => {
         console.log(task.task_description.text)
@@ -305,15 +236,8 @@ const CardTasks = (props) => {
                task={task}
                column_id={column_id}
                onChangeDescription={onChangeDescription}
-               setDeadLine={setDeadLine}
-               addNewCheckList={addNewCheckList}
-               addNewTaskIntoCheckList={addNewTaskIntoCheckList}
-               onChangeCheckListCheckBox={onChangeCheckListCheckBox}
                totalSubTasks={totalSubTasks}
                totalSuccessSubTasks={totalSuccessSubTasks}
-               onChangeValueCheckBox={onChangeValueCheckBox}
-               deleteSomeCheckList={deleteSomeCheckList}
-               deleteSomeCheckBox={deleteSomeCheckBox}
 
                clientVisibleData={clientVisibleData}
                onChangeCardMark={onChangeCardMark}

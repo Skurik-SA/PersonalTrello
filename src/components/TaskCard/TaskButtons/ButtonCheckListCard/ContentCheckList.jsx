@@ -1,17 +1,18 @@
 import styles from "./ButtonCheckList.module.css"
 import ExitModal from "../../../../assets/Icons/ExitModal.jsx";
 import {useState} from "react";
+import {useCheckListActions} from "../../../../hooks/useCheckListActions.js";
 
 const ContentCheckList = (props) => {
 
     const {
         task_id,
         column_id,
-        addNewCheckList,
         handleClose
     } = props
 
     const [value, setValue] = useState("Чек-лист")
+    const {addNewCheckList} = useCheckListActions(task_id, column_id)
 
     return (
         <div className={styles.contentCheckListWrapper}>
@@ -34,7 +35,7 @@ const ContentCheckList = (props) => {
                 </div>
                 <button className={styles.contentCheckList_setButton}
                         onClick={() => {
-                            addNewCheckList(task_id, column_id, value)
+                            addNewCheckList(value)
                             handleClose()
                         }}>
                     Добавить

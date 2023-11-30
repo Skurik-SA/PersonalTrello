@@ -23,13 +23,6 @@ class InnerCardList extends PureComponent {
             markTextShow,
             setMarkTextShow,
             clientVisibleData,
-            addNewTaskIntoCheckList,
-            onChangeCheckListCheckBox,
-            onChangeValueCheckBox,
-            deleteSomeCheckList,
-            deleteSomeCheckBox,
-
-            addNewCheckList
         } = this.props
 
         return <CardBase
@@ -37,13 +30,7 @@ class InnerCardList extends PureComponent {
                     card_title={card_title}
                     onChangeCardMark={onChangeCardMark}
                     clientVisibleData={clientVisibleData}
-                    addNewCheckList={addNewCheckList}
                     index={index}
-                    addNewTaskIntoCheckList={addNewTaskIntoCheckList}
-                    onChangeCheckListCheckBox={onChangeCheckListCheckBox}
-                    onChangeValueCheckBox={onChangeValueCheckBox}
-                    deleteSomeCheckList={deleteSomeCheckList}
-                    deleteSomeCheckBox={deleteSomeCheckBox}
 
                     markTextShow={markTextShow}
                     setMarkTextShow={setMarkTextShow}
@@ -66,106 +53,6 @@ const CardBoard = (props) => {
     const [markTextShow, setMarkTextShow] = useState(false)
     // Это костыль, но зато какой, потом с бэком скорее всего менять придётся
     const dispatch = useDispatch()
-
-
-    const addNewCheckList = (task_id, card_id, value) => {
-        const columnIndex = clientVisibleData.findIndex((column_id) => column_id.id === card_id)
-        const taskIndex = clientVisibleData[columnIndex].content.findIndex((task) => task.id === task_id)
-
-        const newCheckList =
-            {
-                id: uuidv4(),
-                title: value ? value : 'Чек-лист',
-                success_amount: 0,
-                total_amount: 0,
-                check_list: []
-            }
-
-
-        const newData = cloneDeep(clientVisibleData)
-        newData[columnIndex].content[taskIndex].sub_tasks.push(newCheckList)
-        setClientVisibleData(newData)
-    }
-
-    const deleteSomeCheckList = (task_id, card_id, sub_task_id) => {
-        const columnIndex = clientVisibleData.findIndex((column_id) => column_id.id === card_id)
-        const taskIndex = clientVisibleData[columnIndex].content.findIndex((task) => task.id === task_id)
-        const sub_tasks = clientVisibleData[columnIndex].content[taskIndex].sub_tasks.filter((task) => task.id !== sub_task_id)
-
-
-        const newData = cloneDeep(clientVisibleData)
-        newData[columnIndex].content[taskIndex].sub_tasks = sub_tasks
-        setClientVisibleData(newData)
-    }
-
-    const deleteSomeCheckBox = (task_id, card_id, sub_task_id, check_box_id, checked) => {
-        const columnIndex = clientVisibleData.findIndex((column_id) => column_id.id === card_id)
-        const taskIndex = clientVisibleData[columnIndex].content.findIndex((task) => task.id === task_id)
-        const subTaskIndex = clientVisibleData[columnIndex].content[taskIndex].sub_tasks.findIndex((task) => task.id === sub_task_id)
-        const newCheckBoxesArray = clientVisibleData[columnIndex].content[taskIndex].sub_tasks[subTaskIndex].check_list.filter((task) => task.id !== check_box_id)
-
-        const newData = cloneDeep(clientVisibleData)
-        if (checked) {
-            newData[columnIndex].content[taskIndex].sub_tasks[subTaskIndex].success_amount -= 1
-        }
-        newData[columnIndex].content[taskIndex].sub_tasks[subTaskIndex].total_amount -= 1
-        newData[columnIndex].content[taskIndex].sub_tasks[subTaskIndex].check_list = newCheckBoxesArray
-        setClientVisibleData(newData)
-    }
-
-    const addNewTaskIntoCheckList = (task_id, card_id, sub_task_id, value) => {
-        const columnIndex = clientVisibleData.findIndex((column_id) => column_id.id === card_id)
-        const taskIndex = clientVisibleData[columnIndex].content.findIndex((task) => task.id === task_id)
-        const subTaskIndex = clientVisibleData[columnIndex].content[taskIndex].sub_tasks.findIndex((task) => task.id === sub_task_id)
-
-        const newSubTasks = {
-            id: uuidv4(),
-            isChecked: false,
-            label: value ? value : 'Новая задача',
-            deadline: {
-                type: '',
-                remaining: '',
-                end: '',
-            }
-        }
-
-        const newData = cloneDeep(clientVisibleData)
-        newData[columnIndex].content[taskIndex].sub_tasks[subTaskIndex].total_amount += 1
-        newData[columnIndex].content[taskIndex].sub_tasks[subTaskIndex].check_list.push(newSubTasks)
-        setClientVisibleData(newData)
-    }
-
-    const onChangeCheckListCheckBox = (task_id, card_id, sub_task_id, check_box_id, checked) => {
-        const columnIndex = clientVisibleData.findIndex((column_id) => column_id.id === card_id)
-        const taskIndex = clientVisibleData[columnIndex].content.findIndex((task) => task.id === task_id)
-        const subTaskIndex = clientVisibleData[columnIndex].content[taskIndex].sub_tasks.findIndex((task) => task.id === sub_task_id)
-        const checkBoxIndex = clientVisibleData[columnIndex].content[taskIndex].sub_tasks[subTaskIndex].check_list.findIndex((task) => task.id === check_box_id)
-
-
-        const newData = cloneDeep(clientVisibleData)
-        if (checked) {
-            newData[columnIndex].content[taskIndex].sub_tasks[subTaskIndex].success_amount += 1
-        }
-        else {
-            newData[columnIndex].content[taskIndex].sub_tasks[subTaskIndex].success_amount -= 1
-        }
-
-        newData[columnIndex].content[taskIndex].sub_tasks[subTaskIndex].check_list[checkBoxIndex].isChecked = checked
-        setClientVisibleData(newData)
-    }
-
-    const onChangeValueCheckBox = (task_id, card_id, sub_task_id, check_box_id, value) => {
-        const columnIndex = clientVisibleData.findIndex((column_id) => column_id.id === card_id)
-        const taskIndex = clientVisibleData[columnIndex].content.findIndex((task) => task.id === task_id)
-        const subTaskIndex = clientVisibleData[columnIndex].content[taskIndex].sub_tasks.findIndex((task) => task.id === sub_task_id)
-        const checkBoxIndex = clientVisibleData[columnIndex].content[taskIndex].sub_tasks[subTaskIndex].check_list.findIndex((task) => task.id === check_box_id)
-
-
-        const newData = cloneDeep(clientVisibleData)
-
-        newData[columnIndex].content[taskIndex].sub_tasks[subTaskIndex].check_list[checkBoxIndex].label = value ? value : newData[columnIndex].content[taskIndex].sub_tasks[subTaskIndex].check_list[checkBoxIndex].label
-        setClientVisibleData(newData)
-    }
 
     const onChangeCardMark = (task_id, new_mark, type="add") => {
 
@@ -325,15 +212,7 @@ const CardBoard = (props) => {
                                                     card_title={card.title}
                                                     clientVisibleData={clientVisibleData}
 
-
                                                     onChangeCardMark={onChangeCardMark}
-                                                    addNewTaskIntoCheckList={addNewTaskIntoCheckList}
-                                                    onChangeCheckListCheckBox={onChangeCheckListCheckBox}
-                                                    onChangeValueCheckBox={onChangeValueCheckBox}
-                                                    deleteSomeCheckList={deleteSomeCheckList}
-                                                    deleteSomeCheckBox={deleteSomeCheckBox}
-
-                                                    addNewCheckList={addNewCheckList}
 
                                                     markTextShow={markTextShow}
                                                     setMarkTextShow={setMarkTextShow}

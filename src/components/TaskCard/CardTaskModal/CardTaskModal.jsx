@@ -22,9 +22,9 @@ import Cover from "../../../assets/Icons/Cover.jsx";
 import MakeTemplate from "../../../assets/Icons/MakeTemplate.jsx";
 import Archive from "../../../assets/Icons/Archive.jsx";
 import Share from "../../../assets/Icons/Share.jsx";
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import ButtonChangeMark from "../TaskButtons/ButtonChangeMark/ButtonChangeMark.jsx";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import Notifications from "../../../assets/Icons/Notifications.jsx";
 import Eye from "../../../assets/Icons/Eye.jsx";
 import ButtonMoveCard from "../TaskButtons/ButtonMoveCard/ButtonMoveCard.jsx";
@@ -39,7 +39,12 @@ import EmptyBox from "../../../assets/Icons/EmptyBox.jsx";
 import * as deadline from  "../../../utils/StatusConstants.js";
 import {BpCheckedIcon, BpIcon} from "../TaskButtons/ButtonCopyCard/ContentCopyCard.jsx";
 import ButtonCheckList from "../TaskButtons/ButtonCheckListCard/ButtonCheckList.jsx";
-import {sum} from "lodash-es";
+import {cloneDeep, sum} from "lodash-es";
+import BoardContext from "../../../context/BoardContext.jsx";
+import {v4 as uuidv4} from "uuid";
+import {useDeadLine} from "../../../hooks/useDeadLine.js";
+import DeadLineBlockModal from "./DeadLineBlockModal/DeadLineBlockModal.jsx";
+import {useCheckListActions} from "../../../hooks/useCheckListActions.js";
 
 const CardTaskModal = (props) => {
 
@@ -52,23 +57,16 @@ const CardTaskModal = (props) => {
         task,
         column_id,
         onChangeCardMark,
-        clientVisibleData,
         onChangeDescription,
-        addNewTaskIntoCheckList,
-        onChangeCheckListCheckBox,
-        onChangeValueCheckBox,
-        deleteSomeCheckList,
-        deleteSomeCheckBox,
 
-
-        setDeadLine,
-        totalSubTasks,
-        totalSuccessSubTasks,
-
-        addNewCheckList
     } = props
 
     const marks = useSelector(state => state.todolist.mark_store)
+
+    const {
+        clientVisibleData,
+        setClientVisibleData
+    } = useContext(BoardContext)
 
     const handleModalClose = () => setModalOpen(false);
     const [valueDescription, setValueDescription] = useState(task.task_description.text)
@@ -141,7 +139,13 @@ const CardTaskModal = (props) => {
     const id = open ? 'editing-popover' : undefined;
     const id2 = open2 ? 'action-popover' : undefined;
 
-
+    const {
+        deleteSomeCheckList,
+        deleteSomeCheckBox,
+        addNewTaskIntoCheckList,
+        onChangeCheckListCheckBox,
+        onChangeValueCheckBox
+    } = useCheckListActions(task.id, column_id)
 
     return (
         <ThemeProvider theme={theme2}>
@@ -237,69 +241,10 @@ const CardTaskModal = (props) => {
                                             Подписаться
                                         </button>
                                     </div>
-                                    {task.deadline.dateJsFormatDate
-                                        ?
-                                        <div className={styles.fullEditDescriptionHeader}>
-                                            <Dates/>
-                                            <span className={styles.fullEditDescriptionHeader_Label}>
-                                                Срок:
-                                            </span>
-                                            <span className={
-                                                    task.deadline.type === deadline.DONE
-                                                        ?
-                                                            styles.fullEditDescriptionHeader_DeadlineDone
-                                                        :
-                                                            styles.fullEditDescriptionHeader_DeadlineNotDone
-                                                    }
-
-                                                  onClick={(e) => {
-                                                      e.stopPropagation()
-                                                      if (task.deadline.type === deadline.DONE) {
-                                                          setDeadLine(task.id, column_id, task.deadline.dateJsFormatDate, "set", deadline.NOT_DONE)
-                                                      }
-                                                      else {
-                                                          setDeadLine(task.id, column_id, task.deadline.dateJsFormatDate, "set", deadline.DONE)
-                                                      }
-                                                  }}
-                                            >
-                                                {task.deadline.type === deadline.DONE
-                                                    ?
-                                                    <WorkDone/>
-                                                    :
-                                                    <EmptyBox/>
-                                                }
-                                                <span>
-                                                    {dayjs(task.deadline.dateJsFormatDate).format("DD-MMM-YYYY")}
-                                                </span>
-                                            </span>
-                                        </div>
-                                        :
-                                        <></>
-                                    }
-                                    {task.deadline.type
-                                        ?
-                                        <div className={styles.fullEditDescriptionHeader}>
-                                            <Status/>
-                                            <span className={styles.fullEditDescriptionHeader_Label}>Статус: </span>
-                                            <span>
-                                                {task.deadline.type === deadline.FAILED ?
-                                                    "Срок сдачи просрочен" : <></>
-                                                }
-                                                {task.deadline.type === deadline.DONE ?
-                                                    "Задание выполнено" : <></>
-                                                }
-                                                {task.deadline.type === deadline.SOON_EXPIRE ?
-                                                    "Срок сдачи скоро истекает" : <></>
-                                                }
-                                                {task.deadline.type === deadline.NOT_DONE ?
-                                                    "Срок сдачи нескоро" : <></>
-                                                }
-                                            </span>
-                                        </div>
-                                        :
-                                        <></>
-
-                                    }
+                                    <DeadLineBlockModal
+                                        column_id={column_id}
+                                        task={task}
+                                    />
                                 </div>
                                 <div className={styles.fullEditDescriptionHeader}>
                                     <Description/>
@@ -323,6 +268,7 @@ const CardTaskModal = (props) => {
                                         onChangeDescription(task.id, column_id, valueDescription)
                                     }}
                                 />
+                                {/*Вынести поповеры в отдельный блок*/}
                                 <Popover
                                     id={id}
                                     open={open}
@@ -348,8 +294,6 @@ const CardTaskModal = (props) => {
                                             onKeyDown={(e) => {
                                                 if (e.key === 'Enter' && currentTaskValue !== "" && targetElement === 'add') {
                                                     addNewTaskIntoCheckList(
-                                                        targetElementData.task_id,
-                                                        targetElementData.column_id,
                                                         targetElementData.sub_task_id,
                                                         currentTaskValue
                                                     )
@@ -359,8 +303,6 @@ const CardTaskModal = (props) => {
                                                 else if (e.key === 'Enter' && currentTaskValue !== "" && targetElement === 'label') {
                                                     console.log("ads")
                                                     onChangeValueCheckBox(
-                                                        targetElementData.task_id,
-                                                        targetElementData.column_id,
                                                         targetElementData.sub_task_id,
                                                         targetElementData.check_box_id,
                                                         currentTaskValue
@@ -381,8 +323,6 @@ const CardTaskModal = (props) => {
                                                     console.log(anchorEl)
                                                     if (currentTaskValue.length > 0) {
                                                         addNewTaskIntoCheckList(
-                                                            targetElementData.task_id,
-                                                            targetElementData.column_id,
                                                             targetElementData.sub_task_id,
                                                             currentTaskValue
                                                         )
@@ -400,8 +340,6 @@ const CardTaskModal = (props) => {
                                                 <button onClick={() => {
                                                     console.log(anchorEl)
                                                     onChangeValueCheckBox(
-                                                        targetElementData.task_id,
-                                                        targetElementData.column_id,
                                                         targetElementData.sub_task_id,
                                                         targetElementData.check_box_id,
                                                         currentTaskValue
@@ -445,8 +383,6 @@ const CardTaskModal = (props) => {
                                             <button
                                                 onClick={() => {
                                                     deleteSomeCheckBox(
-                                                        targetElementData.task_id,
-                                                        targetElementData.column_id,
                                                         targetElementData.sub_task_id,
                                                         targetElementData.check_box_id,
                                                         targetElementData.checked
@@ -474,7 +410,7 @@ const CardTaskModal = (props) => {
                                                 <button
                                                     className={styles.checkBoxAddButton}
                                                     onClick={() => {
-                                                        deleteSomeCheckList(task.id, column_id, sub_task.id)
+                                                        deleteSomeCheckList(sub_task.id)
                                                     }}
                                                 >
                                                     Удалить
@@ -505,7 +441,7 @@ const CardTaskModal = (props) => {
                                                             <Checkbox
                                                                 checked={task.sub_tasks[index].check_list[jindex].isChecked}
                                                                 onChange={(e) => {
-                                                                    onChangeCheckListCheckBox(task.id, column_id, sub_task.id, list.id, e.target.checked)
+                                                                    onChangeCheckListCheckBox(sub_task.id, list.id, e.target.checked)
                                                                 }}
                                                                 size="small"
                                                                 checkedIcon={<BpCheckedIcon />}
@@ -625,14 +561,12 @@ const CardTaskModal = (props) => {
                                     task_id={task.id}
                                     task={task}
                                     column_id={column_id}
-                                    addNewCheckList={addNewCheckList}
                                     renderByAnchor={true}
                                     buttonContent={"Чек-листы"}
                                     button_id={"modal-check-list-card"}
                                     rootButtonStyle={styles.fullEditMenuButton}
                                 />
                                 <ButtonDate
-                                    setDeadLine={setDeadLine}
                                     task_id={task.id}
                                     task={task}
                                     column_id={column_id}

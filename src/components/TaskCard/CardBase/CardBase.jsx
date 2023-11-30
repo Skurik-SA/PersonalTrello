@@ -17,13 +17,7 @@ class InnerCardTaskList extends Component {
             nextProps.onChangeCardMark === this.props.onChangeCardMark &&
             nextProps.markTextShow === this.props.markTextShow &&
             nextProps.setMarkTextShow === this.props.setMarkTextShow &&
-            nextProps.clientVisibleData === this.props.clientVisibleData &&
-            nextProps.addNewCheckList === this.props.addNewCheckList &&
-            nextProps.addNewTaskIntoCheckList === this.props.addNewTaskIntoCheckList &&
-            nextProps.onChangeCheckListCheckBox === this.props.onChangeCheckListCheckBox &&
-            nextProps.onChangeValueCheckBox === this.props.onChangeValueCheckBox &&
-            nextProps.deleteSomeCheckList === this.props.deleteSomeCheckList &&
-            nextProps.deleteSomeCheckBox === this.props.deleteSomeCheckBox
+            nextProps.clientVisibleData === this.props.clientVisibleData
         ) {
             return false;
         }
@@ -40,12 +34,6 @@ class InnerCardTaskList extends Component {
                     clientVisibleData={this.props.clientVisibleData}
                     markTextShow={this.props.markTextShow}
                     setMarkTextShow={this.props.setMarkTextShow}
-                    addNewCheckList={this.props.addNewCheckList}
-                    addNewTaskIntoCheckList={this.props.addNewTaskIntoCheckList}
-                    onChangeCheckListCheckBox={this.props.onChangeCheckListCheckBox}
-                    onChangeValueCheckBox={this.props.onChangeValueCheckBox}
-                    deleteSomeCheckList={this.props.deleteSomeCheckList}
-                    deleteSomeCheckBox={this.props.deleteSomeCheckBox}
                 />
     }
 }
@@ -60,13 +48,6 @@ const CardBase = (props) => {
         onChangeCardMark,
         markTextShow,
         setMarkTextShow,
-        addNewTaskIntoCheckList,
-        onChangeCheckListCheckBox,
-        onChangeValueCheckBox,
-        deleteSomeCheckList,
-        deleteSomeCheckBox,
-
-        addNewCheckList
     } = props
 
 
@@ -249,14 +230,8 @@ const CardBase = (props) => {
                                                 task={task}
                                                 column_id={card_data.id}
                                                 onChangeCardMark={onChangeCardMark}
-                                                addNewTaskIntoCheckList={addNewTaskIntoCheckList}
 
                                                 clientVisibleData={clientVisibleData}
-                                                addNewCheckList={addNewCheckList}
-                                                onChangeCheckListCheckBox={onChangeCheckListCheckBox}
-                                                onChangeValueCheckBox={onChangeValueCheckBox}
-                                                deleteSomeCheckList={deleteSomeCheckList}
-                                                deleteSomeCheckBox={deleteSomeCheckBox}
 
                                                 markTextShow={markTextShow}
                                                 setMarkTextShow={setMarkTextShow}

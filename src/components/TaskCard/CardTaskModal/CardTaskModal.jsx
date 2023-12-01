@@ -1,10 +1,7 @@
 import {
-    Checkbox,
     createTheme,
     Divider,
-    FormControlLabel,
     Modal,
-    Popover,
     TextareaAutosize,
     ThemeProvider
 } from "@mui/material";
@@ -12,11 +9,9 @@ import styles from "./CardTaskModal.module.css"
 import Task from "../../../assets/Icons/Task.jsx";
 import ExitModal from "../../../assets/Icons/ExitModal.jsx";
 import Description from "../../../assets/Icons/Description.jsx";
-import CheckList from "../../../assets/Icons/CheckList.jsx";
 import Comments from "../../../assets/Icons/Comments.jsx";
 import Participants from "../../../assets/Icons/Participants.jsx";
 import Marks from "../../../assets/Icons/Marks.jsx";
-import Dates from "../../../assets/Icons/Dates.jsx";
 import Attachments from "../../../assets/Icons/Attachments.jsx";
 import Cover from "../../../assets/Icons/Cover.jsx";
 import MakeTemplate from "../../../assets/Icons/MakeTemplate.jsx";

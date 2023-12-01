@@ -22,29 +22,20 @@ import Cover from "../../../assets/Icons/Cover.jsx";
 import MakeTemplate from "../../../assets/Icons/MakeTemplate.jsx";
 import Archive from "../../../assets/Icons/Archive.jsx";
 import Share from "../../../assets/Icons/Share.jsx";
-import {useContext, useEffect, useState} from "react";
+import {useContext, useState} from "react";
 import ButtonChangeMark from "../TaskButtons/ButtonChangeMark/ButtonChangeMark.jsx";
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import Notifications from "../../../assets/Icons/Notifications.jsx";
 import Eye from "../../../assets/Icons/Eye.jsx";
 import ButtonMoveCard from "../TaskButtons/ButtonMoveCard/ButtonMoveCard.jsx";
-import Status from "../../../assets/Icons/Status.jsx";
 import ButtonDate from "../TaskButtons/ButtonDate/ButtonDate.jsx";
 import ButtonCopyCard from "../TaskButtons/ButtonCopyCard/ButtonCopyCard.jsx";
 import ButtonDeleteCard from "../TaskButtons/ButtonDeleteCard/ButtonDeleteCard.jsx";
 import ButtonChangePriorityCard from "../TaskButtons/ButtonChangePriorityCard/ButtonChangePriorityCard.jsx";
-import dayjs from "dayjs";
-import WorkDone from "../../../assets/Icons/WorkDone.jsx";
-import EmptyBox from "../../../assets/Icons/EmptyBox.jsx";
-import * as deadline from  "../../../utils/StatusConstants.js";
-import {BpCheckedIcon, BpIcon} from "../TaskButtons/ButtonCopyCard/ContentCopyCard.jsx";
 import ButtonCheckList from "../TaskButtons/ButtonCheckListCard/ButtonCheckList.jsx";
-import {cloneDeep, sum} from "lodash-es";
 import BoardContext from "../../../context/BoardContext.jsx";
-import {v4 as uuidv4} from "uuid";
-import {useDeadLine} from "../../../hooks/useDeadLine.js";
 import DeadLineBlockModal from "./DeadLineBlockModal/DeadLineBlockModal.jsx";
-import {useCheckListActions} from "../../../hooks/useCheckListActions.js";
+import SubTasksModal from "./SubTasksModal/SubTasksModal.jsx";
 
 const CardTaskModal = (props) => {
 
@@ -71,10 +62,6 @@ const CardTaskModal = (props) => {
     const handleModalClose = () => setModalOpen(false);
     const [valueDescription, setValueDescription] = useState(task.task_description.text)
 
-    const [currentTaskValue, setCurrentTaskValue] = useState("")
-
-    const [targetElement, setTargetElement] = useState("")
-    const [targetElementData, setTargetElementData] = useState("")
 
     const theme2 = createTheme({
         components: {
@@ -114,38 +101,6 @@ const CardTaskModal = (props) => {
         },
     });
 
-    const [anchorEl, setAnchorEl] = useState(null);
-    const [anchorEl2, setAnchorEl2] = useState(null);
-
-    const handleClickAddButton = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handleClickActionButton = (event) => {
-        setAnchorEl2(event.currentTarget);
-    };
-
-    const handleClose = () => {
-        setAnchorEl(null);
-        setCurrentTaskValue("")
-    };
-
-    const handleClose2 = () => {
-        setAnchorEl2(null);
-    };
-
-    const open = Boolean(anchorEl);
-    const open2 = Boolean(anchorEl2);
-    const id = open ? 'editing-popover' : undefined;
-    const id2 = open2 ? 'action-popover' : undefined;
-
-    const {
-        deleteSomeCheckList,
-        deleteSomeCheckBox,
-        addNewTaskIntoCheckList,
-        onChangeCheckListCheckBox,
-        onChangeValueCheckBox
-    } = useCheckListActions(task.id, column_id)
 
     return (
         <ThemeProvider theme={theme2}>
@@ -269,261 +224,10 @@ const CardTaskModal = (props) => {
                                     }}
                                 />
                                 {/*Вынести поповеры в отдельный блок*/}
-                                <Popover
-                                    id={id}
-                                    open={open}
-                                    anchorEl={anchorEl}
-                                    onClose={handleClose}
-                                    anchorOrigin={{
-                                        vertical: 'top',
-                                        horizontal: 'left',
-                                    }}
-                                    transformOrigin={{
-                                        vertical: 'top',
-                                        horizontal: 'left',
-                                    }}
-                                >
-                                    <div>
-                                        <textarea
-                                            id={"task-area"}
-                                            value={currentTaskValue}
-                                            autoFocus={true}
-                                            onChange={(e) => {
-                                                setCurrentTaskValue(e.target.value)
-                                            }}
-                                            onKeyDown={(e) => {
-                                                if (e.key === 'Enter' && currentTaskValue !== "" && targetElement === 'add') {
-                                                    addNewTaskIntoCheckList(
-                                                        targetElementData.sub_task_id,
-                                                        currentTaskValue
-                                                    )
-                                                    setCurrentTaskValue("")
-                                                    document.getElementById("task-area").focus()
-                                                }
-                                                else if (e.key === 'Enter' && currentTaskValue !== "" && targetElement === 'label') {
-                                                    console.log("ads")
-                                                    onChangeValueCheckBox(
-                                                        targetElementData.sub_task_id,
-                                                        targetElementData.check_box_id,
-                                                        currentTaskValue
-                                                    )
-                                                    handleClose()
-                                                }
-                                                else if (e.key === 'Enter' && currentTaskValue !== "") {
-                                                    handleClose()
-                                                }
-                                            }}
-                                            className={styles.addInput}
-
-                                        />
-                                        <div>
-                                            {targetElement === 'add'
-                                                ?
-                                                <button onClick={() => {
-                                                    console.log(anchorEl)
-                                                    if (currentTaskValue.length > 0) {
-                                                        addNewTaskIntoCheckList(
-                                                            targetElementData.sub_task_id,
-                                                            currentTaskValue
-                                                        )
-                                                    }
-                                                    handleClose()
-                                                }}
-                                                >
-                                                    Добавить
-                                                </button>
-                                                :
-                                                <></>
-                                            }
-                                            {targetElement === 'label'
-                                                ?
-                                                <button onClick={() => {
-                                                    console.log(anchorEl)
-                                                    onChangeValueCheckBox(
-                                                        targetElementData.sub_task_id,
-                                                        targetElementData.check_box_id,
-                                                        currentTaskValue
-                                                    )
-                                                    handleClose()
-                                                }}
-                                                >
-                                                    Сохранить
-                                                </button>
-                                                :
-                                                <>
-                                                </>
-                                            }
-                                            <button
-                                                onClick={() => {
-                                                    handleClose()
-                                                }}
-                                            >
-                                                Отмена
-                                            </button>
-                                        </div>
-                                    </div>
-                                </Popover>
-                                <Popover
-                                    id={id2}
-                                    open={open2}
-                                    anchorEl={anchorEl2}
-                                    onClose={handleClose2}
-                                    anchorOrigin={{
-                                        vertical: 'bottom',
-                                        horizontal: 'left',
-                                    }}
-                                    transformOrigin={{
-                                        vertical: 'top',
-                                        horizontal: 'left',
-                                    }}
-                                >
-                                    <div>
-                                        <div style={{display: 'flex', flexDirection: 'column'}}>
-                                            <button>Создать карточку</button>
-                                            <button
-                                                onClick={() => {
-                                                    deleteSomeCheckBox(
-                                                        targetElementData.sub_task_id,
-                                                        targetElementData.check_box_id,
-                                                        targetElementData.checked
-                                                    )
-                                                    handleClose2()
-                                                }}
-                                            >
-                                                Удалить
-                                            </button>
-                                        </div>
-                                    </div>
-                                </Popover>
-                                <div>
-                                    {task.sub_tasks && task.sub_tasks.map((sub_task, index) =>
-                                        <div key={index} style={{paddingBottom: '20px'}}>
-                                            <div className={styles.fullEditDescriptionHeader_CheckList}>
-                                                <div style={{display: 'flex', flexDirection: 'row', gap: '10px'}}>
-                                                    <div style={{paddingTop: '5px'}}>
-                                                        <CheckList/>
-                                                    </div>
-                                                    <div style={{fontSize: '1.1rem', textDecoration: 'underline'}}>
-                                                        {sub_task.title}
-                                                    </div>
-                                                </div>
-                                                <button
-                                                    className={styles.checkBoxAddButton}
-                                                    onClick={() => {
-                                                        deleteSomeCheckList(sub_task.id)
-                                                    }}
-                                                >
-                                                    Удалить
-                                                </button>
-                                            </div>
-                                            <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center'}}>
-                                                <span style={{width: '50px'}}>
-                                                    {task.sub_tasks[index].check_list.length > 0
-                                                        ?
-                                                        `${Math.trunc(task.sub_tasks[index].success_amount * 100 / task.sub_tasks[index].check_list.length)} %`
-                                                        :
-                                                        `0 %`
-                                                    }
-                                                </span>
-                                                <progress
-                                                    id={`progress-${sub_task.id}`}
-                                                    // style={{width: '460px', transition: 'all 1s'}}
-                                                    className={styles.progressBar}
-                                                    max={task.sub_tasks[index].check_list.length}
-                                                    value={task.sub_tasks[index].success_amount}>
-                                                </progress>
-                                            </div>
-                                            <div style={{display: 'flex', flexDirection: 'column'}}>
-                                                {sub_task.check_list && sub_task.check_list.map((list, jindex) =>
-                                                    <FormControlLabel
-                                                        key={jindex + 100}
-                                                        control={
-                                                            <Checkbox
-                                                                checked={task.sub_tasks[index].check_list[jindex].isChecked}
-                                                                onChange={(e) => {
-                                                                    onChangeCheckListCheckBox(sub_task.id, list.id, e.target.checked)
-                                                                }}
-                                                                size="small"
-                                                                checkedIcon={<BpCheckedIcon />}
-                                                                icon={<BpIcon />}
-
-                                                            />
-                                                        }
-                                                        label={
-                                                        <div className={styles.checkBoxLabel}>
-                                                            <span
-                                                                className={styles.checkBoxSpan}
-                                                                style={
-                                                                    task.sub_tasks[index].check_list[jindex].isChecked ?
-                                                                    {textDecoration: 'line-through', opacity: 0.7} :
-                                                                        {}
-                                                                }
-                                                                onClick={(e) => {
-                                                                    e.preventDefault()
-                                                                    handleClickAddButton(e)
-                                                                    setTargetElement("label")
-                                                                    setCurrentTaskValue(task.sub_tasks[index].check_list[jindex].label)
-                                                                    setTargetElementData({
-                                                                        task_id: task.id,
-                                                                        column_id: column_id,
-                                                                        sub_task_id: sub_task.id,
-                                                                        check_box_id: task.sub_tasks[index].check_list[jindex].id
-                                                                    })
-                                                                }}
-                                                            >
-                                                                {list.label}
-                                                            </span>
-                                                            <div className={styles.checkBoxIcons}>
-                                                                <span className={styles.checkBoxIconDates}
-                                                                    onClick={(e) => {
-                                                                        e.preventDefault()
-                                                                        handleClickActionButton(e)
-                                                                    }}
-                                                                >
-                                                                    <Dates/>
-                                                                </span>
-                                                                <span className={styles.checkBoxIconContext}
-                                                                      onClick={(e) => {
-                                                                          e.preventDefault()
-                                                                          handleClickActionButton(e)
-                                                                          setTargetElementData({
-                                                                              task_id: task.id,
-                                                                              column_id: column_id,
-                                                                              sub_task_id: sub_task.id,
-                                                                              check_box_id: task.sub_tasks[index].check_list[jindex].id,
-                                                                              checked: task.sub_tasks[index].check_list[jindex].isChecked,
-                                                                          })
-                                                                      }}
-                                                                >
-                                                                    <svg width="15" height="3" viewBox="0 0 15 3" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                    <rect width="3" height="3" fill="#DBA498"/>
-                                                                    <rect x="12" width="3" height="3" fill="#DBA498"/>
-                                                                    <rect x="6" width="3" height="3" fill="#DBA498"/>
-                                                                    </svg>
-                                                                </span>
-                                                            </div>
-                                                        </div>
-                                                    }
-                                                    />
-                                                )}
-                                            </div>
-                                            <button
-                                                className={styles.checkBoxAddButton}
-                                                onClick={(e) => {
-                                                handleClickAddButton(e)
-                                                setTargetElement("add")
-                                                setTargetElementData({
-                                                    task_id: task.id,
-                                                    column_id: column_id,
-                                                    sub_task_id: sub_task.id
-                                                })
-                                                // addNewTaskIntoCheckList(task.id, column_id, sub_task.id)
-                                            }}>
-                                                Добавить элемент
-                                            </button>
-                                        </div>
-                                    )}
-                                </div>
+                                <SubTasksModal
+                                    column_id={column_id}
+                                    task={task}
+                                />
                                 <div className={styles.fullEditDescriptionHeader}>
                                     <Comments/>
                                     <div>Комментарии</div>

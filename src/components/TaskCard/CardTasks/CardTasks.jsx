@@ -27,8 +27,6 @@ import WorkDone from "../../../assets/Icons/WorkDone.jsx";
 import EmptyBox from "../../../assets/Icons/EmptyBox.jsx";
 import * as deadline from  "../../../utils/StatusConstants.js";
 import Notifications from "../../../assets/Icons/Notifications.jsx";
-import {DONE, FAILED, NOT_DONE, SOON_EXPIRE, UNSET} from "../../../utils/StatusConstants.js";
-import relativeTime from "dayjs/plugin/relativeTime.js";
 import BoardContext from "../../../context/BoardContext.jsx";
 import {set_todolist} from "../../../redux/store/slices/slice_ToDoList.js";
 import {useDispatch} from "react-redux";
@@ -239,7 +237,6 @@ const CardTasks = (props) => {
                totalSubTasks={totalSubTasks}
                totalSuccessSubTasks={totalSuccessSubTasks}
 
-               clientVisibleData={clientVisibleData}
                onChangeCardMark={onChangeCardMark}
            />
            <li className={styles.taskContents}

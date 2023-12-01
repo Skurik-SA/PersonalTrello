@@ -16,8 +16,7 @@ class InnerCardTaskList extends Component {
             nextProps.task === this.props.task &&
             nextProps.onChangeCardMark === this.props.onChangeCardMark &&
             nextProps.markTextShow === this.props.markTextShow &&
-            nextProps.setMarkTextShow === this.props.setMarkTextShow &&
-            nextProps.clientVisibleData === this.props.clientVisibleData
+            nextProps.setMarkTextShow === this.props.setMarkTextShow
         ) {
             return false;
         }
@@ -31,7 +30,6 @@ class InnerCardTaskList extends Component {
                     task={this.props.task}
                     column_id={this.props.column_id}
                     onChangeCardMark={this.props.onChangeCardMark}
-                    clientVisibleData={this.props.clientVisibleData}
                     markTextShow={this.props.markTextShow}
                     setMarkTextShow={this.props.setMarkTextShow}
                 />
@@ -44,7 +42,6 @@ const CardBase = (props) => {
         card_data,
         index,
         card_title,
-        // newTaskOnClick,
         onChangeCardMark,
         markTextShow,
         setMarkTextShow,
@@ -230,8 +227,6 @@ const CardBase = (props) => {
                                                 task={task}
                                                 column_id={card_data.id}
                                                 onChangeCardMark={onChangeCardMark}
-
-                                                clientVisibleData={clientVisibleData}
 
                                                 markTextShow={markTextShow}
                                                 setMarkTextShow={setMarkTextShow}

@@ -5,10 +5,7 @@ import CardBase from "../CardBase/CardBase.jsx";
 import {PureComponent, useContext, useState} from "react";
 import {v4 as uuidv4} from "uuid";
 import {useDispatch} from "react-redux";
-import dayjs from "dayjs";
 import {flushSync} from "react-dom";
-import {DONE, FAILED, NOT_DONE, SOON_EXPIRE, UNSET} from "../../../utils/StatusConstants.js";
-import {cloneDeep} from "lodash-es";
 import {set_todolist} from "../../../redux/store/slices/slice_ToDoList.js";
 import BoardContext from "../../../context/BoardContext.jsx";
 import {findColumnIndex} from "../../../utils/FindColumnIndex.js";
@@ -22,14 +19,12 @@ class InnerCardList extends PureComponent {
             index,
             markTextShow,
             setMarkTextShow,
-            clientVisibleData,
         } = this.props
 
         return <CardBase
                     card_data={card_data}
                     card_title={card_title}
                     onChangeCardMark={onChangeCardMark}
-                    clientVisibleData={clientVisibleData}
                     index={index}
 
                     markTextShow={markTextShow}
@@ -44,7 +39,6 @@ const CardBoard = (props) => {
     //
     // } = props
 
-    // const [clientVisibleData, setClientVisibleData] = useState(data)
     const {
         clientVisibleData,
         setClientVisibleData
@@ -210,7 +204,6 @@ const CardBoard = (props) => {
                                                     index={card.id}
                                                     card_data={card}
                                                     card_title={card.title}
-                                                    clientVisibleData={clientVisibleData}
 
                                                     onChangeCardMark={onChangeCardMark}
 

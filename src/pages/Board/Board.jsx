@@ -1,12 +1,11 @@
 import styles from "./Boards.module.css"
 import SideBar from "../../components/SideBar/SideBar.jsx";
 import {useState} from "react";
-import { v4 as uuidv4 } from 'uuid';
 import BoardTitleInput from "../../components/CustomInputs/BoardTitleInput/BoardTitleInput.jsx";
 import NavigationDefaultButton
     from "../../components/NavigationPanel/NavigationButtons/NavigationDefaultButton/NavigationDefaultButton.jsx";
 import CardBoard from "../../components/TaskCard/CardBoard/CardBoard.jsx";
-import {Checkbox, FormControlLabel, FormGroup, ListItemText, MenuItem, Select} from "@mui/material";
+import {Checkbox, FormControlLabel, FormGroup} from "@mui/material";
 import {useSelector} from "react-redux";
 import Share from "../../assets/Icons/Share.jsx";
 import BoardContext from "../../context/BoardContext.jsx";

@@ -26,7 +26,7 @@ const ContentChangeMark = (props) => {
     const [newMarkText, setNewMarkText] = useState("")
     const [newMarkFontColor, setNewMarkFontColor] = useState("#000")
     const [newMark, setNewMark] = useState({
-        id: marks[marks.length - 1].id + 1,
+        id: marks.length > 0 ? marks[marks.length - 1].id + 1 : 0,
         // id: marks[marks.length - 1].id + 1,
         font_color: '#000',
         color: "#" + Math.random().toString(16).substr(-6),
@@ -88,7 +88,7 @@ const ContentChangeMark = (props) => {
         setNewMarkText("")
         setNewMarkFontColor("#000")
         setNewMark({
-            id: marks[marks.length - 1].id + 1,
+            id: marks.length > 0 ? marks[marks.length - 1].id + 1 : 1,
             font_color: '#000',
             color: "#" + Math.random().toString(16).substr(-6),
             mark_text: ''

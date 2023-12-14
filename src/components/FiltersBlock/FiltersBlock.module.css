@@ -30,9 +30,11 @@
     flex-direction: column;
     gap: 10px;
     width: 370px;
+    max-height: 800px;
     background: #4d1a33;
     border-radius: 10px;
     margin-right: 5px;
+    user-select: none;
 }
 
 .filtersPopperWrapper {
@@ -42,6 +44,8 @@
     align-items: center;
     padding: 15px;
     gap: 10px;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .filtersPopperSection {
@@ -87,17 +91,42 @@
 }
 
 .checkBoxWrapper {
+    max-height: 200px;
+    width: 100%;
     padding-left: 10px;
 }
 
 .markStyle {
-    display: flex;
+    display: inline-flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
     padding-left: 10px;
     color: #1f1f1f;
-    min-width: 260px;
+    width: 250px;
     min-height: 30px;
+    max-height: 30px;
     border-radius: 5px;
+
+    overflow: hidden;
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.markStyle:hover {
+    opacity: 0.8;
+}
+
+.markStyle:active {
+    opacity: 1;
+}
+
+.markStyleSpan {
+    max-width: 240px;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

@@ -36,11 +36,9 @@ const CardTasks = (props) => {
     const {
         task,
         column_id,
-        onChangeCardMark,
         markTextShow,
         setMarkTextShow,
     } = props
-
 
     const {
         clientVisibleData,
@@ -133,44 +131,6 @@ const CardTasks = (props) => {
     }
 
 
-    const onChangeDescription = (task_id, card_id, value) => {
-        const columnIndex = clientVisibleData.findIndex((column_id) => column_id.id === card_id)
-        const taskIndex = clientVisibleData[columnIndex].content.findIndex((task) => task.id === task_id)
-        let newTask = {
-            id: clientVisibleData[columnIndex].content[taskIndex].id,
-            info: clientVisibleData[columnIndex].content[taskIndex].info,
-            marks: clientVisibleData[columnIndex].content[taskIndex].marks,
-            task_cover: clientVisibleData[columnIndex].content[taskIndex].task_cover,
-            deadline: clientVisibleData[columnIndex].content[taskIndex].deadline,
-            task_description: {
-                text: value
-            },
-            sub_tasks: clientVisibleData[columnIndex].content[taskIndex].sub_tasks,
-            priority: clientVisibleData[columnIndex].content[taskIndex].priority,
-            comments: clientVisibleData[columnIndex].content[taskIndex].comments,
-        }
-        const newItems = [...(clientVisibleData.map((column_id, col_index) =>
-            column_id.id !== card_id
-                ?
-                clientVisibleData[col_index]
-                :
-                {
-                    id:  clientVisibleData[col_index].id,
-                    title: clientVisibleData[col_index].title,
-                    content: [...clientVisibleData[col_index].content.map((task, row_index) =>
-                        task.id !== task_id
-                            ?
-                            clientVisibleData[col_index].content[row_index]
-                            :
-                            newTask
-                    )]
-                }
-        ))]
-
-        console.log(newItems)
-        setClientVisibleData(newItems)
-    }
-
     const handleClick = (event, type) => {
         console.log(task.task_description.text)
         if (type === 'mini' || event.type === 'contextmenu') {
@@ -233,11 +193,8 @@ const CardTasks = (props) => {
                changeTaskInfo={changeTaskInfo}
                task={task}
                column_id={column_id}
-               onChangeDescription={onChangeDescription}
                totalSubTasks={totalSubTasks}
                totalSuccessSubTasks={totalSuccessSubTasks}
-
-               onChangeCardMark={onChangeCardMark}
            />
            <li className={styles.taskContents}
                onContextMenu={(e) => {
@@ -339,7 +296,6 @@ const CardTasks = (props) => {
                                        </span>
                                    </button>
                                     <ButtonChangeMark
-                                        onChangeCardMark={onChangeCardMark}
                                         task_id={task.id}
                                         card_marks={task.marks}
                                     />
@@ -371,6 +327,7 @@ const CardTasks = (props) => {
                    </ThemeProvider>
 
                    <div>
+                       {/*Приоритет*/}
                        <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center'}}>
                            {task.priority && task.priority.type !== 'default'
                                 ?
@@ -381,6 +338,7 @@ const CardTasks = (props) => {
                                <></>
                            }
                        </div>
+                       {/*Метки*/}
                        {task.marks.length > 0
                            ?
                            <Transition  nodeRef={nodeRef} in={markTextShow} timeout={duration}>
@@ -413,6 +371,7 @@ const CardTasks = (props) => {
                            <>
                            </>
                        }
+                       {/*Текст*/}
                         <div className={styles.taskText}
                              onClick={(e) => {
                                  handleClick(e, 'full')
@@ -420,6 +379,7 @@ const CardTasks = (props) => {
                         >
                             {task.info}
                         </div>
+                       {/*Футер*/}
                        <div className={styles.cardTasks_downLabelsWrapper}
                             onClick={(e) => {
                                 handleClick(e, 'full')

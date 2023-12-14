@@ -8,14 +8,12 @@ import {useDispatch} from "react-redux";
 import {flushSync} from "react-dom";
 import {set_todolist} from "../../../redux/store/slices/slice_ToDoList.js";
 import BoardContext from "../../../context/BoardContext.jsx";
-import {findColumnIndex} from "../../../utils/FindColumnIndex.js";
 
 class InnerCardList extends PureComponent {
     render() {
         const {
             card_data,
             card_title,
-            onChangeCardMark,
             index,
             markTextShow,
             setMarkTextShow,
@@ -24,9 +22,7 @@ class InnerCardList extends PureComponent {
         return <CardBase
                     card_data={card_data}
                     card_title={card_title}
-                    onChangeCardMark={onChangeCardMark}
                     index={index}
-
                     markTextShow={markTextShow}
                     setMarkTextShow={setMarkTextShow}
                 />
@@ -48,62 +44,6 @@ const CardBoard = (props) => {
     // Это костыль, но зато какой, потом с бэком скорее всего менять придётся
     const dispatch = useDispatch()
 
-    const onChangeCardMark = (task_id, new_mark, type="add") => {
-
-        const columnIndex = findColumnIndex(clientVisibleData, task_id, 'index')
-        const validateMark = (taskMarks, col_index, row_index) => {
-            for (let i = 0; i < taskMarks.length; i++) {
-                if (type === "delete") {
-                    return taskMarks.filter((mark) => mark.id !== new_mark.id)
-                }
-                if (taskMarks[i].id === new_mark.id ) {
-                    if (type === "add" && row_index === task_id) {
-                        return taskMarks.filter((mark) => mark.id !== new_mark.id)
-                    }
-                    if (type === "edit") {
-                        return taskMarks.map((mark) => {
-                            if (mark.id === new_mark.id) {
-                                return new_mark
-                            }
-                            else {
-                                return mark
-                            }
-                        })
-                    }
-                }
-            }
-
-            if (col_index === columnIndex && row_index === task_id)
-                return [...taskMarks, new_mark]
-            else
-                return [...taskMarks]
-        }
-
-        setClientVisibleData([...(clientVisibleData.map((column, col_index) =>
-            {
-                return {
-                    id:  column.id,
-                    title: column.title,
-                    content: [...column.content.map((task) =>
-                    {
-                        return {
-                            id: task.id,
-                            info: task.info,
-                            marks: validateMark(task.marks, col_index, task.id),
-                            task_cover: task.task_cover,
-                            deadline: task.deadline,
-                            task_description: task.task_description,
-                            sub_tasks: task.sub_tasks,
-                            priority: task.priority,
-                            comments: task.comments,
-                        }
-                    })]
-                }
-            }
-        ))])
-
-    }
-
     const addNewColumn = () => {
         const newItems = [
             ...clientVisibleData,
@@ -115,8 +55,6 @@ const CardBoard = (props) => {
         ]
         setClientVisibleData(newItems)
     }
-
-
 
     const handleOnDragEnd = (results) => {
 
@@ -204,8 +142,6 @@ const CardBoard = (props) => {
                                                     index={card.id}
                                                     card_data={card}
                                                     card_title={card.title}
-
-                                                    onChangeCardMark={onChangeCardMark}
 
                                                     markTextShow={markTextShow}
                                                     setMarkTextShow={setMarkTextShow}

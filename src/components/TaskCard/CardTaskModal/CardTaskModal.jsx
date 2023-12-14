@@ -42,8 +42,6 @@ const CardTaskModal = (props) => {
         changeTaskInfo,
         task,
         column_id,
-        onChangeCardMark,
-        onChangeDescription,
 
     } = props
 
@@ -56,6 +54,44 @@ const CardTaskModal = (props) => {
 
     const handleModalClose = () => setModalOpen(false);
     const [valueDescription, setValueDescription] = useState(task.task_description.text)
+
+    const onChangeDescription = (task_id, card_id, value) => {
+        const columnIndex = clientVisibleData.findIndex((column_id) => column_id.id === card_id)
+        const taskIndex = clientVisibleData[columnIndex].content.findIndex((task) => task.id === task_id)
+        let newTask = {
+            id: clientVisibleData[columnIndex].content[taskIndex].id,
+            info: clientVisibleData[columnIndex].content[taskIndex].info,
+            marks: clientVisibleData[columnIndex].content[taskIndex].marks,
+            task_cover: clientVisibleData[columnIndex].content[taskIndex].task_cover,
+            deadline: clientVisibleData[columnIndex].content[taskIndex].deadline,
+            task_description: {
+                text: value
+            },
+            sub_tasks: clientVisibleData[columnIndex].content[taskIndex].sub_tasks,
+            priority: clientVisibleData[columnIndex].content[taskIndex].priority,
+            comments: clientVisibleData[columnIndex].content[taskIndex].comments,
+        }
+        const newItems = [...(clientVisibleData.map((column_id, col_index) =>
+            column_id.id !== card_id
+                ?
+                clientVisibleData[col_index]
+                :
+                {
+                    id:  clientVisibleData[col_index].id,
+                    title: clientVisibleData[col_index].title,
+                    content: [...clientVisibleData[col_index].content.map((task, row_index) =>
+                        task.id !== task_id
+                            ?
+                            clientVisibleData[col_index].content[row_index]
+                            :
+                            newTask
+                    )]
+                }
+        ))]
+
+        console.log(newItems)
+        setClientVisibleData(newItems)
+    }
 
 
     const theme2 = createTheme({
@@ -150,7 +186,6 @@ const CardTaskModal = (props) => {
                                             {task.marks.map((mark) =>
                                                 <div key={mark.id} className={styles.fullEditMarksTaskMark} style={{background: `${mark.color}`, color: `${mark.font_color}`}}>
                                                     <ButtonChangeMark
-                                                        onChangeCardMark={onChangeCardMark}
                                                         task_id={task.id}
                                                         card_marks={task.marks}
                                                         renderByAnchor={true}
@@ -168,7 +203,6 @@ const CardTaskModal = (props) => {
                                             )}
                                             <div className={styles.fullEditMarksTaskMark}>
                                                 <ButtonChangeMark
-                                                    onChangeCardMark={onChangeCardMark}
                                                     task_id={task.id}
                                                     card_marks={task.marks}
                                                     renderByAnchor={true}
@@ -247,7 +281,6 @@ const CardTaskModal = (props) => {
                                     rootButtonStyle={styles.fullEditMenuButton}
                                 />
                                 <ButtonChangeMark
-                                    onChangeCardMark={onChangeCardMark}
                                     task_id={task.id}
                                     card_marks={task.marks}
                                     renderByAnchor={true}

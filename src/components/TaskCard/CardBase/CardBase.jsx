@@ -14,7 +14,6 @@ class InnerCardTaskList extends Component {
         if (
             nextProps.column_id === this.props.column_id &&
             nextProps.task === this.props.task &&
-            nextProps.onChangeCardMark === this.props.onChangeCardMark &&
             nextProps.markTextShow === this.props.markTextShow &&
             nextProps.setMarkTextShow === this.props.setMarkTextShow
         ) {
@@ -29,7 +28,6 @@ class InnerCardTaskList extends Component {
                     key={this.props.task.id}
                     task={this.props.task}
                     column_id={this.props.column_id}
-                    onChangeCardMark={this.props.onChangeCardMark}
                     markTextShow={this.props.markTextShow}
                     setMarkTextShow={this.props.setMarkTextShow}
                 />
@@ -42,7 +40,6 @@ const CardBase = (props) => {
         card_data,
         index,
         card_title,
-        onChangeCardMark,
         markTextShow,
         setMarkTextShow,
     } = props
@@ -217,7 +214,6 @@ const CardBase = (props) => {
                                             {/*    task={task}*/}
                                             {/*    column_id={card_data.id}*/}
                                             {/*    changeTaskInfo={changeTaskInfo}*/}
-                                            {/*    onChangeCardMark={onChangeCardMark}*/}
 
                                             {/*    markTextShow={markTextShow}*/}
                                             {/*    setMarkTextShow={setMarkTextShow}*/}
@@ -226,7 +222,6 @@ const CardBase = (props) => {
                                                 key={task.id}
                                                 task={task}
                                                 column_id={card_data.id}
-                                                onChangeCardMark={onChangeCardMark}
 
                                                 markTextShow={markTextShow}
                                                 setMarkTextShow={setMarkTextShow}

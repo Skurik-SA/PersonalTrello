@@ -27,6 +27,7 @@ const ContentDate = (props) => {
     const onChangeDate = (newValue) => {
         setDate(newValue)
         console.log(newValue)
+        console.log(dayjs())
     }
 
     const onChangeTime = (newValue) => {

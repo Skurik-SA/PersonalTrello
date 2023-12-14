@@ -31,12 +31,7 @@ class InnerCardList extends PureComponent {
     }
 }
 
-const CardBoard = (props) => {
-
-    // const {
-    //
-    // } = props
-
+const CardBoard = () => {
     const {
         clientVisibleData,
         setClientVisibleData

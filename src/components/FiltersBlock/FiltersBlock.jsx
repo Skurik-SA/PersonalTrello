@@ -66,8 +66,6 @@ const FiltersBlock = (props) => {
         setClientVisibleData
     } = useContext(BoardContext)
 
-
-
     useEffect(() => {
         const Debounce = setTimeout(() => {
             const filteredData = filterCards(keyWordSearchValue, clientVisibleData)

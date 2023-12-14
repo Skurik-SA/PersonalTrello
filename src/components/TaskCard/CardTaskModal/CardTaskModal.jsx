@@ -31,6 +31,7 @@ import ButtonCheckList from "../TaskButtons/ButtonCheckListCard/ButtonCheckList.
 import BoardContext from "../../../context/BoardContext.jsx";
 import DeadLineBlockModal from "./DeadLineBlockModal/DeadLineBlockModal.jsx";
 import SubTasksModal from "./SubTasksModal/SubTasksModal.jsx";
+import {cloneDeep} from "lodash-es";
 
 const CardTaskModal = (props) => {
 
@@ -58,18 +59,10 @@ const CardTaskModal = (props) => {
     const onChangeDescription = (task_id, card_id, value) => {
         const columnIndex = clientVisibleData.findIndex((column_id) => column_id.id === card_id)
         const taskIndex = clientVisibleData[columnIndex].content.findIndex((task) => task.id === task_id)
-        let newTask = {
-            id: clientVisibleData[columnIndex].content[taskIndex].id,
-            info: clientVisibleData[columnIndex].content[taskIndex].info,
-            marks: clientVisibleData[columnIndex].content[taskIndex].marks,
-            task_cover: clientVisibleData[columnIndex].content[taskIndex].task_cover,
-            deadline: clientVisibleData[columnIndex].content[taskIndex].deadline,
-            task_description: {
-                text: value
-            },
-            sub_tasks: clientVisibleData[columnIndex].content[taskIndex].sub_tasks,
-            priority: clientVisibleData[columnIndex].content[taskIndex].priority,
-            comments: clientVisibleData[columnIndex].content[taskIndex].comments,
+
+        const newTask = cloneDeep(clientVisibleData[columnIndex].content[taskIndex])
+        newTask.task_description = {
+            text: value
         }
         const newItems = [...(clientVisibleData.map((column_id, col_index) =>
             column_id.id !== card_id

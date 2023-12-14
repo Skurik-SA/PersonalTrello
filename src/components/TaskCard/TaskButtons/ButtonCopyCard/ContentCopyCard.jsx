@@ -15,6 +15,7 @@ import {useContext, useState} from "react";
 import {findColumnIndex} from "../../../../utils/FindColumnIndex.js";
 import {v4 as uuidv4} from "uuid";
 import BoardContext from "../../../../context/BoardContext.jsx";
+import {cloneDeep} from "lodash-es";
 
 
 export const BpIcon = styled('span')(({ theme }) => ({
@@ -65,13 +66,10 @@ export const BpCheckedIcon = styled(BpIcon)({
 const ContentCopyCard = (props) => {
 
     const {
-        // clientVisibleData,
         task,
         task_id,
-        // copyCardTo,
         handleClose,
         popover_id,
-        button_id,
 
         copiedValue = ""
     } = props
@@ -138,18 +136,14 @@ const ContentCopyCard = (props) => {
         const newDestinationItems = [...clientVisibleData[destination_column_index].content]
 
         const [gotItem] = newDataItems.splice(source_task_index, 1)
-        const copiedItem = {
-            id: uuidv4(),
-            info: value ? value : gotItem.info,
-            marks: isCopyMarks ? gotItem.marks : [],
-            task_cover: gotItem.task_cover,
-            deadline: gotItem.deadline,
-            task_description: isCopyDescription ? gotItem.task_description : {},
-            // Знаю косяк с копирование id
-            sub_tasks: isCopySubTasks ? gotItem.sub_tasks : [],
-            priority: gotItem.priority,
-            comments: gotItem.comments,
-        }
+
+        const copiedItem = cloneDeep(gotItem)
+        copiedItem.id = uuidv4()
+        copiedItem.info = value ? value : copiedItem.info
+        copiedItem.marks = isCopyMarks ? gotItem.marks : []
+        copiedItem.task_description = isCopyDescription ? copiedItem.task_description : {}
+        copiedItem.sub_tasks = isCopySubTasks ? copiedItem.sub_tasks : []
+
         newDestinationItems.splice(destination_task_index, 0, copiedItem)
 
         const newEl = [...clientVisibleData]

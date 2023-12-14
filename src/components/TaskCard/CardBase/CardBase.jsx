@@ -100,6 +100,7 @@ const CardBase = (props) => {
             ...clientVisibleData[columnIndex].content,
             {
                 id: uuidv4(),
+                is_visible: true,
                 info: 'Новая карточка',
                 marks: [],
                 task_cover: {},

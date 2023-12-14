@@ -141,6 +141,7 @@ const ContentChangeMark = (props) => {
                     {
                         return {
                             id: task.id,
+                            is_visible: task.is_visible,
                             info: task.info,
                             marks: validateMark(task.marks, col_index, task.id),
                             task_cover: task.task_cover,
@@ -155,12 +156,6 @@ const ContentChangeMark = (props) => {
             }
         ))])
     }
-
-
-
-    useEffect(() => {
-
-    }, [])
 
     return (
         <div className={styles.contentChangeMarkWrapper}>

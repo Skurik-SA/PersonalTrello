@@ -50,6 +50,7 @@ const CardTasks = (props) => {
         const taskIndex = clientVisibleData[columnIndex].content.findIndex((task) => task.id === task_id)
         let newTask = {
             id: clientVisibleData[columnIndex].content[taskIndex].id,
+            is_visible: clientVisibleData[columnIndex].content[taskIndex].is_visible,
             info: value,
             marks: clientVisibleData[columnIndex].content[taskIndex].marks,
             task_cover: clientVisibleData[columnIndex].content[taskIndex].task_cover,

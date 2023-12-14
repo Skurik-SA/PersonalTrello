@@ -3,6 +3,7 @@ import {DONE, FAILED, NOT_DONE, SOON_EXPIRE, UNSET} from "../utils/StatusConstan
 import relativeTime from "dayjs/plugin/relativeTime.js";
 import {useContext} from "react";
 import BoardContext from "../context/BoardContext.jsx";
+import {cloneDeep} from "lodash-es";
 
 
 export const useDeadLine = () => {
@@ -32,8 +33,17 @@ export const useDeadLine = () => {
         }
 
         // let newDataItems = [...clientVisibleData[columnIndex].content]
+        // const newTask = cloneDeep(clientVisibleData[columnIndex].content[taskIndex])
+        // newTask.deadline = action === "set" ? {
+        //     type: deadlineType,
+        //     remaining: '',
+        //     end: '',
+        //     dateJsFormatDate: date,
+        //     dateJsFormatTime: {},
+        // } : {}
         let newTask = {
             id: clientVisibleData[columnIndex].content[taskIndex].id,
+            is_visible: clientVisibleData[columnIndex].content[taskIndex].is_visible,
             info: clientVisibleData[columnIndex].content[taskIndex].info,
             marks: clientVisibleData[columnIndex].content[taskIndex].marks,
             task_cover: clientVisibleData[columnIndex].content[taskIndex].task_cover,

@@ -9,12 +9,16 @@ import {Checkbox, FormControlLabel, FormGroup} from "@mui/material";
 import {useSelector} from "react-redux";
 import Share from "../../assets/Icons/Share.jsx";
 import BoardContext from "../../context/BoardContext.jsx";
+import FiltersBlock from "../../components/FiltersBlock/FiltersBlock.jsx";
 
 const Board = () => {
     const data = useSelector(state => state.todolist.data)
-    const [clientVisibleData, setClientVisibleData] = useState(data)
 
-    const [inVal, setInVal] = useState("Task Board For Study")
+    const [clientVisibleData, setClientVisibleData] = useState(data) // Условно не изменяемый стейт
+
+    const [keyWordSearchValue, setKeyWordSearchValue] = useState("") // Условно изменяемый стейт
+
+    // const [inVal, setInVal] = useState("Task Board For Study")
     const [iconFavMode, setIconFavMode] = useState(false)
     const [iconPrivacyMode, setIconPrivacyMode] = useState(0)
 
@@ -30,8 +34,8 @@ const Board = () => {
                         <div className={styles.toolBar_contentLeft}>
                             <div style={{display:'flex'}}>
                                 <BoardTitleInput
-                                    input={inVal}
-                                    setInput={setInVal}
+                                    // input={inVal}
+                                    // setInput={setInVal}
                                 />
                                 <button className={styles.favIcoButton}
                                     onClick={() => {
@@ -141,138 +145,9 @@ const Board = () => {
                         </div>
 
                         <div className={styles.toolBar_contentRight}>
-                            <NavigationDefaultButton
-                                customButtonBaseStyle={styles.filtersIcoButton}
-                                customPopperBaseStyle={styles.filtersPopper}
-                                popperBtnId={'filters-popper'}
-                                placement={"bottom"}
-                                growAnimationStyle={{ transformOrigin: '0 50 0'}}
-                                clickCloseOutside={false}
-                                buttonContent={
-                                    <>
-                                        <span>
-                                            <svg width="15" height="13" viewBox="0 0 15 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M0 1C0 0.447715 0.447715 0 1 0H14C14.5523 0 15 0.447715 15 1V1C15 2.10457 14.1046 3 13 3H2C0.89543 3 0 2.10457 0 1V1Z" fill="#002036"/>
-                                                <path d="M3 6C3 5.44772 3.44772 5 4 5H11C11.5523 5 12 5.44772 12 6V7C12 7.55228 11.5523 8 11 8H4C3.44772 8 3 7.55228 3 7V6Z" fill="#002036"/>
-                                                <path d="M6 10H9V11.5C9 12.3284 8.32843 13 7.5 13V13C6.67157 13 6 12.3284 6 11.5V10Z" fill="#002036"/>
-                                            </svg>
-                                        </span>
-                                            <span>
-                                            Фильтры
-                                        </span>
-                                    </>
-                                }
-                            >
-                                <div className={styles.filtersPopperWrapper}>
-                                    <div className={styles.filtersPopperTitle}>
-                                        <span >
-                                            Фильтр
-                                        </span>
-                                    </div>
-                                    <section className={styles.filtersPopperSection}>
-                                        <span className={styles.filtersPopperNaming}>
-                                            Ключевое слово
-                                        </span>
-                                            <input
-                                                className={styles.filtersSearchInput}
-                                                placeholder={"Введите ключевое слово"}
-                                            />
-                                        <span className={styles.filtersPopperNaming}>
-                                            Поиск карточек
-                                        </span>
-                                    </section>
-                                    <section  className={styles.filtersPopperSection}>
-                                        <span className={styles.filtersPopperNaming}>
-                                            Участники
-                                        </span>
-                                        <div className={styles.checkBoxWrapper}>
-                                            <FormGroup>
-                                                <FormControlLabel control={<Checkbox sx={{ '& + *': { fontSize: '0.9rem' } }}/>} label="Нет участников" />
-                                                <FormControlLabel control={<Checkbox sx={{ '& + *': { fontSize: '0.9rem' } }}/>} label="Для меня" />
-                                            </FormGroup>
-                                        </div>
-                                    </section>
-                                    <section className={styles.filtersPopperSection}>
-                                        <span className={styles.filtersPopperNaming}>
-                                            Срок
-                                        </span>
-                                        <div className={styles.checkBoxWrapper}>
-                                            <FormGroup>
-                                                <FormControlLabel control={<Checkbox sx={{ '& + *': { fontSize: '0.9rem' } }}/>} label="Без даты" />
-                                                <FormControlLabel control={<Checkbox sx={{ '& + *': { fontSize: '0.9rem' } }}/>} label="Просроченные" />
-                                                <FormControlLabel control={<Checkbox sx={{ '& + *': { fontSize: '0.9rem' } }}/>} label="Истекает" />
-                                                <FormControlLabel control={<Checkbox sx={{ '& + *': { fontSize: '0.9rem' } }}/>} label="Выполнено" />
-                                                <FormControlLabel control={<Checkbox sx={{ '& + *': { fontSize: '0.9rem' } }}/>} label="По приоритету" />
-                                            </FormGroup>
-                                        </div>
-                                    </section>
-                                    <section className={styles.filtersPopperSection}>
-                                        <span className={styles.filtersPopperNaming}>
-                                            Метки
-                                        </span>
-                                        <div className={styles.checkBoxWrapper}>
-                                            <FormGroup>
-                                                <FormControlLabel control={<Checkbox sx={{ '& + *': { fontSize: '0.9rem' } }}/>} label="Нет меток" />
-                                                <FormControlLabel
-                                                    control={
-                                                        <Checkbox
-                                                            sx={{ '& + *': { fontSize: '0.9rem' } }}
-                                                        />
-                                                    }
-                                                    label={
-                                                        <div style={{background: '#7bbb39'}} className={styles.markStyle}>
-                                                            <span>
-                                                                NameTag
-                                                            </span>
-                                                        </div>
-                                                    } />
-                                                <FormControlLabel
-                                                    control={
-                                                        <Checkbox
-                                                            sx={{ '& + *': { fontSize: '0.9rem' } }}
-                                                        />
-                                                    }
-                                                    label={
-                                                        <div style={{background: '#cc2525'}} className={styles.markStyle}>
+                            <FiltersBlock
 
-                                                        </div>
-                                                    } />
-                                                <FormControlLabel
-                                                    control={
-                                                    <Checkbox
-                                                        sx={{ '& + *': { fontSize: '0.9rem' } }}
-                                                    />
-                                                }
-                                                    label={
-                                                        <div style={{background: '#32b09c'}} className={styles.markStyle}>
-
-                                                        </div>
-                                                } />
-                                                {/*<Select*/}
-                                                {/*    value={checkedColors}*/}
-                                                {/*    onChange={handleCheckedColorsChange}*/}
-                                                {/*    multiple*/}
-                                                {/*    displayEmpty*/}
-                                                {/*    inputProps={{ 'aria-label': 'Without label' }}*/}
-                                                {/*>*/}
-                                                {/*    <MenuItem value="">*/}
-                                                {/*        <em>None</em>*/}
-                                                {/*    </MenuItem>*/}
-                                                {/*    <MenuItem value={10}>*/}
-                                                {/*        <Checkbox*/}
-                                                {/*            sx={{ '& + *': { fontSize: '0.9rem' } }}*/}
-                                                {/*        />*/}
-                                                {/*        <ListItemText primary={"asdas"} />*/}
-                                                {/*    </MenuItem>*/}
-                                                {/*    <MenuItem value={20}>Twenty</MenuItem>*/}
-                                                {/*    <MenuItem value={30}>Thirty</MenuItem>*/}
-                                                {/*</Select>*/}
-                                            </FormGroup>
-                                        </div>
-                                    </section>
-                                </div>
-                            </NavigationDefaultButton>
-
+                            />
                             <button className={styles.shareIcoButton}>
                                 <span>
                                     <Share/>

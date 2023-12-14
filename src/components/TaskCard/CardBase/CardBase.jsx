@@ -47,7 +47,7 @@ const CardBase = (props) => {
 
     const {
         clientVisibleData,
-        setClientVisibleData
+        setClientVisibleData,
     } = useContext(BoardContext)
     const dispatch = useDispatch()
 
@@ -209,15 +209,6 @@ const CardBase = (props) => {
                                             {...provided.draggableProps}
                                             ref={provided.innerRef}
                                         >
-                                            {/*<CardTasks*/}
-                                            {/*    key={task.id}*/}
-                                            {/*    task={task}*/}
-                                            {/*    column_id={card_data.id}*/}
-                                            {/*    changeTaskInfo={changeTaskInfo}*/}
-
-                                            {/*    markTextShow={markTextShow}*/}
-                                            {/*    setMarkTextShow={setMarkTextShow}*/}
-                                            {/*/>*/}
                                             <InnerCardTaskList
                                                 key={task.id}
                                                 task={task}

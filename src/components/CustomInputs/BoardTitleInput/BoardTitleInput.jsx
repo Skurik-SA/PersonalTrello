@@ -1,11 +1,15 @@
 import styles from "./BoardTitleInput.module.css"
+import {useContext, useState} from "react";
+import BoardContext from "../../../context/BoardContext.jsx";
 
 const BoardTitleInput = (props) => {
 
     const {
-        input,
-        setInput
+        // input,
+        // setInput
     } = props
+
+    const [input, setInput] = useState("Task Board For Study")
 
     return (
         <input id={"board-title-input"}

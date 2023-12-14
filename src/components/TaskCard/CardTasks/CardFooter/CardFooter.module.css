@@ -1,0 +1,51 @@
+.cardTasks_downLabelsWrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.cardTasks_downLabel, .cardTasks_downLabelDate {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.9rem;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.cardTasks_downLabelDate {
+    padding: 4px;
+    border-radius: 5px;
+    background: #722eb9; /* Много времени 4, 5, 6, ...*/
+    background: #2d600f; /* Выполнено boolFlag */
+    background: #600f27; /* Просрочено -1, -2, -3, ...*/
+    background: #833606; /* Истекает скоро 0, 1, 2, 3*/
+}
+
+.cardTasks_dateLogoClock, .cardTasks_dateLogoCheckList {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.25s;
+}
+
+.cardTasks_dateLogoCheckList {
+    position: absolute;
+    opacity: 0;
+    scale: 0.8;
+}
+
+.cardTasks_downLabelDate:hover .cardTasks_dateLogoClock{
+    opacity: 0;
+    scale: 0.8;
+}
+
+.cardTasks_downLabelDate:hover .cardTasks_dateLogoCheckList{
+    opacity: 1;
+    scale: 1;
+}

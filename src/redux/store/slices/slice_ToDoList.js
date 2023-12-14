@@ -92,6 +92,7 @@ const Slice_ToDoList = createSlice({
                 content: [
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Я не искал ничьей вины\n' +
                             'Но в твоих словах мне виделась грань\n' +
                             'Лишних не было\n' +
@@ -218,6 +219,7 @@ const Slice_ToDoList = createSlice({
                     },
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'И я не верил ни в чьи слова\n' +
                             'Кроме твоих — они казались мне истиной\n' +
                             'Но ты не была со мной искренней\n' +
@@ -264,6 +266,7 @@ const Slice_ToDoList = createSlice({
                     },
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Ты надо мною глумишься\n' +
                             'И в свете этих событий\n' +
                             'Не хочу быть тем лишним\n' +
@@ -285,6 +288,7 @@ const Slice_ToDoList = createSlice({
                     },
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Самому сгинуть, о тебе забыть\n' +
                             'Пока ты сыпешь мне в глаза пыль\n' +
                             'Ты моё недоразумение\n' +
@@ -306,6 +310,7 @@ const Slice_ToDoList = createSlice({
                     },
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Я не искал любви\n' +
                             'Неси меня туда\n' +
                             'Куда несут цветы\n' +
@@ -327,6 +332,7 @@ const Slice_ToDoList = createSlice({
                     },
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'И я не верил ни в чьи слова\n' +
                             'Кроме твоих — они казались мне истиной\n' +
                             'Но ты не была со мной искренней\n' +
@@ -348,6 +354,7 @@ const Slice_ToDoList = createSlice({
                     },
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Самому сгинуть, о тебе забыть\n' +
                             'Пока ты сыпешь мне в глаза пыль\n' +
                             'Ты моё недоразумение\n' +
@@ -369,6 +376,7 @@ const Slice_ToDoList = createSlice({
                     },
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Самому сгинуть, о тебе забыть\n' +
                             'Пока ты сыпешь мне в глаза пыль\n' +
                             'Ты моё недоразумение\n' +
@@ -390,6 +398,7 @@ const Slice_ToDoList = createSlice({
                     },
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Тудудуду',
                         marks: [],
                         task_cover: {},
@@ -411,6 +420,7 @@ const Slice_ToDoList = createSlice({
                 content: [
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Чек-лист',
                         marks: [],
                         task_cover: {},
@@ -426,6 +436,7 @@ const Slice_ToDoList = createSlice({
                     },
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Приоритет',
                         marks: [],
                         task_cover: {},
@@ -441,6 +452,7 @@ const Slice_ToDoList = createSlice({
                     },
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Фильтрация',
                         marks: [],
                         task_cover: {},
@@ -456,6 +468,7 @@ const Slice_ToDoList = createSlice({
                     },
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Уведомления',
                         marks: [],
                         task_cover: {},
@@ -471,6 +484,7 @@ const Slice_ToDoList = createSlice({
                     },
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Комментарии',
                         marks: [],
                         task_cover: {},
@@ -486,6 +500,7 @@ const Slice_ToDoList = createSlice({
                     },
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Архивация',
                         marks: [],
                         task_cover: {},
@@ -507,6 +522,7 @@ const Slice_ToDoList = createSlice({
                 content: [
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'А ты улетишь туда, где будет теплей\n' +
                             'Оставишь белые ночи, меня и апрель\n' +
                             'А ты улетишь туда, где будет теплей\n' +
@@ -550,6 +566,7 @@ const Slice_ToDoList = createSlice({
                     },
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Поменяю города и не забуду твою улыбку',
                         marks: [],
                         task_cover: {},
@@ -565,6 +582,7 @@ const Slice_ToDoList = createSlice({
                     },
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Может, я ушёл навсегда',
                         marks: [],
                         task_cover: {},
@@ -580,6 +598,7 @@ const Slice_ToDoList = createSlice({
                     },
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Но буду помнить свою ошибку',
                         marks: [],
                         task_cover: {},
@@ -595,6 +614,7 @@ const Slice_ToDoList = createSlice({
                     },
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Я помню каменный остров, там сияю как фосфор',
                         marks: [],
                         task_cover: {},
@@ -610,6 +630,7 @@ const Slice_ToDoList = createSlice({
                     },
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Бегу от друзей, играю в прятки',
                         marks: [],
                         task_cover: {},
@@ -625,6 +646,7 @@ const Slice_ToDoList = createSlice({
                     },
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Со сломанным носом взлетаю в космос',
                         marks: [],
                         task_cover: {},
@@ -640,6 +662,7 @@ const Slice_ToDoList = createSlice({
                     },
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Ты меня вспомнишь вряд ли',
                         marks: [],
                         task_cover: {},
@@ -655,6 +678,7 @@ const Slice_ToDoList = createSlice({
                     },
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Мы сейчас забиты делом с головой\n' +
                             'Ты помнишь меня — я был не такой',
                         marks: [],
@@ -671,6 +695,7 @@ const Slice_ToDoList = createSlice({
                     },
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Что послужит нам чертой между небом и землёй?\n' +
                             'И я когда-нибудь вернусь домой',
                         marks: [],
@@ -687,6 +712,7 @@ const Slice_ToDoList = createSlice({
                     },
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Там будешь ты, и ты пойдёшь со мной\n' +
                             'Свет в конце тоннеля станет путевой звездой',
                         marks: [],
@@ -703,6 +729,7 @@ const Slice_ToDoList = createSlice({
                     },
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Между небом и землёй',
                         marks: [],
                         task_cover: {},
@@ -718,6 +745,7 @@ const Slice_ToDoList = createSlice({
                     },
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Влюблённым подростком бежал от проблем\n' +
                             'Ты бежала рядом\n' +
                             'Перед глазами картина: я улетаю\n' +
@@ -739,6 +767,7 @@ const Slice_ToDoList = createSlice({
                     },
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'А ты улетишь туда, где будет теплей\n' +
                             'Оставишь белые ночи, меня и апрель\n' +
                             'Я знаю: ты улетишь, и я оставлю себе\n' +
@@ -757,6 +786,7 @@ const Slice_ToDoList = createSlice({
                     },
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Я помню каменный остров, там сияю как фосфор\n' +
                             'Бегу от друзей, играю в прятки\n' +
                             'Со сломанным носом взлетаем в космос\n' +
@@ -779,6 +809,7 @@ const Slice_ToDoList = createSlice({
                     },
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Ведь ты улетишь туда, где будет теплей\n' +
                             'Оставишь белые ночи, меня и апрель\n' +
                             'Я знаю: ты улетишь, и я оставлю себе\n' +
@@ -807,6 +838,7 @@ const Slice_ToDoList = createSlice({
                 content: [
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Boom-boom',
                         marks: [],
                         task_cover: {},
@@ -822,6 +854,7 @@ const Slice_ToDoList = createSlice({
                     },
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Crack-Crack',
                         marks: [],
                         task_cover: {},
@@ -837,6 +870,7 @@ const Slice_ToDoList = createSlice({
                     },
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Wock-wock',
                         marks: [],
                         task_cover: {},
@@ -852,6 +886,7 @@ const Slice_ToDoList = createSlice({
                     },
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Zzzzzzz',
                         marks: [],
                         task_cover: {},
@@ -867,6 +902,7 @@ const Slice_ToDoList = createSlice({
                     },
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Pffffffff',
                         marks: [],
                         task_cover: {},
@@ -888,6 +924,7 @@ const Slice_ToDoList = createSlice({
                 content: [
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Из берегов вытекает река\n' +
                             'Мы наблюдаем издалека\n' +
                             'Это Армагеддон наверняка\n' +
@@ -918,6 +955,7 @@ const Slice_ToDoList = createSlice({
                     },
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Будем чёрным пятном на стене дома\n' +
                             'Родная моя, обещаю, нам будет не больно\n' +
                             'Когда город сложится в хаотичные коридоры\n' +
@@ -948,6 +986,7 @@ const Slice_ToDoList = createSlice({
                     },
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Нелепая казённая улыбочка\n' +
                             'С унылым взглядом спросит:\n' +
                             '«Что с тобой не так?» (Или «Что с нами не так?»)\n' +
@@ -970,6 +1009,7 @@ const Slice_ToDoList = createSlice({
                     },
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Нас не спасут (Не)\n' +
                             'Ни советы, ни книги, ни суть (Нет)\n' +
                             'Нас не спасут (Чё?), нас не спасут (Ага, едем)\n' +
@@ -992,6 +1032,7 @@ const Slice_ToDoList = createSlice({
                     },
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Из берегов вытекает река\n' +
                             'Мы наблюдаем издалека\n' +
                             'Это Армагеддон наверняка (Армагеддон)\n' +
@@ -1028,6 +1069,7 @@ const Slice_ToDoList = createSlice({
                 content: [
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Row 1',
                         marks: [],
                         task_cover: {},
@@ -1043,6 +1085,7 @@ const Slice_ToDoList = createSlice({
                     },
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Row 2',
                         marks: [],
                         task_cover: {},
@@ -1058,6 +1101,7 @@ const Slice_ToDoList = createSlice({
                     },
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Row 3',
                         marks: [],
                         task_cover: {},
@@ -1079,6 +1123,7 @@ const Slice_ToDoList = createSlice({
                 content: [
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Заключительная информация',
                         marks: [],
                         task_cover: {},
@@ -1094,6 +1139,7 @@ const Slice_ToDoList = createSlice({
                     },
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Находится тут',
                         marks: [],
                         task_cover: {},

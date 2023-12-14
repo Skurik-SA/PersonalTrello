@@ -8,6 +8,7 @@ import {useDispatch} from "react-redux";
 import {flushSync} from "react-dom";
 import {set_todolist} from "../../../redux/store/slices/slice_ToDoList.js";
 import BoardContext from "../../../context/BoardContext.jsx";
+import {findColumnIndex} from "../../../utils/FindColumnIndex.js";
 
 class InnerCardList extends PureComponent {
     render() {
@@ -23,6 +24,7 @@ class InnerCardList extends PureComponent {
                     card_data={card_data}
                     card_title={card_title}
                     index={index}
+
                     markTextShow={markTextShow}
                     setMarkTextShow={setMarkTextShow}
                 />
@@ -44,6 +46,7 @@ const CardBoard = (props) => {
     // Это костыль, но зато какой, потом с бэком скорее всего менять придётся
     const dispatch = useDispatch()
 
+
     const addNewColumn = () => {
         const newItems = [
             ...clientVisibleData,
@@ -55,6 +58,8 @@ const CardBoard = (props) => {
         ]
         setClientVisibleData(newItems)
     }
+
+
 
     const handleOnDragEnd = (results) => {
 

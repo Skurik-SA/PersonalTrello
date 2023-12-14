@@ -1,0 +1,103 @@
+.filtersIcoButton {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 4px;
+    border-radius: 5px;
+
+    font-size: 0.9rem;
+
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.filtersIcoButton {
+    padding: 8px 8px 8px 8px;
+    gap: 8px;
+}
+
+.filtersIcoButton:hover {
+    background: rgba(96, 68, 62, 50%);
+}
+
+.filtersPopper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 370px;
+    background: #4d1a33;
+    border-radius: 10px;
+    margin-right: 5px;
+}
+
+.filtersPopperWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    gap: 10px;
+}
+
+.filtersPopperSection {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+    padding-left: 10px;
+}
+
+.filtersPopperTitle {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 20px;
+}
+
+.filtersSearchInput {
+    width: 320px;
+    height: 32px;
+    flex-shrink: 0;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: none;
+    background: #8d3c62;
+    color: #DBA498;
+
+    outline: none;
+    padding-left: 10px;
+}
+
+.filtersSearchInput::placeholder {
+    color: rgba(219, 164, 152, 0.8);
+    font-size: 0.9rem;
+}
+
+
+
+.filtersPopperNaming {
+    font-size: 0.8rem;
+}
+
+.checkBoxWrapper {
+    padding-left: 10px;
+}
+
+.markStyle {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding-left: 10px;
+    color: #1f1f1f;
+    min-width: 260px;
+    min-height: 30px;
+    border-radius: 5px;
+}

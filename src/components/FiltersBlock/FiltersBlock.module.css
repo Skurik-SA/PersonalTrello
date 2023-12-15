@@ -4,10 +4,10 @@
     justify-content: center;
     align-items: center;
 
-    padding-left: 8px;
-    padding-right: 8px;
-    padding-top: 4px;
-    border-radius: 5px;
+    /*padding-left: 8px;*/
+    /*padding-right: 8px;*/
+    /*padding-top: 4px;*/
+    /*border-radius: 5px;*/
 
     font-size: 0.9rem;
 
@@ -17,12 +17,48 @@
 }
 
 .filtersIcoButton {
-    padding: 8px 8px 8px 8px;
-    gap: 8px;
+    /*padding: 8px 8px 8px 8px;*/
+}
+
+.filtersSpanButton {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding-left: 8px;
+    padding-right: 8px;
+    gap: 4px;
+    background: transparent;
+}
+
+.filtersSpanButton:hover {
+    border-radius: 10px;
+    background: rgba(54, 39, 35, 0.25);
 }
 
 .filtersIcoButton:hover {
-    background: rgba(96, 68, 62, 50%);
+    /*background: rgba(96, 68, 62, 50%);*/
+}
+
+.clearButton {
+
+    padding-left: 8px;
+    padding-right: 8px;
+
+    font-size: 0.85rem;
+
+    height: 100%;
+    background: transparent;
+    border: none;
+
+    cursor: pointer;
+}
+
+.clearButton:hover {
+    border-radius: 10px;
+
+    background: #1f1f1f;
 }
 
 .filtersPopper {
@@ -40,10 +76,14 @@
 .filtersPopperWrapper {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     padding: 15px;
     gap: 10px;
+
+
+    scrollbar-color: #8d3c62 #59263e;
+    scrollbar-width: thin;
+
     overflow-y: auto;
     overflow-x: hidden;
 }
@@ -91,7 +131,6 @@
 }
 
 .checkBoxWrapper {
-    max-height: 200px;
     width: 100%;
     padding-left: 10px;
 }
@@ -130,3 +169,4 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
+

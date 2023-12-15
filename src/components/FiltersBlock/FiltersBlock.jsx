@@ -5,7 +5,8 @@ import NavigationDefaultButton
 import {useContext, useEffect, useState} from "react";
 import BoardContext from "../../context/BoardContext.jsx";
 import {useSelector} from "react-redux";
-import {DONE, FAILED, SOON_EXPIRE} from "../../utils/StatusConstants.js";
+import {DONE, FAILED, NOT_DONE, SOON_EXPIRE, UNSET} from "../../utils/StatusConstants.js";
+import {cloneDeep} from "lodash-es";
 
 const filterCards = (
     filterInterface,
@@ -17,90 +18,79 @@ const filterCards = (
         cont
     ) => {
         let res = true
+        console.log("asdasd")
+        const datesFilters = () => {
+            console.log("Первое вхождение")
 
-        if (filterInterface.byText) {
-            res = cont.info.toLowerCase().includes(searchText.toLowerCase())
+            if (filterInterface.isNoDates || filterInterface.isNotDone || filterInterface.isDone || filterInterface.isExpired || filterInterface.isSoonExpired) {
+                console.log("Второе вхождение")
+
+                if (filterInterface.isNoDates && !cont.deadline.dateJsFormatDate) {
+                    console.log("Вхождение без дат")
+
+                    return true
+                }
+
+                if (filterInterface.isDone && cont.deadline.type === DONE) {
+                    console.log("Вхождение завершено")
+
+                    return true
+                }
+
+                if (filterInterface.isExpired && cont.deadline.type === FAILED) {
+                    console.log("Вхождение просрочено")
+
+
+                    return true
+                }
+
+                if (filterInterface.isSoonExpired && cont.deadline.type === SOON_EXPIRE) {
+                    console.log("Вхождение скоро истекает")
+
+                    return true
+                }
+
+                if (filterInterface.isNotDone && cont.deadline.type === NOT_DONE) {
+                    console.log("Вхождение не завершено")
+
+                    return true
+                }
+            }
+
+            return false
         }
 
-        if (filterInterface.isNoDates) {
-            res = res && !cont.deadline.dateJsFormatDate
+        const datesVar = datesFilters()
+
+        if (searchText) {
+            if (datesVar) {
+                res = cont.info.toLowerCase().includes(searchText.toLowerCase()) && datesVar
+            }
+            else {
+                res = cont.info.toLowerCase().includes(searchText.toLowerCase())
+            }
+        }
+        else {
+            if (filterInterface.isNoDates || filterInterface.isNotDone || filterInterface.isDone || filterInterface.isExpired || filterInterface.isSoonExpired) {
+                res = datesVar
+            }
+            else {
+                res = true
+            }
         }
 
-        if (filterInterface.isDone) {
-            res = res && cont.deadline.type === DONE
-        }
-        // not working
-        if (filterInterface.isSoonExpired) {
-            res = res && cont.deadline.type === SOON_EXPIRE
-        }
+        const filteredContent = cloneDeep(cont)
+        filteredContent.is_visible = res
 
-        if (filterInterface.isExpired) {
-            res = res && cont.deadline.type === FAILED
-        }
-
-        if (filterInterface.isNoDates && filterInterface.isDone && filterInterface.isSoonExpired && filterInterface.isExpired) {
-            res = res || cont.deadline.type === DONE || cont.deadline.type === SOON_EXPIRE || cont.deadline.type === FAILED
-        }
-
-        return {
-            id: cont.id,
-            is_visible: res,
-            info: cont.info,
-            marks: cont.marks,
-            task_cover: cont.task_cover,
-            deadline: cont.deadline,
-            task_description: cont.task_description,
-            sub_tasks: cont.sub_tasks,
-            priority : cont.priority,
-            comments: cont.comments,
-        }
+        return filteredContent
     }
 
-    // if (!searchText) {
-    //     return listOfData.map((data) => {
-    //         // const newContent = data.content.filter((inf) => inf.info.toLowerCase().includes(searchText.toLowerCase()))
-    //         // newContent.map()
-    //         return {
-    //             id: data.id,
-    //             title: data.title,
-    //             content: data.content.map((inf) => {
-    //                 return {
-    //                     id: inf.id,
-    //                     is_visible: true,
-    //                     info: inf.info,
-    //                     marks: inf.marks,
-    //                     task_cover: inf.task_cover,
-    //                     deadline: inf.deadline,
-    //                     task_description: inf.task_description,
-    //                     sub_tasks: inf.sub_tasks,
-    //                     priority : inf.priority,
-    //                     comments: inf.comments,
-    //                 }
-    //             })
-    //         }
-    //     })
-    // }
-
     return listOfData.map((data) => {
-        // const newContent = data.content.filter((inf) => inf.info.toLowerCase().includes(searchText.toLowerCase()))
-        // newContent.map()
         return {
             id: data.id,
             title: data.title,
             content: data.content.map((cont) => {
                 return filterFunction(cont)
-                // return {
-                //     id: inf.id,
-                //     is_visible: filterFunction(inf.info.toLowerCase().includes(searchText.toLowerCase())),
-                //     info: inf.info,
-                //     marks: inf.marks,
-                //     task_cover: inf.task_cover,
-                //     deadline: inf.deadline,
-                //     task_description: inf.task_description,
-                //     sub_tasks: inf.sub_tasks,
-                //     priority : inf.priority,
-                //     comments: inf.comments,
-                // }
             })
         }
     })
@@ -119,6 +109,7 @@ const FiltersBlock = (props) => {
         isExpired: false,
         isSoonExpired: false,
         isDone: false,
+        isNotDone: false,
         isPriority: false,
         byMarks: false,
     })
@@ -138,36 +129,76 @@ const FiltersBlock = (props) => {
         setFiltersByMarks([...filtersByMarks.filter((mark) => mark !== deletedFilteredMark)])
     }
 
+    const clearFilters = () => {
+        setFilterInterface({
+            byText: false,
+            isNoDates: false,
+            isExpired: false,
+            isSoonExpired: false,
+            isDone: false,
+            isNotDone: false,
+            isPriority: false,
+            byMarks: false,
+        })
+        setKeyWordSearchValue("")
+    }
+
     useEffect(() => {
         const Debounce = setTimeout(() => {
 
             const filteredData = filterCards(filterInterface, keyWordSearchValue, clientVisibleData)
             setClientVisibleData(filteredData)
-        }, 300)
+        })
 
         return () => clearTimeout(Debounce)
-    }, [filterInterface, keyWordSearchValue])
+    }, [filterInterface, keyWordSearchValue, setClientVisibleData])
 
     return (
         <NavigationDefaultButton
             customButtonBaseStyle={styles.filtersIcoButton}
             customPopperBaseStyle={styles.filtersPopper}
             popperBtnId={'filters-popper'}
-            placement={"bottom"}
+            placement={"bottom-end"}
             growAnimationStyle={{ transformOrigin: '0 50 0'}}
             clickCloseOutside={false}
             buttonContent={
                 <>
-                    <span>
-                        <svg width="15" height="13" viewBox="0 0 15 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M0 1C0 0.447715 0.447715 0 1 0H14C14.5523 0 15 0.447715 15 1V1C15 2.10457 14.1046 3 13 3H2C0.89543 3 0 2.10457 0 1V1Z" fill="#002036"/>
-                            <path d="M3 6C3 5.44772 3.44772 5 4 5H11C11.5523 5 12 5.44772 12 6V7C12 7.55228 11.5523 8 11 8H4C3.44772 8 3 7.55228 3 7V6Z" fill="#002036"/>
-                            <path d="M6 10H9V11.5C9 12.3284 8.32843 13 7.5 13V13C6.67157 13 6 12.3284 6 11.5V10Z" fill="#002036"/>
-                        </svg>
-                    </span>
-                    <span>
-                        Фильтры
-                    </span>
+                    <div className={styles.filtersSpanButton}>
+                        <span>
+                            <svg width="15" height="13" viewBox="0 0 15 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M0 1C0 0.447715 0.447715 0 1 0H14C14.5523 0 15 0.447715 15 1V1C15 2.10457 14.1046 3 13 3H2C0.89543 3 0 2.10457 0 1V1Z" fill="#002036"/>
+                                <path d="M3 6C3 5.44772 3.44772 5 4 5H11C11.5523 5 12 5.44772 12 6V7C12 7.55228 11.5523 8 11 8H4C3.44772 8 3 7.55228 3 7V6Z" fill="#002036"/>
+                                <path d="M6 10H9V11.5C9 12.3284 8.32843 13 7.5 13V13C6.67157 13 6 12.3284 6 11.5V10Z" fill="#002036"/>
+                            </svg>
+                        </span>
+                        <span>
+                            Фильтры
+                        </span>
+                    </div>
+                    <button
+                        className={styles.clearButton}
+                        onClick={(e) => {
+                            e.stopPropagation()
+                            clearFilters()
+                        }}
+                        style={
+                            filterInterface.isDone ||
+                            filterInterface.isNoDates ||
+                            filterInterface.isExpired ||
+                            filterInterface.byMarks ||
+                            filterInterface.isSoonExpired ||
+                            filterInterface.isNotDone ||
+                            keyWordSearchValue ?
+                                {}
+                                :
+                                {display: 'none'}
+                        }
+                    >
+                        <span >
+                            Очистить x
+                        </span>
+                    </button>
+
                 </>
             }
         >
@@ -192,6 +223,7 @@ const FiltersBlock = (props) => {
                                     isExpired: filterInterface.isExpired,
                                     isSoonExpired: filterInterface.isSoonExpired,
                                     isDone: filterInterface.isDone,
+                                    isNotDone: filterInterface.isNotDone,
                                     isPriority: filterInterface.isPriority,
                                     byMarks: filterInterface.byMarks,
                                 })
@@ -203,6 +235,7 @@ const FiltersBlock = (props) => {
                                     isExpired: filterInterface.isExpired,
                                     isSoonExpired: filterInterface.isSoonExpired,
                                     isDone: filterInterface.isDone,
+                                    isNotDone: filterInterface.isNotDone,
                                     isPriority: filterInterface.isPriority,
                                     byMarks: filterInterface.byMarks,
                                 })
@@ -243,12 +276,30 @@ const FiltersBlock = (props) => {
                                             isExpired: filterInterface.isExpired,
                                             isSoonExpired: filterInterface.isSoonExpired,
                                             isDone: filterInterface.isDone,
+                                            isNotDone: filterInterface.isNotDone,
                                             isPriority: filterInterface.isPriority,
                                             byMarks: filterInterface.byMarks,
                                         })}
                                     />
                                 }
                                 label="Без даты" />
+                            <FormControlLabel
+                                control={
+                                    <Checkbox sx={{ '& + *': { fontSize: '0.9rem' } }}
+                                              checked={filterInterface.isNotDone}
+                                              onChange={(e) => setFilterInterface({
+                                                  byText: filterInterface.byText,
+                                                  isNoDates: filterInterface.isNoDates,
+                                                  isExpired: filterInterface.isExpired,
+                                                  isSoonExpired: filterInterface.isSoonExpired,
+                                                  isDone: filterInterface.isDone,
+                                                  isNotDone: e.target.checked,
+                                                  isPriority: filterInterface.isPriority,
+                                                  byMarks: filterInterface.byMarks,
+                                              })}
+                                    />
+                                }
+                                label="Истекает не скоро" />
                             <FormControlLabel
                                 control={
                                     <Checkbox sx={{ '& + *': { fontSize: '0.9rem' } }}
@@ -259,6 +310,7 @@ const FiltersBlock = (props) => {
                                             isExpired: e.target.checked,
                                             isSoonExpired: filterInterface.isSoonExpired,
                                             isDone: filterInterface.isDone,
+                                            isNotDone: filterInterface.isNotDone,
                                             isPriority: filterInterface.isPriority,
                                             byMarks: filterInterface.byMarks,
                                         })}
@@ -275,6 +327,7 @@ const FiltersBlock = (props) => {
                                             isExpired: filterInterface.isExpired,
                                             isSoonExpired: e.target.checked,
                                             isDone: filterInterface.isDone,
+                                            isNotDone: filterInterface.isNotDone,
                                             isPriority: filterInterface.isPriority,
                                             byMarks: filterInterface.byMarks,
                                         })}
@@ -291,6 +344,7 @@ const FiltersBlock = (props) => {
                                             isExpired: filterInterface.isExpired,
                                             isSoonExpired: filterInterface.isSoonExpired,
                                             isDone: e.target.checked,
+                                            isNotDone: filterInterface.isNotDone,
                                             isPriority: filterInterface.isPriority,
                                             byMarks: filterInterface.byMarks,
                                         })}
@@ -307,6 +361,7 @@ const FiltersBlock = (props) => {
                                             isExpired: filterInterface.isExpired,
                                             isSoonExpired: filterInterface.isSoonExpired,
                                             isDone: filterInterface.isDone,
+                                            isNotDone: filterInterface.isNotDone,
                                             isPriority: e.target.checked,
                                             byMarks: filterInterface.byMarks,
                                         })}
@@ -341,41 +396,6 @@ const FiltersBlock = (props) => {
                                         } />
                                 )}
                             </div>
-                            {/*<FormControlLabel*/}
-                            {/*    control={*/}
-                            {/*        <Checkbox*/}
-                            {/*            sx={{ '& + *': { fontSize: '0.9rem' } }}*/}
-                            {/*        />*/}
-                            {/*    }*/}
-                            {/*    label={*/}
-                            {/*        <div style={{background: '#7bbb39'}} className={styles.markStyle}>*/}
-                            {/*            <span>*/}
-                            {/*                NameTag*/}
-                            {/*            </span>*/}
-                            {/*        </div>*/}
-                            {/*    } />*/}
-                            {/*<FormControlLabel*/}
-                            {/*    control={*/}
-                            {/*        <Checkbox*/}
-                            {/*            sx={{ '& + *': { fontSize: '0.9rem' } }}*/}
-                            {/*        />*/}
-                            {/*    }*/}
-                            {/*    label={*/}
-                            {/*        <div style={{background: '#cc2525'}} className={styles.markStyle}>*/}
-
-                            {/*        </div>*/}
-                            {/*    } />*/}
-                            {/*<FormControlLabel*/}
-                            {/*    control={*/}
-                            {/*        <Checkbox*/}
-                            {/*            sx={{ '& + *': { fontSize: '0.9rem' } }}*/}
-                            {/*        />*/}
-                            {/*    }*/}
-                            {/*    label={*/}
-                            {/*        <div style={{background: '#32b09c'}} className={styles.markStyle}>*/}
-
-                            {/*        </div>*/}
-                            {/*    } />*/}
                         </FormGroup>
                     </div>
                 </section>

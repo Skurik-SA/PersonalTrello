@@ -21,34 +21,27 @@ const filterCards = (
         console.log(filterInterface.byMarks)
 
         const datesFilters = () => {
-            // console.log("Первое вхождение")
-
             if (filterInterface.isNoDates && !cont.deadline.dateJsFormatDate) {
-                console.log("Вхождение без дат")
 
                 return true
             }
 
             if (filterInterface.isDone && cont.deadline.type === DONE) {
-                console.log("Вхождение завершено")
 
                 return true
             }
 
             if (filterInterface.isExpired && cont.deadline.type === FAILED) {
-                console.log("Вхождение просрочено")
 
                 return true
             }
 
             if (filterInterface.isSoonExpired && cont.deadline.type === SOON_EXPIRE) {
-                console.log("Вхождение скоро истекает")
 
                 return true
             }
 
             if (filterInterface.isNotDone && cont.deadline.type === NOT_DONE) {
-                console.log("Вхождение не завершено")
 
                 return true
             }
@@ -102,9 +95,13 @@ const filterCards = (
 const FiltersBlock = (props) => {
 
     const marks = useSelector(state => state.todolist.mark_store)
+    const {
+        clientVisibleData,
+        setClientVisibleData
+    } = useContext(BoardContext)
 
     const [keyWordSearchValue, setKeyWordSearchValue] = useState("")
-
+    const [filtersByMarks, setFiltersByMarks] = useState([])
     const [filterInterface, setFilterInterface] = useState({
         byText: false,
         isNoDates: false,
@@ -116,40 +113,24 @@ const FiltersBlock = (props) => {
         isMarks: false,
     })
 
-    const {
-        clientVisibleData,
-        setClientVisibleData
-    } = useContext(BoardContext)
-
-    const [filtersByMarks, setFiltersByMarks] = useState([])
-
-    const addMarkToFilters = (newFilteredMark) => {
-        setFiltersByMarks(prev => [...prev, newFilteredMark])
-    }
-
-    const deleteMarkFromFilters = (deletedFilteredMark) => {
-        setFiltersByMarks(prev => [...prev.filter((mark) => mark.id !== deletedFilteredMark.id)])
-    }
-
-    const [num, setNum] = useState(0);
-    const result = useMemo(() => {return num}, [num]);
-    const actionHandler = (mark) => {
-        const markId = filtersByMarks.some((f_mark) => f_mark.id === mark.id)
+    const actionHandler = (actioned_mark) => {
+        const markId = filtersByMarks.some((f_mark) => f_mark.id === actioned_mark.id)
 
         if (markId) {
-            deleteMarkFromFilters(mark)
-            setNum(prev => prev - 1)
+            setFiltersByMarks(prev =>
+                [...prev.filter((mark) => mark.id !== actioned_mark.id)]
+            )
         }
         else {
-            addMarkToFilters(mark)
-            setNum(prev => prev + 1)
+            setFiltersByMarks(prev =>
+                [...prev, actioned_mark]
+            )
         }
-
-        console.log(result)
-
     }
 
     const clearFilters = () => {
+        setKeyWordSearchValue("")
+        setFiltersByMarks([])
         setFilterInterface({
             byText: false,
             isNoDates: false,
@@ -160,8 +141,6 @@ const FiltersBlock = (props) => {
             isPriority: false,
             isMarks: false,
         })
-        setKeyWordSearchValue("")
-        setFiltersByMarks([])
     }
 
     useEffect(() => {
@@ -205,17 +184,18 @@ const FiltersBlock = (props) => {
                             filterInterface.isDone ||
                             filterInterface.isNoDates ||
                             filterInterface.isExpired ||
-                            filterInterface.byMarks ||
                             filterInterface.isSoonExpired ||
                             filterInterface.isNotDone ||
                             filterInterface.isMarks ||
+                            filterInterface.isPriority ||
+                            filtersByMarks.length > 0 ||
                             keyWordSearchValue ?
                                 {}
                                 :
                                 {display: 'none'}
                         }
                     >
-                        <span >
+                        <span>
                             Очистить x
                         </span>
                     </button>

@@ -1156,7 +1156,6 @@ const Slice_ToDoList = createSlice({
                 ],
             },
         ],
-        column_list: []
     },
     reducers: {
         set_todolist(state, action) {
@@ -1180,7 +1179,8 @@ const Slice_ToDoList = createSlice({
         },
         delete_mark(state, action) {
             state.mark_store = state.mark_store.filter((mark) => mark.id !== action.payload.id)
-        }
+        },
+
     }
 })
 

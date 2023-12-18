@@ -18,8 +18,6 @@ const filterCards = (
     const filterFunction = (
         cont
     ) => {
-        console.log(filterInterface.byMarks)
-
         const datesFilters = () => {
             if (filterInterface.isNoDates && !cont.deadline.dateJsFormatDate) {
 

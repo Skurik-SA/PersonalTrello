@@ -2,10 +2,10 @@ import styles from "./FiltersBlock.module.css"
 import {Checkbox, FormControlLabel, FormGroup} from "@mui/material";
 import NavigationDefaultButton
     from "../NavigationPanel/NavigationButtons/NavigationDefaultButton/NavigationDefaultButton.jsx";
-import {useContext, useEffect, useMemo, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import BoardContext from "../../context/BoardContext.jsx";
 import {useSelector} from "react-redux";
-import {DONE, FAILED, NOT_DONE, SOON_EXPIRE, UNSET} from "../../utils/StatusConstants.js";
+import {DONE, FAILED, NOT_DONE, SOON_EXPIRE} from "../../utils/StatusConstants.js";
 import {cloneDeep} from "lodash-es";
 
 const filterCards = (
@@ -92,7 +92,7 @@ const filterCards = (
 
 }
 
-const FiltersBlock = (props) => {
+const FiltersBlock = () => {
 
     const marks = useSelector(state => state.todolist.mark_store)
     const {

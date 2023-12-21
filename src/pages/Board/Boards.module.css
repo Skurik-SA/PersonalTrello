@@ -37,7 +37,8 @@
 .favIcoButton,
 .privacyIcoButton,
 .shareIcoButton,
-.moreOptionsIcoButton {
+.moreOptionsIcoButtonFromVisibleTo,
+.moreOptionsIcoButtonToVisibleFrom {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -64,15 +65,49 @@
     padding-bottom: 5px;
 }
 
-.moreOptionsIcoButton {
+.moreOptionsIcoButtonFromVisibleTo {
     padding-bottom: 10px;
+    animation-name: svgFromVisibleTo;
+    animation-duration: 0.2s;
+    animation-fill-mode: forwards;
+}
+
+.svgMoreOptionsFromVisibleTo {
+    animation-name: svgFromVisibleTo;
+    animation-duration: 0.2s;
+    animation-fill-mode: forwards;
+}
+
+.moreOptionsIcoButtonToVisibleFrom {
+    padding-bottom: 10px;
+    animation-name: svgToVisibleFrom;
+    animation-duration: 0.2s;
+    animation-fill-mode: forwards;
+}
+
+.svgMoreOptionsToVisibleFrom {
+    /*transition: opacity 10s;*/
+    animation-name: svgToVisibleFrom;
+    animation-duration: 0.2s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes svgFromVisibleTo {
+    from {opacity: 1; scale: 1; position: unset; height: auto}
+    to {opacity: 0; scale: 0; position: absolute; height: 0}
+}
+
+@keyframes svgToVisibleFrom {
+    from {opacity: 0; scale: 0; position: absolute; height: 0}
+    to {opacity: 1; scale: 1; position: unset; height: auto}
 }
 
 .favIcoButton:hover,
 .privacyIcoButton:hover,
-.moreOptionsIcoButton:hover,
+.moreOptionsIcoButtonFromVisibleTo:hover,
+.moreOptionsIcoButtonToVisibleFrom:hover,
 .shareIcoButton:hover {
-    background: rgba(96, 68, 62, 50%);
+    background: rgba(96, 68, 62, 25%);
 }
 
 .favIconSVG:hover {

@@ -157,7 +157,7 @@ const FiltersBlock = () => {
             popperBtnId={'filters-popper'}
             placement={"bottom-end"}
             growAnimationStyle={{ transformOrigin: '0 50 0'}}
-            clickCloseOutside={false}
+            clickCloseOutside={true}
             buttonContent={
                 <>
                     <div className={styles.filtersSpanButton}>

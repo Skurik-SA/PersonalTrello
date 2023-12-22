@@ -148,7 +148,7 @@
 
 .sideBar_hiddenMenuSpan {
     margin-left: 5px;
-    font-size: 1.1rem;
+    font-size: 1rem;
 }
 
 .sideBar_TitleLabels {
@@ -157,9 +157,9 @@
     justify-content: flex-start;
     align-items: center;
     gap: 10px;
-    font-size: 1.1rem;
+    font-size: 1rem;
+    font-weight: bold;
     padding-left: 5px;
-
 }
 
 .sideBar_TextArea {
@@ -177,7 +177,6 @@
     font-family: Arial, serif;
     outline: none;
     border-radius: 8px;
-    z-index: 1;
 
     scrollbar-color: #8d3c62 #59263e;
     scrollbar-width: thin;
@@ -187,4 +186,11 @@
     border: none;
     border-radius: 8px;
     cursor: text;
+}
+
+.sideBar_SettingsBlock {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
 }

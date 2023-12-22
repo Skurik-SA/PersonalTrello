@@ -1,6 +1,6 @@
 import styles from "./BoardContextSideBar.module.css"
 import {Collapse, Divider, TextareaAutosize} from "@mui/material";
-import {useState} from "react";
+import {useRef, useState} from "react";
 import ExitModal from "../../assets/Icons/ExitModal.jsx";
 import ReturnArrow from "../../assets/Icons/ReturnArrow.jsx";
 import Info_LS from "../../assets/Icons/Info_LS.jsx";
@@ -115,7 +115,7 @@ const BoardContextSideBar = (props) => {
                             {/*Hidden level*/}
                             <section className={styles.sideBar_sectionRight}>
                                 <Collapse in={secondLevelCheckedAbout} orientation="horizontal" timeout={100}
-                                          collapsedSize={0}>
+                                          collapsedSize={0} sx={{zIndex: 1}}>
                                     <div className={styles.sideBar_hiddenLevelWrapper}>
                                         <div className={styles.sideBar_TitleLabels}>
                                             <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
@@ -156,45 +156,39 @@ const BoardContextSideBar = (props) => {
                             </section>
                             <section className={styles.sideBar_sectionRight}>
                                 <Collapse in={secondLevelCheckedArchive} orientation="horizontal" timeout={100}
-                                          collapsedSize={0}>
-                                    <div className={styles.sideBar_menuBlock}>
-                                        <button className={styles.sideBar_menuButtons}>
-                                            <div className={styles.sideBar_ButtonEntrails}>
-                                                <span>
-                                                    <Archive_LS/>
-                                                </span>
-                                                <span>
-                                                    Архив
-                                                </span>
-                                            </div>
-
-                                        </button>
+                                          collapsedSize={0} sx={{zIndex: 1}}>
+                                    <div className={styles.sideBar_hiddenLevelWrapper}>
+                                        <div>
+                                            <input placeholder={"Поиск в архиве"}/>
+                                            <button>К спискам</button>
+                                        </div>
                                     </div>
                                 </Collapse>
                             </section>
                             <section className={styles.sideBar_sectionRight}>
                                 <Collapse in={secondLevelCheckedSettings} orientation="horizontal" timeout={100}
-                                          collapsedSize={0}>
-                                    <div className={styles.sideBar_menuBlock}>
-                                        <button className={styles.sideBar_menuButtons}>
-                                            <div className={styles.sideBar_ButtonEntrails}>
-                                                <span>
-                                                    <Settings_LS/>
-                                                </span>
-                                                <span>
-                                                    <span>
-                                                        Настройки
-                                                    </span>
-                                                </span>
-                                            </div>
-
-                                        </button>
+                                          collapsedSize={0} sx={{zIndex: 1}}>
+                                    <div className={styles.sideBar_hiddenLevelWrapper}>
+                                        <div className={styles.sideBar_SettingsBlock}>
+                                            <span>
+                                                Права доступа
+                                            </span>
+                                            <span>
+                                                Комментирование
+                                            </span>
+                                            <span>
+                                                Добавление участников
+                                            </span>
+                                            <span>
+                                                Редактирование
+                                            </span>
+                                        </div>
                                     </div>
                                 </Collapse>
                             </section>
                             <section className={styles.sideBar_sectionRight}>
                                 <Collapse in={secondLevelCheckedBackGround} orientation="horizontal" timeout={100}
-                                          collapsedSize={0}>
+                                          collapsedSize={0} sx={{zIndex: 1}}>
                                     <div className={styles.sideBar_menuBlock}>
                                         <button className={styles.sideBar_menuButtons}>
                                             <div className={styles.sideBar_ButtonEntrails}>
@@ -212,7 +206,7 @@ const BoardContextSideBar = (props) => {
                             </section>
                             <section className={styles.sideBar_sectionRight}>
                                 <Collapse in={secondLevelCheckedMarks} orientation="horizontal" timeout={100}
-                                          collapsedSize={0}>
+                                          collapsedSize={0} sx={{zIndex: 1}}>
                                     <div className={styles.sideBar_menuBlock}>
                                         <button className={styles.sideBar_menuButtons}>
                                             <div className={styles.sideBar_ButtonEntrails}>
@@ -230,7 +224,7 @@ const BoardContextSideBar = (props) => {
                             </section>
                             <section className={styles.sideBar_sectionRight}>
                                 <Collapse in={secondLevelCheckedCopyBoard} orientation="horizontal" timeout={100}
-                                          collapsedSize={0}>
+                                          collapsedSize={0} sx={{zIndex: 1}}>
                                     <div className={styles.sideBar_menuBlock}>
                                         <button className={styles.sideBar_menuButtons}>
                                             <div className={styles.sideBar_ButtonEntrails}>
@@ -248,7 +242,7 @@ const BoardContextSideBar = (props) => {
                             </section>
                             <section className={styles.sideBar_sectionRight}>
                                 <Collapse in={secondLevelCheckedCloseBoard} orientation="horizontal" timeout={100}
-                                          collapsedSize={0}>
+                                          collapsedSize={0} sx={{zIndex: 1}}>
                                     <div className={styles.sideBar_menuBlock}>
                                         <button className={styles.sideBar_menuButtons}>
                                             <div className={styles.sideBar_ButtonEntrails}>

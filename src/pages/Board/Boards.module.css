@@ -13,7 +13,8 @@
     justify-content: space-between;
     align-items: center;
     color: black;
-    background: #966d64;
+    background: rgba(150, 109, 100, 0.85);
+    backdrop-filter: blur(2px);
     height: 65px;
     overflow: hidden;
 }

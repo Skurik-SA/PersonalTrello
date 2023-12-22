@@ -10,6 +10,7 @@ import {useDispatch} from "react-redux";
 import CardMarks from "./CardMarks/CardMarks.jsx";
 import PopoverCardTask from "./PopoverCardTask/PopoverCardTask.jsx";
 import CardFooter from "./CardFooter/CardFooter.jsx";
+import PropTypes from "prop-types";
 
 const CardTasks = (props) => {
     const {
@@ -192,6 +193,13 @@ const CardTasks = (props) => {
            </li>
        </>
     )
+}
+
+CardTasks.propTypes = {
+    task: PropTypes.any,
+    column_id: PropTypes.any,
+    markTextShow: PropTypes.bool,
+    setMarkTextShow: PropTypes.func,
 }
 
 export default CardTasks;

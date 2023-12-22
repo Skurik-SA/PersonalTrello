@@ -10,7 +10,8 @@ import BackGroundIco from "../../assets/Icons/BackGroundIco.jsx";
 import Marks_LS from "../../assets/Icons/Marks_LS.jsx";
 import Copy_LS from "../../assets/Icons/Copy_LS.jsx";
 import CloseBoardIco from "../../assets/Icons/CloseBoardIco.jsx";
-import Description from "../../assets/Icons/Description.jsx";
+import PropTypes from "prop-types";
+import SideBarMainButton from "./SideBarMainButton/SideBarMainButton.jsx";
 
 const RETURN_CONTEXT = "return_context"
 const INFO_CONTEXT = "info_context"
@@ -21,8 +22,9 @@ const MARKS_CONTEXT = "marks_context"
 const COPY_BOARD_CONTEXT = "copy_board_context"
 const CLOSE_BOARD_CONTEXT = "close_board_context"
 
-const BoardContextSideBar = (props) => {
 
+
+const BoardContextSideBar = (props) => {
     const {
         checked,
         handleChecked
@@ -363,6 +365,12 @@ const BoardContextSideBar = (props) => {
                                                 </span>
                                             </div>
                                         </button>
+                                        <SideBarMainButton
+                                            handleClick={handleSecondLevelChecked}
+                                            actionEvent={CLOSE_BOARD_CONTEXT}
+                                            icon={<CloseBoardIco/>}
+                                            buttonContent={"Закрыть доску"}
+                                        />
                                     </div>
                                 </Collapse>
                             </section>
@@ -372,6 +380,11 @@ const BoardContextSideBar = (props) => {
             </Collapse>
         </>
     )
+}
+
+BoardContextSideBar.propTypes = {
+    checked: PropTypes.bool,
+    handleChecked: PropTypes.func,
 }
 
 export default BoardContextSideBar;

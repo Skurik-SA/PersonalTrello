@@ -74,7 +74,6 @@ const BoardContextSideBar = (props) => {
             }
             setSecondLevelCheckedMain(false)
         }
-
     }
 
     return (
@@ -89,7 +88,9 @@ const BoardContextSideBar = (props) => {
 
                             {/*Menu Header*/}
                             <div className={styles.boardContextMenuHeaderWrapper}>
-                                <button className={styles.sideBar_arrow} onClick={() => {
+                                <button className={styles.sideBar_arrow}
+                                        style={secondLevelCheckedMain ? {opacity: 0, cursor: 'default'} : {opacity: 1, cursor: 'pointer'}}
+                                        onClick={() => {
                                     handleSecondLevelChecked(RETURN_CONTEXT)
                                 }}>
                                     <span>
@@ -271,100 +272,48 @@ const BoardContextSideBar = (props) => {
                                           timeout={60}
                                           collapsedSize={0}>
                                     <div className={styles.sideBar_menuBlock}>
-                                        <button className={styles.sideBar_menuButtons} onClick={() => {
-                                            handleSecondLevelChecked(INFO_CONTEXT)
-                                        }}>
-                                            <div className={styles.sideBar_ButtonEntrails}>
-                                                <span>
-                                                    <Info_LS/>
-                                                </span>
-                                                <span>
-                                                    О доске
-                                                </span>
-                                            </div>
-                                        </button>
-                                        <button className={styles.sideBar_menuButtons} onClick={() => {
-                                            handleSecondLevelChecked(ARCHIVE_CONTEXT)
-                                        }}>
-                                            <div className={styles.sideBar_ButtonEntrails}>
-                                                <span>
-                                                    <Archive_LS/>
-                                                </span>
-                                                <span>
-                                                    Архив
-                                                </span>
-                                            </div>
-
-                                        </button>
+                                        <SideBarMainButton
+                                            handleClick={handleSecondLevelChecked}
+                                            actionEvent={INFO_CONTEXT}
+                                            icon={<Info_LS/>}
+                                            buttonContent={"О доске"}
+                                        />
+                                        <SideBarMainButton
+                                            handleClick={handleSecondLevelChecked}
+                                            actionEvent={ARCHIVE_CONTEXT}
+                                            icon={<Archive_LS/>}
+                                            buttonContent={"Архив"}
+                                        />
                                     </div>
                                     <Divider sx={{background: '#DBA498', width: '100%', opacity: '0.5'}}/>
                                     <div className={styles.sideBar_menuBlock}>
-                                        <button className={styles.sideBar_menuButtons} onClick={() => {
-                                            handleSecondLevelChecked(SETTINGS_CONTEXT)
-                                        }}>
-                                            <div className={styles.sideBar_ButtonEntrails}>
-                                                <span>
-                                                    <Settings_LS/>
-                                                </span>
-                                                <span>
-                                                    <span>
-                                                        Настройки
-                                                    </span>
-                                                </span>
-                                            </div>
-                                        </button>
-                                        <button className={styles.sideBar_menuButtons} onClick={() => {
-                                            handleSecondLevelChecked(BACKGROUND_CONTEXT)
-                                        }}>
-                                            <div className={styles.sideBar_ButtonEntrails}>
-                                                <span>
-                                                    <BackGroundIco/>
-                                                </span>
-                                                <span>
-                                                    Сменить фон
-                                                </span>
-                                            </div>
-                                        </button>
-                                        <button className={styles.sideBar_menuButtons} onClick={() => {
-                                            handleSecondLevelChecked(MARKS_CONTEXT)
-                                        }}>
-                                            <div className={styles.sideBar_ButtonEntrails}>
-                                                <span>
-                                                    <Marks_LS/>
-                                                </span>
-                                                <span>
-                                                    Метки
-                                                </span>
-                                            </div>
-
-                                        </button>
+                                        <SideBarMainButton
+                                            handleClick={handleSecondLevelChecked}
+                                            actionEvent={SETTINGS_CONTEXT}
+                                            icon={<Settings_LS/>}
+                                            buttonContent={"Настройки"}
+                                        />
+                                        <SideBarMainButton
+                                            handleClick={handleSecondLevelChecked}
+                                            actionEvent={BACKGROUND_CONTEXT}
+                                            icon={<BackGroundIco/>}
+                                            buttonContent={"Сменить фон"}
+                                        />
+                                        <SideBarMainButton
+                                            handleClick={handleSecondLevelChecked}
+                                            actionEvent={MARKS_CONTEXT}
+                                            icon={<Marks_LS/>}
+                                            buttonContent={"Метки"}
+                                        />
                                     </div>
                                     <Divider sx={{background: '#DBA498', width: '100%', opacity: '0.5'}}/>
                                     <div className={styles.sideBar_menuBlock}>
-                                        <button className={styles.sideBar_menuButtons} onClick={() => {
-                                            handleSecondLevelChecked(COPY_BOARD_CONTEXT)
-                                        }}>
-                                            <div className={styles.sideBar_ButtonEntrails}>
-                                                <span>
-                                                    <Copy_LS/>
-                                                </span>
-                                                <span>
-                                                    Копировать доску
-                                                </span>
-                                            </div>
-                                        </button>
-                                        <button className={styles.sideBar_menuButtons} onClick={() => {
-                                            handleSecondLevelChecked(CLOSE_BOARD_CONTEXT)
-                                        }}>
-                                            <div className={styles.sideBar_ButtonEntrails}>
-                                                <span style={{paddingBottom: 4}}>
-                                                    <CloseBoardIco/>
-                                                </span>
-                                                <span>
-                                                    Закрыть доску
-                                                </span>
-                                            </div>
-                                        </button>
+                                        <SideBarMainButton
+                                            handleClick={handleSecondLevelChecked}
+                                            actionEvent={COPY_BOARD_CONTEXT}
+                                            icon={<Copy_LS/>}
+                                            buttonContent={"Копировать доску"}
+                                        />
                                         <SideBarMainButton
                                             handleClick={handleSecondLevelChecked}
                                             actionEvent={CLOSE_BOARD_CONTEXT}

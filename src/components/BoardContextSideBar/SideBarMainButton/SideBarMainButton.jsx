@@ -1,7 +1,5 @@
 import PropTypes from "prop-types";
-import styles from "../BoardContextSideBar.module.css";
-import BackGroundIco from "../../../assets/Icons/BackGroundIco.jsx";
-
+import styles from "./SideBarMainButton.module.css"
 
 const SideBarMainButton = (props) => {
 

@@ -1,0 +1,33 @@
+.sideBar_menuButtons {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    border: none;
+    border-radius: 10px;
+    color: #DBA498;
+    padding: 10px 10px 10px 20px;
+    /*width: 100%;*/
+    width: 320px;
+    background: transparent;
+    cursor: pointer;
+
+    font-size: 0.85rem;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-text-size-adjust: 100%;
+}
+
+.sideBar_menuButtons:hover {
+    background: rgba(134, 58, 94, 0.8);
+}
+
+.sideBar_ButtonEntrails {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+}

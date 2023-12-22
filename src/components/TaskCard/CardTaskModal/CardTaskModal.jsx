@@ -46,8 +46,6 @@ const CardTaskModal = (props) => {
 
     } = props
 
-    const marks = useSelector(state => state.todolist.mark_store)
-
     const {
         clientVisibleData,
         setClientVisibleData

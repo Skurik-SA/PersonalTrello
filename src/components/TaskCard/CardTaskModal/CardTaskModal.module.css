@@ -33,7 +33,6 @@
     justify-content: flex-start;
     align-items: flex-start;
     margin-top: 30px;
-    gap: 20px;
 }
 
 .fullEditMenuWrapper {
@@ -58,7 +57,7 @@
     letter-spacing: 1px;
 
     width: 170px;
-    padding: 5px 5px 5px 10px;
+    padding: 10px 5px 5px 10px;
     cursor: pointer;
 
     border: none;
@@ -70,7 +69,11 @@
     background: #8d325f;
 }
 
-
+.fullEditDivider {
+    color: #DBA498;
+    background: #DBA498;
+    width: 170px;
+}
 
 .fullEditDescriptionWrapper {
     display: flex;
@@ -80,12 +83,47 @@
     gap: 10px;
 }
 
-.fullEditDescriptionHeader {
+.fullEditDescriptionHeader, .fullEditDescriptionHeader_DeadlineNotDone, .fullEditDescriptionHeader_DeadlineDone, .fullEditDescriptionHeader_CheckList {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
     gap: 10px;
+}
+
+.fullEditDescriptionHeader_CheckList {
+    height: 100%;
+    align-items: center;
+    justify-content: space-between;
+    width: 510px;
+}
+
+.fullEditDescriptionHeader_DeadlineNotDone, .fullEditDescriptionHeader_DeadlineDone {
+    color: white;
+    border-radius: 6px;
+    padding: 5px 10px;
+    background: rgba(89, 26, 58, 0.8);
+    cursor: pointer;
+}
+
+.fullEditDescriptionHeader_DeadlineDone {
+    background: rgba(26, 89, 29, 0.8);
+}
+
+.fullEditDescriptionHeader_DeadlineNotDone:hover {
+    background: rgb(121, 35, 76);
+}
+
+.fullEditDescriptionHeader_DeadlineDone:hover {
+    background: rgb(42, 145, 50);
+}
+
+.fullEditDescriptionHeader_Label {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    width: 120px;
 }
 
 .modalWindowTextArea, .modalWindowTextAreaDescription {
@@ -144,7 +182,6 @@
     letter-spacing: 1px;
     padding-top: 5px;
     padding-bottom: 5px;
-    width: 30px;
     height: 30px;
     cursor: pointer;
 
@@ -154,6 +191,7 @@
 
 .fullEditAddMarkButton {
     padding-left: 10px;
+    width: 30px;
 }
 
 .fullEditAddMarkButton:hover, .subscribeButton:hover {
@@ -187,10 +225,9 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    gap: 10px;
     padding-top: 10px;
     padding-bottom: 10px;
-    max-width: calc(100% - 100px);
+    max-width: 600px;
 }
 
 .fullEditMarksTaskMark {
@@ -199,23 +236,192 @@
     align-items: center;
     font-size: 0.8rem;
     border-radius: 5px;
-    margin-right: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 2px;
+    margin-left: 5px;
     min-width: 40px;
     min-height: 30px;
     opacity: 85%;
-    max-width: 300px;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .fullEditMarksTaskMark:hover {
     opacity: 100%;
 }
 
-
-
 .fullEditMarksTaskSpanContent {
+    width: 300px;
     white-space: nowrap;
 
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.checkBoxLabel {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 486px;
+
+    border-radius: 6px;
+    background: transparent;
+}
+
+.checkBoxLabel:hover {
+    background: #8d3c62;
+}
+
+
+.checkBoxSpan {
+    padding-left: 10px;
+    user-select: none;
+}
+
+.checkBoxIcons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    height: 36px;
+    margin-right: 10px;
+}
+
+.checkBoxIconDates {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.checkBoxIconContext, .checkBoxIconDates {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 4px;
+    opacity: 0;
+}
+
+.checkBoxIconContext {
+    height: 15px;
+    width: 15px;
+}
+
+.checkBoxLabel:hover .checkBoxIconContext {
+    opacity: 1;
+}
+
+.checkBoxLabel:hover .checkBoxIconDates {
+    opacity: 1;
+}
+
+.checkBoxIconDates:hover, .checkBoxIconContext:hover {
+    background: #da6099;
+    border-radius:15px;
+}
+
+.addInput {
+    width: 450px;
+    height: 45px;
+    white-space: nowrap;
+}
+
+.progressBar {
+    width: 450px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.checkBoxAddButton {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    margin-top: 8px;
+
+    background: #48182f;
+
+    cursor: pointer;
+}
+
+.checkBoxAddButton:hover {
+    background: #832854;
+}
+
+
+
+@media screen and (min-width: 300px) {
+    .fullEditDescriptionHeader_CheckList {
+        width: 250px;
+    }
+    .checkBoxLabel {
+        width: 286px;
+    }
+    .fullEditMarksWrapper {
+        max-width: 200px;
+    }
+    .progressBar {
+        width: 200px;
+    }
+    .fullEditMenuSpan {
+        display: none;
+    }
+    .fullEditWrapper {
+        width: 370px;
+    }
+    .fullEditMenuButton {
+        width: 36px;
+    }
+    .fullEditDivider {
+        width: 36px;
+    }
+    .modalWindowTextArea {
+        min-width: 230px;
+    }
+    .modalWindowTextAreaDescription {
+        min-width: 160px;
+    }
+}
+
+@media screen and (min-width: 600px) {
+    .fullEditDescriptionHeader_CheckList {
+        width: 510px;
+    }
+    .checkBoxLabel {
+        width: 486px;
+    }
+    .fullEditMarksWrapper {
+        max-width: 600px;
+    }
+    .progressBar {
+        width: 460px;
+    }
+    .fullEditMenuSpan {
+        display: flex;
+    }
+    .fullEditWrapper {
+        width: 740px;
+    }
+    .fullEditMenuButton {
+        width: 170px;
+    }
+    .fullEditDivider {
+        width: 170px;
+    }
+    .modalWindowTextArea {
+        min-width: 600px;
+    }
+    .modalWindowTextAreaDescription {
+        min-width: 446px;
+    }
 }

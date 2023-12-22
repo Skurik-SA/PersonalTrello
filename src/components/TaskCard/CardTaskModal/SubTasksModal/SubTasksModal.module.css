@@ -1,0 +1,143 @@
+.fullEditDescriptionHeader_CheckList {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+}
+
+.fullEditDescriptionHeader_CheckList {
+    height: 100%;
+    align-items: center;
+    justify-content: space-between;
+    width: 510px;
+}
+
+.checkBoxLabel {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 486px;
+
+    border-radius: 6px;
+    background: transparent;
+}
+
+.checkBoxLabel:hover {
+    background: #8d3c62;
+}
+
+
+.checkBoxSpan {
+    padding-left: 10px;
+    user-select: none;
+}
+
+.checkBoxIcons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    height: 36px;
+    margin-right: 10px;
+}
+
+.checkBoxIconDates {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.checkBoxIconContext, .checkBoxIconDates {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 4px;
+    opacity: 0;
+}
+
+.checkBoxIconContext {
+    height: 15px;
+    width: 15px;
+}
+
+.checkBoxLabel:hover .checkBoxIconContext {
+    opacity: 1;
+}
+
+.checkBoxLabel:hover .checkBoxIconDates {
+    opacity: 1;
+}
+
+.checkBoxIconDates:hover, .checkBoxIconContext:hover {
+    background: #da6099;
+    border-radius:15px;
+}
+
+.addInput {
+    width: 450px;
+    height: 45px;
+    white-space: nowrap;
+}
+
+.progressBar {
+    width: 450px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.checkBoxAddButton {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    margin-top: 8px;
+
+    background: #48182f;
+
+    cursor: pointer;
+}
+
+.checkBoxAddButton:hover {
+    background: #832854;
+}
+
+
+@media screen and (min-width: 300px) {
+    .fullEditDescriptionHeader_CheckList {
+        width: 250px;
+    }
+    .checkBoxLabel {
+        width: 286px;
+    }
+    .fullEditMarksWrapper {
+        max-width: 200px;
+    }
+    .progressBar {
+        width: 200px;
+    }
+}
+
+@media screen and (min-width: 600px) {
+    .fullEditDescriptionHeader_CheckList {
+        width: 510px;
+    }
+    .checkBoxLabel {
+        width: 486px;
+    }
+    .fullEditMarksWrapper {
+        max-width: 600px;
+    }
+    .progressBar {
+        width: 460px;
+    }
+}

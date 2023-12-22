@@ -164,39 +164,39 @@
 
 
 
-.taskMarksWrapper {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 5px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-}
+/*.taskMarksWrapper {*/
+/*    display: flex;*/
+/*    flex-direction: row;*/
+/*    flex-wrap: wrap;*/
+/*    gap: 5px;*/
+/*    padding-top: 10px;*/
+/*    padding-bottom: 10px;*/
+/*}*/
 
-.taskMark {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 0.8rem;
-    padding-left: 5px;
-    padding-right: 5px;
-    border-radius: 5px;
-    min-width: 34px;
-    min-height: 8px;
-    opacity: 70%;
-    max-width: 240px;
-}
+/*.taskMark {*/
+/*    display: inline-flex;*/
+/*    justify-content: center;*/
+/*    align-items: center;*/
+/*    font-size: 0.8rem;*/
+/*    padding-left: 5px;*/
+/*    padding-right: 5px;*/
+/*    border-radius: 5px;*/
+/*    min-width: 34px;*/
+/*    min-height: 8px;*/
+/*    opacity: 70%;*/
+/*    max-width: 240px;*/
+/*}*/
 
-.taskMark:hover {
-    opacity: 100%;
-}
+/*.taskMark:hover {*/
+/*    opacity: 100%;*/
+/*}*/
 
-.taskSpanContent {
-    white-space: nowrap;
+/*.taskSpanContent {*/
+/*    white-space: nowrap;*/
 
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
+/*    overflow: hidden;*/
+/*    text-overflow: ellipsis;*/
+/*}*/
 
 .my-node-enter {
     max-width: 36px;
@@ -215,4 +215,80 @@
     max-width: 36px;
     opacity: 0;
     transition: max-width 200ms;
+}
+
+.cardTasks_downLabelsWrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.cardTasks_downLabel, .cardTasks_downLabelDate {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.9rem;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.cardTasks_downLabelDate {
+    padding: 4px;
+    border-radius: 5px;
+    background: #722eb9; /* Много времени 4, 5, 6, ...*/
+    background: #2d600f; /* Выполнено boolFlag */
+    background: #600f27; /* Просрочено -1, -2, -3, ...*/
+    background: #833606; /* Истекает скоро 0, 1, 2, 3*/
+}
+
+.cardTasks_dateLogoClock, .cardTasks_dateLogoCheckList {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.25s;
+}
+
+.cardTasks_dateLogoCheckList {
+    position: absolute;
+    opacity: 0;
+    scale: 0.8;
+}
+
+.cardTasks_downLabelDate:hover .cardTasks_dateLogoClock{
+    opacity: 0;
+    scale: 0.8;
+}
+
+.cardTasks_downLabelDate:hover .cardTasks_dateLogoCheckList{
+    opacity: 1;
+    scale: 1;
+}
+
+@media screen and (min-width: 300px) {
+    .cardEditPopperMenuButton {
+        flex-direction: column;
+        justify-content: center;
+        padding: 14px;
+        gap: 0;
+    }
+    .buttonTextMobile {
+        font-size: 0;
+    }
+}
+
+@media screen and (min-width: 600px) {
+    .cardEditPopperMenuButton {
+        flex-direction: row;
+        justify-content: flex-start;
+        padding: 10px;
+        gap: 10px;
+    }
+    .buttonTextMobile {
+        font-size: 0.85rem;
+    }
 }

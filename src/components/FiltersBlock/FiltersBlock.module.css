@@ -1,0 +1,172 @@
+.filtersIcoButton {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    /*padding-left: 8px;*/
+    /*padding-right: 8px;*/
+    /*padding-top: 4px;*/
+    /*border-radius: 5px;*/
+
+    font-size: 0.9rem;
+
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.filtersIcoButton {
+    /*padding: 8px 8px 8px 8px;*/
+}
+
+.filtersSpanButton {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding-left: 8px;
+    padding-right: 8px;
+    gap: 4px;
+    background: transparent;
+}
+
+.filtersSpanButton:hover {
+    border-radius: 10px;
+    background: rgba(54, 39, 35, 0.25);
+}
+
+.filtersIcoButton:hover {
+    /*background: rgba(96, 68, 62, 50%);*/
+}
+
+.clearButton {
+
+    padding-left: 8px;
+    padding-right: 8px;
+
+    font-size: 0.85rem;
+
+    height: 100%;
+    background: transparent;
+    border: none;
+
+    cursor: pointer;
+}
+
+.clearButton:hover {
+    border-radius: 10px;
+
+    background: #1f1f1f;
+}
+
+.filtersPopper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 370px;
+    max-height: 800px;
+    background: #4d1a33;
+    border-radius: 10px;
+    margin-right: 5px;
+    user-select: none;
+}
+
+.filtersPopperWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+    gap: 10px;
+
+
+    scrollbar-color: #8d3c62 #59263e;
+    scrollbar-width: thin;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.filtersPopperSection {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+    padding-left: 10px;
+}
+
+.filtersPopperTitle {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 20px;
+}
+
+.filtersSearchInput {
+    width: 320px;
+    height: 32px;
+    flex-shrink: 0;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: none;
+    background: #8d3c62;
+    color: #DBA498;
+
+    outline: none;
+    padding-left: 10px;
+}
+
+.filtersSearchInput::placeholder {
+    color: rgba(219, 164, 152, 0.8);
+    font-size: 0.9rem;
+}
+
+
+
+.filtersPopperNaming {
+    font-size: 0.8rem;
+}
+
+.checkBoxWrapper {
+    width: 100%;
+    padding-left: 10px;
+}
+
+.markStyle {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding-left: 10px;
+    color: #1f1f1f;
+    width: 250px;
+    min-height: 30px;
+    max-height: 30px;
+    border-radius: 5px;
+
+    overflow: hidden;
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.markStyle:hover {
+    opacity: 0.8;
+}
+
+.markStyle:active {
+    opacity: 1;
+}
+
+.markStyleSpan {
+    max-width: 240px;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+

@@ -1,26 +1,37 @@
-import {createTheme, Divider, Modal, TextareaAutosize, ThemeProvider} from "@mui/material";
+import {
+    createTheme,
+    Divider,
+    Modal,
+    TextareaAutosize,
+    ThemeProvider
+} from "@mui/material";
 import styles from "./CardTaskModal.module.css"
 import Task from "../../../assets/Icons/Task.jsx";
 import ExitModal from "../../../assets/Icons/ExitModal.jsx";
 import Description from "../../../assets/Icons/Description.jsx";
-import CheckList from "../../../assets/Icons/CheckList.jsx";
 import Comments from "../../../assets/Icons/Comments.jsx";
 import Participants from "../../../assets/Icons/Participants.jsx";
-import Priority from "../../../assets/Icons/Priority.jsx";
 import Marks from "../../../assets/Icons/Marks.jsx";
-import Dates from "../../../assets/Icons/Dates.jsx";
 import Attachments from "../../../assets/Icons/Attachments.jsx";
 import Cover from "../../../assets/Icons/Cover.jsx";
-import Moving from "../../../assets/Icons/Moving.jsx";
-import Copy from "../../../assets/Icons/Copy.jsx";
 import MakeTemplate from "../../../assets/Icons/MakeTemplate.jsx";
 import Archive from "../../../assets/Icons/Archive.jsx";
 import Share from "../../../assets/Icons/Share.jsx";
-import {useState} from "react";
+import {useContext, useState} from "react";
 import ButtonChangeMark from "../TaskButtons/ButtonChangeMark/ButtonChangeMark.jsx";
 import {useSelector} from "react-redux";
 import Notifications from "../../../assets/Icons/Notifications.jsx";
 import Eye from "../../../assets/Icons/Eye.jsx";
+import ButtonMoveCard from "../TaskButtons/ButtonMoveCard/ButtonMoveCard.jsx";
+import ButtonDate from "../TaskButtons/ButtonDate/ButtonDate.jsx";
+import ButtonCopyCard from "../TaskButtons/ButtonCopyCard/ButtonCopyCard.jsx";
+import ButtonDeleteCard from "../TaskButtons/ButtonDeleteCard/ButtonDeleteCard.jsx";
+import ButtonChangePriorityCard from "../TaskButtons/ButtonChangePriorityCard/ButtonChangePriorityCard.jsx";
+import ButtonCheckList from "../TaskButtons/ButtonCheckListCard/ButtonCheckList.jsx";
+import BoardContext from "../../../context/BoardContext.jsx";
+import DeadLineBlockModal from "./DeadLineBlockModal/DeadLineBlockModal.jsx";
+import SubTasksModal from "./SubTasksModal/SubTasksModal.jsx";
+import {cloneDeep} from "lodash-es";
 
 const CardTaskModal = (props) => {
 
@@ -32,13 +43,49 @@ const CardTaskModal = (props) => {
         changeTaskInfo,
         task,
         column_id,
-        onChangeCardMark,
+
     } = props
 
     const marks = useSelector(state => state.todolist.mark_store)
 
+    const {
+        clientVisibleData,
+        setClientVisibleData
+    } = useContext(BoardContext)
+
     const handleModalClose = () => setModalOpen(false);
-    const [valueDescription, setValueDescription] = useState("")
+    const [valueDescription, setValueDescription] = useState(task.task_description.text)
+
+    const onChangeDescription = (task_id, card_id, value) => {
+        const columnIndex = clientVisibleData.findIndex((column_id) => column_id.id === card_id)
+        const taskIndex = clientVisibleData[columnIndex].content.findIndex((task) => task.id === task_id)
+
+        const newTask = cloneDeep(clientVisibleData[columnIndex].content[taskIndex])
+        newTask.task_description = {
+            text: value
+        }
+        const newItems = [...(clientVisibleData.map((column_id, col_index) =>
+            column_id.id !== card_id
+                ?
+                clientVisibleData[col_index]
+                :
+                {
+                    id:  clientVisibleData[col_index].id,
+                    title: clientVisibleData[col_index].title,
+                    content: [...clientVisibleData[col_index].content.map((task, row_index) =>
+                        task.id !== task_id
+                            ?
+                            clientVisibleData[col_index].content[row_index]
+                            :
+                            newTask
+                    )]
+                }
+        ))]
+
+        console.log(newItems)
+        setClientVisibleData(newItems)
+    }
+
 
     const theme2 = createTheme({
         components: {
@@ -65,8 +112,19 @@ const CardTaskModal = (props) => {
                     }
                 },
             },
+            MuiPopover: {
+                styleOverrides: {
+                    root: {
+                        background: "none"
+                    },
+                    paper: {
+                        background: 'none'
+                    }
+                }
+            }
         },
     });
+
 
     return (
         <ThemeProvider theme={theme2}>
@@ -100,8 +158,7 @@ const CardTaskModal = (props) => {
                                 />
                                 <span>
                                            В колонке
-                                       </span>
-
+                                </span>
                             </div>
                             <button className={styles.modalWindowCloseButton} onClick={handleModalClose}>
                                    <span>
@@ -112,7 +169,7 @@ const CardTaskModal = (props) => {
 
                         <section className={styles.fullEditMidWrapper}>
                             <div className={styles.fullEditDescriptionWrapper}>
-                                <div style={{display: 'flex', flexDirection: 'column'}}>
+                                <div style={{display: 'flex', flexDirection: 'column', gap: '10px'}}>
                                     <div className={styles.fullEditMarksWrapper}>
                                         <div className={styles.fullEditDescriptionHeader}>
                                             <Marks/>
@@ -122,7 +179,6 @@ const CardTaskModal = (props) => {
                                             {task.marks.map((mark) =>
                                                 <div key={mark.id} className={styles.fullEditMarksTaskMark} style={{background: `${mark.color}`, color: `${mark.font_color}`}}>
                                                     <ButtonChangeMark
-                                                        onChangeCardMark={onChangeCardMark}
                                                         task_id={task.id}
                                                         card_marks={task.marks}
                                                         renderByAnchor={true}
@@ -140,7 +196,6 @@ const CardTaskModal = (props) => {
                                             )}
                                             <div className={styles.fullEditMarksTaskMark}>
                                                 <ButtonChangeMark
-                                                    onChangeCardMark={onChangeCardMark}
                                                     task_id={task.id}
                                                     card_marks={task.marks}
                                                     renderByAnchor={true}
@@ -155,7 +210,7 @@ const CardTaskModal = (props) => {
                                     </div>
                                     <div className={styles.fullEditDescriptionHeader}>
                                         <Notifications/>
-                                        <span> Уведомления: </span>
+                                        <span className={styles.fullEditDescriptionHeader_Label}> Уведомления: </span>
                                         <button className={styles.subscribeButton}>
                                             <span>
                                                 <Eye/>
@@ -163,8 +218,10 @@ const CardTaskModal = (props) => {
                                             Подписаться
                                         </button>
                                     </div>
-                                    <span>Срок: </span>
-                                    <span>Статус: </span>
+                                    <DeadLineBlockModal
+                                        column_id={column_id}
+                                        task={task}
+                                    />
                                 </div>
                                 <div className={styles.fullEditDescriptionHeader}>
                                     <Description/>
@@ -178,12 +235,21 @@ const CardTaskModal = (props) => {
                                     onChange={(e) => {
                                         setValueDescription(e.target.value)
                                     }}
+                                    onKeyDown={(e) => {
+                                        if (e.key === 'Escape' || e.key === 'Enter') {
+                                            onChangeDescription(task.id, column_id, valueDescription)
+                                        }
+                                    }}
                                     spellCheck="false"
+                                    onMouseOut={(e) => {
+                                        onChangeDescription(task.id, column_id, valueDescription)
+                                    }}
                                 />
-                                <div className={styles.fullEditDescriptionHeader}>
-                                    <CheckList/>
-                                    <div>Чек-лист</div>
-                                </div>
+                                {/*Вынести поповеры в отдельный блок*/}
+                                <SubTasksModal
+                                    column_id={column_id}
+                                    task={task}
+                                />
                                 <div className={styles.fullEditDescriptionHeader}>
                                     <Comments/>
                                     <div>Комментарии</div>
@@ -199,16 +265,15 @@ const CardTaskModal = (props) => {
                                            Участники
                                     </span>
                                 </button>
-                                <button className={styles.fullEditMenuButton}>
-                                    <span>
-                                                <Priority/>
-                                    </span>
-                                    <span>
-                                               Приоритет
-                                    </span>
-                                </button>
+                                <ButtonChangePriorityCard
+                                    task_id={task.id}
+                                    column_id={column_id}
+                                    button_id={"modal-card-priority"}
+
+                                    buttonContent={"Приоритет"}
+                                    rootButtonStyle={styles.fullEditMenuButton}
+                                />
                                 <ButtonChangeMark
-                                    onChangeCardMark={onChangeCardMark}
                                     task_id={task.id}
                                     card_marks={task.marks}
                                     renderByAnchor={true}
@@ -217,22 +282,25 @@ const CardTaskModal = (props) => {
                                     buttonContent={"Метки"}
                                     rootButtonStyle={styles.fullEditMenuButton}
                                 />
-                                <button className={styles.fullEditMenuButton}>
-                                    <span>
-                                                <CheckList/>
-                                    </span>
-                                    <span>
-                                               Чек-лист
-                                    </span>
-                                </button>
-                                <button className={styles.fullEditMenuButton}>
-                                    <span>
-                                               <Dates/>
-                                    </span>
-                                    <span>
-                                               Даты
-                                    </span>
-                                </button>
+                                <ButtonCheckList
+                                    task_id={task.id}
+                                    task={task}
+                                    column_id={column_id}
+                                    renderByAnchor={true}
+                                    buttonContent={"Чек-листы"}
+                                    button_id={"modal-check-list-card"}
+                                    rootButtonStyle={styles.fullEditMenuButton}
+                                />
+                                <ButtonDate
+                                    task_id={task.id}
+                                    task={task}
+                                    column_id={column_id}
+
+                                    renderByAnchor={true}
+                                    buttonContent={"Даты"}
+                                    button_id={"modal-date-to"}
+                                    rootButtonStyle={styles.fullEditMenuButton}
+                                />
                                 <button className={styles.fullEditMenuButton}>
                                     <span>
                                        <Attachments/>
@@ -251,23 +319,25 @@ const CardTaskModal = (props) => {
                                 </button>
                                 <span className={styles.fullEditMenuSpan}>
                                            Действия
-                                       </span>
-                                <button className={styles.fullEditMenuButton}>
-                                    <span>
-                                        <Moving/>
-                                    </span>
-                                    <span>
-                                               Перемещение
-                                    </span>
-                                </button>
-                                <button className={styles.fullEditMenuButton}>
-                                    <span>
-                                       <Copy/>
-                                    </span>
-                                    <span>
-                                               Копирование
-                                    </span>
-                                </button>
+                                </span>
+                                <ButtonMoveCard
+                                    task_id={task.id}
+
+                                    renderByAnchor={true}
+                                    buttonContent={"Перемещение"}
+                                    button_id={"modal-move-card-to"}
+                                    rootButtonStyle={styles.fullEditMenuButton}
+                                />
+                                <ButtonCopyCard
+                                    task={task}
+                                    copiedValue={taskTitleValue}
+                                    task_id={task.id}
+
+                                    renderByAnchor={true}
+                                    buttonContent={"Копирование"}
+                                    button_id={"modal-copy-card-to"}
+                                    rootButtonStyle={styles.fullEditMenuButton}
+                                />
                                 <button className={styles.fullEditMenuButton}>
                                     <span>
                                        <MakeTemplate/>
@@ -276,15 +346,20 @@ const CardTaskModal = (props) => {
                                                Создать шаблон
                                     </span>
                                 </button>
-                                <Divider style={{color: '#DBA498', background: '#DBA498'}}/>
-                                <button className={styles.fullEditMenuButton}>
-                                    <span>
-                                       <Archive/>
-                                    </span>
-                                    <span>
-                                               Архивация
-                                    </span>
-                                </button>
+                                <Divider
+                                    className={styles.fullEditDivider}
+
+                                />
+                                <ButtonDeleteCard
+                                    column_id={column_id}
+                                    task_id={task.id}
+
+                                    renderByAnchor={true}
+                                    buttonIcon={<Archive/>}
+                                    buttonContent={"Архивация"}
+                                    button_id={"modal-delete-card-from"}
+                                    rootButtonStyle={styles.fullEditMenuButton}
+                                />
                                 <button className={styles.fullEditMenuButton}>
                                     <span>
                                        <Share/>

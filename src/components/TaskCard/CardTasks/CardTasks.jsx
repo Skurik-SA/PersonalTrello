@@ -1,32 +1,30 @@
 import styles from "./CardTasks.module.css"
-import {useRef, useState} from "react";
-import {
-    createTheme,
-    Popover,
-    TextareaAutosize,
-    ThemeProvider,
-} from "@mui/material";
-import Priority from "../../../assets/Icons/Priority.jsx";
-import Marks from "../../../assets/Icons/Marks.jsx";
-import Dates from "../../../assets/Icons/Dates.jsx";
-import Moving from "../../../assets/Icons/Moving.jsx";
-import Copy from "../../../assets/Icons/Copy.jsx";
-import Task from "../../../assets/Icons/Task.jsx";
-import {Transition} from "react-transition-group";
+import {useContext, useEffect, useState} from "react";
 import CardTaskModal from "../CardTaskModal/CardTaskModal.jsx";
-import TaskBaseButton from "../TaskButtons/TaskBaseButton/TaskBaseButton.jsx";
-import ButtonChangeMark from "../TaskButtons/ButtonChangeMark/ButtonChangeMark.jsx";
+import Pen from "../../../assets/Icons/Pen.jsx";
+import {sum} from "lodash-es";
+import {useCurrentDate} from "../../../hooks/useCurrentDate.js";
+import BoardContext from "../../../context/BoardContext.jsx";
+import {set_todolist} from "../../../redux/store/slices/slice_ToDoList.js";
+import {useDispatch} from "react-redux";
+import CardMarks from "./CardMarks/CardMarks.jsx";
+import PopoverCardTask from "./PopoverCardTask/PopoverCardTask.jsx";
+import CardFooter from "./CardFooter/CardFooter.jsx";
 
 const CardTasks = (props) => {
-
     const {
         task,
         column_id,
-        changeTaskInfo,
-        onChangeCardMark,
         markTextShow,
-        setMarkTextShow
+        setMarkTextShow,
     } = props
+
+    const {
+        clientVisibleData,
+        setClientVisibleData
+    } = useContext(BoardContext)
+
+    const dispatch = useDispatch()
 
     const [anchorEl, setAnchorEl] = useState(null);
     const [modalOpen, setModalOpen] = useState(false);
@@ -36,43 +34,58 @@ const CardTasks = (props) => {
 
     const [value, setValue] = useState(task.info)
 
-    const nodeRef = useRef(null);
-    const duration = 600;
+    const [
+        currentDate,
+        setCurrentDate,
+        daysLeft,
+        smallDeadlineDate
+    ] = useCurrentDate(task.deadline.dateJsFormatDate)
 
-    const defaultStyle = {
-        transition: `max-width ${duration}ms ease-in-out, font-size  ${duration / 2}ms ease-in-out, min-height ${duration / 2}ms ease-in-out`,
-        maxWidth: 240,
-        fontSize: '0.8rem',
-        minHeight: '20px',
+    const [totalSubTasks, setTotalSubTasks] = useState(sum(task.sub_tasks.map((task) => task.total_amount)))
+    const [totalSuccessSubTasks, setTotalSuccessSubTasks] = useState(sum(task.sub_tasks.map((task) => task.success_amount)))
+
+
+    const changeTaskInfo = (task_id, card_id, value) => {
+        const columnIndex = clientVisibleData.findIndex((column_id) => column_id.id === card_id)
+        const taskIndex = clientVisibleData[columnIndex].content.findIndex((task) => task.id === task_id)
+        let newTask = {
+            id: clientVisibleData[columnIndex].content[taskIndex].id,
+            is_visible: clientVisibleData[columnIndex].content[taskIndex].is_visible,
+            info: value,
+            marks: clientVisibleData[columnIndex].content[taskIndex].marks,
+            task_cover: clientVisibleData[columnIndex].content[taskIndex].task_cover,
+            deadline: clientVisibleData[columnIndex].content[taskIndex].deadline,
+            task_description: clientVisibleData[columnIndex].content[taskIndex].task_description,
+            sub_tasks: clientVisibleData[columnIndex].content[taskIndex].sub_tasks,
+            priority: clientVisibleData[columnIndex].content[taskIndex].priority,
+            comments: clientVisibleData[columnIndex].content[taskIndex].comments,
+        }
+
+        const newItems = [...(clientVisibleData.map((column_id, col_index) =>
+            column_id.id !== card_id
+                ?
+                clientVisibleData[col_index]
+                :
+                {
+                    id:  clientVisibleData[col_index].id,
+                    title: clientVisibleData[col_index].title,
+                    content: [...clientVisibleData[col_index].content.map((task, row_index) =>
+                        task.id !== task_id
+                            ?
+                            clientVisibleData[col_index].content[row_index]
+                            :
+                            newTask
+                    )]
+                }
+        ))]
+
+        dispatch(set_todolist(newItems))
+        setClientVisibleData(newItems)
     }
-
-    const transitionStyles = {
-        entering: {
-            maxWidth: 36,
-            fontSize: '0rem',
-            minHeight: '8px'
-        },
-        entered:  {
-            maxWidth: 36,
-            fontSize: '0rem',
-            minHeight: '8px'
-        },
-        exiting:  {
-            maxWidth: 240,
-            fontSize: '0.8rem',
-            minHeight: '20px'
-        },
-        exited:  {
-            maxWidth: 240,
-            fontSize: '0.8rem',
-            minHeight: '20px'
-        },
-    };
 
 
     const handleClick = (event, type) => {
-
-        if (type === 'mini') {
+        if (type === 'mini' || event.type === 'contextmenu') {
             setAnchorEl(event.currentTarget);
             var element = document.getElementById(task.id);
             var rect = element.getBoundingClientRect();
@@ -81,43 +94,17 @@ const CardTasks = (props) => {
 
             setTop(yPosition)
             setLeft(xPosition)
-            // console.log(task)
-            // console.log(column_id)
         }
         else if (type === 'full') {
             setModalOpen(true);
         }
     };
 
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
-
-    const open = Boolean(anchorEl);
-    const id = open ? 'card-popover' : undefined;
-
-
-    const theme = createTheme({
-        components: {
-            // Name of the component
-            MuiPopover: {
-                styleOverrides: {
-                    // Name of the slot
-                    root: {
-                        // Some CSS
-                        background: 'rgba(0, 0, 0, 0.5)',
-                    },
-                    paper: {
-                        background: 'transparent',
-                        transformOrigin: '0 100 0',
-                        boxShadow: 'none',
-                    }
-                },
-            },
-        },
-    });
-
-
+    useEffect(() => {
+        setTotalSuccessSubTasks(sum(task.sub_tasks.map((task) => task.success_amount)))
+        setTotalSubTasks(sum(task.sub_tasks.map((task) => task.total_amount)))
+        // console.log(daysLeft)
+    }, [currentDate, daysLeft, task.sub_tasks])
 
     return (
        <>
@@ -129,217 +116,67 @@ const CardTasks = (props) => {
                changeTaskInfo={changeTaskInfo}
                task={task}
                column_id={column_id}
-               onChangeCardMark={onChangeCardMark}
+               totalSubTasks={totalSubTasks}
+               totalSuccessSubTasks={totalSuccessSubTasks}
            />
-           <li className={styles.taskContents} >
-               <div id={task.id} className={styles.taskWrapper}>
-                   <ThemeProvider theme={theme}>
-                       <Popover
-                           id={id}
-                           open={open}
-                           onClose={handleClose}
-                           anchorReference="anchorPosition"
-                           anchorPosition={{top, left}}
-                           anchorOrigin={{
-                               vertical: 'bottom',
-                               horizontal: 'center',
-                           }}
-                           transitionDuration={0}
-                       >
-                           <div className={styles.cardEditPopperRow}>
-                               <div className={styles.cardEditPopperColumn}>
-                                   <div className={styles.cardEditPopperWrapper} >
-                                       <div className={styles.cardEditPopper}>
-                                           <div className={styles.marksPopper}>
-                                               {task.marks.length > 0
-                                                   ?
-                                                   <Transition  nodeRef={nodeRef} in={markTextShow} timeout={duration}>
-                                                       {state => (
-                                                           <div className={styles.taskMarksWrapper}>
-                                                               {task.marks.map((mark, i) =>
-                                                                   <div
-                                                                       key={i}
-                                                                       className={styles.taskMark}
-                                                                       style={{
-                                                                           ...defaultStyle,
-                                                                           ...transitionStyles[state],
-                                                                           background: `${mark.color}`,
-                                                                           color: `${mark.font_color}`
-                                                                       }}
-                                                                       onClick={() => {
-                                                                           setMarkTextShow(!markTextShow)
-                                                                       }}
-                                                                       ref={nodeRef}
-                                                                   >
-                                                                        <span className={styles.taskSpanContent} >
-                                                                            {mark.mark_text}
-                                                                        </span>
-                                                                   </div>
-                                                               )}
-                                                           </div>
-                                                       )}
-                                                   </Transition>
-                                                   :
-                                                   <>
-                                                   </>
-                                               }
-                                           </div>
-                                           <TextareaAutosize
-                                               className={styles.taskTextArea}
-                                               value={value}
-                                               onChange={(e) => {
-                                                   setValue(e.target.value)
-                                               }}
-                                               onKeyDown={(e) => {
-                                                   if (e.key === 'Escape') {
-                                                       changeTaskInfo(task.id, column_id, value)
-                                                   }
-                                               }}
-                                               autoFocus={true}
-                                               spellCheck="false"
-                                           />
+           <li className={styles.taskContents}
+               onContextMenu={(e) => {
+                   e.preventDefault()
+                   handleClick(e, 'mini')
+               }}
+           >
+               <div id={task.id} className={styles.taskWrapper} style={task.is_visible ? {} : {display: 'none'}}>
+                   <PopoverCardTask
+                       anchorEl={anchorEl}
+                       setAnchorEl={setAnchorEl}
+                       top={top}
+                       left={left}
 
-                                       </div>
-
-                                   </div>
-                                   <button className={styles.cardEditPopperSaveButton}
-                                           onClick={() => {
-                                               changeTaskInfo(task.id, column_id, value)
-                                               handleClose()
-                                           }}
-                                   >
-                                       Сохранить
-                                   </button>
-                               </div>
-                               <div className={styles.cardEditPopperMenuWrapper}>
-                                   <button className={styles.cardEditPopperMenuButton}
-                                           onClick={(e) => {
-                                               handleClose()
-                                               handleClick(e, 'full')
-                                           }}
-                                   >
-                                       <span>
-                                           <Task/>
-                                       </span>
-                                       <span>
-                                           Открыть задачу
-                                       </span>
-                                   </button>
-
-                                   {/*<TaskBaseButton*/}
-                                   {/*    // open={open2}*/}
-                                   {/*    // top={top2}*/}
-                                   {/*    // left={left2}*/}
-                                   {/*    // anchorEl={anchorEl2}*/}
-                                   {/*    // setAnchorEl={setAnchorEl2}*/}
-                                   {/*    id={"marks"}*/}
-                                   {/*    buttonContent={"adsada"}*/}
-                                   {/*    buttonIcon={<Marks/>}*/}
-                                   {/*>*/}
-                                   {/* /!*     Тут ребёнок*!/*/}
-                                   {/*</TaskBaseButton>*/}
-                                   {/*<button*/}
-                                   {/*    className={styles.cardEditPopperMenuButton}*/}
-                                   {/*    onClick={(e) => {*/}
-                                   {/*        // handleClick(e, 'mini_secondary')*/}
-                                   {/*        console.log("asdasdad")*/}
-                                   {/*    }}*/}
-                                   {/*>*/}
-                                   {/*     <span>*/}
-                                   {/*         <Marks/>*/}
-                                   {/*     </span>*/}
-
-                                   {/*     <span>*/}
-                                   {/*         Изменить метки*/}
-                                   {/*     </span>*/}
-                                   {/*</button>*/}
-                                    <ButtonChangeMark
-                                        onChangeCardMark={onChangeCardMark}
-                                        task_id={task.id}
-                                        card_marks={task.marks}
-                                    />
-
-
-                                   <button className={styles.cardEditPopperMenuButton}>
-                                       <span>
-                                            <Priority/>
-                                       </span>
-                                       <span>
-                                            Изменить приоритет
-                                       </span>
-                                   </button>
-                                   <button className={styles.cardEditPopperMenuButton}>
-                                       <span>
-                                            <Moving/>
-                                       </span>
-                                       <span>
-                                            Переместить
-                                       </span>
-                                   </button>
-                                   <button className={styles.cardEditPopperMenuButton}>
-                                       <span>
-                                            <Copy/>
-                                       </span>
-                                       <span>
-                                            Копировать
-                                       </span>
-                                   </button>
-                                   <button className={styles.cardEditPopperMenuButton}>
-                                       <span>
-                                            <Dates/>
-                                       </span>
-                                       <span>
-                                            Изменить даты
-                                       </span>
-                                   </button>
-                                   <button className={styles.cardEditPopperMenuButton}>
-                                       Удалить
-                                   </button>
-                               </div>
-                           </div>
-                       </Popover>
-                   </ThemeProvider>
-
+                       markTextShow={markTextShow}
+                       setMarkTextShow={setMarkTextShow}
+                       task={task}
+                       value={value}
+                       setValue={setValue}
+                       column_id={column_id}
+                       handleClick={handleClick}
+                       changeTaskInfo={changeTaskInfo}
+                   />
                    <div>
-                       {task.marks.length > 0
-                           ?
-                           <Transition  nodeRef={nodeRef} in={markTextShow} timeout={duration}>
-                               {state => (
-                                   <div className={styles.taskMarksWrapper}>
-                                       {task.marks.map((mark, i) =>
-                                           <div
-                                               key={i}
-                                                className={styles.taskMark}
-                                                style={{
-                                                    ...defaultStyle,
-                                                    ...transitionStyles[state],
-                                                    background: `${mark.color}`,
-                                                    color: `${mark.font_color}`,
-                                                }}
-                                                onClick={() => {
-                                                    setMarkTextShow(!markTextShow)
-                                                }}
-                                                ref={nodeRef}
-                                           >
-                                                <span className={styles.taskSpanContent} >
-                                                    {mark.mark_text}
-                                                </span>
-                                           </div>
-                                       )}
-                                   </div>
-                               )}
-                           </Transition>
-                           :
-                           <>
-                           </>
-                       }
-                        <div className={styles.taskText}
+                       {/*Приоритет*/}
+                       <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center'}}>
+                           {task.priority && task.priority.type !== 'default'
+                                ?
+                               <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', background: '#000148FF', padding: '4px', fontSize: '0.9rem', borderRadius: '10px'}}>
+                                   {task.priority.label}
+                               </div>
+                               :
+                               <></>
+                           }
+                       </div>
+                       {/*Метки*/}
+                       <CardMarks
+                           marks={task.marks}
+                           markTextShow={markTextShow}
+                           setMarkTextShow={setMarkTextShow}
+                       />
+                       {/*Текст*/}
+                       <div className={styles.taskText}
                              onClick={(e) => {
                                  handleClick(e, 'full')
                              }}
-                        >
-                            {task.info}
-                        </div>
+                       >
+                           {task.info}
+                       </div>
+                       {/*Футер*/}
+                       <CardFooter
+                           task={task}
+                           daysLeft={daysLeft}
+                           column_id={column_id}
+
+                           handleClick={handleClick}
+                           totalSubTasks={totalSubTasks}
+                           totalSuccessSubTasks={totalSuccessSubTasks}
+                       />
                    </div>
                    <button className={styles.editTaskButton}
                            onClick={(e) => {
@@ -348,10 +185,7 @@ const CardTasks = (props) => {
                            }}
                    >
                         <span>
-                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <rect x="0.706004" width="11.0543" height="2.98189" transform="matrix(0.706004 -0.708208 0.706004 0.708208 2.88603 9.03698)" stroke="#DBA498"/>
-                                <path d="M1.57791 12.417L2.10495 9.14641L4.8383 11.8883L1.57791 12.417Z" fill="#DBA498"/>
-                            </svg>
+                            <Pen/>
                         </span>
                    </button>
                </div>

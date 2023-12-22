@@ -36,9 +36,9 @@
 
 .favIcoButton,
 .privacyIcoButton,
-.filtersIcoButton,
 .shareIcoButton,
-.moreOptionsIcoButton {
+.moreOptionsIcoButtonFromVisibleTo,
+.moreOptionsIcoButtonToVisibleFrom {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -56,11 +56,6 @@
     cursor: pointer;
 }
 
-.filtersIcoButton {
-    padding: 8px 8px 8px 8px;
-    gap: 8px;
-}
-
 .privacyIcoButton {
     margin-left: 10px;
     padding-bottom: 4px;
@@ -70,16 +65,49 @@
     padding-bottom: 5px;
 }
 
-.moreOptionsIcoButton {
+.moreOptionsIcoButtonFromVisibleTo {
     padding-bottom: 10px;
+    animation-name: svgFromVisibleTo;
+    animation-duration: 0.2s;
+    animation-fill-mode: forwards;
+}
+
+.svgMoreOptionsFromVisibleTo {
+    animation-name: svgFromVisibleTo;
+    animation-duration: 0.2s;
+    animation-fill-mode: forwards;
+}
+
+.moreOptionsIcoButtonToVisibleFrom {
+    padding-bottom: 10px;
+    animation-name: svgToVisibleFrom;
+    animation-duration: 0.2s;
+    animation-fill-mode: forwards;
+}
+
+.svgMoreOptionsToVisibleFrom {
+    /*transition: opacity 10s;*/
+    animation-name: svgToVisibleFrom;
+    animation-duration: 0.2s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes svgFromVisibleTo {
+    from {opacity: 1; scale: 1; position: unset; height: auto}
+    to {opacity: 0; scale: 0; position: absolute; height: 0}
+}
+
+@keyframes svgToVisibleFrom {
+    from {opacity: 0; scale: 0; position: absolute; height: 0}
+    to {opacity: 1; scale: 1; position: unset; height: auto}
 }
 
 .favIcoButton:hover,
 .privacyIcoButton:hover,
-.filtersIcoButton:hover,
-.moreOptionsIcoButton:hover,
+.moreOptionsIcoButtonFromVisibleTo:hover,
+.moreOptionsIcoButtonToVisibleFrom:hover,
 .shareIcoButton:hover {
-    background: rgba(96, 68, 62, 50%);
+    background: rgba(96, 68, 62, 25%);
 }
 
 .favIconSVG:hover {
@@ -131,89 +159,6 @@
 .privacyPopperLiDownContent {
     font-size: 0.8rem;
 }
-
-
-
-
-.filtersPopper {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    width: 370px;
-    background: #4d1a33;
-    border-radius: 10px;
-    margin-right: 5px;
-}
-
-.filtersPopperWrapper {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 15px;
-    gap: 10px;
-}
-
-.filtersPopperSection {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    width: 100%;
-    padding-left: 10px;
-}
-
-.filtersPopperTitle {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding-bottom: 20px;
-}
-
-.filtersSearchInput {
-    width: 320px;
-    height: 32px;
-    flex-shrink: 0;
-    font-size: 1rem;
-    border-radius: 5px;
-    border: none;
-    background: #8d3c62;
-    color: #DBA498;
-
-    outline: none;
-    padding-left: 10px;
-}
-
-.filtersSearchInput::placeholder {
-    color: rgba(219, 164, 152, 0.8);
-    font-size: 0.9rem;
-}
-
-
-
-.filtersPopperNaming {
-    font-size: 0.8rem;
-}
-
-.checkBoxWrapper {
-    padding-left: 10px;
-}
-
-.markStyle {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    padding-left: 10px;
-    color: #1f1f1f;
-    min-width: 260px;
-    min-height: 30px;
-    border-radius: 5px;
-}
-
-
-
 
 @media screen and (min-width: 0px) {
     .boardTitleInput {

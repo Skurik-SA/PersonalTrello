@@ -3,29 +3,37 @@ import {Checkbox, FormControlLabel, FormGroup} from "@mui/material";
 import ExitModal from "../../../../assets/Icons/ExitModal.jsx";
 import Pen from "../../../../assets/Icons/Pen.jsx";
 import {useDispatch, useSelector} from "react-redux";
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {ChromePicker} from "react-color";
 import {create_new_mark, delete_mark, edit_mark} from "../../../../redux/store/slices/slice_ToDoList.js";
+import {findColumnIndex} from "../../../../utils/FindColumnIndex.js";
+import BoardContext from "../../../../context/BoardContext.jsx";
 
+
+// Нужно как-то переделать меточную архитектуру
 const ContentChangeMark = (props) => {
 
     const dispatch = useDispatch()
     const marks = useSelector(state => state.todolist.mark_store)
 
+    const {
+        clientVisibleData,
+        setClientVisibleData
+    } = useContext(BoardContext)
+
     const [windowSelector, setWindowSelector] = useState("choose") // choose || edit || create
 
-    const [bgcolor, setBgcolor] = useState("#4B0F29")
     const [newMarkText, setNewMarkText] = useState("")
     const [newMarkFontColor, setNewMarkFontColor] = useState("#000")
     const [newMark, setNewMark] = useState({
-        id: marks[marks.length - 1].id + 1,
+        id: marks.length > 0 ? marks[marks.length - 1].id + 1 : 0,
+        // id: marks[marks.length - 1].id + 1,
         font_color: '#000',
         color: "#" + Math.random().toString(16).substr(-6),
         mark_text: ''
     })
 
     const handleColorPickChange = (color) => {
-        setBgcolor(color.hex)
         setNewMark({
             id: windowSelector === 'edit' ? newMark.id : marks[marks.length - 1].id + 1,
             font_color: newMark.font_color,
@@ -80,7 +88,7 @@ const ContentChangeMark = (props) => {
         setNewMarkText("")
         setNewMarkFontColor("#000")
         setNewMark({
-            id: marks[marks.length - 1].id + 1,
+            id: marks.length > 0 ? marks[marks.length - 1].id + 1 : 1,
             font_color: '#000',
             color: "#" + Math.random().toString(16).substr(-6),
             mark_text: ''
@@ -88,15 +96,66 @@ const ContentChangeMark = (props) => {
     }
 
     const {
-        onChangeCardMark,
         task_id,
         handleClose,
         card_marks,
     } = props
 
-    useEffect(() => {
+    const onChangeCardMark = (task_id, new_mark, type="add") => {
 
-    }, [])
+        const columnIndex = findColumnIndex(clientVisibleData, task_id, 'index')
+        const validateMark = (taskMarks, col_index, row_index) => {
+            for (let i = 0; i < taskMarks.length; i++) {
+                if (type === "delete") {
+                    return taskMarks.filter((mark) => mark.id !== new_mark.id)
+                }
+                if (taskMarks[i].id === new_mark.id ) {
+                    if (type === "add" && row_index === task_id) {
+                        return taskMarks.filter((mark) => mark.id !== new_mark.id)
+                    }
+                    if (type === "edit") {
+                        return taskMarks.map((mark) => {
+                            if (mark.id === new_mark.id) {
+                                return new_mark
+                            }
+                            else {
+                                return mark
+                            }
+                        })
+                    }
+                }
+            }
+
+            if (col_index === columnIndex && row_index === task_id)
+                return [...taskMarks, new_mark]
+            else
+                return [...taskMarks]
+        }
+
+        setClientVisibleData([...(clientVisibleData.map((column, col_index) =>
+            {
+                return {
+                    id:  column.id,
+                    title: column.title,
+                    content: [...column.content.map((task) =>
+                    {
+                        return {
+                            id: task.id,
+                            is_visible: task.is_visible,
+                            info: task.info,
+                            marks: validateMark(task.marks, col_index, task.id),
+                            task_cover: task.task_cover,
+                            deadline: task.deadline,
+                            task_description: task.task_description,
+                            sub_tasks: task.sub_tasks,
+                            priority: task.priority,
+                            comments: task.comments,
+                        }
+                    })]
+                }
+            }
+        ))])
+    }
 
     return (
         <div className={styles.contentChangeMarkWrapper}>

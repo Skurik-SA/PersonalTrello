@@ -7,7 +7,6 @@ import {useState} from "react";
 const ButtonChangeMark = (props) => {
 
     const {
-        onChangeCardMark,
         task_id,
         card_marks,
         renderByAnchor,
@@ -42,7 +41,6 @@ const ButtonChangeMark = (props) => {
             <ContentChangeMark
                 task_id={task_id}
                 card_marks={card_marks}
-                onChangeCardMark={onChangeCardMark}
                 handleClose={handleClose}
             />
         </TaskBaseButton>

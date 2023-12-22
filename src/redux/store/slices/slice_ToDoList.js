@@ -92,6 +92,7 @@ const Slice_ToDoList = createSlice({
                 content: [
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Я не искал ничьей вины\n' +
                             'Но в твоих словах мне виделась грань\n' +
                             'Лишних не было\n' +
@@ -120,33 +121,91 @@ const Slice_ToDoList = createSlice({
                             color: 'red'
                         },
                         deadline: {
-                            type: '',
-                            remaining: '',
-                            end: '',
+                            // type: 'NotSoon', // (?) Скоро истекает [SoonExpires] / Выполнено [Done] / Нескоро [NotSoon] / Просрочено [Failed]
+                            // remaining: '', //
+                            // end: '', // set date
+                            // dateJsFormatDate: {},
+                            // dateJsFormatTime: {},
                         },
                         task_description: {
-                            text: '',
+                            text: 'Что-то тут не чисто',
                         },
+                        // Сабтаски будут грузиться отдельно от общего пула информации,
+                        // нужно иметь в виду при проектировании БД и последующим рефакторингом кода
                         sub_tasks: [
                             {
-                                isChecked: false,
-                                label: 'sub_task 1',
-                                deadline: {
-                                    type: '',
-                                    remaining: '',
-                                    end: '',
-                                }
+                                id: uuidv4(),
+                                title: 'check-list-1',
+                                success_amount: 0,
+                                total_amount: 2,
+                                check_list: [
+                                    {
+                                        id: uuidv4(),
+                                        isChecked: false,
+                                        label: 'sub_task 1.1',
+                                        deadline: {
+                                            type: '',
+                                            remaining: '',
+                                            end: '',
+                                            dateJsFormatDate: {},
+                                            dateJsFormatTime: {},
+                                        }
+                                    },
+                                    {
+                                        id: uuidv4(),
+                                        isChecked: false,
+                                        label: 'sub_task 1.2',
+                                        deadline: {
+                                            type: '',
+                                            remaining: '',
+                                            end: '',
+                                            dateJsFormatDate: {},
+                                            dateJsFormatTime: {},
+                                        }
+                                    },
+                                ]
                             },
                             {
-                                isChecked: true,
-                                label: 'sub_task 2',
-                                deadline: {
-                                    type: '',
-                                    remaining: '',
-                                    end: '',
-                                }
+                                id: uuidv4(),
+                                title: 'check-list-2',
+                                success_amount: 2,
+                                total_amount: 2,
+                                check_list: [
+                                    {
+                                        id: uuidv4(),
+                                        isChecked: true,
+                                        label: 'sub_task 2.1',
+                                        deadline: {
+                                            type: '',
+                                            remaining: '',
+                                            end: '',
+                                        }
+                                    },
+                                    {
+                                        id: uuidv4(),
+                                        isChecked: true,
+                                        label: 'sub_task 2.2',
+                                        deadline: {
+                                            type: '',
+                                            remaining: '',
+                                            end: '',
+                                        }
+                                    },
+                                ]
+                            },
+                            {
+                                id: uuidv4(),
+                                title: 'Очень большое название для чек-листа, чтобы проверить как реагирует интерфейс на это',
+                                success_amount: 0,
+                                total_amount: 0,
+                                check_list: []
                             },
                         ],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [
                             {
                                 author: 'Dog',
@@ -160,6 +219,7 @@ const Slice_ToDoList = createSlice({
                     },
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'И я не верил ни в чьи слова\n' +
                             'Кроме твоих — они казались мне истиной\n' +
                             'Но ты не была со мной искренней\n' +
@@ -197,10 +257,16 @@ const Slice_ToDoList = createSlice({
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Ты надо мною глумишься\n' +
                             'И в свете этих событий\n' +
                             'Не хочу быть тем лишним\n' +
@@ -213,10 +279,16 @@ const Slice_ToDoList = createSlice({
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Самому сгинуть, о тебе забыть\n' +
                             'Пока ты сыпешь мне в глаза пыль\n' +
                             'Ты моё недоразумение\n' +
@@ -229,10 +301,16 @@ const Slice_ToDoList = createSlice({
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Я не искал любви\n' +
                             'Неси меня туда\n' +
                             'Куда несут цветы\n' +
@@ -245,10 +323,16 @@ const Slice_ToDoList = createSlice({
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'И я не верил ни в чьи слова\n' +
                             'Кроме твоих — они казались мне истиной\n' +
                             'Но ты не была со мной искренней\n' +
@@ -261,10 +345,16 @@ const Slice_ToDoList = createSlice({
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Самому сгинуть, о тебе забыть\n' +
                             'Пока ты сыпешь мне в глаза пыль\n' +
                             'Ты моё недоразумение\n' +
@@ -277,10 +367,16 @@ const Slice_ToDoList = createSlice({
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Самому сгинуть, о тебе забыть\n' +
                             'Пока ты сыпешь мне в глаза пыль\n' +
                             'Ты моё недоразумение\n' +
@@ -293,16 +389,129 @@ const Slice_ToDoList = createSlice({
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Тудудуду',
                         marks: [],
                         task_cover: {},
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
+                        comments: [],
+                    },
+                ],
+            },
+            {
+                id: uuidv4(),
+                title: 'То, что необходимо сейчас реализовать',
+                content: [
+                    {
+                        id: uuidv4(),
+                        is_visible: true,
+                        info: 'Чек-лист',
+                        marks: [],
+                        task_cover: {},
+                        deadline: {},
+                        task_description: {},
+                        sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
+                        comments: [],
+                    },
+                    {
+                        id: uuidv4(),
+                        is_visible: true,
+                        info: 'Приоритет',
+                        marks: [],
+                        task_cover: {},
+                        deadline: {},
+                        task_description: {},
+                        sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
+                        comments: [],
+                    },
+                    {
+                        id: uuidv4(),
+                        is_visible: true,
+                        info: 'Фильтрация',
+                        marks: [],
+                        task_cover: {},
+                        deadline: {},
+                        task_description: {},
+                        sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
+                        comments: [],
+                    },
+                    {
+                        id: uuidv4(),
+                        is_visible: true,
+                        info: 'Уведомления',
+                        marks: [],
+                        task_cover: {},
+                        deadline: {},
+                        task_description: {},
+                        sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
+                        comments: [],
+                    },
+                    {
+                        id: uuidv4(),
+                        is_visible: true,
+                        info: 'Комментарии',
+                        marks: [],
+                        task_cover: {},
+                        deadline: {},
+                        task_description: {},
+                        sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
+                        comments: [],
+                    },
+                    {
+                        id: uuidv4(),
+                        is_visible: true,
+                        info: 'Архивация',
+                        marks: [],
+                        task_cover: {},
+                        deadline: {},
+                        task_description: {},
+                        sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                 ],
@@ -313,6 +522,7 @@ const Slice_ToDoList = createSlice({
                 content: [
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'А ты улетишь туда, где будет теплей\n' +
                             'Оставишь белые ночи, меня и апрель\n' +
                             'А ты улетишь туда, где будет теплей\n' +
@@ -347,80 +557,128 @@ const Slice_ToDoList = createSlice({
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Поменяю города и не забуду твою улыбку',
                         marks: [],
                         task_cover: {},
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Может, я ушёл навсегда',
                         marks: [],
                         task_cover: {},
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Но буду помнить свою ошибку',
                         marks: [],
                         task_cover: {},
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Я помню каменный остров, там сияю как фосфор',
                         marks: [],
                         task_cover: {},
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Бегу от друзей, играю в прятки',
                         marks: [],
                         task_cover: {},
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Со сломанным носом взлетаю в космос',
                         marks: [],
                         task_cover: {},
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Ты меня вспомнишь вряд ли',
                         marks: [],
                         task_cover: {},
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Мы сейчас забиты делом с головой\n' +
                             'Ты помнишь меня — я был не такой',
                         marks: [],
@@ -428,10 +686,16 @@ const Slice_ToDoList = createSlice({
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Что послужит нам чертой между небом и землёй?\n' +
                             'И я когда-нибудь вернусь домой',
                         marks: [],
@@ -439,10 +703,16 @@ const Slice_ToDoList = createSlice({
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Там будешь ты, и ты пойдёшь со мной\n' +
                             'Свет в конце тоннеля станет путевой звездой',
                         marks: [],
@@ -450,20 +720,32 @@ const Slice_ToDoList = createSlice({
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Между небом и землёй',
                         marks: [],
                         task_cover: {},
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Влюблённым подростком бежал от проблем\n' +
                             'Ты бежала рядом\n' +
                             'Перед глазами картина: я улетаю\n' +
@@ -476,10 +758,16 @@ const Slice_ToDoList = createSlice({
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'А ты улетишь туда, где будет теплей\n' +
                             'Оставишь белые ночи, меня и апрель\n' +
                             'Я знаю: ты улетишь, и я оставлю себе\n' +
@@ -489,10 +777,16 @@ const Slice_ToDoList = createSlice({
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Я помню каменный остров, там сияю как фосфор\n' +
                             'Бегу от друзей, играю в прятки\n' +
                             'Со сломанным носом взлетаем в космос\n' +
@@ -506,10 +800,16 @@ const Slice_ToDoList = createSlice({
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Ведь ты улетишь туда, где будет теплей\n' +
                             'Оставишь белые ночи, меня и апрель\n' +
                             'Я знаю: ты улетишь, и я оставлю себе\n' +
@@ -523,6 +823,11 @@ const Slice_ToDoList = createSlice({
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                 ],
@@ -533,52 +838,82 @@ const Slice_ToDoList = createSlice({
                 content: [
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Boom-boom',
                         marks: [],
                         task_cover: {},
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Crack-Crack',
                         marks: [],
                         task_cover: {},
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Wock-wock',
                         marks: [],
                         task_cover: {},
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Zzzzzzz',
                         marks: [],
                         task_cover: {},
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Pffffffff',
                         marks: [],
                         task_cover: {},
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                 ],
@@ -589,6 +924,7 @@ const Slice_ToDoList = createSlice({
                 content: [
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Из берегов вытекает река\n' +
                             'Мы наблюдаем издалека\n' +
                             'Это Армагеддон наверняка\n' +
@@ -610,10 +946,16 @@ const Slice_ToDoList = createSlice({
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Будем чёрным пятном на стене дома\n' +
                             'Родная моя, обещаю, нам будет не больно\n' +
                             'Когда город сложится в хаотичные коридоры\n' +
@@ -635,10 +977,16 @@ const Slice_ToDoList = createSlice({
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Нелепая казённая улыбочка\n' +
                             'С унылым взглядом спросит:\n' +
                             '«Что с тобой не так?» (Или «Что с нами не так?»)\n' +
@@ -652,10 +1000,16 @@ const Slice_ToDoList = createSlice({
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Нас не спасут (Не)\n' +
                             'Ни советы, ни книги, ни суть (Нет)\n' +
                             'Нас не спасут (Чё?), нас не спасут (Ага, едем)\n' +
@@ -669,10 +1023,16 @@ const Slice_ToDoList = createSlice({
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Из берегов вытекает река\n' +
                             'Мы наблюдаем издалека\n' +
                             'Это Армагеддон наверняка (Армагеддон)\n' +
@@ -694,6 +1054,11 @@ const Slice_ToDoList = createSlice({
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                 ],
@@ -704,32 +1069,50 @@ const Slice_ToDoList = createSlice({
                 content: [
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Row 1',
                         marks: [],
                         task_cover: {},
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Row 2',
                         marks: [],
                         task_cover: {},
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Row 3',
                         marks: [],
                         task_cover: {},
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                 ],
@@ -740,22 +1123,34 @@ const Slice_ToDoList = createSlice({
                 content: [
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Заключительная информация',
                         marks: [],
                         task_cover: {},
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                     {
                         id: uuidv4(),
+                        is_visible: true,
                         info: 'Находится тут',
                         marks: [],
                         task_cover: {},
                         deadline: {},
                         task_description: {},
                         sub_tasks: [],
+                        priority : {
+                            id: 0,
+                            type: 'default',
+                            label: 'Нет установлен'
+                        },
                         comments: [],
                     },
                 ],
@@ -765,31 +1160,9 @@ const Slice_ToDoList = createSlice({
     reducers: {
         set_todolist(state, action) {
             state.data = action.payload
-
         },
         set_mark_store(state, action) {
             state.mark_store = action.payload
-        },
-        // set_data_content_marks(state, action) {
-        //
-        // },
-        set_selected_task_byId(state, action) {
-            state.data.map((card) => {
-                card.content.map((task) => {
-                    if (task.id === action.payload) {
-                        state.selected_task = task
-                    }
-                })
-            })
-        },
-        set_selected_task_byData(state, action) {
-            state.data.map((card) => {
-                card.content.map((task) => {
-                    if (task.id === action.payload.id) {
-                        state.selected_task = action.payload
-                    }
-                })
-            })
         },
         create_new_mark(state, action) {
             state.mark_store.push(action.payload)
@@ -806,7 +1179,8 @@ const Slice_ToDoList = createSlice({
         },
         delete_mark(state, action) {
             state.mark_store = state.mark_store.filter((mark) => mark.id !== action.payload.id)
-        }
+        },
+
     }
 })
 
@@ -814,9 +1188,7 @@ export default Slice_ToDoList.reducer
 
 export const {
     set_todolist,
-    set_selected_task_byId,
-    set_selected_task_byData,
     create_new_mark,
     edit_mark,
-    delete_mark
+    delete_mark,
 } = Slice_ToDoList.actions

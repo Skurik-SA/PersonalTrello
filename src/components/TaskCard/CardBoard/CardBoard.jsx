@@ -2,106 +2,45 @@ import styles from "./CardBoard.module.css"
 import ScrollContainer from "react-indiana-drag-scroll";
 import {DragDropContext, Draggable, Droppable} from "react-beautiful-dnd";
 import CardBase from "../CardBase/CardBase.jsx";
-import {useState} from "react";
+import {PureComponent, useContext, useState} from "react";
 import {v4 as uuidv4} from "uuid";
-import {useDispatch, useSelector} from "react-redux";
-import {delete_mark, set_selected_task_byData, set_todolist} from "../../../redux/store/slices/slice_ToDoList.js";
+import {useDispatch} from "react-redux";
+import {flushSync} from "react-dom";
+import {set_todolist} from "../../../redux/store/slices/slice_ToDoList.js";
+import BoardContext from "../../../context/BoardContext.jsx";
+import {findColumnIndex} from "../../../utils/FindColumnIndex.js";
 
+class InnerCardList extends PureComponent {
+    render() {
+        const {
+            card_data,
+            card_title,
+            index,
+            markTextShow,
+            setMarkTextShow,
+        } = this.props
 
-const CardBoard = (props) => {
+        return <CardBase
+                    card_data={card_data}
+                    card_title={card_title}
+                    index={index}
 
+                    markTextShow={markTextShow}
+                    setMarkTextShow={setMarkTextShow}
+                />
+    }
+}
+
+const CardBoard = () => {
     const {
-        data,
-    } = props
+        clientVisibleData,
+        setClientVisibleData
+    } = useContext(BoardContext)
 
-    const [clientVisibleData, setClientVisibleData] = useState(data)
     const [markTextShow, setMarkTextShow] = useState(false)
     // Это костыль, но зато какой, потом с бэком скорее всего менять придётся
     const dispatch = useDispatch()
 
-    const onChangeCardMark = (task_id, new_mark, type="add") => {
-
-        const findColumnIndex = (type) => {
-            let colIndex = {
-                index: -1,
-                id: '',
-            }
-
-            clientVisibleData.map((column, i) => column.content.map((el) => {
-                if (el.id === task_id) {
-                    colIndex = {
-                        index: i,
-                        id: column.id
-                    }
-                }
-            }))
-
-            if (type === 'id')
-                return colIndex.id
-            else if (type === 'index')
-                return colIndex.index
-        }
-
-        const validateMark = (taskMarks) => {
-            for (let i = 0; i < taskMarks.length; i++) {
-                if (type === "delete") {
-                    return taskMarks.filter((mark) => mark.id !== new_mark.id)
-                }
-                if (taskMarks[i].id === new_mark.id) {
-                    if (type === "add") {
-                        return taskMarks.filter((mark) => mark.id !== new_mark.id)
-                    }
-                    if (type === "edit") {
-                        return taskMarks.map((mark) => {
-                            if (mark.id === new_mark.id) {
-                                return new_mark
-                            }
-                            else {
-                                return mark
-                            }
-                        })
-                    }
-                }
-            }
-            return [...taskMarks, new_mark]
-        }
-
-        const columnId = findColumnIndex('id')
-        const columnIndex = findColumnIndex('index')
-        const taskIndex = clientVisibleData[columnIndex].content.findIndex((task) => task.id === task_id)
-        let newTask = {
-            id: clientVisibleData[columnIndex].content[taskIndex].id,
-            info: clientVisibleData[columnIndex].content[taskIndex].info,
-            marks: validateMark(clientVisibleData[columnIndex].content[taskIndex].marks),
-            task_cover: clientVisibleData[columnIndex].content[taskIndex].task_cover,
-            deadline: clientVisibleData[columnIndex].content[taskIndex].deadline,
-            task_description: clientVisibleData[columnIndex].content[taskIndex].task_description,
-            sub_tasks: clientVisibleData[columnIndex].content[taskIndex].sub_tasks,
-            comments: clientVisibleData[columnIndex].content[taskIndex].comments,
-        }
-
-        const newItems = [...(clientVisibleData.map((column_id, col_index) =>
-            column_id.id !== columnId
-                ?
-                clientVisibleData[col_index]
-                :
-                {
-                    id:  clientVisibleData[col_index].id,
-                    title: clientVisibleData[col_index].title,
-                    content: [...clientVisibleData[col_index].content.map((task, row_index) =>
-                        task.id !== task_id
-                            ?
-                            clientVisibleData[col_index].content[row_index]
-                            :
-                            newTask
-                    )]
-                }
-        ))]
-
-        setClientVisibleData(newItems)
-        // Это костыль, но зато какой, потом с бэком скорее всего менять придётся
-        dispatch(set_selected_task_byData(newItems))
-    }
 
     const addNewColumn = () => {
         const newItems = [
@@ -115,85 +54,7 @@ const CardBoard = (props) => {
         setClientVisibleData(newItems)
     }
 
-    const addNewTask = (card_id) => {
-        const columnIndex = clientVisibleData.findIndex((column_id) => column_id.id === card_id)
 
-        const newContentItems = [
-            ...clientVisibleData[columnIndex].content,
-            {
-                id: uuidv4(),
-                info: 'Новая карточка',
-                marks: [],
-                task_cover: {},
-                deadline: {},
-                task_description: {},
-                sub_tasks: [],
-                comments: [],
-            }
-        ]
-
-        const newEl = [...clientVisibleData]
-
-        newEl[columnIndex] = {
-            ...clientVisibleData[columnIndex],
-            content: newContentItems
-        }
-
-        setClientVisibleData(newEl)
-    }
-
-    const changeTitle = (card_id, value) => {
-        const columnIndex = clientVisibleData.findIndex((column_id) => column_id.id === card_id)
-
-        // let newData = clientVisibleData[columnIndex]
-        let newTitleData = {
-                id: clientVisibleData[columnIndex].id,
-                title: value,
-                content: clientVisibleData[columnIndex].content
-            }
-        const newItems = [...(clientVisibleData.map((column_id, index) =>
-                column_id.id !== card_id
-                    ?
-                        clientVisibleData[index]
-                    :
-                        newTitleData
-        ))]
-
-        setClientVisibleData(newItems)
-    }
-
-    const changeTaskInfo = (task_id, card_id, value) => {
-        const columnIndex = clientVisibleData.findIndex((column_id) => column_id.id === card_id)
-        const taskIndex = clientVisibleData[columnIndex].content.findIndex((task) => task.id === task_id)
-        let newTask = {
-            id: clientVisibleData[columnIndex].content[taskIndex].id,
-            info: value,
-            marks: clientVisibleData[columnIndex].content[taskIndex].marks,
-            task_cover: clientVisibleData[columnIndex].content[taskIndex].task_cover,
-            deadline: clientVisibleData[columnIndex].content[taskIndex].deadline,
-            task_description: clientVisibleData[columnIndex].content[taskIndex].task_description,
-            sub_tasks: clientVisibleData[columnIndex].content[taskIndex].sub_tasks,
-            comments: clientVisibleData[columnIndex].content[taskIndex].comments,
-        }
-        const newItems = [...(clientVisibleData.map((column_id, col_index) =>
-            column_id.id !== card_id
-                ?
-                clientVisibleData[col_index]
-                :
-                {
-                    id:  clientVisibleData[col_index].id,
-                    title: clientVisibleData[col_index].title,
-                    content: [...clientVisibleData[col_index].content.map((task, row_index) =>
-                        task.id !== task_id
-                            ?
-                            clientVisibleData[col_index].content[row_index]
-                            :
-                            newTask
-                    )]
-                }
-        ))]
-        setClientVisibleData(newItems)
-    }
 
     const handleOnDragEnd = (results) => {
 
@@ -245,7 +106,11 @@ const CardBoard = (props) => {
             content: newDestinationItems
         }
 
-        setClientVisibleData(newEl)
+        dispatch(set_todolist(newEl))
+
+        flushSync(() => {
+            setClientVisibleData(newEl)
+        });
     }
 
     return (
@@ -273,15 +138,10 @@ const CardBoard = (props) => {
                                                 {...provided.draggableProps}
                                                 ref={provided.innerRef}
                                             >
-                                                <CardBase
+                                                <InnerCardList
+                                                    index={card.id}
                                                     card_data={card}
                                                     card_title={card.title}
-                                                    titleOnChange={changeTitle}
-                                                    newTaskOnClick={addNewTask}
-                                                    changeTaskInfo={changeTaskInfo}
-                                                    onChangeCardMark={onChangeCardMark}
-
-                                                    index={card.id}
 
                                                     markTextShow={markTextShow}
                                                     setMarkTextShow={setMarkTextShow}

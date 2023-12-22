@@ -1,0 +1,99 @@
+.buttonWrapper {
+    display: flex;
+    flex-direction: column;
+    background: #260d19;
+    min-height: 200px;
+    min-width: 300px;
+    border-radius: 20px;
+}
+
+.contentCheckListWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 15px;
+
+    /*border: #8d325f 1px solid;*/
+    /*border-radius: 16px;*/
+}
+
+.contentCheckList_title {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 20px;
+    font-size: 1rem;
+    letter-spacing: 1px;
+}
+
+.contentCheckList_exit {
+    position: absolute;
+    right: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    padding: 8px;
+    border: none;
+    border-radius: 10px;
+    background: transparent;
+    cursor: pointer;
+}
+
+.contentCheckList_exit:hover {
+    background: rgba(141, 60, 98, 0.5);
+}
+
+.contentCheckListControlsWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 94%;
+    gap: 20px;
+}
+
+.contentCheckList_inputWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 90%;
+}
+
+.contentCheckList_label {
+    font-size: 0.9rem;
+}
+
+.contentCheckList_input {
+
+    padding-left: 10px;
+    height: 25px;
+    width: 95%;
+}
+
+.contentCheckList_setButton{
+    height: 40px;
+    width: 90%;
+
+    border: none;
+    border-radius: 8px;
+    background: #32404d;
+    cursor: pointer;
+    margin-bottom: 5px;
+
+    font-size: 1rem;
+}
+
+.contentCheckList_setButton:hover {
+    background: #6089f3;
+}
+
+.contentCheckList_setButton:active {
+    background: #32404d;
+}
+

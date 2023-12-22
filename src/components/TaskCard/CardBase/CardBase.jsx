@@ -1,8 +1,38 @@
 import styles from "./CardBase.module.css"
-import {useEffect, useRef, useState} from "react";
+import {Component, useContext, useEffect, useRef, useState} from "react";
 import {TextareaAutosize} from "@mui/material";
 import CardTasks from "../CardTasks/CardTasks.jsx";
 import {Draggable, Droppable} from "react-beautiful-dnd";
+import BoardContext from "../../../context/BoardContext.jsx";
+import {set_todolist} from "../../../redux/store/slices/slice_ToDoList.js";
+import {useDispatch} from "react-redux";
+import {v4 as uuidv4} from "uuid";
+
+
+class InnerCardTaskList extends Component {
+    shouldComponentUpdate(nextProps) {
+        if (
+            nextProps.column_id === this.props.column_id &&
+            nextProps.task === this.props.task &&
+            nextProps.markTextShow === this.props.markTextShow &&
+            nextProps.setMarkTextShow === this.props.setMarkTextShow
+        ) {
+            return false;
+        }
+
+        return true
+    }
+
+    render() {
+        return <CardTasks
+                    key={this.props.task.id}
+                    task={this.props.task}
+                    column_id={this.props.column_id}
+                    markTextShow={this.props.markTextShow}
+                    setMarkTextShow={this.props.setMarkTextShow}
+                />
+    }
+}
 
 const CardBase = (props) => {
 
@@ -10,17 +40,20 @@ const CardBase = (props) => {
         card_data,
         index,
         card_title,
-        titleOnChange,
-        newTaskOnClick,
-        changeTaskInfo,
-        onChangeCardMark,
         markTextShow,
-        setMarkTextShow
+        setMarkTextShow,
     } = props
+
+
+    const {
+        clientVisibleData,
+        setClientVisibleData,
+    } = useContext(BoardContext)
+    const dispatch = useDispatch()
 
     const [titleTextVisibility, setTitleTextVisibility] = useState(false)
 
-    // const [titleValue, setTitleValue] = useState(card_title)
+    const [titleValue, setTitleValue] = useState(card_title)
 
     const wrapRef = useRef(null)
 
@@ -37,6 +70,63 @@ const CardBase = (props) => {
             document.getElementById(index).focus()
         }, 50);
     }
+
+    const titleOnChange = (card_id, value) => {
+        const columnIndex = clientVisibleData.findIndex((column_id) => column_id.id === card_id)
+
+        // let newData = clientVisibleData[columnIndex]
+        let newTitleData = {
+            id: clientVisibleData[columnIndex].id,
+            title: value,
+            content: clientVisibleData[columnIndex].content
+        }
+        const newItems = [...(clientVisibleData.map((column_id, index) =>
+            column_id.id !== card_id
+                ?
+                clientVisibleData[index]
+                :
+                newTitleData
+        ))]
+
+        dispatch(set_todolist(newItems))
+
+        setClientVisibleData(newItems)
+    }
+
+    const newTaskOnClick = (card_id) => {
+        const columnIndex = clientVisibleData.findIndex((column_id) => column_id.id === card_id)
+
+        const newContentItems = [
+            ...clientVisibleData[columnIndex].content,
+            {
+                id: uuidv4(),
+                is_visible: true,
+                info: 'Новая карточка',
+                marks: [],
+                task_cover: {},
+                deadline: {},
+                task_description: {},
+                sub_tasks: [],
+                priority : {
+                    id: 0,
+                    type: 'default',
+                    label: 'Нет установлен'
+                },
+                comments: [],
+            }
+        ]
+
+        const newEl = [...clientVisibleData]
+
+        newEl[columnIndex] = {
+            ...clientVisibleData[columnIndex],
+            content: newContentItems
+        }
+
+        setClientVisibleData(newEl)
+    }
+
+
 
     useEffect(() => {
         document.addEventListener("mousedown", handleClick)
@@ -59,6 +149,8 @@ const CardBase = (props) => {
                         ref={provided.innerRef}
                     >
                         <div className={styles.cardHead}>
+                            {/*<InnerList booba={"Game"}/>*/}
+
                             <div className={styles.cardHead_contentLeft}>
                                 {titleTextVisibility
                                     ?
@@ -69,12 +161,11 @@ const CardBase = (props) => {
                                         cols={23}
                                         placeholder={"Введите название"}
                                         className={styles.titleTextArea}
-                                        value={card_title}
+                                        value={titleValue}
                                         spellCheck="false"
                                         ref={wrapRef}
                                         onChange={(e) => {
-                                            // setTitleValue(e.target.value)
-                                            titleOnChange(card_data.id, e.target.value)
+                                            setTitleValue(e.target.value)
                                         }}
                                         onKeyDown={(e) => {
                                             if (e.key === 'Enter') {
@@ -83,6 +174,9 @@ const CardBase = (props) => {
                                                 document.getElementById(index).blur()
                                                 setTitleTextVisibility(!titleTextVisibility)
                                             }
+                                        }}
+                                        onBlur={(e) => {
+                                            titleOnChange(card_data.id, e.target.value)
                                         }}
 
                                     />
@@ -116,16 +210,14 @@ const CardBase = (props) => {
                                             {...provided.draggableProps}
                                             ref={provided.innerRef}
                                         >
-                                            <CardTasks
+                                            <InnerCardTaskList
+                                                key={task.id}
                                                 task={task}
                                                 column_id={card_data.id}
-                                                changeTaskInfo={changeTaskInfo}
-                                                onChangeCardMark={onChangeCardMark}
 
                                                 markTextShow={markTextShow}
                                                 setMarkTextShow={setMarkTextShow}
-                                            />
-
+                                                />
                                         </div>
                                     )}
                                 </Draggable>

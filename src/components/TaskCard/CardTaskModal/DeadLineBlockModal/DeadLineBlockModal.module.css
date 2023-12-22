@@ -1,0 +1,35 @@
+.deadlineModal, .deadlineModal_DeadlineNotDone, .deadlineModal_DeadlineDone {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+}
+
+.deadlineModal_DeadlineNotDone, .deadlineModal_DeadlineDone {
+    color: white;
+    border-radius: 6px;
+    padding: 5px 10px;
+    background: rgba(89, 26, 58, 0.8);
+    cursor: pointer;
+}
+
+.deadlineModal_DeadlineDone {
+    background: rgba(26, 89, 29, 0.8);
+}
+
+.deadlineModal_DeadlineNotDone:hover {
+    background: rgb(121, 35, 76);
+}
+
+.deadlineModal_DeadlineDone:hover {
+    background: rgb(42, 145, 50);
+}
+
+.deadlineModal_Label {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    width: 120px;
+}

@@ -1,5 +1,5 @@
 import styles from "./SideBar.module.css"
-import {Collapse} from "@mui/material";
+import {Collapse, Divider} from "@mui/material";
 import {useState} from "react";
 
 const SideBar = () => {
@@ -18,24 +18,26 @@ const SideBar = () => {
                         <div className={styles.sideBarWrapper}>
 
                             {/*visible side*/}
-                            <hr style={{color: '#DBA498', width: '100%', margin: '0'}}/>
+                            <Divider sx={{background: '#DBA498', width: '100%', opacity: '0.5'}}/>
+
                             <div className={styles.userDataWrapper}>
                                 <div className={styles.userData_leftContent}>
                                     Fname Lname
                                 </div>
                                 <div className={styles.userData_rightContent}>
                                     <button className={styles.sideBar_arrow} onClick={handleChange}>
-                                <span>
-                                    <svg width="11" height="15" viewBox="0 0 11 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <rect x="0.896729" y="7.38086" width="11" height="2" rx="1" transform="rotate(-41.3176 0.896729 7.38086)" fill="#DBA498"/>
-                                        <rect x="2.13623" y="6.16138" width="11" height="2" rx="1" transform="rotate(39.2293 2.13623 6.16138)" fill="#DBA498"/>
-                                    </svg>
-                                </span>
+                                        <span>
+                                            <svg width="11" height="15" viewBox="0 0 11 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <rect x="0.896729" y="7.38086" width="11" height="2" rx="1" transform="rotate(-41.3176 0.896729 7.38086)" fill="#DBA498"/>
+                                                <rect x="2.13623" y="6.16138" width="11" height="2" rx="1" transform="rotate(39.2293 2.13623 6.16138)" fill="#DBA498"/>
+                                            </svg>
+                                        </span>
                                     </button>
                                 </div>
                             </div>
 
-                            <hr style={{color: '#DBA498', width: '100%', margin: '0'}}/>
+                            <Divider sx={{background: '#DBA498', width: '100%', opacity: '0.5'}}/>
+
                             {/*hidden side*/}
 
                             <div className={styles.navigationAreaWrapper}>

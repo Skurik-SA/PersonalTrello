@@ -2,7 +2,7 @@ import styles from "./TaskBaseButton.module.css"
 import {createTheme, Popover, ThemeProvider} from "@mui/material";
 import {useState} from "react";
 import {useDispatch} from "react-redux";
-import {set_selected_task_byId} from "../../../../redux/store/slices/slice_ToDoList.js";
+// import {set_selected_task_byId} from "../../../../redux/store/slices/slice_ToDoList.js";
 
 const TaskBaseButton = (props) => {
 
@@ -45,7 +45,7 @@ const TaskBaseButton = (props) => {
 
 
     const handleClick = (event) => {
-        dispatch(set_selected_task_byId(task_id))
+        // dispatch(set_selected_task_byId(task_id))
 
         setAnchorEl(event.currentTarget);
 
@@ -54,10 +54,14 @@ const TaskBaseButton = (props) => {
         let xPosition = rect.left;
         let yPosition = rect.top + element.offsetHeight + 2;
 
+
+        // let poppppover = (document.getElementById(id)).getBoundingClientRect()
         setTop(yPosition)
         setLeft(xPosition)
         console.log(xPosition)
         console.log(yPosition)
+        console.log(rect)
+        // console.log(poppppover.)
     }
 
 
@@ -77,6 +81,8 @@ const TaskBaseButton = (props) => {
                         boxShadow: 'none',
                         color: 'white',
                         overflow: 'hidden',
+                        border: '#8d325f 1px solid',
+                        borderRadius: '20px',
                     }
                 },
             },
@@ -100,6 +106,7 @@ const TaskBaseButton = (props) => {
                     transitionDuration={100}
                 >
                     <div
+                        id={"ch-div"}
                         className={
                             rootPopoverStyle
                                 ?
@@ -107,6 +114,10 @@ const TaskBaseButton = (props) => {
                                 :
                                     styles.taskBaseButtonWrapper
                         }
+                        onMouseUp={() => {
+                            console.log((document.getElementById(id)).getBoundingClientRect())
+                            console.log(anchorEl)
+                        }}
                     >
                         {children}
                     </div>
@@ -128,7 +139,7 @@ const TaskBaseButton = (props) => {
                 <span>
                     {buttonIcon}
                 </span>
-                <span>
+                <span className={styles.buttonTextMobile}>
                     {buttonContent}
                 </span>
             </button>

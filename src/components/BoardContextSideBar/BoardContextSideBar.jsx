@@ -1,5 +1,5 @@
 import styles from "./BoardContextSideBar.module.css"
-import {Collapse, Divider} from "@mui/material";
+import {Collapse, Divider, TextareaAutosize} from "@mui/material";
 import {useState} from "react";
 import ExitModal from "../../assets/Icons/ExitModal.jsx";
 import ReturnArrow from "../../assets/Icons/ReturnArrow.jsx";
@@ -10,6 +10,7 @@ import BackGroundIco from "../../assets/Icons/BackGroundIco.jsx";
 import Marks_LS from "../../assets/Icons/Marks_LS.jsx";
 import Copy_LS from "../../assets/Icons/Copy_LS.jsx";
 import CloseBoardIco from "../../assets/Icons/CloseBoardIco.jsx";
+import Description from "../../assets/Icons/Description.jsx";
 
 const RETURN_CONTEXT = "return_context"
 const INFO_CONTEXT = "info_context"
@@ -112,17 +113,41 @@ const BoardContextSideBar = (props) => {
                             <section className={styles.sideBar_sectionRight}>
                                 <Collapse in={secondLevelCheckedAbout} orientation="horizontal" timeout={100}
                                           collapsedSize={0}>
-                                    <div className={styles.sideBar_menuBlock}>
-                                        <button className={styles.sideBar_menuButtons}>
-                                            <div className={styles.sideBar_ButtonEntrails}>
-                                                <span>
-                                                    <Info_LS/>
-                                                </span>
-                                                <span>
-                                                    О доске
-                                                </span>
-                                            </div>
-                                        </button>
+                                    <div className={styles.sideBar_hiddenLevelWrapper}>
+                                        <div className={styles.sideBar_TitleLabels}>
+                                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                                 xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M9 9.57141H11C15.4183 9.57141 19 13.1531 19 17.5714V19H1V17.5714C1 13.1531 4.58172 9.57141 9 9.57141Z"
+                                                      stroke="#DBA498" strokeWidth="2"/>
+                                                <path
+                                                    d="M13.6666 5C13.6666 7.27524 11.9611 9 9.99992 9C8.03874 9 6.33325 7.27524 6.33325 5C6.33325 2.72476 8.03874 1 9.99992 1C11.9611 1 13.6666 2.72476 13.6666 5Z"
+                                                    stroke="#DBA498" strokeWidth="2"/>
+                                            </svg>
+                                            <span>
+                                                Администратор доски
+                                            </span>
+                                        </div>
+                                        <span className={styles.sideBar_hiddenMenuSpan}>
+                                            FNAME SNAME
+                                        </span>
+                                        <div className={styles.sideBar_TitleLabels}>
+                                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                                 xmlns="http://www.w3.org/2000/svg">
+                                                <rect width="20" height="2.85714" rx="1.42857" fill="#DBA498"/>
+                                                    <rect y="17.1428" width="12" height="2.85714" rx="1.42857" fill="#DBA498"/>
+                                                    <rect y="12.8572" width="20" height="2.85714" rx="1.42857" fill="#DBA498"/>
+                                                    <rect y="8.57141" width="20" height="2.85714" rx="1.42857" fill="#DBA498"/>
+                                                    <rect y="4.28577" width="20" height="2.85714" rx="1.42857" fill="#DBA498"/>
+                                                </svg>
+                                            <span>
+                                                Описание доски
+                                            </span>
+                                        </div>
+                                        <TextareaAutosize
+                                            className={styles.sideBar_TextArea}
+                                            spellCheck={"false"}
+                                            maxRows={20}
+                                        />
                                     </div>
                                 </Collapse>
                             </section>
@@ -241,7 +266,7 @@ const BoardContextSideBar = (props) => {
                             <section className={styles.sideBar_sectionLeft}>
                                 <Collapse in={secondLevelCheckedMain}
                                           orientation="horizontal"
-                                          timeout={160}
+                                          timeout={60}
                                           collapsedSize={0}>
                                     <div className={styles.sideBar_menuBlock}>
                                         <button className={styles.sideBar_menuButtons} onClick={() => {

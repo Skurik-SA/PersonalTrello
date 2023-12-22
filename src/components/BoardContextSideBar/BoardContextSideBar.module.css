@@ -133,3 +133,57 @@
     align-items: center;
     gap: 10px;
 }
+
+.sideBar_hiddenLevelWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 320px;
+
+    margin-top: 10px;
+    margin-bottom: 10px;
+    gap: 15px;
+}
+
+.sideBar_hiddenMenuSpan {
+    margin-left: 5px;
+    font-size: 1.1rem;
+}
+
+.sideBar_TitleLabels {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 1.1rem;
+    padding-left: 5px;
+}
+
+.sideBar_TextArea {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: left;
+    padding: 10px 10px;
+    background: #852b56;
+    min-width: 295px;
+    margin-left: 5px;
+    resize: none;
+    border: none;
+    font-size: 1rem;
+    font-family: Arial, serif;
+    outline: none;
+    border-radius: 8px;
+    z-index: 1;
+
+    scrollbar-color: #8d3c62 #59263e;
+    scrollbar-width: thin;
+}
+
+.sideBar_TextArea:focus {
+    border: none;
+    border-radius: 8px;
+    cursor: text;
+}

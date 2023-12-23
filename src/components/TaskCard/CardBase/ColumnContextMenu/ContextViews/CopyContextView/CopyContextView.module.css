@@ -1,0 +1,53 @@
+.copyContextView {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.copyContextView_textarea {
+    width: 80%;
+    resize: none;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    font-size: 16px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    overflow-y: auto;
+}
+
+.copyContextView_textarea:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+}
+
+.copyContextView_textarea:focus {
+    background-color: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    cursor: text;
+}
+
+
+.copyContextView_button {
+    width: 90%;
+    height: 40px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: none;
+    outline: none;
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    margin: 10px;
+}
+
+.copyContextView_button:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}

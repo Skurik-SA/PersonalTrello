@@ -30,7 +30,7 @@ const Board = () => {
 
     return (
         <BoardContext.Provider value={{clientVisibleData, setClientVisibleData}}>
-            <div style={{display: 'flex', height: '100%'}}>
+            <div className={styles.mainBase}>
                 <div style={{display: 'flex', flexDirection: 'column'}}>
                     <SideBar/>
                 </div>

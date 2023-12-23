@@ -1,4 +1,5 @@
 import styles from "./Search.module.css"
+import PropTypes from "prop-types";
 
 const Search = (props) => {
 
@@ -18,13 +19,18 @@ const Search = (props) => {
                 </div>
                 <input
                     value={value}
-                    onChange={onChange}
+                    onChange={(e) => onChange(e.target.value)}
                     className={styles.searchInputNew}
                     placeholder={"Поиск..."}
                 />
             </div>
         </div>
     )
+}
+
+Search.propTypes = {
+    value: PropTypes.string,
+    onChange: PropTypes.func
 }
 
 export default Search;

@@ -1,0 +1,52 @@
+.searchWrapper {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    color: black;
+    width: 50%;
+}
+
+.searchIcon {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    height: 42px;
+}
+
+.searchInputNew {
+    width: 263px;
+    height: 40px;
+    flex-shrink: 0;
+
+    border-radius: 5px;
+    border: none;
+    background: #212121;
+    color: #DBA498;
+
+    outline: none;
+    padding-left: 35px;
+    transition: width 0.2s ease-in-out;
+}
+
+.searchInputNew::placeholder {
+    color: #DBA498;
+}
+
+@media screen and (min-width: 0) {
+    .searchInputNew {
+        width: 100%;
+    }
+}
+
+@media screen and (min-width: 300px) {
+    .searchInputNew {
+        width: 163px;
+    }
+}
+
+@media screen and (min-width: 600px) {
+    .searchInputNew {
+        width: 263px;
+    }
+}

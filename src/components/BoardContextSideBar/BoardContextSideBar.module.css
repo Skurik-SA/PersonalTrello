@@ -175,7 +175,7 @@
     font-size: 1rem;
     font-family: Arial, serif;
     outline: none;
-    border-radius: 8px;
+    border-radius: 2px;
     border: 1px solid rgba(72, 0, 255, 0.2);
 
     scrollbar-color: #8d3c62 #59263e;
@@ -183,7 +183,6 @@
 }
 
 .sideBar_TextArea:focus {
-    border-radius: 8px;
     cursor: text;
     border-color: red;
     -webkit-box-shadow: 0px 0px 8px 4px rgba(255, 0, 0, 0.2);
@@ -196,6 +195,7 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
+    gap: 10px;
 }
 
 .sideBar_ArchiveSearchWrapper {
@@ -228,4 +228,8 @@
     border: none;
     width: 28%;
     cursor: pointer;
+}
+
+.sideBar_btnTitle {
+    font-weight: bold;
 }

@@ -5,17 +5,6 @@ import {v4 as uuidv4} from "uuid";
 const Slice_ToDoList = createSlice({
     name: "todolist",
     initialState: {
-        selected_task: {
-            card_id: '',
-            id: '',
-            info: '',
-            marks: [],
-            task_cover: {},
-            deadline: {},
-            task_description: {},
-            sub_tasks: [],
-            comments: [],
-        },
         mark_store: [
             {
                 id: 1,

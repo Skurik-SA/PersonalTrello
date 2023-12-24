@@ -10,6 +10,7 @@ import {set_todolist} from "../../../redux/store/slices/slice_ToDoList.js";
 import BoardContext from "../../../context/BoardContext.jsx";
 import {findColumnIndex} from "../../../utils/FindColumnIndex.js";
 import PropTypes from "prop-types";
+import { FixedSizeList as List } from 'react-window';
 
 class InnerCardList extends PureComponent {
     render() {
@@ -35,7 +36,7 @@ class InnerCardList extends PureComponent {
 InnerCardList.propTypes = {
     card_data: PropTypes.object,
     card_title: PropTypes.string,
-    index: PropTypes.number,
+    index: PropTypes.any,
     markTextShow: PropTypes.bool,
     setMarkTextShow: PropTypes.func,
 }
@@ -49,7 +50,6 @@ const CardBoard = () => {
     const [markTextShow, setMarkTextShow] = useState(false)
     // Это костыль, но зато какой, потом с бэком скорее всего менять придётся
     const dispatch = useDispatch()
-
 
     const addNewColumn = () => {
         const newItems = [
@@ -132,6 +132,7 @@ const CardBoard = () => {
                 >
                     <Droppable droppableId="ROOT" type="group" direction="horizontal">
                         {(provided) => (
+                                // <List height={500} width={1200} itemCount={clientVisibleData.length} itemSize={50}>
                             <ol className={styles.boardOl} {...provided.droppableProps} ref={provided.innerRef}>
                                 {clientVisibleData.map((card, index) =>
                                     <Draggable
@@ -159,6 +160,7 @@ const CardBoard = () => {
                                 )}
                                 {provided.placeholder}
                             </ol>
+                                // </List>
                         )}
                     </Droppable>
                     <button className={styles.addNewCardButton} onClick={() => {

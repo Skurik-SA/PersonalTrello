@@ -48,12 +48,12 @@ const ColumnContextMenu = (props) => {
             content: newContent,
         }
 
-        // const newData = [...clientVisibleData];
-        // newData.splice(columnIndex + 1, 0, newColumn);
-        // dispatch(set_todolist(newData))
-        // setClientVisibleData(newData)
-        dispatch(set_todolist([...clientVisibleData, newColumn]))
-        setClientVisibleData([...clientVisibleData, newColumn])
+        const newData = [...clientVisibleData];
+        newData.splice(columnIndex + 1, 0, newColumn);
+        dispatch(set_todolist(newData))
+        setClientVisibleData(newData)
+        // dispatch(set_todolist([...clientVisibleData, newColumn]))
+        // setClientVisibleData([...clientVisibleData, newColumn])
         handleClose()
     }
 
@@ -151,6 +151,8 @@ const ColumnContextMenu = (props) => {
                 {currentContextView === MOVE_CARD
                     ?
                     <MoveContextView
+                        card_data_id={card_data_id}
+                        handleClose={handleClose}
 
                     />
                     :

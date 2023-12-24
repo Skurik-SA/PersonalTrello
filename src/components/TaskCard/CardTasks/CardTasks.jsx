@@ -152,7 +152,17 @@ const CardTasks = (props) => {
                    ?
                    <div className={styles.cardPriorityWrapper}>
                        <span className={styles.cardPriorityContent}
-                             style={{background: priority_color()}}>
+                             style={
+                                 task.is_visible ?
+                                     {
+                                         background: priority_color(),
+                                     }
+                                     :
+                                     {
+                                         display: 'none'
+                                     }
+                             }
+                       >
                            Приоритет: {task.priority.label}
                        </span>
                    </div>

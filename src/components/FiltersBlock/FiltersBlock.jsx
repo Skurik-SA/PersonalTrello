@@ -20,31 +20,42 @@ const filterCards = (
     ) => {
         const datesFilters = () => {
             if (filterInterface.isNoDates && !cont.deadline.dateJsFormatDate) {
-
                 return true
             }
 
             if (filterInterface.isDone && cont.deadline.type === DONE) {
-
                 return true
             }
 
             if (filterInterface.isExpired && cont.deadline.type === FAILED) {
-
                 return true
             }
 
             if (filterInterface.isSoonExpired && cont.deadline.type === SOON_EXPIRE) {
-
                 return true
             }
 
             if (filterInterface.isNotDone && cont.deadline.type === NOT_DONE) {
-
                 return true
             }
 
             if (filterInterface.isMarks && cont.marks.length === 0) {
+                return true
+            }
+
+            if (filterInterface.isLowPriority && cont.priority.type === "Low") {
+                return true
+            }
+
+            if (filterInterface.isMidPriority && cont.priority.type === "Middle") {
+                return true
+            }
+
+            if (filterInterface.isHighPriority && cont.priority.type === "High") {
+                return true
+            }
+
+            if (filterInterface.isCriticalPriority && cont.priority.type === "Critical") {
                 return true
             }
 
@@ -62,14 +73,7 @@ const filterCards = (
                 return cont.info.toLowerCase().includes(searchText.toLowerCase())
             }
 
-            return !filterInterface.isNoDates &&
-                   !filterInterface.isExpired &&
-                   !filterInterface.isSoonExpired &&
-                   !filterInterface.isDone &&
-                   !filterInterface.isNotDone &&
-                   !filterInterface.isPriority &&
-                   !filterInterface.isMarks;
-
+            return Object.values(filterInterface).every(value => !value);
         }
 
         const filteredContent = cloneDeep(cont)
@@ -100,7 +104,7 @@ const FiltersBlock = () => {
 
     const [keyWordSearchValue, setKeyWordSearchValue] = useState("")
     const [filtersByMarks, setFiltersByMarks] = useState([])
-    const [filterInterface, setFilterInterface] = useState({
+    const initialFilterInterface = {
         byText: false,
         isNoDates: false,
         isExpired: false,
@@ -108,38 +112,33 @@ const FiltersBlock = () => {
         isDone: false,
         isNotDone: false,
         isPriority: false,
+        isLowPriority: false,
+        isMidPriority: false,
+        isHighPriority: false,
+        isCriticalPriority: false,
         isMarks: false,
-    })
+    };
+    const [filterInterface, setFilterInterface] = useState(initialFilterInterface)
 
     const actionHandler = (actioned_mark) => {
-        const markId = filtersByMarks.some((f_mark) => f_mark.id === actioned_mark.id)
+        setFiltersByMarks((prev) => {
+            const markId = prev.some((f_mark) => f_mark.id === actioned_mark.id);
 
-        if (markId) {
-            setFiltersByMarks(prev =>
-                [...prev.filter((mark) => mark.id !== actioned_mark.id)]
-            )
-        }
-        else {
-            setFiltersByMarks(prev =>
-                [...prev, actioned_mark]
-            )
-        }
+            return markId
+                ? prev.filter((mark) => mark.id !== actioned_mark.id)
+                : [...prev, actioned_mark];
+        });
     }
 
     const clearFilters = () => {
         setKeyWordSearchValue("")
         setFiltersByMarks([])
-        setFilterInterface({
-            byText: false,
-            isNoDates: false,
-            isExpired: false,
-            isSoonExpired: false,
-            isDone: false,
-            isNotDone: false,
-            isPriority: false,
-            isMarks: false,
-        })
+        setFilterInterface(initialFilterInterface)
     }
+
+    const shouldDisplayClearButton = Object.values(filterInterface).some(value => value) ||
+        filtersByMarks.length > 0 ||
+        keyWordSearchValue;
 
     useEffect(() => {
         const Debounce = setTimeout(() => {
@@ -178,18 +177,11 @@ const FiltersBlock = () => {
                             clearFilters()
                         }}
                         style={
-                            filterInterface.isDone ||
-                            filterInterface.isNoDates ||
-                            filterInterface.isExpired ||
-                            filterInterface.isSoonExpired ||
-                            filterInterface.isNotDone ||
-                            filterInterface.isMarks ||
-                            filterInterface.isPriority ||
-                            filtersByMarks.length > 0 ||
-                            keyWordSearchValue ?
-                                {}
-                                :
-                                {display: 'none'}
+                            shouldDisplayClearButton
+                            ?
+                            {}
+                            :
+                            {display: 'none'}
                         }
                     >
                         <span>
@@ -202,7 +194,7 @@ const FiltersBlock = () => {
         >
             <div className={styles.filtersPopperWrapper}>
                 <div className={styles.filtersPopperTitle}>
-                    <span >
+                    <span>
                         Фильтр
                     </span>
                 </div>
@@ -213,25 +205,12 @@ const FiltersBlock = () => {
                     <input
                         value={keyWordSearchValue}
                         onChange={(e) => {
-                            setKeyWordSearchValue(e.target.value)
-                            if (keyWordSearchValue !== "") {
-                                setFilterInterface(prev => (
-                                    {
-                                        ...prev,
-                                        byText: true
-                                    }
-                                ))
-                            }
-                            else {
-                                setFilterInterface(prev => (
-                                    {
-                                        ...prev,
-                                        byText: false
-                                    }
-                                ))
-                            }
+                            setKeyWordSearchValue(e.target.value);
+                            setFilterInterface((prev) => ({
+                                ...prev,
+                                byText: e.target.value !== "",
+                            }));
                         }}
-
                         className={styles.filtersSearchInput}
                         placeholder={"Введите ключевое слово"}
                     />
@@ -239,14 +218,16 @@ const FiltersBlock = () => {
                         Поиск карточек
                     </span>
                 </section>
-                <section  className={styles.filtersPopperSection}>
+                <section className={styles.filtersPopperSection}>
                     <span className={styles.filtersPopperNaming}>
                         Участники
                     </span>
                     <div className={styles.checkBoxWrapper}>
                         <FormGroup>
-                            <FormControlLabel control={<Checkbox sx={{ '& + *': { fontSize: '0.9rem' } }}/>} label="Нет участников" />
-                            <FormControlLabel control={<Checkbox sx={{ '& + *': { fontSize: '0.9rem' } }}/>} label="Для меня" />
+                            <FormControlLabel control={<Checkbox sx={{'& + *': {fontSize: '0.9rem'}}}/>}
+                                              label="Нет участников"/>
+                            <FormControlLabel control={<Checkbox sx={{'& + *': {fontSize: '0.9rem'}}}/>}
+                                              label="Для меня"/>
                         </FormGroup>
                     </div>
                 </section>
@@ -258,35 +239,35 @@ const FiltersBlock = () => {
                         <FormGroup>
                             <FormControlLabel
                                 control={
-                                    <Checkbox sx={{ '& + *': { fontSize: '0.9rem' } }}
-                                                checked={filterInterface.isNoDates}
-                                                onChange={(e) =>
-                                                    setFilterInterface(prev => (
-                                                    {
-                                                        ...prev,
-                                                        isNoDates: e.target.checked
-                                                    }
-                                                ))}
+                                    <Checkbox sx={{'& + *': {fontSize: '0.9rem'}}}
+                                              checked={filterInterface.isNoDates}
+                                              onChange={(e) =>
+                                                  setFilterInterface(prev => (
+                                                      {
+                                                          ...prev,
+                                                          isNoDates: e.target.checked
+                                                      }
+                                                  ))}
                                     />
                                 }
-                                label="Без даты" />
+                                label="Без даты"/>
                             <FormControlLabel
                                 control={
-                                    <Checkbox sx={{ '& + *': { fontSize: '0.9rem' } }}
+                                    <Checkbox sx={{'& + *': {fontSize: '0.9rem'}}}
                                               checked={filterInterface.isNotDone}
                                               onChange={(e) =>
                                                   setFilterInterface(prev => (
-                                                  {
-                                                      ...prev,
-                                                      isNotDone: e.target.checked
-                                                  }
-                                              ))}
+                                                      {
+                                                          ...prev,
+                                                          isNotDone: e.target.checked
+                                                      }
+                                                  ))}
                                     />
                                 }
-                                label="Истекает не скоро" />
+                                label="Истекает не скоро"/>
                             <FormControlLabel
                                 control={
-                                    <Checkbox sx={{ '& + *': { fontSize: '0.9rem' } }}
+                                    <Checkbox sx={{'& + *': {fontSize: '0.9rem'}}}
                                               checked={filterInterface.isExpired}
                                               onChange={(e) =>
                                                   setFilterInterface(prev => (
@@ -294,13 +275,13 @@ const FiltersBlock = () => {
                                                           ...prev,
                                                           isExpired: e.target.checked
                                                       }
-                                              ))}
+                                                  ))}
                                     />
                                 }
-                                label="Просроченные" />
+                                label="Просроченные"/>
                             <FormControlLabel
                                 control={
-                                    <Checkbox sx={{ '& + *': { fontSize: '0.9rem' } }}
+                                    <Checkbox sx={{'& + *': {fontSize: '0.9rem'}}}
                                               checked={filterInterface.isSoonExpired}
                                               onChange={(e) =>
                                                   setFilterInterface(prev => (
@@ -308,13 +289,13 @@ const FiltersBlock = () => {
                                                           ...prev,
                                                           isSoonExpired: e.target.checked
                                                       }
-                                              ))}
+                                                  ))}
                                     />
                                 }
-                                label="Истекает" />
+                                label="Истекает"/>
                             <FormControlLabel
                                 control={
-                                    <Checkbox sx={{ '& + *': { fontSize: '0.9rem' } }}
+                                    <Checkbox sx={{'& + *': {fontSize: '0.9rem'}}}
                                               checked={filterInterface.isDone}
                                               onChange={(e) =>
                                                   setFilterInterface(prev => (
@@ -322,13 +303,13 @@ const FiltersBlock = () => {
                                                           ...prev,
                                                           isDone: e.target.checked
                                                       }
-                                              ))}
+                                                  ))}
                                     />
                                 }
-                                label="Выполнено" />
+                                label="Выполнено"/>
                             <FormControlLabel
                                 control={
-                                    <Checkbox sx={{ '& + *': { fontSize: '0.9rem' } }}
+                                    <Checkbox sx={{'& + *': {fontSize: '0.9rem'}}}
                                               checked={filterInterface.isPriority}
                                               onChange={(e) =>
                                                   setFilterInterface(prev => (
@@ -336,13 +317,90 @@ const FiltersBlock = () => {
                                                           ...prev,
                                                           isPriority: e.target.checked
                                                       }
-                                              ))}
+                                                  ))}
                                     />
                                 }
-                                label="По приоритету" />
+                                label="По приоритету"/>
                         </FormGroup>
                     </div>
                 </section>
+
+                <section className={styles.filtersPopperSection}>
+                    <span className={styles.filtersPopperNaming}>
+                        Приоритет
+                    </span>
+                    <FormGroup>
+                        <FormControlLabel
+                            control={
+                                <Checkbox
+                                    sx={{'& + *': {fontSize: '0.9rem'}}}
+                                    checked={filterInterface.isLowPriority}
+                                    onChange={(e) => {
+                                        setFilterInterface(prev => (
+                                            {
+                                                ...prev,
+                                                isLowPriority: e.target.checked,
+                                            }
+                                        ))
+                                    }}
+                                />
+                            }
+                            label="Низкий приоритет"
+                        />
+                        <FormControlLabel
+                            control={
+                                <Checkbox
+                                    sx={{'& + *': {fontSize: '0.9rem'}}}
+                                    checked={filterInterface.isMidPriority}
+                                    onChange={(e) => {
+                                        setFilterInterface(prev => (
+                                            {
+                                                ...prev,
+                                                isMidPriority: e.target.checked,
+                                            }
+                                        ))
+                                    }}
+                                />
+                            }
+                            label="Средний приоритет"
+                        />
+                        <FormControlLabel
+                            control={
+                                <Checkbox
+                                    sx={{'& + *': {fontSize: '0.9rem'}}}
+                                    checked={filterInterface.isHighPriority}
+                                    onChange={(e) => {
+                                        setFilterInterface(prev => (
+                                            {
+                                                ...prev,
+                                                isHighPriority: e.target.checked,
+                                            }
+                                        ))
+                                    }}
+                                />
+                            }
+                            label="Высокий приоритет"
+                        />
+                        <FormControlLabel
+                            control={
+                                <Checkbox
+                                    sx={{'& + *': {fontSize: '0.9rem'}}}
+                                    checked={filterInterface.isCriticalPriority}
+                                    onChange={(e) => {
+                                        setFilterInterface(prev => (
+                                            {
+                                                ...prev,
+                                                isCriticalPriority: e.target.checked,
+                                            }
+                                        ))
+                                    }}
+                                />
+                            }
+                            label="Критический приоритет"
+                        />
+                    </FormGroup>
+                </section>
+
                 <section className={styles.filtersPopperSection}>
                     <span className={styles.filtersPopperNaming}>
                         Метки
@@ -352,7 +410,7 @@ const FiltersBlock = () => {
                             <FormControlLabel
                                 control={
                                     <Checkbox
-                                        sx={{ '& + *': { fontSize: '0.9rem' } }}
+                                        sx={{'& + *': {fontSize: '0.9rem'}}}
                                         checked={filterInterface.isMarks}
                                         onChange={(e) => {
                                             setFilterInterface(prev => (
@@ -374,7 +432,7 @@ const FiltersBlock = () => {
                                         control={
                                             <Checkbox
                                                 checked={filtersByMarks.some((index) => index === mark)}
-                                                sx={{ '& + *': { fontSize: '0.9rem' } }}
+                                                sx={{'& + *': {fontSize: '0.9rem'}}}
                                                 onClick={() => {
                                                     setFilterInterface(prev => (
                                                         {
@@ -387,12 +445,13 @@ const FiltersBlock = () => {
                                             />
                                         }
                                         label={
-                                            <div style={{background: mark.color, color: mark.font_color}} className={styles.markStyle}>
-                                                <div  className={styles.markStyleSpan}>
+                                            <div style={{background: mark.color, color: mark.font_color}}
+                                                 className={styles.markStyle}>
+                                                <div className={styles.markStyleSpan}>
                                                     {mark.mark_text}
                                                 </div>
                                             </div>
-                                        } />
+                                        }/>
                                 )}
                             </div>
                         </FormGroup>

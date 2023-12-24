@@ -8,6 +8,7 @@ import {ChromePicker} from "react-color";
 import {create_new_mark, delete_mark, edit_mark} from "../../../../redux/store/slices/slice_ToDoList.js";
 import {findColumnIndex} from "../../../../utils/FindColumnIndex.js";
 import BoardContext from "../../../../context/BoardContext.jsx";
+import PropTypes from "prop-types";
 
 
 // Нужно как-то переделать меточную архитектуру
@@ -21,56 +22,62 @@ const ContentChangeMark = (props) => {
         setClientVisibleData
     } = useContext(BoardContext)
 
+    const {
+        task_id,
+        handleClose,
+        card_marks,
+    } = props
+
     const [windowSelector, setWindowSelector] = useState("choose") // choose || edit || create
 
     const [newMarkText, setNewMarkText] = useState("")
     const [newMarkFontColor, setNewMarkFontColor] = useState("#000")
-    const [newMark, setNewMark] = useState({
-        id: marks.length > 0 ? marks[marks.length - 1].id + 1 : 0,
-        // id: marks[marks.length - 1].id + 1,
+
+    const createNewId = () => {
+        return marks.length > 0 ? Math.max(...marks.map(mark => mark.id)) + 1 : 0;
+    }
+    const initialMarkData = {
+        id: createNewId(),
         font_color: '#000',
         color: "#" + Math.random().toString(16).substr(-6),
         mark_text: ''
-    })
+    }
+    const [newMark, setNewMark] = useState(initialMarkData)
 
     const handleColorPickChange = (color) => {
-        setNewMark({
-            id: windowSelector === 'edit' ? newMark.id : marks[marks.length - 1].id + 1,
-            font_color: newMark.font_color,
-            color: color.hex,
-            mark_text: newMark.mark_text
+        setNewMark((prev) => {
+            return {
+                ...prev,
+                color: color.hex
+            }
         })
     }
 
     const onNewMarkTextChange = (e) => {
         setNewMarkText(e.target.value)
-        setNewMark({
-            id: windowSelector === 'edit' ? newMark.id : marks[marks.length - 1].id + 1,
-            font_color: newMark.font_color,
-            color: newMark.color,
-            mark_text: e.target.value
+        setNewMark((prev) => {
+            return {
+                ...prev,
+                mark_text: e.target.value
+            }
         })
     }
 
     const onNewMarkFontColorClick = () => {
         setNewMarkFontColor(newMarkFontColor === "#000" ? "#fff" : "#000")
-        setNewMark({
-            id: windowSelector === 'edit' ? newMark.id : marks[marks.length - 1].id + 1,
-            font_color: newMarkFontColor === "#000" ? "#fff" : "#000",
-            color: newMark.color,
-            mark_text: newMark.mark_text
+        setNewMark((prev) => {
+            return {
+                ...prev,
+                font_color: newMarkFontColor === "#000" ? "#fff" : "#000"
+            }
         })
     }
 
     const dumpMark = () => {
         setNewMarkText("")
         setNewMarkFontColor("#000")
-        setNewMark({
-            id: windowSelector === 'edit' ? newMark.id : marks[marks.length - 1].id + 1,
-            font_color: '#000',
-            color: "#" + Math.random().toString(16).substr(-6),
-            mark_text: ''
-        })
+
+        setNewMark(initialMarkData)
     }
 
     const toEditMark = (id, markFontColor, markBackgroundColor, markText) => {
@@ -87,19 +94,8 @@ const ContentChangeMark = (props) => {
     const toNewMark = () => {
         setNewMarkText("")
         setNewMarkFontColor("#000")
-        setNewMark({
-            id: marks.length > 0 ? marks[marks.length - 1].id + 1 : 1,
-            font_color: '#000',
-            color: "#" + Math.random().toString(16).substr(-6),
-            mark_text: ''
-        })
+        setNewMark(initialMarkData)
     }
-
-    const {
-        task_id,
-        handleClose,
-        card_marks,
-    } = props
 
     const onChangeCardMark = (task_id, new_mark, type="add") => {
 
@@ -314,6 +310,12 @@ const ContentChangeMark = (props) => {
 
         </div>
     )
+}
+
+ContentChangeMark.propTypes = {
+    task_id: PropTypes.any,
+    handleClose: PropTypes.func,
+    card_marks: PropTypes.any,
 }
 
 export default ContentChangeMark;

@@ -126,6 +126,17 @@ const CardTasks = (props) => {
                    handleClick(e, 'mini')
                }}
            >
+               {/*Приоритет*/}
+               {task.priority && task.priority.type !== 'default'
+                   ?
+                   <div className={styles.cardPriorityWrapper}>
+                       <span className={styles.cardPriorityContent}  style={{background: 'red'}}>
+                           Приоритет: {task.priority.label}
+                       </span>
+                   </div>
+                   :
+                   <></>
+               }
                <div id={task.id} className={styles.taskWrapper} style={task.is_visible ? {} : {display: 'none'}}>
                    <PopoverCardTask
                        anchorEl={anchorEl}
@@ -142,18 +153,9 @@ const CardTasks = (props) => {
                        handleClick={handleClick}
                        changeTaskInfo={changeTaskInfo}
                    />
+
                    <div>
-                       {/*Приоритет*/}
-                       <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center'}}>
-                           {task.priority && task.priority.type !== 'default'
-                                ?
-                               <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', background: '#000148FF', padding: '4px', fontSize: '0.9rem', borderRadius: '10px'}}>
-                                   {task.priority.label}
-                               </div>
-                               :
-                               <></>
-                           }
-                       </div>
+
                        {/*Метки*/}
                        <CardMarks
                            marks={task.marks}

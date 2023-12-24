@@ -12,6 +12,12 @@ import PopoverCardTask from "./PopoverCardTask/PopoverCardTask.jsx";
 import CardFooter from "./CardFooter/CardFooter.jsx";
 import PropTypes from "prop-types";
 
+
+const LOW_COLOR = "#46404F"
+const MID_COLOR = "#5E335E"
+const HIGH_COLOR = "#8B4256"
+const CRIT_COLOR = "#b02e41"
+
 const CardTasks = (props) => {
     const {
         task,
@@ -101,6 +107,21 @@ const CardTasks = (props) => {
         }
     };
 
+    const priority_color = () => {
+        switch (task.priority.type) {
+            case 'Low':
+                return LOW_COLOR
+            case 'Middle':
+                return MID_COLOR
+            case 'High':
+                return HIGH_COLOR
+            case 'Critical':
+                return CRIT_COLOR
+            default:
+                return ''
+        }
+    }
+
     useEffect(() => {
         setTotalSuccessSubTasks(sum(task.sub_tasks.map((task) => task.success_amount)))
         setTotalSubTasks(sum(task.sub_tasks.map((task) => task.total_amount)))
@@ -130,7 +151,8 @@ const CardTasks = (props) => {
                {task.priority && task.priority.type !== 'default'
                    ?
                    <div className={styles.cardPriorityWrapper}>
-                       <span className={styles.cardPriorityContent}  style={{background: 'red'}}>
+                       <span className={styles.cardPriorityContent}
+                             style={{background: priority_color()}}>
                            Приоритет: {task.priority.label}
                        </span>
                    </div>

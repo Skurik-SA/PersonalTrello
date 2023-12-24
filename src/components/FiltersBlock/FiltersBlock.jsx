@@ -172,8 +172,7 @@ const FiltersBlock = () => {
                             Фильтры
                         </span>
                     </div>
-                    <button
-                        className={styles.clearButton}
+                    <div className={styles.clearButton}
                         onClick={(e) => {
                             e.stopPropagation()
                             clearFilters()
@@ -196,7 +195,7 @@ const FiltersBlock = () => {
                         <span>
                             Очистить x
                         </span>
-                    </button>
+                    </div>
 
                 </>
             }

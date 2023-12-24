@@ -60,24 +60,24 @@ const NavigationDefaultButton = (props) => {
             <button className={
                 customButtonBaseStyle
                     ?
-                        customButtonBaseStyle
+                    customButtonBaseStyle
                     :
-                        styles.menuButton
+                    styles.menuButton
             }
                     onClick={handleClick}
                     ref={buttonPopperRef}
             >
                 {isIcon
                     ?
-                        <>
-                            <LogoOff style={styles.logoOn}/>
-                            <LogoOn style={styles.logoOff}/>
-                            {buttonContent}
-                        </>
+                    <>
+                        <LogoOff style={styles.logoOn}/>
+                        <LogoOn style={styles.logoOff}/>
+                        {buttonContent}
+                    </>
                     :
-                        <>
-                            {buttonContent}
-                        </>
+                    <>
+                        {buttonContent}
+                    </>
                 }
             </button>
             <Popper id={id}
@@ -87,13 +87,13 @@ const NavigationDefaultButton = (props) => {
                     ref={popperRef2}
                     transition
             >
-                {({ TransitionProps }) => (
+                {({TransitionProps}) => (
                     <Grow
                         {...TransitionProps}
                         in={animElFlag}
                         ref={popperRef2}
                         timeout={150}
-                        style={growAnimationStyle ? growAnimationStyle : { transformOrigin: '0 0 0' }}
+                        style={growAnimationStyle ? growAnimationStyle : {transformOrigin: '0 0 0'}}
                     >
                         <div className={
                             customPopperBaseStyle
@@ -101,7 +101,7 @@ const NavigationDefaultButton = (props) => {
                                 customPopperBaseStyle
                                 :
                                 styles.popupBaseContent
-                            }
+                        }
                              onClick={() => {
                                  if (clickClose) {
                                      setAnchorEl(null)

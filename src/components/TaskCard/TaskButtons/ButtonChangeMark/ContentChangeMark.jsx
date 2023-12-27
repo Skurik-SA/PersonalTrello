@@ -103,13 +103,16 @@ const ContentChangeMark = (props) => {
         const validateMark = (taskMarks, col_index, row_index) => {
             for (let i = 0; i < taskMarks.length; i++) {
                 if (type === "delete") {
+                    console.log("delete")
                     return taskMarks.filter((mark) => mark.id !== new_mark.id)
                 }
                 if (taskMarks[i].id === new_mark.id ) {
                     if (type === "add" && row_index === task_id) {
+                        console.log("add")
                         return taskMarks.filter((mark) => mark.id !== new_mark.id)
                     }
                     if (type === "edit") {
+                        console.log("edit")
                         return taskMarks.map((mark) => {
                             if (mark.id === new_mark.id) {
                                 return new_mark
@@ -122,8 +125,10 @@ const ContentChangeMark = (props) => {
                 }
             }
 
-            if (col_index === columnIndex && row_index === task_id)
+            if (col_index === columnIndex && row_index === task_id && type !== "delete") {
+                console.log('вот дичь')
                 return [...taskMarks, new_mark]
+            }
             else
                 return [...taskMarks]
         }

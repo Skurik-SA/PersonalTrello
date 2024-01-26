@@ -75,7 +75,8 @@
 .boards_boardCard {
     display: inline-flex;
 
-    background-image: url("../../../src/assets/Ah.jpg");
+    /*background-image: url("../../../src/assets/Ah.jpg");*/
+    background-color: #6c2e4e;
     background-size: 80%;
     background-position: center;
     /*min-height: 60px;*/

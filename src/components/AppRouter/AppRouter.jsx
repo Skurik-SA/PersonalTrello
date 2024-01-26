@@ -15,7 +15,7 @@ const AppRouter = () => {
                 <Route path='registration' element={<RegistrationPage/>}/>
                 <Route path='prevApp' element={<PreviousAppPage/>}/>
                 <Route path='board' element={<Board/>}/>
-                <Route path='board/id' element={<Board/>}/>
+                <Route path='board/:id' element={<Board/>}/>
                 <Route path='my-boards' element={<MyBoards/>}/>
             </Route>
         </Routes>

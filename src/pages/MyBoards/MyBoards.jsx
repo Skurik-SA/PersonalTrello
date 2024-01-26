@@ -3,11 +3,13 @@ import SideBar from "../../components/SideBar/SideBar.jsx";
 import SearchBoards from "../../components/SearchBoards/SearchBoards.jsx";
 import {useState} from "react";
 import {useSelector} from "react-redux";
+import {useNavigate} from "react-router-dom";
 
 const MyBoards = () => {
 
     const boards_data = useSelector(state => state.boards.boards_data)
     const [searchText, setSearchText] = useState("")
+    const navigate = useNavigate()
 
     let displayedBoards = boards_data.filter((board) => {
         return board.title.toLowerCase().includes(searchText.toLowerCase())
@@ -43,7 +45,11 @@ const MyBoards = () => {
                     }}>
                         <div className={styles.boards_List}>
                             {displayedBoards.map((data, index) =>
-                                <div key={index} className={styles.boards_boardCard} style={data.fav ? {border: "gold 1px solid", boxShadow: '0px -1px 19px 0px rgba(255, 215, 0, 0.3) inset'} : {}}>
+                                <div key={index}
+                                     className={styles.boards_boardCard}
+                                     style={data.fav ? {border: "gold 1px solid", boxShadow: '0px -1px 19px 0px rgba(255, 215, 0, 0.3) inset'} : {}}
+                                     onClick={() => navigate(`/board/${index + 1}`)}
+                                >
                                     <span>{data.title}</span>
                                 </div>
                             )}

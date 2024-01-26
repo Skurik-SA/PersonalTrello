@@ -24,39 +24,9 @@ const Slice_Boards = createSlice({
                 backgroundIm: '',
             },
             {
-                id: 4,
-                title: 'Доска для глаз',
-                fav: false,
-                backgroundIm: '',
-            },
-            {
-                id: 4,
-                title: 'Доска для анимешнкиов',
-                fav: false,
-                backgroundIm: '',
-            },
-            {
-                id: 5,
-                title: 'Доска для людей',
-                fav: false,
-                backgroundIm: '',
-            },
-            {
                 id: 6,
                 title: 'Доска для программстов',
                 fav: true,
-                backgroundIm: '',
-            },
-            {
-                id: 7,
-                title: 'Доска для геншинят',
-                fav: false,
-                backgroundIm: '',
-            },
-            {
-                id: 8,
-                title: 'Доска для геншинят',
-                fav: false,
                 backgroundIm: '',
             },
             {
@@ -70,7 +40,13 @@ const Slice_Boards = createSlice({
                 title: 'Доска для кошек',
                 fav: false,
                 backgroundIm: '',
-            }
+            },
+            {
+                id: 11,
+                title: 'Task Board For Study',
+                fav: false,
+                backgroundIm: '',
+            },
         ],
     },
     reducers: {

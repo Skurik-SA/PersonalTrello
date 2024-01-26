@@ -11,8 +11,15 @@ import Share from "../../assets/Icons/Share.jsx";
 import BoardContext from "../../context/BoardContext.jsx";
 import FiltersBlock from "../../components/FiltersBlock/FiltersBlock.jsx";
 import BoardContextSideBar from "../../components/BoardContextSideBar/BoardContextSideBar.jsx";
+import PropTypes from "prop-types";
+import CardTasks from "../../components/TaskCard/CardTasks/CardTasks.jsx";
 
-const Board = () => {
+const Board = (props) => {
+
+    const {
+        board_id
+    } = props
+
     const data = useSelector(state => state.todolist.data)
 
     const [clientVisibleData, setClientVisibleData] = useState(data) // Условно не изменяемый стейт
@@ -209,6 +216,10 @@ const Board = () => {
             </div>
         </BoardContext.Provider>
     )
+}
+
+CardTasks.propTypes = {
+    board_id: PropTypes.any,
 }
 
 export default Board;

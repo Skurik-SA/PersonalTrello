@@ -1,11 +1,14 @@
 import styles from "./NavigationIconButton.module.css"
 import {Avatar, Divider, Grow, IconButton, Popper} from "@mui/material";
 import {useEffect, useRef, useState} from "react";
+import {useNavigate} from "react-router-dom";
 
 const NavigationIconButton = () => {
 
     const [anchorIconMenu, setAnchorIconMenu] = useState(null);
     const [animMenuFlag, setAnimMenuFlag] = useState(false);
+
+    const navigate = useNavigate()
 
     const handleClick = (event) => {
         setAnchorIconMenu(anchorIconMenu ? null : event.currentTarget)
@@ -66,7 +69,7 @@ const NavigationIconButton = () => {
                                 <div className={styles.popupMenuItems}>
                                     Настройки
                                 </div>
-                                <div className={styles.popupMenuItems}>
+                                <div className={styles.popupMenuItems} onClick={() => navigate('/')}>
                                     Выйти
                                 </div>
                             </div>

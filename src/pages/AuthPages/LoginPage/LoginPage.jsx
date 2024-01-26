@@ -22,6 +22,7 @@ const LoginPage = () => {
                             <input placeholder="Пароль" type='password' className={styles.authInput}/>
                             <button className={styles.authButton} onClick={(e) => {
                                 e.preventDefault()
+                                navigate('/my-boards')
                             }}>
                                 Продолжить
                             </button>

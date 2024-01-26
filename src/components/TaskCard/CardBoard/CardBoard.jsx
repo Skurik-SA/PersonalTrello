@@ -9,6 +9,8 @@ import {flushSync} from "react-dom";
 import {set_todolist} from "../../../redux/store/slices/slice_ToDoList.js";
 import BoardContext from "../../../context/BoardContext.jsx";
 import {findColumnIndex} from "../../../utils/FindColumnIndex.js";
+import PropTypes from "prop-types";
+import { FixedSizeList as List } from 'react-window';
 
 class InnerCardList extends PureComponent {
     render() {
@@ -31,6 +33,14 @@ class InnerCardList extends PureComponent {
     }
 }
 
+InnerCardList.propTypes = {
+    card_data: PropTypes.object,
+    card_title: PropTypes.string,
+    index: PropTypes.any,
+    markTextShow: PropTypes.bool,
+    setMarkTextShow: PropTypes.func,
+}
+
 const CardBoard = () => {
     const {
         clientVisibleData,
@@ -40,7 +50,6 @@ const CardBoard = () => {
     const [markTextShow, setMarkTextShow] = useState(false)
     // Это костыль, но зато какой, потом с бэком скорее всего менять придётся
     const dispatch = useDispatch()
-
 
     const addNewColumn = () => {
         const newItems = [
@@ -54,64 +63,62 @@ const CardBoard = () => {
         setClientVisibleData(newItems)
     }
 
-
-
     const handleOnDragEnd = (results) => {
+        const { source, destination, type } = results;
 
-        const {source, destination, type} = results
-
-        if (!destination) {
-            return
-        }
-
-        if (
-            source.droppableId === destination.droppableId &&
-            source.index === destination.index
-        ) {
+        if (!destination || (type === 'group' && source.index === destination.index)) {
             return;
         }
 
-        if (type === 'group')
-        {
-            const reorderedData = [...clientVisibleData]
-            const sourceIndex = source.index
-            const destinationIndex = destination.index
+        const isGroupType = type === 'group';
+        const reorderedData = isGroupType ? [...clientVisibleData] : undefined;
 
-            const [removedItem] = reorderedData.splice(sourceIndex, 1)
-            reorderedData.splice(destinationIndex, 0, removedItem)
+        if (isGroupType) {
+            const [removedItem] = reorderedData.splice(source.index, 1);
+            reorderedData.splice(destination.index, 0, removedItem);
 
-            return setClientVisibleData(reorderedData);
+            dispatch(set_todolist(reorderedData));
+            flushSync(() => setClientVisibleData(reorderedData));
+            return;
         }
 
-        const dataSourceIndex = clientVisibleData.findIndex((nd) => nd.id === source.droppableId)
-        const dataDestinationIndex = clientVisibleData.findIndex((nd) => nd.id === destination.droppableId)
-        const newDataItems = [...clientVisibleData[dataSourceIndex].content]
+        const dataSourceIndex = clientVisibleData.findIndex((nd) => nd.id === source.droppableId);
+        const dataDestinationIndex = clientVisibleData.findIndex((nd) => nd.id === destination.droppableId);
 
+        if (
+            dataSourceIndex === -1 ||
+            dataDestinationIndex === -1 ||
+            !clientVisibleData[dataSourceIndex]?.content ||
+            !clientVisibleData[dataDestinationIndex]?.content
+        ) {
+            console.error("Invalid dataSourceIndex or dataDestinationIndex");
+            return;
+        }
+
+        const newDataItems = [...clientVisibleData[dataSourceIndex].content];
         const newDestinationItems =
             source.droppableId !== destination.droppableId
                 ? [...clientVisibleData[dataDestinationIndex].content]
-                : newDataItems
+                : newDataItems;
 
-        const [deletedItem] = newDataItems.splice(source.index, 1)
-        newDestinationItems.splice(destination.index, 0, deletedItem)
+        const [deletedItem] = newDataItems.splice(source.index, 1);
+        newDestinationItems.splice(destination.index, 0, deletedItem);
 
-        const newEl = [...clientVisibleData]
+        const newEl = [...clientVisibleData];
         newEl[dataSourceIndex] = {
             ...clientVisibleData[dataSourceIndex],
-            content: newDataItems
-        }
+            content: newDataItems,
+        };
 
         newEl[dataDestinationIndex] = {
             ...clientVisibleData[dataDestinationIndex],
-            content: newDestinationItems
-        }
+            content: newDestinationItems,
+        };
 
-        dispatch(set_todolist(newEl))
+        dispatch(set_todolist(newEl));
+        flushSync(() => setClientVisibleData(newEl));
+    };
 
-        flushSync(() => {
-            setClientVisibleData(newEl)
-        });
-    }
 
     return (
         <DragDropContext onDragEnd={handleOnDragEnd}>
@@ -125,6 +132,7 @@ const CardBoard = () => {
                 >
                     <Droppable droppableId="ROOT" type="group" direction="horizontal">
                         {(provided) => (
+                                // <List height={500} width={1200} itemCount={clientVisibleData.length} itemSize={50}>
                             <ol className={styles.boardOl} {...provided.droppableProps} ref={provided.innerRef}>
                                 {clientVisibleData.map((card, index) =>
                                     <Draggable
@@ -152,6 +160,7 @@ const CardBoard = () => {
                                 )}
                                 {provided.placeholder}
                             </ol>
+                                // </List>
                         )}
                     </Droppable>
                     <button className={styles.addNewCardButton} onClick={() => {

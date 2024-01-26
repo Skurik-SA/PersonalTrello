@@ -2,8 +2,14 @@ import styles from "./Nav.module.css"
 import Search from "../Search/Search.jsx";
 import NavigationIconButton from "./NavigationButtons/NavigationIconButton/NavigationIconButton.jsx";
 import NavigationDefaultButton from "./NavigationButtons/NavigationDefaultButton/NavigationDefaultButton.jsx";
+import {useNavigate} from "react-router-dom";
+import {useSelector} from "react-redux";
 
 const Nav = (props) => {
+
+    const navigate = useNavigate()
+    const boards_data = useSelector(state => state.boards.boards_data)
+
     return (
         <nav>
             <section>
@@ -51,14 +57,11 @@ const Nav = (props) => {
                 >
                     <ul className={styles.navUl}>
                         <li className={styles.navLi}>
-                            <button className={styles.singlePoint}>
-                                Доски
-                            </button>
-                        </li>
-                        <li className={styles.navLi}>
-                            <button className={styles.singlePoint}>
-                                Хуёски
-                            </button>
+                            {boards_data.map((data, index) =>
+                                <button key={index} className={styles.singlePoint} onClick={() => navigate('/my-boards')}>
+                                    {data.title}
+                                </button>
+                            )}
                         </li>
                     </ul>
                 </NavigationDefaultButton>

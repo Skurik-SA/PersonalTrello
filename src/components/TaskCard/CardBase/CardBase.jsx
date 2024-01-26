@@ -7,6 +7,7 @@ import BoardContext from "../../../context/BoardContext.jsx";
 import {set_todolist} from "../../../redux/store/slices/slice_ToDoList.js";
 import {useDispatch} from "react-redux";
 import {v4 as uuidv4} from "uuid";
+import ColumnContextMenu from "./ColumnContextMenu/ColumnContextMenu.jsx";
 
 
 class InnerCardTaskList extends Component {
@@ -126,6 +127,7 @@ const CardBase = (props) => {
         setClientVisibleData(newEl)
     }
 
+    const [anchorEl, setAnchorEl] = useState(null);
 
 
     useEffect(() => {
@@ -141,6 +143,12 @@ const CardBase = (props) => {
 
     return (
         <li className={styles.boardLi}>
+            <ColumnContextMenu
+                anchorEl={anchorEl}
+                setAnchorEl={setAnchorEl}
+                newTaskOnClick={newTaskOnClick}
+                card_data_id={card_data.id}
+            />
             <Droppable droppableId={card_data.id} type={"row"}>
                 {(provided) => (
                     <div
@@ -191,7 +199,7 @@ const CardBase = (props) => {
                                 }
 
                             </div>
-                            <button className={styles.cardHead_contentRight}>
+                            <button className={styles.cardHead_contentRight} onClick={(e) => setAnchorEl(e.currentTarget)}>
                                 <span>
                                     <svg width="15" height="3" viewBox="0 0 15 3" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <rect width="3" height="3" fill="#DBA498"/>

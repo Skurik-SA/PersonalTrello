@@ -119,12 +119,12 @@ const PopoverCardTask = (props) => {
                                     handleClick(e, 'full')
                                 }}
                         >
-                                       <span>
-                                           <Task/>
-                                       </span>
+                           <span>
+                               <Task/>
+                           </span>
                             <span className={styles.buttonTextMobile}>
-                                           Открыть задачу
-                                       </span>
+                               Открыть задачу
+                           </span>
                         </button>
                         <ButtonChangeMark
                             task_id={task.id}

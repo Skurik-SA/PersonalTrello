@@ -168,24 +168,26 @@
     justify-content: center;
     text-align: left;
     padding: 10px 10px;
-    background: #852b56;
+    background: #6c2e4e;
     min-width: 295px;
     margin-left: 5px;
     resize: none;
-    border: none;
     font-size: 1rem;
     font-family: Arial, serif;
     outline: none;
-    border-radius: 8px;
+    border-radius: 2px;
+    border: 1px solid rgba(72, 0, 255, 0.2);
 
     scrollbar-color: #8d3c62 #59263e;
     scrollbar-width: thin;
 }
 
 .sideBar_TextArea:focus {
-    border: none;
-    border-radius: 8px;
     cursor: text;
+    border-color: red;
+    -webkit-box-shadow: 0px 0px 8px 4px rgba(255, 0, 0, 0.2);
+    -moz-box-shadow: 0px 0px 8px 4px rgba(255, 0, 0, 0.2);
+    box-shadow: 0px 0px 8px 4px rgba(255, 0, 0, 0.2);
 }
 
 .sideBar_SettingsBlock {
@@ -193,4 +195,41 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
+    gap: 10px;
+}
+
+.sideBar_ArchiveSearchWrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    gap: 5px;
+}
+
+.sideBar_searchInput {
+    height: 35px;
+    padding-left: 10px;
+    outline: none;
+    background: #6c2e4e;
+    border: 1px solid rgba(72, 0, 255, 0.2);
+    width: 68%;
+}
+
+.sideBar_searchInput:focus {
+    border-color: red;
+    -webkit-box-shadow: 0px 0px 8px 4px rgba(255, 0, 0, 0.2);
+    -moz-box-shadow: 0px 0px 8px 4px rgba(255, 0, 0, 0.2);
+    box-shadow: 0px 0px 8px 4px rgba(255, 0, 0, 0.2);
+}
+
+.sideBar_btnTo {
+    height: 35px;
+    border: none;
+    width: 28%;
+    cursor: pointer;
+}
+
+.sideBar_btnTitle {
+    font-weight: bold;
 }

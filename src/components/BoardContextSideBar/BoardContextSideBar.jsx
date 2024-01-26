@@ -1,6 +1,6 @@
 import styles from "./BoardContextSideBar.module.css"
 import {Collapse, Divider, TextareaAutosize} from "@mui/material";
-import {useRef, useState} from "react";
+import {useState} from "react";
 import ExitModal from "../../assets/Icons/ExitModal.jsx";
 import ReturnArrow from "../../assets/Icons/ReturnArrow.jsx";
 import Info_LS from "../../assets/Icons/Info_LS.jsx";
@@ -14,67 +14,47 @@ import PropTypes from "prop-types";
 import SideBarMainButton from "./SideBarMainButton/SideBarMainButton.jsx";
 
 const RETURN_CONTEXT = "return_context"
-const INFO_CONTEXT = "info_context"
-const ARCHIVE_CONTEXT = "archive_context"
-const SETTINGS_CONTEXT = "settings_context"
-const BACKGROUND_CONTEXT = "background_context"
-const MARKS_CONTEXT = "marks_context"
-const COPY_BOARD_CONTEXT = "copy_board_context"
-const CLOSE_BOARD_CONTEXT = "close_board_context"
+const ABOUT_CONTEXT = "About"
+const ARCHIVE_CONTEXT = "Archive"
+const SETTINGS_CONTEXT = "Settings"
+const BACKGROUND_CONTEXT = "BackGround"
+const MARKS_CONTEXT = "Marks"
+const COPY_BOARD_CONTEXT = "CopyBoard"
+const CLOSE_BOARD_CONTEXT = "CloseBoard"
 
 
-
+// Если будет плохо по оптимизации, то необходимо убрать mountOn внутри второго уровня
 const BoardContextSideBar = (props) => {
     const {
         checked,
         handleChecked
     } = props
 
-    const [secondLevelCheckedMain, setSecondLevelCheckedMain] = useState(true)
-    const [secondLevelCheckedAbout, setSecondLevelCheckedAbout] = useState(false)
-    const [secondLevelCheckedArchive, setSecondLevelCheckedArchive] = useState(false)
-    const [secondLevelCheckedSettings, setSecondLevelCheckedSettings] = useState(false)
-    const [secondLevelCheckedBackGround, setSecondLevelCheckedBackGround] = useState(false)
-    const [secondLevelCheckedMarks, setSecondLevelCheckedMarks] = useState(false)
-    const [secondLevelCheckedCopyBoard, setSecondLevelCheckedCopyBoard] = useState(false)
-    const [secondLevelCheckedCloseBoard, setSecondLevelCheckedCloseBoard] = useState(false)
+    const initialState = {
+        Main: true,
+        About: false,
+        Archive: false,
+        Settings: false,
+        BackGround: false,
+        Marks: false,
+        CopyBoard: false,
+        CloseBoard: false,
+    };
+
+    const [secondLevelChecked, setSecondLevelChecked] = useState(initialState);
 
     const handleSecondLevelChecked = (action) => {
-        if (action === RETURN_CONTEXT) {
-            setSecondLevelCheckedMain(true)
-            setSecondLevelCheckedAbout(false)
-            setSecondLevelCheckedArchive(false)
-            setSecondLevelCheckedSettings(false)
-            setSecondLevelCheckedBackGround(false)
-            setSecondLevelCheckedMarks(false)
-            setSecondLevelCheckedCopyBoard(false)
-            setSecondLevelCheckedCloseBoard(false)
+        if (action !== RETURN_CONTEXT) {
+            setSecondLevelChecked((prev) => ({
+                ...initialState,
+                "Main": false,
+                [action]: !prev[action],
+            }));
         }
         else {
-            if (action === INFO_CONTEXT) {
-                setSecondLevelCheckedAbout((prev) => !prev)
-            }
-            if (action === ARCHIVE_CONTEXT) {
-                setSecondLevelCheckedArchive((prev) => !prev)
-            }
-            if (action === SETTINGS_CONTEXT) {
-                setSecondLevelCheckedSettings((prev) => !prev)
-            }
-            if (action === BACKGROUND_CONTEXT) {
-                setSecondLevelCheckedBackGround((prev) => !prev)
-            }
-            if (action === MARKS_CONTEXT) {
-                setSecondLevelCheckedMarks((prev) => !prev)
-            }
-            if (action === COPY_BOARD_CONTEXT) {
-                setSecondLevelCheckedCopyBoard((prev) => !prev)
-            }
-            if (action === CLOSE_BOARD_CONTEXT) {
-                setSecondLevelCheckedCloseBoard((prev) => !prev)
-            }
-            setSecondLevelCheckedMain(false)
+            setSecondLevelChecked(initialState)
         }
-    }
+    };
 
     return (
         <>
@@ -89,7 +69,7 @@ const BoardContextSideBar = (props) => {
                             {/*Menu Header*/}
                             <div className={styles.boardContextMenuHeaderWrapper}>
                                 <button className={styles.sideBar_arrow}
-                                        style={secondLevelCheckedMain ? {opacity: 0, cursor: 'default'} : {opacity: 1, cursor: 'pointer'}}
+                                        style={secondLevelChecked.Main ? {opacity: 0, cursor: 'default'} : {opacity: 1, cursor: 'pointer'}}
                                         onClick={() => {
                                     handleSecondLevelChecked(RETURN_CONTEXT)
                                 }}>
@@ -114,8 +94,14 @@ const BoardContextSideBar = (props) => {
 
                             {/*Hidden level*/}
                             <section className={styles.sideBar_sectionRight}>
-                                <Collapse in={secondLevelCheckedAbout} orientation="horizontal" timeout={100}
-                                          collapsedSize={0} sx={{zIndex: 1}}>
+                                <Collapse in={secondLevelChecked.About}
+                                          orientation="horizontal"
+                                          timeout={100}
+                                          collapsedSize={0}
+                                          sx={{zIndex: 1}}
+                                          mountOnEnter={true}
+                                          unmountOnExit={true}
+                                >
                                     <div className={styles.sideBar_hiddenLevelWrapper}>
                                         <div className={styles.sideBar_TitleLabels}>
                                             <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
@@ -155,40 +141,85 @@ const BoardContextSideBar = (props) => {
                                 </Collapse>
                             </section>
                             <section className={styles.sideBar_sectionRight}>
-                                <Collapse in={secondLevelCheckedArchive} orientation="horizontal" timeout={100}
-                                          collapsedSize={0} sx={{zIndex: 1}}>
+                                <Collapse in={secondLevelChecked.Archive}
+                                          orientation="horizontal"
+                                          timeout={100}
+                                          collapsedSize={0}
+                                          sx={{zIndex: 1}}
+                                          mountOnEnter={true}
+                                          unmountOnExit={true}
+                                >
                                     <div className={styles.sideBar_hiddenLevelWrapper}>
+                                        <div className={styles.sideBar_ArchiveSearchWrapper}>
+                                            <input className={styles.sideBar_searchInput} placeholder={"Поиск в архиве"}/>
+                                            <button className={styles.sideBar_btnTo}>К спискам</button>
+                                        </div>
+                                        <Divider sx={{background: '#DBA498', width: '100%', opacity: '0.5'}}/>
                                         <div>
-                                            <input placeholder={"Поиск в архиве"}/>
-                                            <button>К спискам</button>
+                                            <div>
+                                                Некоторый удалённый объект
+                                            </div>
                                         </div>
                                     </div>
                                 </Collapse>
                             </section>
                             <section className={styles.sideBar_sectionRight}>
-                                <Collapse in={secondLevelCheckedSettings} orientation="horizontal" timeout={100}
-                                          collapsedSize={0} sx={{zIndex: 1}}>
+                                <Collapse in={secondLevelChecked.Settings}
+                                          orientation="horizontal"
+                                          timeout={100}
+                                          collapsedSize={0}
+                                          sx={{zIndex: 1}}
+                                          mountOnEnter={true}
+                                          unmountOnExit={true}
+                                >
                                     <div className={styles.sideBar_hiddenLevelWrapper}>
                                         <div className={styles.sideBar_SettingsBlock}>
-                                            <span>
+                                            <span className={styles.sideBar_TitleLabels}>
                                                 Права доступа
                                             </span>
-                                            <span>
-                                                Комментирование
-                                            </span>
-                                            <span>
-                                                Добавление участников
-                                            </span>
-                                            <span>
-                                                Редактирование
-                                            </span>
+                                            <SideBarMainButton
+                                                handleClick={()=>{}}
+                                                actionEvent={ABOUT_CONTEXT}
+                                                buttonContent={
+                                                    <div style={{display: "flex", flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: '4px'}}>
+                                                        <span className={styles.sideBar_btnTitle}>Комментирование</span>
+                                                        <span>Участники</span>
+                                                    </div>
+                                                }
+                                            />
+                                            <SideBarMainButton
+                                                handleClick={()=>{}}
+                                                actionEvent={ABOUT_CONTEXT}
+                                                buttonContent={
+                                                    <div style={{display: "flex", flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: '4px'}}>
+                                                        <span className={styles.sideBar_btnTitle}>Добавление участников</span>
+                                                        <span>Участники</span>
+                                                    </div>
+                                                }
+                                            />
+                                            <SideBarMainButton
+                                                handleClick={()=>{}}
+                                                actionEvent={ABOUT_CONTEXT}
+                                                buttonContent={
+                                                    <div style={{display: "flex", flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: '4px'}}>
+                                                        <span className={styles.sideBar_btnTitle}>Редактирование</span>
+                                                        <span>Участники</span>
+                                                    </div>
+                                                }
+                                            />
                                         </div>
                                     </div>
                                 </Collapse>
                             </section>
                             <section className={styles.sideBar_sectionRight}>
-                                <Collapse in={secondLevelCheckedBackGround} orientation="horizontal" timeout={100}
-                                          collapsedSize={0} sx={{zIndex: 1}}>
+                                <Collapse in={secondLevelChecked.BackGround}
+                                          orientation="horizontal"
+                                          timeout={100}
+                                          collapsedSize={0}
+                                          sx={{zIndex: 1}}
+                                          mountOnEnter={true}
+                                          unmountOnExit={true}
+                                >
                                     <div className={styles.sideBar_menuBlock}>
                                         <button className={styles.sideBar_menuButtons}>
                                             <div className={styles.sideBar_ButtonEntrails}>
@@ -205,8 +236,14 @@ const BoardContextSideBar = (props) => {
                                 </Collapse>
                             </section>
                             <section className={styles.sideBar_sectionRight}>
-                                <Collapse in={secondLevelCheckedMarks} orientation="horizontal" timeout={100}
-                                          collapsedSize={0} sx={{zIndex: 1}}>
+                                <Collapse in={secondLevelChecked.Marks}
+                                          orientation="horizontal"
+                                          timeout={100}
+                                          collapsedSize={0}
+                                          sx={{zIndex: 1}}
+                                          mountOnEnter={true}
+                                          unmountOnExit={true}
+                                >
                                     <div className={styles.sideBar_menuBlock}>
                                         <button className={styles.sideBar_menuButtons}>
                                             <div className={styles.sideBar_ButtonEntrails}>
@@ -223,8 +260,14 @@ const BoardContextSideBar = (props) => {
                                 </Collapse>
                             </section>
                             <section className={styles.sideBar_sectionRight}>
-                                <Collapse in={secondLevelCheckedCopyBoard} orientation="horizontal" timeout={100}
-                                          collapsedSize={0} sx={{zIndex: 1}}>
+                                <Collapse in={secondLevelChecked.CopyBoard}
+                                          orientation="horizontal"
+                                          timeout={100}
+                                          collapsedSize={0}
+                                          sx={{zIndex: 1}}
+                                          mountOnEnter={true}
+                                          unmountOnExit={true}
+                                >
                                     <div className={styles.sideBar_menuBlock}>
                                         <button className={styles.sideBar_menuButtons}>
                                             <div className={styles.sideBar_ButtonEntrails}>
@@ -241,8 +284,14 @@ const BoardContextSideBar = (props) => {
                                 </Collapse>
                             </section>
                             <section className={styles.sideBar_sectionRight}>
-                                <Collapse in={secondLevelCheckedCloseBoard} orientation="horizontal" timeout={100}
-                                          collapsedSize={0} sx={{zIndex: 1}}>
+                                <Collapse in={secondLevelChecked.CloseBoard}
+                                          orientation="horizontal"
+                                          timeout={100}
+                                          collapsedSize={0}
+                                          sx={{zIndex: 1}}
+                                          mountOnEnter={true}
+                                          unmountOnExit={true}
+                                >
                                     <div className={styles.sideBar_menuBlock}>
                                         <button className={styles.sideBar_menuButtons}>
                                             <div className={styles.sideBar_ButtonEntrails}>
@@ -261,14 +310,15 @@ const BoardContextSideBar = (props) => {
 
                             {/*Base menu controls*/}
                             <section className={styles.sideBar_sectionLeft}>
-                                <Collapse in={secondLevelCheckedMain}
+                                <Collapse in={secondLevelChecked.Main}
                                           orientation="horizontal"
                                           timeout={60}
-                                          collapsedSize={0}>
+                                          collapsedSize={0}
+                                >
                                     <div className={styles.sideBar_menuBlock}>
                                         <SideBarMainButton
                                             handleClick={handleSecondLevelChecked}
-                                            actionEvent={INFO_CONTEXT}
+                                            actionEvent={ABOUT_CONTEXT}
                                             icon={<Info_LS/>}
                                             buttonContent={"О доске"}
                                         />

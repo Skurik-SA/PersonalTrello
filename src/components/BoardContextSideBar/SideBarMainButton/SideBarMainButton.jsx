@@ -15,9 +15,7 @@ const SideBarMainButton = (props) => {
             handleClick(actionEvent)
         }}>
             <div className={styles.sideBar_ButtonEntrails}>
-                <span>
-                    {icon}
-                </span>
+                {icon ? <span>{icon}</span> : <></>}
                 <span>
                     {buttonContent}
                 </span>

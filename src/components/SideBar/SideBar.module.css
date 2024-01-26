@@ -7,7 +7,8 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    background: #381727;
+    background: rgba(56, 23, 39, 0.85);
+    backdrop-filter: blur(2px);
 
     width: 260px;
     height: 100vh;
@@ -127,6 +128,7 @@
     height: 30px;
     border: none;
     border-radius: 15px;
+    z-index: 1;
 }
 
 .navButtonSideBar:hover {

@@ -4,6 +4,8 @@ import {createTheme, FormControl, InputLabel, MenuItem, Select, ThemeProvider} f
 import {useContext, useState} from "react";
 import {cloneDeep} from "lodash-es";
 import BoardContext from "../../../../context/BoardContext.jsx";
+import {useDispatch} from "react-redux";
+import {set_todolist} from "../../../../redux/store/slices/slice_ToDoList.js";
 
 const ContentChangePriorityCard = (props) => {
 
@@ -18,6 +20,8 @@ const ContentChangePriorityCard = (props) => {
         setClientVisibleData
     } = useContext(BoardContext)
 
+    const dispatch = useDispatch()
+
     const task_priorities = [
         {
             id: 0,
@@ -26,18 +30,23 @@ const ContentChangePriorityCard = (props) => {
         },
         {
             id: 1,
-            type: 'Important',
-            label: 'Важно'
+            type: 'Low',
+            label: 'Низкий'
         },
         {
             id: 2,
-            type: 'NeverMind',
-            label: 'Неважно'
+            type: 'Middle',
+            label: 'Средний'
         },
         {
             id: 3,
-            type: 'Immediately',
-            label: 'Срочно'
+            type: 'High',
+            label: 'Высокий'
+        },
+        {
+            id: 4,
+            type: 'Critical',
+            label: 'Критичный'
         },
     ]
     const [taskPriority, setTaskPriority] = useState()
@@ -53,6 +62,8 @@ const ContentChangePriorityCard = (props) => {
 
         const newData = cloneDeep(clientVisibleData)
         newData[columnIndex].content[taskIndex].priority = priority_data
+
+        dispatch(set_todolist(newData))
         setClientVisibleData(newData)
     }
 
@@ -146,6 +157,7 @@ const ContentChangePriorityCard = (props) => {
                 <button className={styles.contentChangePriority_setButton}
                         onClick={() => {
                             setPriorityCard(task_id, column_id, task_priorities[taskPriority])
+                            handleClose()
                         }}
                 >
                     Установить

@@ -19,7 +19,6 @@ import Archive from "../../../assets/Icons/Archive.jsx";
 import Share from "../../../assets/Icons/Share.jsx";
 import {useContext, useState} from "react";
 import ButtonChangeMark from "../TaskButtons/ButtonChangeMark/ButtonChangeMark.jsx";
-import {useSelector} from "react-redux";
 import Notifications from "../../../assets/Icons/Notifications.jsx";
 import Eye from "../../../assets/Icons/Eye.jsx";
 import ButtonMoveCard from "../TaskButtons/ButtonMoveCard/ButtonMoveCard.jsx";
@@ -32,6 +31,7 @@ import BoardContext from "../../../context/BoardContext.jsx";
 import DeadLineBlockModal from "./DeadLineBlockModal/DeadLineBlockModal.jsx";
 import SubTasksModal from "./SubTasksModal/SubTasksModal.jsx";
 import {cloneDeep} from "lodash-es";
+import PropTypes from "prop-types";
 
 const CardTaskModal = (props) => {
 
@@ -43,10 +43,7 @@ const CardTaskModal = (props) => {
         changeTaskInfo,
         task,
         column_id,
-
     } = props
-
-    const marks = useSelector(state => state.todolist.mark_store)
 
     const {
         clientVisibleData,
@@ -241,7 +238,7 @@ const CardTaskModal = (props) => {
                                         }
                                     }}
                                     spellCheck="false"
-                                    onMouseOut={(e) => {
+                                    onMouseOut={() => {
                                         onChangeDescription(task.id, column_id, valueDescription)
                                     }}
                                 />
@@ -376,6 +373,16 @@ const CardTaskModal = (props) => {
             </Modal>
         </ThemeProvider>
     )
+}
+
+CardTaskModal.propTypes = {
+    modalOpen: PropTypes.bool,
+    setModalOpen: PropTypes.func,
+    taskTitleValue: PropTypes.string,
+    setTaskTitleValue: PropTypes.func,
+    changeTaskInfo: PropTypes.func,
+    task: PropTypes.any,
+    column_id: PropTypes.any,
 }
 
 export default CardTaskModal;

@@ -1,10 +1,14 @@
 import styles from "./SideBar.module.css"
 import {Collapse, Divider} from "@mui/material";
 import {useState} from "react";
+import {useNavigate} from "react-router-dom";
+import {useSelector} from "react-redux";
 
 const SideBar = () => {
 
+    const boards_data = useSelector(state => state.boards.boards_data)
     const [checked, setChecked] = useState(true);
+    const navigate = useNavigate()
 
     const handleChange = () => {
         setChecked((prev) => !prev);
@@ -12,7 +16,7 @@ const SideBar = () => {
 
     return (
         <>
-            <Collapse in={checked} orientation="horizontal" collapsedSize={20}>
+            <Collapse in={checked} orientation="horizontal" collapsedSize={20} timeout={100}>
                 <nav className={styles.sideBarWrapper}>
                     <Collapse in={checked} orientation="horizontal" timeout={10}>
                         <div className={styles.sideBarWrapper}>
@@ -47,7 +51,7 @@ const SideBar = () => {
                                             Навигация:
                                         </div>
                                         <div className={styles.buttonsLayer}>
-                                            <button className={styles.navButton}>Доски</button>
+                                            <button className={styles.navButton} onClick={() => navigate('/my-boards')}>Доски</button>
                                             <button className={styles.navButton}>Участники</button>
                                             <button className={styles.navButton}>Настройки</button>
                                         </div>
@@ -59,8 +63,9 @@ const SideBar = () => {
                                             Мои доски:
                                         </div>
                                         <div className={styles.buttonsLayer}>
-                                            <button className={styles.navButton}>Доска 1</button>
-                                            <button className={styles.navButton}>Доска 2</button>
+                                            {boards_data.map((data, index) =>
+                                                <button key={index} className={styles.navButton}>{data.title}</button>
+                                            )}
                                         </div>
                                     </div>
                                 </div>

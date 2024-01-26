@@ -116,6 +116,7 @@ section {
     align-items: flex-start;
     justify-content: center;
     width: 90%;
+    gap: 5px;
 }
 
 .navLi:hover {

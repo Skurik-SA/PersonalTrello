@@ -10,6 +10,13 @@ import {useDispatch} from "react-redux";
 import CardMarks from "./CardMarks/CardMarks.jsx";
 import PopoverCardTask from "./PopoverCardTask/PopoverCardTask.jsx";
 import CardFooter from "./CardFooter/CardFooter.jsx";
+import PropTypes from "prop-types";
+
+
+const LOW_COLOR = "#46404F"
+const MID_COLOR = "#5E335E"
+const HIGH_COLOR = "#8B4256"
+const CRIT_COLOR = "#b02e41"
 
 const CardTasks = (props) => {
     const {
@@ -100,6 +107,21 @@ const CardTasks = (props) => {
         }
     };
 
+    const priority_color = () => {
+        switch (task.priority.type) {
+            case 'Low':
+                return LOW_COLOR
+            case 'Middle':
+                return MID_COLOR
+            case 'High':
+                return HIGH_COLOR
+            case 'Critical':
+                return CRIT_COLOR
+            default:
+                return ''
+        }
+    }
+
     useEffect(() => {
         setTotalSuccessSubTasks(sum(task.sub_tasks.map((task) => task.success_amount)))
         setTotalSubTasks(sum(task.sub_tasks.map((task) => task.total_amount)))
@@ -125,6 +147,28 @@ const CardTasks = (props) => {
                    handleClick(e, 'mini')
                }}
            >
+               {/*Приоритет*/}
+               {task.priority && task.priority.type !== 'default'
+                   ?
+                   <div className={styles.cardPriorityWrapper}>
+                       <span className={styles.cardPriorityContent}
+                             style={
+                                 task.is_visible ?
+                                     {
+                                         background: priority_color(),
+                                     }
+                                     :
+                                     {
+                                         display: 'none'
+                                     }
+                             }
+                       >
+                           Приоритет: {task.priority.label}
+                       </span>
+                   </div>
+                   :
+                   <></>
+               }
                <div id={task.id} className={styles.taskWrapper} style={task.is_visible ? {} : {display: 'none'}}>
                    <PopoverCardTask
                        anchorEl={anchorEl}
@@ -141,18 +185,9 @@ const CardTasks = (props) => {
                        handleClick={handleClick}
                        changeTaskInfo={changeTaskInfo}
                    />
+
                    <div>
-                       {/*Приоритет*/}
-                       <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center'}}>
-                           {task.priority && task.priority.type !== 'default'
-                                ?
-                               <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', background: '#000148FF', padding: '4px', fontSize: '0.9rem', borderRadius: '10px'}}>
-                                   {task.priority.label}
-                               </div>
-                               :
-                               <></>
-                           }
-                       </div>
+
                        {/*Метки*/}
                        <CardMarks
                            marks={task.marks}
@@ -192,6 +227,13 @@ const CardTasks = (props) => {
            </li>
        </>
     )
+}
+
+CardTasks.propTypes = {
+    task: PropTypes.any,
+    column_id: PropTypes.any,
+    markTextShow: PropTypes.bool,
+    setMarkTextShow: PropTypes.func,
 }
 
 export default CardTasks;
